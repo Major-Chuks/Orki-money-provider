@@ -1,0 +1,120 @@
+.wrapper {
+  width: 100%;
+  background: linear-gradient(
+    155deg,
+    #f1f0fa -8.48%,
+    rgba(237, 235, 255, 0.81) 158.51%
+  );
+  margin-bottom: 104px;
+  padding-top: 40px;
+  padding-bottom: 62px;
+}
+
+.container {
+  width: 100%;
+}
+
+.heading {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 100px;
+}
+
+.accent {
+  color: var(--Foundation-Brand-brand-500, #5b29ec);
+  font-family: "Space Grotesk";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 40px; /* 111.111% */
+}
+
+.listContainer {
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 62px 0;
+}
+
+.box {
+  display: flex;
+  max-width: 450px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 68px !important;
+}
+
+.iconContainer {
+  width: 100%;
+  display: flex;
+  width: 52px;
+  height: 52px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background: var(--Foundation-Brand-brand-100, #ccbdf9);
+  margin-bottom: 32px;
+}
+
+.box:nth-child(2),
+.box:nth-child(5) {
+  padding: 0px 90.8px;
+}
+
+.box:nth-child(3),
+.box:nth-child(6) {
+  padding-left: 26px;
+}
+
+.box:nth-child(2),
+.box:nth-child(5) {
+  border-right: 0.8px solid #e4e7e9;
+  border-left: 0.8px solid #e4e7e9;
+  position: relative;
+}
+
+.box:nth-child(2)::before,
+.box:nth-child(5)::before {
+  content: "";
+  width: 2px;
+  height: 40px;
+  position: absolute;
+  left: -0.699px;
+  top: 0;
+  background: #000;
+}
+
+.box:nth-child(2)::after,
+.box:nth-child(5)::after {
+  content: "";
+  width: 2px;
+  height: 40px;
+  position: absolute;
+  right: -0.699px;
+  bottom: 0;
+  background: #000;
+}
+
+.title {
+  color: #000;
+  font-family: "Space Grotesk";
+  font-size: 23.625px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 34px; /* 143.915% */
+  margin-bottom: 24px;
+}
+
+.description {
+  color: #111;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}

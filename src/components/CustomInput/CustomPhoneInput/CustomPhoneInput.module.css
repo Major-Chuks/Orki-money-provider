@@ -1,0 +1,26 @@
+.input {
+  /* padding-left: 68px !important; */
+}
+
+.dialCode {
+  color: #6c6c78;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 15px; /* 100% */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  white-space: nowrap;
+}
+
+.section:first-child {
+  display: inline-flex !important;
+}
+
+.left {
+  width: auto !important;
+  height: auto !important;
+}

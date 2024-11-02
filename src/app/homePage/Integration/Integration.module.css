@@ -1,0 +1,62 @@
+.container {
+  width: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 57px;
+  margin-bottom: 160px;
+}
+
+.iconContainer {
+  width: max-content;
+  align-self: flex-start;
+}
+
+.accent {
+  color: var(--Foundation-Brand-brand-500, #5b29ec);
+  font-family: "Space Grotesk";
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64.8px;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 62px;
+}
+
+.details {
+  width: 100%;
+  max-width: 551px;
+}
+
+.listContainer {
+  margin-top: 52px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.item {
+  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+}

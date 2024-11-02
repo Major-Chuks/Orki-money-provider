@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 32px;
+  margin-bottom: 160px;
+}
+
+.faqWrapper {
+  width: 100%;
+  padding: 32px 26px 32px 22px;
+  border-radius: 12px;
+  border: 1px solid var(--Gray-500, #a0aec0);
+}
+
+.question {
+  color: var(--Text-Heading-Dark, #27272e);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* text */
+  color: var(--Foundation-text-color-text-color-500, #23262f);
+  font-family: "Space Grotesk";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px; /* 140% */
+}
+
+.answer {
+  height: 0;
+  padding-top: 0;
+  color: var(--Text-Body-Light, #425466);
+  overflow: hidden;
+  transition: padding 300ms;
+  /* text */
+  color: var(--Foundation-text-color-text-color-400, #4f5159);
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 200% */
+}
+
+.faqWrapper.active .answer {
+  height: auto;
+  padding-top: 40px;
+}
+
+.toggle {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.line {
+  width: 16px;
+  height: 1px;
+  border: 1.5px solid rgba(41, 45, 50, 1);
+}
+
+.line:nth-child(2) {
+  position: absolute;
+  transform: rotate(90deg);
+  transition: transform 300ms, opacity 300ms;
+}
+
+.faqWrapper.active .line:nth-child(2) {
+  transform: rotate(0);
+  opacity: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    gap: 32px;
+    margin-bottom: 108px;
+  }
+
+  .question {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .answer {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .faqWrapper.active .answer {
+    height: auto;
+    padding-top: 24px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .container {
+    gap: 24px;
+    margin-bottom: 52px;
+  }
+
+  .faqWrapper {
+    padding: 16px 12px 17px 12px;
+    border-radius: 12px;
+  }
+
+  .question {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .answer {
+    font-size: 10px;
+    line-height: 18px;
+  }
+
+  .faqWrapper.active .answer {
+    padding-top: 18px;
+  }
+}

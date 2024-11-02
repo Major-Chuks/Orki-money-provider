@@ -1,0 +1,210 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 86px;
+  margin-bottom: 142px;
+}
+
+.leftSide {
+  flex: 50%;
+}
+
+.title {
+  color: var(--Foundation-text-color-text-color-500, #23262f);
+  font-family: "Space Grotesk";
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 84px; /* 131.25% */
+  margin-bottom: 57px;
+}
+
+.imageContainer {
+  width: 100%;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+}
+
+.rightSide {
+  flex: 50%;
+  width: 100%;
+  max-width: 584px;
+  border-radius: 32px;
+  background: #fff;
+  box-shadow: 0px 0px 13px 0px rgba(99, 97, 97, 0.25);
+  padding: 52px 32px;
+  padding-bottom: 24px;
+}
+
+.inputContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.inputContainer textarea::placeholder,
+.inputContainer input::placeholder {
+  color: var(--Foundation-Text-color-text-color-200, #8f8f8f);
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 128.571% */
+}
+
+.inputContainer textarea,
+.inputContainer input {
+  color: var(--neutral-5, #777e90);
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px; /* 128.571% */
+}
+
+.inputContainer input,
+.inputContainer select,
+.inputContainer textarea {
+  width: 100%;
+  display: flex;
+  height: 48px;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 12px;
+  border: 2px solid var(--Foundation-text-color-text-color-50, #e9e9ea);
+  outline: none;
+}
+
+.inputContainer textarea {
+  display: flex;
+  width: 100%;
+  height: 152px;
+  padding: 12px 16px;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 12px;
+  border: 2px solid var(--Foundation-text-color-text-color-50, #e9e9ea);
+}
+
+.btnContainer {
+  margin-top: 32px;
+  margin-bottom: 31px;
+}
+
+.terms {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+
+  color: #4e5d78;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 128.571% */
+}
+
+.terms a {
+  color: var(--Foundation-Brand-brand-500, #5b29ec);
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  text-decoration-line: underline;
+  white-space: nowrap;
+}
+
+.submission {
+  width: 100%;
+  max-width: 584px;
+  height: 490px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.submission img {
+  width: 101px;
+  height: 97px;
+  margin-bottom: 24px;
+}
+
+.submission .title {
+  margin-bottom: 12px;
+  color: var(--neutral-2, #23262f);
+  text-align: center;
+  font-family: Manrope;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 32px; /* 145.455% */
+}
+
+.submission .description {
+  color: var(--neutral-4, #777e90);
+  text-align: center;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.2px;
+}
+
+@media screen and (max-width: 1200px) {
+  .title {
+    font-size: 48px;
+    line-height: 60px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    gap: 33px;
+  }
+
+  .rightSide {
+    border-radius: 16px;
+    max-width: 100%;
+  }
+
+  .title {
+    margin-bottom: 32px;
+    font-size: 42px;
+    line-height: 56px;
+  }
+
+  .title br {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .title {
+    color: var(
+      --Foundation-text-color-text-color-500,
+      var(--neutral-2, #23262f)
+    );
+    font-family: "Robert Sans 800";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 44px; /* 183.333% */
+    margin-bottom: 24px;
+  }
+}

@@ -1,0 +1,23 @@
+.input {
+  padding: 0 16px !important;
+}
+
+.input.plain {
+  all: unset !important;
+  width: 100% !important;
+  color: var(--neutral-2, #23262f) !important;
+  font-family: "DM Sans" !important;
+  font-size: 12px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+}
+
+.input.plain::placeholder {
+  color: var(--faint);
+  font-family: "DM Sans" !important;
+  font-size: 12px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+}

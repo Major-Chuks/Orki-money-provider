@@ -1,0 +1,53 @@
+.container {
+  width: 100%;
+  max-width: 1192px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 40px;
+  margin-bottom: 152px;
+}
+
+.container section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 24px;
+}
+
+.title {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "Space Grotesk";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 133.333% */
+}
+
+.description {
+  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
+  font-family: Manrope;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px; /* 155.556% */
+}
+
+@media screen and (max-width: 540px) {
+  .container section {
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 24px;
+  }
+}

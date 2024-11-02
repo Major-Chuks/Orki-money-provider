@@ -1,0 +1,40 @@
+.input {
+  padding: 0 16px !important;
+}
+
+.input:disabled {
+  color: var(--neutral-3, #353945) !important;
+}
+
+.copyIcon {
+  position: absolute;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.copyIcon::after {
+  content: "Copied";
+  position: absolute;
+  top: 0;
+  transform: translateY(-20%);
+  background: #efecfc;
+  padding: 4px 8px;
+  border-radius: 8px;
+  visibility: hidden;
+  transition: transform 300ms;
+  /* text */
+  color: var(--neutral-4, #353945);
+  font-family: "DM Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 87.5% */
+}
+
+.copyIcon.tooltip::after {
+  transform: translateY(-100%);
+  visibility: visible;
+}

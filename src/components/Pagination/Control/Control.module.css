@@ -1,0 +1,61 @@
+.container {
+  width: 100%;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leftCtrl,
+.rightCtrl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  /* text */
+  color: var(--Foundation-Grey-grey-300, #6c696a);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+}
+
+.pageCountContainer {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.page {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  /* text */
+  color: var(--Foundation-Grey-grey-300, #6c696a);
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+}
+
+.page.active {
+  background: var(--accent-color);
+  color: var(--primary);
+  border-radius: 50%;
+}

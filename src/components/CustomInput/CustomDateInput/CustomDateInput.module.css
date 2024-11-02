@@ -1,0 +1,19 @@
+.input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+.input {
+  width: 0px;
+  flex: 1;
+  border: 1px solid var(--border);
+  color: #babdc1 !important;
+}
+
+.input.active {
+  color: #353945 !important;
+}
+
+.right {
+  width: 24px !important;
+  height: 24px !important;
+}

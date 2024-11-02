@@ -1,0 +1,240 @@
+.wrapper {
+  background: #010101;
+}
+
+.container {
+  width: 100%;
+  padding-top: 64px;
+  padding-bottom: 62px;
+}
+
+.top {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 62px;
+}
+
+.top .left {
+  width: 100%;
+  max-width: 382px;
+}
+
+.logo {
+  color: var(--neutral-5, #b1b5c3);
+  font-family: "Robert Sans 800";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 28px; /* 87.5% */
+  margin-bottom: 24px;
+}
+
+.brandDescription {
+  color: var(--Foundation-Text-color-text-color-100, #b4b4b4);
+  text-align: justify;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+  margin-bottom: 32px;
+}
+
+.newsletter {
+  margin-bottom: 16px;
+}
+
+.newsletter .text {
+  color: var(--Foundation-Text-color-text-color-100, #b4b4b4);
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 114.286% */
+  margin-bottom: 16px;
+}
+
+.input {
+  display: flex;
+  width: 298px;
+  padding: 8px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid var(--Foundation-Text-color-text-color-100, #b4b4b4);
+  /* text */
+  color: #fff;
+  font-family: "Robert Sans";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 160% */
+}
+
+.input::placeholder {
+  color: var(--Foundation-Text-color-text-color-100, #b4b4b4);
+  font-family: Manrope;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 150% */
+}
+
+.top .right {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 72px;
+}
+
+.navTitle {
+  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
+  font-family: "Space Grotesk";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21.6px; /* 135.001% */
+  margin-bottom: 24px;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-50, #e7e7e7);
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21.6px; /* 154.286% */
+}
+
+.bottom {
+  border-top: 1px solid var(--neutral-3, #353945);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  /* text */
+  color: var(--Foundation-Text-color-text-color-200, #8f8f8f);
+  text-align: center;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21.6px; /* 154.286% */
+  padding-top: 16px;
+}
+
+.bottom .left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.bottom .right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.socialLinkContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.socialLinkContainer img {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1200px) {
+  .imageWrapper {
+    margin-bottom: 88px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .imageWrapper {
+    margin-bottom: 38px;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .top {
+    flex-direction: column;
+  }
+
+  .top .left {
+    margin-bottom: 32px;
+  }
+
+  .top .right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .bottom .right {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .socialLinkContainer {
+    transform: translateY(16px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .description {
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .container {
+    padding: 16px;
+    padding-top: 25px;
+    border-radius: 12px;
+  }
+}

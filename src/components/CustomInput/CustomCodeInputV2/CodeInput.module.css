@@ -1,0 +1,72 @@
+.container {
+  width: 62px;
+  height: 81px;
+  border-radius: 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  outline: none;
+  background: #fcfcfc;
+  border-radius: 8px;
+  border: 1px solid #777e90;
+  border: 1px solid #e6e8ec;
+
+  /* text */
+  color: #000;
+  font-family: "DM Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 136.023%; /* 48.968px */
+}
+
+.blinker {
+  height: 32px;
+  position: absolute;
+}
+
+.container.valid {
+  border: 1px solid #777e90;
+}
+
+.container.active {
+  border: 2px solid #141416;
+}
+
+.container::after {
+  position: absolute;
+  content: "";
+  display: none;
+  color: transparent;
+  border: 2px solid transparent;
+  height: 32px;
+}
+
+/* .container.active::after, */
+.container.blink::after {
+  display: block;
+  animation: blinking 1s 500ms infinite linear;
+}
+
+/* .container.active.valid::after {
+  transform: translateX(14px);
+} */
+
+@keyframes blinking {
+  0% {
+    border-color: #23262f;
+  }
+
+  30%,
+  60% {
+    border-color: transparent;
+  }
+
+  100% {
+    border-color: #23262f;
+  }
+}

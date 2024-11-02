@@ -1,0 +1,102 @@
+.container {
+  width: 100%;
+  margin-bottom: 140px;
+}
+
+.accent {
+  color: var(--Foundation-Brand-brand-500, #5b29ec);
+  font-family: "Space Grotesk";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 40px; /* 111.111% */
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.categoryContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 72px;
+  margin-top: 40px;
+}
+
+.category {
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--Foundation-Brand-brand-50, #efeafd);
+  /* text */
+  color: var(--Foundation-Brand-brand-500, #5b29ec);
+  text-align: center;
+  font-family: Manrope;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 120% */
+}
+
+.openingContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 32px;
+}
+
+.opening {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 32px 24px;
+  border-radius: 12px;
+  border: 2px solid var(--Foundation-Text-color-text-color-100, #b4b4b4);
+}
+
+.opening .rhs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.opening .lhs,
+.availability,
+.location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.title {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "Space Grotesk";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.description {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.tag {
+  color: var(--Foundation-Brand-brand-500, #5b29ec);
+  font-family: Manrope;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

@@ -1,0 +1,45 @@
+.title {
+  color: var(--Foundation-text-color-text-color-500, #23262f);
+  font-family: "Space Grotesk";
+  font-size: 42px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 52px; /* 123.81% */
+  margin-bottom: 52px;
+}
+
+.blogContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 24px;
+  padding-bottom: 100px;
+  margin-bottom: 40px;
+}
+
+@media screen and (max-width: 1200px) {
+  .blogContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .title {
+    font-size: 42px;
+    line-height: 52px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .blogContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .title {
+    font-size: 20px;
+    line-height: normal;
+    margin-bottom: 32px;
+  }
+}

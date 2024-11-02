@@ -1,0 +1,100 @@
+
+.selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  gap: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+
+  /* text */
+  color: var(--text-filter-color);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px; /* 133.333% */
+}
+/* dropdown start */
+
+.customDropdown {
+  position: relative;
+}
+
+.customDropdown {
+  position: relative;
+  z-index: 18;
+}
+
+.customDropdown:hover .dropdownWrapper {
+  visibility: visible;
+}
+
+.customDropdown:hover .dropdown {
+  transform: translateY(10px);
+}
+
+.dropdownWrapper {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+}
+
+.dropdown {
+  display: flex;
+  width: 223px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--Table-stroke, rgba(0, 0, 0, 0.03));
+  background: var(--Light-Gohan, #fff);
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  transition: transform 150ms;
+  transform: translateY(10px);
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.item:hover {
+  background: var(--dropdown-bg-hover);
+}
+
+.item:hover .dName {
+  color: var(--dropdown-text-hover);
+  font-weight: 600;
+}
+
+.text {
+  color: var(--text-light);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.48px;
+  text-transform: uppercase;
+}
+
+.dIndicator {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.item.active .dIndicator {
+  background: var(--text-accent);
+}
+
+/* dropdown end */

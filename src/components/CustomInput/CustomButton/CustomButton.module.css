@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  padding: 14px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  cursor: pointer;
+  transition: background 150ms;
+  white-space: nowrap;
+  border-radius: 8px;
+  background: var(--brand, var(--primary));
+}
+
+.container.outline {
+  border-radius: 8px;
+  border: 1px solid var(--primary);
+  background: transparent;
+}
+
+.disabled {
+  border-radius: 8px;
+  background: var(--disabled);
+}
+
+.disabled .text {
+  color: var(--disabled-faint);
+}
+
+.container:hover {
+  background: var(--primary-hover);
+}
+
+.container.disabled:hover {
+  background: var(--disabled);
+}
+
+.container.outline:hover {
+  background: transparent;
+}
+
+.disabled:hover {
+  background: var(--paper-color);
+  cursor: not-allowed;
+  cursor: default;
+}
+
+.text {
+  color: var(--light);
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: "DM Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.2px;
+}
+
+.outline .text {
+}
+
+.loadingIcon {
+  color: var(--neutral-01100, #fefefe);
+}

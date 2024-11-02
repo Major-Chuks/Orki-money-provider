@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.container label {
+  color: #000;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.container input[type="checkbox"] {
+  display: none;
+}
+
+/* Style the label to look like a custom checkbox button */
+.container .checkbox {
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  border-radius: 8px;
+  width: 24px;
+  height: 15px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 3px;
+  background: #2a2f67;
+}
+
+/* Style the custom checkbox button icon */
+.container .checkbox::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  transition: all 150ms;
+}
+
+/* Style the custom checkbox button when it's checked */
+.container input[type="checkbox"]:checked + .checkbox::before {
+  transform: translateX(calc(100% - 1px));
+}
+
+.container input:disabled + .checkbox {
+  background: var(--text-light);
+}

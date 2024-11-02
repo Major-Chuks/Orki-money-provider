@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  padding: 12px 55px 12px 12px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  color: var(--neutral-3, #353945);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.inputWrapper {
+  display: flex;
+  padding: 12px 55px 12px 12px;
+  align-items: center;
+  gap: 12px;
+  border-radius: 2px;
+  border: 1px solid #dfeaf2;
+}
+
+.picked {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.selectBtn {
+  color: #000;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+}

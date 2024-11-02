@@ -1,0 +1,57 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-radius: 24px;
+  border: 1px solid #7d7d7d;
+  background: #fff;
+  margin-bottom: 120px;
+  padding-right: 52px;
+  padding-left: 40px;
+  padding-top: 64px;
+  padding-bottom: 34px;
+}
+
+.details {
+  max-width: 399px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.title {
+  color: var(--Foundation-Brand-brand-500, #5b29ec);
+  font-family: "Space Grotesk";
+  font-size: 52px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64.8px; /* 124.615% */
+}
+
+.description {
+  color: #4f5664;
+  text-align: center;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 37px; /* 231.25% */
+}
+
+.inputWrapper {
+  width: 100%;
+  max-width: 522px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.btnContainer {
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
