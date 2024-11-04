@@ -1,7 +1,6 @@
 import Image from "next/image";
 import classes from "./WhyUs.module.css";
 import img from "@/assets/why-us.png";
-import H1 from "@/components/Typography/H1/H1";
 import chevron from "@/assets/chevron.svg";
 import Responsive from "@/components/Responsive/Responsive";
 import { useState } from "react";
@@ -38,9 +37,11 @@ const WhyUs = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <Image src={img} alt="" />
+        <div className={classes.image}>
+          <Image src={img} alt="" />
+        </div>
         <div className={classes.details}>
-          <H1>Why choose us?</H1>
+          <div className={classes.title}>Why choose us?</div>
           <div className={classes.listContainer}>
             {data.map(({ id, title, description }, idx) => (
               <div

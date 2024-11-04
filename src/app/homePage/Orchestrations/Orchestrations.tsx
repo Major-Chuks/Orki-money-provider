@@ -57,7 +57,7 @@ const Orchestrations = () => {
     <div className={classes.container}>
       <Responsive>
         <div className={classes.wrapper}>
-          <H1 style={{ textAlign: "center" }}>What we orchestrate for you</H1>
+          <div className={classes.title}>What we orchestrate for you</div>
 
           <div className={classes.list}>
             {data.map(({ count, name }, idx) => (
@@ -70,7 +70,7 @@ const Orchestrations = () => {
         </div>
       </Responsive>
 
-      <div className={classes.gateways}>
+      <div className={classes.gatewaysDesktop}>
         {[...Array(2)].map((_, idx) => (
           <div key={idx} className={classes.scroller}>
             {gateways.map((logo, idx) => (
@@ -82,7 +82,17 @@ const Orchestrations = () => {
         ))}
       </div>
 
-      <Image className={classes.globe} src={globe} alt="" />
+      <div className={classes.gatewaysMobile}>
+        {gateways.map((logo, idx) => (
+          <div className={classes.logo} key={idx}>
+            <Image src={logo} alt="" />
+          </div>
+        ))}
+      </div>
+
+      <div className={classes.image}>
+        <Image className={classes.globe} src={globe} alt="" />
+      </div>
     </div>
   );
 };

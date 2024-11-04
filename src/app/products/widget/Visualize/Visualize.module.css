@@ -24,11 +24,25 @@
   margin-bottom: 72px;
 }
 
+.title {
+  color: #000;
+  text-align: center;
+  font-family: "Space Grotesk";
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64px; /* 118.519% */
+  letter-spacing: -0.2px;
+}
+
 .image {
-  background: black;
-  width: 80%;
-  height: 292px;
+  width: 100%;
   margin-bottom: 131px;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
 }
 
 .listContainer {
@@ -61,4 +75,19 @@
   font-weight: 700;
   line-height: 40px; /* 129.032% */
   letter-spacing: -0.1px;
+}
+
+@media screen and (max-width: 992px) {
+  .listContainer {
+    grid-template-columns: auto;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px; /* 133.333% */
+    letter-spacing: -0.2px;
+  }
 }

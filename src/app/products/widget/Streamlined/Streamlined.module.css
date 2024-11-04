@@ -14,21 +14,32 @@
 
 .title {
   color: #000;
+  text-align: center;
   font-family: "Space Grotesk";
-  font-size: 23.625px;
+  font-size: 54px;
   font-style: normal;
   font-weight: 700;
-  line-height: 34px; /* 143.915% */
-  margin-bottom: 23px;
+  line-height: 64.8px; /* 120% */
+}
+
+.subTitle {
+  color: #000;
+  text-align: center;
+  font-family: "Space Grotesk";
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 168.421% */
 }
 
 .description {
-  color: #111;
-  font-family: Manrope;
-  font-size: 16px;
+  color: #000;
+  text-align: center;
+  font-family: "Space Grotesk";
+  font-size: 19px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
+  line-height: 32px; /* 168.421% */
 }
 
 .listContainer {
@@ -43,4 +54,28 @@
   display: flex;
   width: 372px;
   height: 372px;
+}
+
+@media screen and (max-width: 540px) {
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px; /* 133.333% */
+  }
+
+  .subTitle {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px; /* 125% */
+  }
+
+  .description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  }
+
+  .listContainer {
+    grid-template-columns: auto;
+  }
 }

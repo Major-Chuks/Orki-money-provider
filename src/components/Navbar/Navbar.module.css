@@ -5,12 +5,16 @@
   background: #fff;
 }
 
-.container {
+.desktopView {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 36px 0;
+}
+
+.mobileView {
+  display: none;
 }
 
 .logo_nav {
@@ -78,4 +82,17 @@
   font-style: normal;
   font-weight: 500;
   line-height: 28px; /* 155.556% */
+}
+
+@media screen and (max-width: 992px) {
+  .desktopView {
+    display: none;
+  }
+
+  .mobileView {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+  }
 }

@@ -16,3 +16,68 @@
   align-items: flex-start;
   justify-content: flex-start;
 }
+
+.title {
+  color: #000;
+  font-family: "Space Grotesk";
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64.8px; /* 120% */
+}
+
+.description {
+  color: #4f5664;
+  text-align: justify;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px; /* 187.5% */
+}
+
+.image {
+  width: 100%;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .title,
+  .description {
+    text-align: center;
+  }
+
+  .image {
+    max-width: 540px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .container {
+    gap: 40px;
+  }
+
+  .details {
+    gap: 24px;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px; /* 133.333% */
+  }
+
+  .description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  }
+}

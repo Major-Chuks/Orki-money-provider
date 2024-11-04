@@ -1,6 +1,7 @@
-import H1 from "@/components/Typography/H1/H1";
 import classes from "./Visualize.module.css";
 import Responsive from "@/components/Responsive/Responsive";
+import orchestrationLayer from "@/assets/orchestration layer.png";
+import Image from "next/image";
 
 const data = [
   {
@@ -26,11 +27,13 @@ const Visualize = () => {
       <Responsive>
         <div className={classes.container}>
           <div className={classes.heading}>
-            <H1 style={{ textAlign: "center" }}>
+            <div className={classes.title}>
               Visualize the Onramp Orchestration Layer{" "}
-            </H1>
+            </div>
           </div>
-          <div className={classes.image}></div>
+          <div className={classes.image}>
+            <Image src={orchestrationLayer} alt="" />
+          </div>
           <div className={classes.listContainer}>
             {data.map(({ id, description }, idx) => (
               <div key={idx} className={classes.box}>

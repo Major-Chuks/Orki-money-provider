@@ -1,4 +1,3 @@
-import H1 from "@/components/Typography/H1/H1";
 import classes from "./Aggregates.module.css";
 import alchemypay from "@/assets/comp-alchemy.svg";
 import btcDirect from "@/assets/comp-btc-direct.svg";
@@ -100,9 +99,9 @@ const Aggregates = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <H1 style={{ textAlign: "center" }}>
+        <div className={classes.title}>
           We aggregate all the onramps so you don’t have to choose from one.
-        </H1>
+        </div>
         <div className={classes.listContainer}>
           {data.map(({ icon, isComingSoon, name }, idx) => (
             <div className={classes.box} key={idx}>

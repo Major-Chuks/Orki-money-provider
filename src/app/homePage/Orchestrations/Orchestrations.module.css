@@ -21,6 +21,15 @@
   margin-bottom: 112px;
 }
 
+.title {
+  color: #000;
+  font-family: "Space Grotesk";
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64.8px; /* 120% */
+}
+
 .list {
   width: 100%;
   display: grid;
@@ -31,9 +40,8 @@
 
 .box {
   display: flex;
-  width: 276px;
+  width: 100%;
   height: 180px;
-  max-width: 308px;
   padding: 16px 16px 16px 24px;
   flex-direction: column;
   justify-content: center;
@@ -70,7 +78,7 @@
   line-height: 24px; /* 171.429% */
 }
 
-.gateways {
+.gatewaysDesktop {
   width: 100%;
   display: flex;
   align-items: center;
@@ -80,12 +88,25 @@
   overflow: hidden;
 }
 
+.gatewaysMobile {
+  display: none;
+}
+
 .scroller {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 40px;
   animation: scroll 15s infinite linear;
+}
+
+.image {
+  width: 100%;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
 }
 
 @keyframes scroll {
@@ -110,5 +131,33 @@
   justify-content: center;
 }
 
-.globe {
+@media screen and (max-width: 992px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px; /* 133.333% */
+  }
+
+  .gatewaysDesktop {
+    display: none;
+  }
+
+  .gatewaysMobile {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    gap: 16px;
+  }
+
+  .logo {
+    width: 100%;
+    height: 60px;
+  }
 }

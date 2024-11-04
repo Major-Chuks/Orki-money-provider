@@ -31,6 +31,15 @@
   gap: 62px;
 }
 
+.title {
+  color: #000;
+  font-family: "Space Grotesk";
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64.8px; /* 135% */
+}
+
 .details {
   width: 100%;
   max-width: 551px;
@@ -59,4 +68,21 @@
   font-style: normal;
   font-weight: 500;
   line-height: 20px; /* 125% */
+}
+
+@media screen and (max-width: 992px) {
+  .wrapper {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .title {
+    color: #000;
+    font-family: "Space Grotesk";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 34px; /* 141.667% */
+  }
 }

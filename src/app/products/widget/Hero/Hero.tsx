@@ -9,7 +9,7 @@ import checkIcon from "@/assets/widget-checkicon.svg";
 const data = [
   "Fully customizable.",
   "Smart Routing for Onramps, Offering the Best Paths and Aggregation.",
-  "Get up and running with just few lines of code.",
+  "Get up and running with jus t few lines of code.",
 ];
 
 const Hero = () => {
@@ -25,11 +25,13 @@ const Hero = () => {
                   Crypto On-Ramp Orceshtration
                 </span>
               </div>
-              <H1>Seamless Access, Instant Onramp from Anywhere</H1>
-              <P style={{ fontSize: "19px" }}>
+              <div className={classes.title}>
+                Seamless Access, Instant Onramp from Anywhere
+              </div>
+              <div className={classes.description}>
                 Your “one-stop-shop” for Onramp Solution! Everything Aggregated
                 and Tailored to Your Preferences
-              </P>
+              </div>
               <div className={classes.listContainer}>
                 {data.map((item, idx) => (
                   <div key={idx} className={classes.box}>

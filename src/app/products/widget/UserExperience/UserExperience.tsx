@@ -1,6 +1,4 @@
-import H1 from "@/components/Typography/H1/H1";
 import classes from "./UserExperience.module.css";
-import P from "@/components/Typography/P/P";
 import icon1 from "@/assets/ux-1.svg";
 import icon2 from "@/assets/ux-2.svg";
 import icon3 from "@/assets/ux-3.svg";
@@ -54,14 +52,14 @@ const UserExperience = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.heading}>
-          <H1 style={{ textAlign: "center" }}>
+          <div className={classes.title}>
             User Experience that will delight your users
-          </H1>
-          <P style={{ textAlign: "center", maxWidth: "859px" }}>
+          </div>
+          <div className={classes.description}>
             Unleash the potential of a unified onramp experience with a single
             point of connection, and let innovation flow effortlessly into your
             platform.
-          </P>
+          </div>
         </div>
 
         <div className={classes.listContainer}>

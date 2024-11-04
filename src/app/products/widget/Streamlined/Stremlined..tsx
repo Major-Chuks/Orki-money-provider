@@ -12,17 +12,20 @@ const Streamlined = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.heading}>
-          <H1 style={{ textAlign: "center" }}>
+          <div className={classes.title}>
             Streamlined Access: Your Gateway to All Onramps in One Unified API.
-          </H1>
-          <P>
+          </div>
+          <div className={classes.subTitle}>
             Navigate Your Path with Orki: Where Every Entry Unlocks
             Possibilities.
-          </P>
-          <P style={{ textAlign: "center", maxWidth: "859px" }}>
+          </div>
+          <div
+            className={classes.description}
+            style={{ textAlign: "center", maxWidth: "859px" }}
+          >
             We Connect Your Customers to the Perfect Onramp for their Unique
             Journey, ensuring a smooth ride into the world of opportunities.
-          </P>
+          </div>
         </div>
 
         <div className={classes.listContainer}>

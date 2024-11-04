@@ -1,4 +1,3 @@
-import H1 from "@/components/Typography/H1/H1";
 import classes from "./Integration.module.css";
 import code from "@/assets/code.png";
 import Image from "next/image";
@@ -22,10 +21,10 @@ const Integration = () => {
         </div>
         <div className={classes.wrapper}>
           <div className={classes.details}>
-            <H1>
+            <div className={classes.title}>
               Integrate our widget with just few lines of{" "}
               <span className={classes.accent}>{"{code}"}</span>
-            </H1>
+            </div>
             <div className={classes.listContainer}>
               {data.map((item, idx) => (
                 <div key={idx} className={classes.box}>

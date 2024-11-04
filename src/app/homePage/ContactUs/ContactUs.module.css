@@ -70,3 +70,13 @@
   bottom: 16px;
   right: 32px;
 }
+
+@media screen and (max-width: 540px) {
+  .title {
+    text-align: center;
+  }
+
+  .description {
+    text-align: center;
+  }
+}
