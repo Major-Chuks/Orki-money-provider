@@ -19,6 +19,8 @@ import avatar from "@/assets/blog/avatar.png";
 import Responsive from "@/components/Responsive/Responsive";
 import Paginate from "@/components/Pagination/Paginate";
 import Control from "@/components/Pagination/Control";
+import searchIcon from "@/assets/icon-search2.svg";
+import Image from "next/image";
 
 const filterby = ["All", "Customer Stories", "News", , "Product Updates"];
 
@@ -103,7 +105,10 @@ const Articles = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.heading}>
-          {/* <div className={classes.title}>Recent Articles</div> */}
+          <div className={classes.search}>
+            <input placeholder="Search our latest updates" type="text" />
+            <Image src={searchIcon} alt="" />
+          </div>
           <div className={classes.filterContainer}>
             {filterby.map((filter, idx) => (
               <div
@@ -135,6 +140,7 @@ const Articles = () => {
             }
           />
         </div>
+
         <Control
           controlProps={{
             _static: true,

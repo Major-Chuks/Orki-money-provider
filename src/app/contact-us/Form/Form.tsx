@@ -80,9 +80,15 @@ const Form = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.leftSide}>
-          <div className={classes.title}>
-            Contact our <br />
-            Support Team
+          <div className={classes.heading}>
+            <div className={classes.title}>
+              Contact our <br />
+              Support Team
+            </div>
+            <div className={classes.description}>
+              Have questions about Orki? Fill out the form and our sales expert
+              will be in touch directly
+            </div>
           </div>
           <div className={classes.imageContainer}>
             <Image src={teamImage} alt="" />

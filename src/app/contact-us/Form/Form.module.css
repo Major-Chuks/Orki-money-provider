@@ -5,10 +5,16 @@
   justify-content: space-between;
   gap: 86px;
   margin-bottom: 142px;
+  padding-top: 95px;
 }
 
 .leftSide {
   flex: 50%;
+}
+
+.heading {
+  width: 100%;
+  margin-bottom: 47px;
 }
 
 .title {
@@ -18,7 +24,16 @@
   font-style: normal;
   font-weight: 700;
   line-height: 84px; /* 131.25% */
-  margin-bottom: 57px;
+  margin-bottom: 12px;
+}
+
+.heading .description {
+  color: #000;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 157.143% */
 }
 
 .imageContainer {
@@ -27,7 +42,7 @@
 
 .imageContainer img {
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 .rightSide {
@@ -98,8 +113,7 @@
 }
 
 .btnContainer {
-  margin-top: 32px;
-  margin-bottom: 31px;
+  /* margin-top: 32px; */
 }
 
 .terms {
@@ -107,6 +121,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 12px;
+  margin-bottom: 32px;
 
   color: #4e5d78;
   font-family: Manrope;
@@ -165,28 +180,14 @@
   letter-spacing: 0.2px;
 }
 
-@media screen and (max-width: 1200px) {
-  .title {
-    font-size: 48px;
-    line-height: 60px;
-  }
-}
-
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 992px) {
   .container {
     flex-direction: column;
-    gap: 33px;
   }
 
   .rightSide {
     border-radius: 16px;
     max-width: 100%;
-  }
-
-  .title {
-    margin-bottom: 32px;
-    font-size: 42px;
-    line-height: 56px;
   }
 
   .title br {
@@ -195,16 +196,36 @@
 }
 
 @media screen and (max-width: 540px) {
+  .container {
+    padding-top: 16px;
+    gap: 40px;
+    margin-bottom: 64px;
+  }
+
+  .heading {
+    margin-bottom: 24px;
+  }
+
   .title {
-    color: var(
-      --Foundation-text-color-text-color-500,
-      var(--neutral-2, #23262f)
-    );
-    font-family: "Robert Sans 800";
     font-size: 24px;
-    font-style: normal;
     font-weight: 800;
-    line-height: 44px; /* 183.333% */
+    line-height: 32px; /* 133.333% */
+  }
+
+  .heading .description {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px; /* 133.333% */
+  }
+
+  .rightSide {
+    padding: 24px 16px;
+    gap: 24px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 13px 0px rgba(155, 153, 153, 0.25);
+  }
+
+  .terms {
     margin-bottom: 24px;
   }
 }

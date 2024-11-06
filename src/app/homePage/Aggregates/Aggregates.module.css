@@ -68,6 +68,10 @@
 }
 
 @media screen and (max-width: 540px) {
+  .container {
+    margin-bottom: 32px;
+  }
+
   .title {
     font-size: 24px;
     font-weight: 700;
@@ -75,6 +79,7 @@
   }
 
   .listContainer {
+    margin-top: 20px;
     width: 100%;
     grid-template-columns: repeat(3, 1fr);
   }

@@ -2,10 +2,14 @@ import classes from "./Hero.module.css";
 import Responsive from "@/components/Responsive/Responsive";
 import about from "@/assets/about.png";
 import Image from "next/image";
+import img1 from "@/assets/about-b1.png";
+import img2 from "@/assets/about-b2.png";
+import img3 from "@/assets/about-b3.png";
 
 const Hero = () => {
   return (
     <div className={classes.wrapper}>
+      <div className={classes.bg}></div>
       <Responsive>
         <div className={classes.container}>
           <div className={classes.heading}>
@@ -19,7 +23,14 @@ const Hero = () => {
               of digital finance effortlessly.
             </div>
           </div>
-          <Image src={about} alt="" />
+          <div className={classes.desktopImage}>
+            <Image src={about} alt="" />
+          </div>
+          <div className={classes.mobileImage}>
+            <Image src={img1} alt="" />
+            <Image src={img2} alt="" />
+            <Image src={img3} alt="" />
+          </div>
         </div>
       </Responsive>
     </div>

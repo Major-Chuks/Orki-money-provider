@@ -8,7 +8,7 @@ import ProductDropdown from "./ProductDropdown/ProductDropdown";
 import ResourcesDropdown from "./ResourcesDropdown/ResourcesDropdown";
 import { useRouter } from "next/navigation";
 import { routes } from "@/services/routes";
-import logo from "@/assets/logo-2.svg";
+import logo from "@/assets/logo.svg";
 import Responsive from "../Responsive/Responsive";
 import { useEffect, useState } from "react";
 import { outSideClickHandler } from "@/services/utils";

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import classes from "./Openings.module.css";
 import Responsive from "@/components/Responsive/Responsive";
-import H1 from "@/components/Typography/H1/H1";
 
 const categories = ["All", "Product", "Sales", "Growth"] as const;
 
@@ -37,9 +36,7 @@ const Openings = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.accent}>Recent Opening</div>
-        <H1 style={{ textAlign: "center" }}>
-          Apply to our current opportunities
-        </H1>
+        <div className={classes.title}>Apply to our current opportunities</div>
 
         <div className={classes.categoryContainer}>
           {categories.map((category, idx) => (

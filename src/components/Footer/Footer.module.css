@@ -159,82 +159,29 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 1200px) {
-  .imageWrapper {
-    margin-bottom: 88px;
-  }
-
-  .title {
-    font-size: 32px;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .imageWrapper {
-    margin-bottom: 38px;
-  }
-
+@media screen and (max-width: 992px) {
   .container {
-    flex-direction: column;
+    padding-bottom: 48px;
   }
 
   .top {
     flex-direction: column;
+    gap: 46px;
   }
 
   .top .left {
-    margin-bottom: 32px;
+    max-width: 100%;
   }
 
   .top .right {
     width: 100%;
     justify-content: space-between;
-  }
-
-  .bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .bottom .right {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 8px;
-  }
-
-  .socialLinkContainer {
-    transform: translateY(16px);
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .title {
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-
-  .description {
-    font-size: 16px;
-    line-height: 24px;
+    flex-wrap: wrap;
   }
 }
 
 @media screen and (max-width: 540px) {
-  .title {
-    font-size: 20px;
-    margin-bottom: 16px;
-  }
-
-  .description {
-    font-size: 12px;
-    line-height: 14px;
-  }
-
   .container {
-    padding: 16px;
-    padding-top: 25px;
-    border-radius: 12px;
+    padding-bottom: 16px;
   }
 }

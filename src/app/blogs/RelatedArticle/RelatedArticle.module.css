@@ -42,4 +42,8 @@
     line-height: normal;
     margin-bottom: 32px;
   }
+
+  .blogContainer {
+    padding-bottom: 52px;
+  }
 }

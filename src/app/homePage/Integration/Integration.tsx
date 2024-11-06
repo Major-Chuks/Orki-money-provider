@@ -34,7 +34,9 @@ const Integration = () => {
               ))}
             </div>
           </div>
-          <Image src={code} alt="" />
+          <div className={classes.image}>
+            <Image src={code} alt="" />
+          </div>
         </div>
       </div>
     </Responsive>

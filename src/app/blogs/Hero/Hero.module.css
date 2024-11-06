@@ -10,6 +10,7 @@
     rgba(231, 230, 252, 0.61) -9.05%,
     rgba(171, 171, 206, 0.58) 112.83%
   );
+  margin-bottom: 89px;
 }
 
 .update {
@@ -32,7 +33,7 @@
   margin-bottom: 32px;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 992px) {
   .update {
     font-size: 16px;
     line-height: 26px;
@@ -46,6 +47,11 @@
 }
 
 @media screen and (max-width: 540px) {
+  .container {
+    height: 240px;
+    margin-bottom: 24px;
+  }
+
   .update {
     font-size: 12px;
     line-height: 22px;

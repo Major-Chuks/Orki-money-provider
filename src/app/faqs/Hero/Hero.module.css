@@ -47,6 +47,11 @@
 }
 
 @media screen and (max-width: 540px) {
+  .container {
+    height: 240px;
+    margin-bottom: 52px;
+  }
+
   .update {
     font-size: 12px;
     line-height: 22px;

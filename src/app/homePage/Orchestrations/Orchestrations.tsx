@@ -1,4 +1,3 @@
-import H1 from "@/components/Typography/H1/H1";
 import classes from "./Orchestrations.module.css";
 import applypay from "@/assets/gateway-apple-pay.svg";
 import ipay from "@/assets/gateway-b-ipay.svg";
@@ -59,7 +58,7 @@ const Orchestrations = () => {
         <div className={classes.wrapper}>
           <div className={classes.title}>What we orchestrate for you</div>
 
-          <div className={classes.list}>
+          <div className={classes.listContainer}>
             {data.map(({ count, name }, idx) => (
               <div key={idx} className={classes.box}>
                 <div className={classes.count}>{count}</div>

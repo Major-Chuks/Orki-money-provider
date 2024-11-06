@@ -62,15 +62,6 @@
   margin-bottom: 92px;
 }
 
-.category {
-  color: #4f5664;
-  font-family: "Space Grotesk";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 25.6px; /* 128% */
-}
-
 .btnContainer {
   display: flex;
   align-items: center;
@@ -89,8 +80,7 @@
   }
 
   .title,
-  .description,
-  .category {
+  .description {
     width: 100%;
     text-align: center;
   }
@@ -107,10 +97,6 @@
 
   .container {
     gap: 16px;
-  }
-
-  .category {
-    font-size: 14px;
   }
 
   .btnContainer {

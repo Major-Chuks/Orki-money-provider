@@ -4,11 +4,19 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 34px;
+  padding-top: 92px;
+  margin-bottom: 92px;
 }
 
 .image {
   width: 100%;
   max-width: 483px;
+  padding-top: 68px;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
 }
 
 .details_button {
@@ -17,13 +25,11 @@
 }
 
 .heading {
-  padding-top: 92px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   gap: 32px;
-  margin-bottom: 92px;
 }
 
 .heading h1 {
@@ -37,39 +43,12 @@
 
 .heading p {
   color: #4f5664;
-  text-align: justify;
+  text-align: left;
   font-family: "Space Grotesk";
   font-size: 19px;
   font-style: normal;
   font-weight: 400;
   line-height: 30px; /* 157.895% */
-}
-
-.category {
-  color: #4f5664;
-  font-family: "Space Grotesk";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 25.6px; /* 128% */
-}
-
-.accent {
-  color: #2d29d7;
-  font-family: "Space Grotesk";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 25.6px;
-}
-
-.faint {
-  color: #cbd3e2;
-  font-family: "Space Grotesk";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 25.6px;
 }
 
 .listContainer {
@@ -95,4 +74,65 @@
   font-style: normal;
   font-weight: 500;
   line-height: 20px; /* 125% */
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    flex-direction: column-reverse;
+  }
+
+  .details_button {
+    max-width: 100%;
+  }
+
+  .image {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .container {
+    padding-top: 16px;
+    margin-bottom: 24px;
+  }
+
+  .heading {
+    gap: 16px;
+  }
+
+  .heading h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px; /* 125% */
+  }
+
+  .heading p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  }
+
+  .listContainer {
+    gap: 12px;
+  }
+
+  .box {
+    gap: 8px;
+  }
+
+  .box img {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .item {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  }
+
+  .image {
+    padding-top: 0;
+  }
 }

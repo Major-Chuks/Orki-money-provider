@@ -12,7 +12,7 @@ const MisionAndVision = () => {
           <div className={classes.imageContainer}>
             <Image src={about1} alt="" />
           </div>
-          <div>
+          <div className={classes.details}>
             <div className={classes.heading}>
               <div className={classes.tag}>OUR MISSION </div>
               <div className={classes.title}>Who we are</div>
@@ -34,7 +34,7 @@ const MisionAndVision = () => {
           <div className={classes.imageContainer}>
             <Image src={about2} alt="" />
           </div>
-          <div>
+          <div className={classes.details}>
             <div className={classes.heading}>
               <div className={classes.tag}>OUR VISION </div>
               <div className={classes.title}>Who we are</div>

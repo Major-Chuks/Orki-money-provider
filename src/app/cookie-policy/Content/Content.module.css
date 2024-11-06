@@ -37,6 +37,10 @@
 }
 
 @media screen and (max-width: 540px) {
+  .container {
+    margin-bottom: 64px;
+  }
+
   .container section {
     gap: 16px;
   }

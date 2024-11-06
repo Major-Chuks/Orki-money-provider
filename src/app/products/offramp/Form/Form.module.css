@@ -15,6 +15,7 @@
 }
 
 .details {
+  width: 100%;
   max-width: 399px;
   display: flex;
   flex-direction: column;
@@ -54,4 +55,37 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .details,
+  .inputWrapper {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .container {
+    flex-direction: column;
+    border-radius: 16px;
+    padding: 24px 16px;
+    margin-bottom: 40px;
+  }
+
+  .title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px; /* 125% */
+  }
+
+  .description {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+  }
 }

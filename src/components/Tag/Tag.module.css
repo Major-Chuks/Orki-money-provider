@@ -1,0 +1,44 @@
+.category {
+  color: #4f5664;
+  font-family: "Space Grotesk";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 25.6px; /* 128% */
+}
+
+.accent {
+  color: #2d29d7;
+  font-family: "Space Grotesk";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 25.6px;
+}
+
+.faint {
+  color: #cbd3e2;
+  font-family: "Space Grotesk";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 25.6px;
+}
+
+@media screen and (max-width: 540px) {
+  .category {
+    width: 100%;
+  }
+
+  .category.center {
+    text-align: center;
+  }
+
+  .category,
+  .accent,
+  .faint {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 25.6px; /* 182.857% */
+  }
+}

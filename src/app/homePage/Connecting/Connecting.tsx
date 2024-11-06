@@ -1,6 +1,4 @@
-import H1 from "@/components/Typography/H1/H1";
 import classes from "./Connecting.module.css";
-import P from "@/components/Typography/P/P";
 import icon1 from "@/assets/connecting-1.png";
 import icon2 from "@/assets/connecting-2.png";
 import icon3 from "@/assets/connecting-3.png";
@@ -33,14 +31,12 @@ const Connecting = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.heading}>
-          <div className={classes.title}>
-            Connecting You to Onramps with one API
-          </div>
-          <div className={classes.description}>
+          <h1>Connecting You to Onramps with one API</h1>
+          <p>
             Unleash the potential of a unified onramp experience with a single
             point of connection, and let innovation flow effortlessly into your
             platform.
-          </div>
+          </p>
         </div>
 
         <div className={classes.listContainer}>

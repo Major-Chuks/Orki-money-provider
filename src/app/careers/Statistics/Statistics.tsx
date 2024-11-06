@@ -22,9 +22,9 @@ const data = [
 
 const Statistics = () => {
   return (
-    <div className={classes.wrapper}>
+    <div className={classes.container}>
       <Responsive>
-        <div className={classes.list}>
+        <div className={classes.listContainer}>
           {data.map(({ count, name }, idx) => (
             <div key={idx} className={classes.box}>
               <div className={classes.count}>{count}</div>

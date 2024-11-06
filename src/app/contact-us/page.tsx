@@ -3,11 +3,7 @@
 import Form from "./Form/Form";
 
 const ContactUsPage = () => {
-  return (
-    <>
-      <Form />
-    </>
-  );
+  return <Form />;
 };
 
 export default ContactUsPage;

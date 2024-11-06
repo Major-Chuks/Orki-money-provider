@@ -1,10 +1,9 @@
 import Image from "next/image";
 import classes from "./Hero.module.css";
 import widget from "@/assets/widget.png";
-import H1 from "@/components/Typography/H1/H1";
-import P from "@/components/Typography/P/P";
 import Responsive from "@/components/Responsive/Responsive";
 import checkIcon from "@/assets/widget-checkicon.svg";
+import Tag from "@/components/Tag/Tag";
 
 const data = [
   "Fully customizable.",
@@ -14,40 +13,31 @@ const data = [
 
 const Hero = () => {
   return (
-    <div className={classes.wrapper}>
-      <Responsive>
-        <div className={classes.container}>
-          <div className={classes.details_button}>
-            <div className={classes.details}>
-              <div className={classes.category}>
-                Orki Payments <span className={classes.faint}>|</span>{" "}
-                <span className={classes.accent}>
-                  Crypto On-Ramp Orceshtration
-                </span>
-              </div>
-              <div className={classes.title}>
-                Seamless Access, Instant Onramp from Anywhere
-              </div>
-              <div className={classes.description}>
-                Your “one-stop-shop” for Onramp Solution! Everything Aggregated
-                and Tailored to Your Preferences
-              </div>
-              <div className={classes.listContainer}>
-                {data.map((item, idx) => (
-                  <div key={idx} className={classes.box}>
-                    <Image src={checkIcon} alt="" />
-                    <div>{item}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+    <Responsive>
+      <div className={classes.container}>
+        <div className={classes.details}>
+          <Tag />
+          <div className={classes.title}>
+            Seamless Access, Instant Onramp from Anywhere
           </div>
-          <div className={classes.image}>
-            <Image src={widget} alt="" />
+          <div className={classes.description}>
+            Your “one-stop-shop” for Onramp Solution! Everything Aggregated and
+            Tailored to Your Preferences
+          </div>
+          <div className={classes.listContainer}>
+            {data.map((item, idx) => (
+              <div key={idx} className={classes.box}>
+                <Image src={checkIcon} alt="" />
+                <div className={classes.item}>{item}</div>
+              </div>
+            ))}
           </div>
         </div>
-      </Responsive>
-    </div>
+        <div className={classes.image}>
+          <Image src={widget} alt="" />
+        </div>
+      </div>
+    </Responsive>
   );
 };
 

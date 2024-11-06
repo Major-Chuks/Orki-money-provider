@@ -1,4 +1,3 @@
-import H1 from "@/components/Typography/H1/H1";
 import classes from "./CoreValues.module.css";
 import icon1 from "@/assets/core-value-1.svg";
 import icon2 from "@/assets/core-value-2.svg";
@@ -34,7 +33,7 @@ const CoreValues = () => {
         <div className={classes.container}>
           <div className={classes.heading}>
             <div className={classes.accent}>OUR VALUES</div>
-            <H1 style={{ textAlign: "center" }}>What we stand for</H1>
+            <div className={classes.title}>What we stand for</div>
           </div>
 
           <div className={classes.listContainer}>

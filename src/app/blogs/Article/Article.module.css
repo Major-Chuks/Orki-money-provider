@@ -189,11 +189,16 @@
 @media screen and (max-width: 540px) {
   .container {
     margin-bottom: 40px;
+    gap: 32px;
   }
 
   .navbarWrapper {
     padding-top: 54px;
     padding-bottom: 38px;
+  }
+
+  .details {
+    margin-bottom: 24px;
   }
 
   .pubInfo {

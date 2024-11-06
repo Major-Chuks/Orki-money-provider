@@ -1,4 +1,3 @@
-import H1 from "@/components/Typography/H1/H1";
 import classes from "./ValueAndCulture.module.css";
 import icon1 from "@/assets/career-1.svg";
 import icon2 from "@/assets/career-2.svg";
@@ -54,7 +53,7 @@ const ValueAndCulture = () => {
       <div className={classes.container}>
         <div className={classes.heading}>
           <div className={classes.accent}>Life at Orki </div>
-          <H1 style={{ textAlign: "center" }}>Our team values and Culture</H1>
+          <div className={classes.title}>Our team values and Culture</div>
         </div>
 
         <div className={classes.listContainer}>

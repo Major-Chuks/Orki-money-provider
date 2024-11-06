@@ -23,11 +23,12 @@
   justify-content: center;
   gap: 24px;
   margin-bottom: 62px;
+  padding: 0 32px;
 }
 
 .title {
   color: #fff;
-  text-align: justify;
+  text-align: center;
   font-family: "Space Grotesk";
   font-size: 32px;
   font-style: normal;
@@ -72,11 +73,53 @@
 }
 
 @media screen and (max-width: 540px) {
+  .container {
+    border-radius: 16px;
+    height: 372px;
+    margin-bottom: 64px;
+  }
+
+  .heading {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
   .title {
-    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px; /* 140% */
   }
 
   .description {
-    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 182%; /* 29.12px */
+    letter-spacing: 0.24px;
+  }
+
+  .coin {
+    width: 49.124px;
+    height: 56.587px;
+    flex-shrink: 0;
+  }
+
+  .coin1 {
+    top: 24px;
+    left: 24px;
+  }
+
+  .coin2 {
+    top: 28px;
+    right: 22px;
+  }
+
+  .coin3 {
+    bottom: 16px;
+    left: 22px;
+  }
+
+  .coin4 {
+    bottom: 24px;
+    right: 32px;
   }
 }

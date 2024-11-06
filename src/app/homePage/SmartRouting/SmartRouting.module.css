@@ -55,6 +55,12 @@
     padding: 0;
     padding-top: 35px;
     padding-bottom: 26px;
+    border-radius: 8px;
+    margin-bottom: 34px;
+  }
+
+  .heading {
+    margin-bottom: 32px;
   }
 
   .title {

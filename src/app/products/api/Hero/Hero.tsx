@@ -3,6 +3,7 @@ import classes from "./Hero.module.css";
 import api from "@/assets/api.png";
 import Responsive from "@/components/Responsive/Responsive";
 import Button from "@/components/Button/Button";
+import Tag from "@/components/Tag/Tag";
 
 const Hero = () => {
   return (
@@ -11,23 +12,18 @@ const Hero = () => {
         <div className={classes.container}>
           <div className={classes.details_button}>
             <div className={classes.heading}>
-              <div className={classes.category}>
-                Orki Payments <span className={classes.faint}>|</span>{" "}
-                <span className={classes.accent}>
-                  Crypto On-Ramp Orceshtration
-                </span>
-              </div>
-              <h1>
+              <Tag mobile={{ center: true }} />
+              <div className={classes.title}>
                 The ultimate onramp experience, featuring a single, cohesive API
-              </h1>
-              <p style={{ fontSize: "19px" }}>
+              </div>
+              <div className={classes.description}>
                 Simplifying the intricate orchestration of onramp providers
                 across multiple platforms, our unified solution harmonizes the
                 diverse landscape into one streamlined API. Orki’s middleware
                 seamlessly integrates various onramp sources and essential data
                 feeds, ensuring effortless connectivity and intelligent order
                 routing for a seamless user experience.
-              </p>
+              </div>
             </div>
 
             <div className={classes.btnContainer}>

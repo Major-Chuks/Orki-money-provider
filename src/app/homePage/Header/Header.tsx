@@ -3,6 +3,7 @@ import classes from "./Header.module.css";
 import widget from "@/assets/widget.png";
 import Button from "@/components/Button/Button";
 import Responsive from "@/components/Responsive/Responsive";
+import Tag from "@/components/Tag/Tag";
 
 const Header = () => {
   return (
@@ -11,9 +12,7 @@ const Header = () => {
         <div className={classes.container}>
           <div className={classes.details_button}>
             <div className={classes.details}>
-              <div className={classes.category}>
-                Orki Payments | Crypto On-Ramp Orceshtration
-              </div>
+              <Tag />
               <div className={classes.title}>
                 Buying crypto just got a lot easier
               </div>

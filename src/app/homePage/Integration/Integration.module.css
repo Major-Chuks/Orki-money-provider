@@ -40,8 +40,11 @@
   line-height: 64.8px; /* 135% */
 }
 
+.wrapper {
+  gap: 32px;
+}
+
 .details {
-  width: 100%;
   max-width: 551px;
 }
 
@@ -70,6 +73,15 @@
   line-height: 20px; /* 125% */
 }
 
+.image {
+  width: 100%;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+}
+
 @media screen and (max-width: 992px) {
   .wrapper {
     flex-direction: column;
@@ -77,12 +89,33 @@
 }
 
 @media screen and (max-width: 540px) {
-  .title {
-    color: #000;
-    font-family: "Space Grotesk";
+  .container {
+    margin-bottom: 54px;
+  }
+
+  .iconContainer {
+    display: none;
+  }
+
+  .wrapper {
+    /* gap: 32px; */
+  }
+
+  .title,
+  .accent {
     font-size: 24px;
-    font-style: normal;
     font-weight: 700;
     line-height: 34px; /* 141.667% */
+  }
+
+  .listContainer {
+    margin-top: 32px;
+    gap: 16px;
+  }
+
+  .item {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
   }
 }
