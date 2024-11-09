@@ -20,7 +20,7 @@ function Paginate<T>({
   pageCount = 6,
   renderItem,
   scrollId,
-  control
+  control,
 }: Props<T>): JSX.Element {
   const [state, setState] = useState<State<T>>({
     currentPage: 1,

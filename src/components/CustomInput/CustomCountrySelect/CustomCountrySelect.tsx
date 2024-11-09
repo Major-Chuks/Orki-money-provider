@@ -67,6 +67,7 @@ const CustomCountrySelect = ({
     outSideClickHandler({
       className: "id_country",
       setState: setToggleDropdown,
+      document: window.document,
     });
   }, []);
 

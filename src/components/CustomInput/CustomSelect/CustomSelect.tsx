@@ -55,6 +55,7 @@ const CustomSelect = ({
     outSideClickHandler({
       className: "id_select",
       setState: setToggleDropdown,
+      document: window.document,
     });
   }, []);
 
