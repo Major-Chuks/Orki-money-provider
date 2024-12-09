@@ -1,8 +1,8 @@
 import Image from "next/image";
 import classes from "./Hero.module.css";
 import career from "@/assets/career.png";
-import Button from "@/components/Button/Button";
 import Responsive from "@/components/Responsive/Responsive";
+import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 
 const Hero = () => {
   return (
@@ -18,7 +18,7 @@ const Hero = () => {
             </div>
 
             <div className={classes.btnContainer}>
-              <Button>View Open Roles</Button>
+              <CustomButton>View Open Roles</CustomButton>
             </div>
           </div>
           <div className={classes.image}>

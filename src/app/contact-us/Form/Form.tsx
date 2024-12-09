@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import CustomEmailInput from "@/components/CustomInput/CustomEmailInput/CustomEmailInput";
 import envelopIcon from "@/assets/icon-envelop.png";
 import Responsive from "@/components/Responsive/Responsive";
-import Button from "@/components/Button/Button";
+import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 
 const Form = () => {
   const [error, setError] = useState<ErrorState>({
@@ -163,13 +163,13 @@ const Form = () => {
               </div>
 
               <div className={classes.btnContainer}>
-                <Button
+                <CustomButton
                   onClick={handleSubmit}
                   loading={loading}
                   disabled={disabled}
                 >
                   Submit
-                </Button>
+                </CustomButton>
               </div>
             </div>
           ) : (

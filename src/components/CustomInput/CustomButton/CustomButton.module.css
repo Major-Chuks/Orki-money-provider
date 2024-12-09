@@ -1,62 +1,67 @@
 .container {
+  width: 100%;
   display: flex;
-  padding: 14px 24px;
-  justify-content: center;
   align-items: center;
-  gap: 8px;
-  align-self: stretch;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 14px 24px;
   cursor: pointer;
-  transition: background 150ms;
+  transition: all 150ms;
   white-space: nowrap;
-  border-radius: 8px;
-  background: var(--brand, var(--primary));
-}
-
-.container.outline {
-  border-radius: 8px;
-  border: 1px solid var(--primary);
-  background: transparent;
-}
-
-.disabled {
-  border-radius: 8px;
-  background: var(--disabled);
-}
-
-.disabled .text {
-  color: var(--disabled-faint);
-}
-
-.container:hover {
-  background: var(--primary-hover);
-}
-
-.container.disabled:hover {
-  background: var(--disabled);
-}
-
-.container.outline:hover {
-  background: transparent;
-}
-
-.disabled:hover {
-  background: var(--paper-color);
-  cursor: not-allowed;
-  cursor: default;
-}
-
-.text {
-  color: var(--light);
-  font-feature-settings: "clig" off, "liga" off;
-  font-family: "DM Sans";
+  border-radius: 12px;
+  background: #5b29ec;
+  user-select: none;
+  /* text */
+  color: var(--white, #fff);
+  text-align: center;
+  font-family: Roboto;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: normal;
-  letter-spacing: 0.2px;
+  line-height: 18px; /* 128.571% */
 }
 
-.outline .text {
+.container:hover {
+  filter: brightness(90%);
+}
+
+.container:hover:not(.disabled) img:last-child {
+  transform: translateX(4px);
+}
+
+.container img:last-child {
+  transition: all 300ms;
+}
+
+.container.neutral {
+  all: unset;
+  cursor: pointer;
+}
+
+.container.neutral {
+  color: #fff;
+}
+
+.container.outline {
+  border: 1px solid #5b29ec;
+  background: transparent;
+}
+
+.container.outline {
+  color: #5b29ec;
+}
+
+.disabled {
+  /* background: var(--disabled); */
+  cursor: not-allowed;
+}
+
+.disabled {
+  /* color: var(--disabled-faint); */
+}
+
+.container.disabled:hover {
+  /* background: var(--disabled); */
 }
 
 .loadingIcon {

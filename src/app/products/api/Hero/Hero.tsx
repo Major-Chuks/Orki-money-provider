@@ -2,8 +2,8 @@ import Image from "next/image";
 import classes from "./Hero.module.css";
 import api from "@/assets/api.png";
 import Responsive from "@/components/Responsive/Responsive";
-import Button from "@/components/Button/Button";
 import Tag from "@/components/Tag/Tag";
+import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 
 const Hero = () => {
   return (
@@ -27,7 +27,7 @@ const Hero = () => {
             </div>
 
             <div className={classes.btnContainer}>
-              <Button>Contact Sales</Button>
+              <CustomButton>Contact Sales</CustomButton>
             </div>
           </div>
           <div className={classes.image}>

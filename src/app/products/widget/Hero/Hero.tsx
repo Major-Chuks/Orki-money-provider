@@ -1,9 +1,9 @@
 import Image from "next/image";
 import classes from "./Hero.module.css";
-import widget from "@/assets/widget.png";
 import Responsive from "@/components/Responsive/Responsive";
 import checkIcon from "@/assets/widget-checkicon.svg";
 import Tag from "@/components/Tag/Tag";
+import Widget from "@/components/Widget/Widget";
 
 const data = [
   "Fully customizable.",
@@ -33,8 +33,8 @@ const Hero = () => {
             ))}
           </div>
         </div>
-        <div className={classes.image}>
-          <Image src={widget} alt="" />
+        <div className={classes.widgetWrapper}>
+          <Widget />
         </div>
       </div>
     </Responsive>

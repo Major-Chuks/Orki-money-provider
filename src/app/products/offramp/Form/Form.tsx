@@ -1,7 +1,7 @@
 import Responsive from "@/components/Responsive/Responsive";
 import classes from "./Form.module.css";
 import CustomTextInput from "@/components/CustomInput/CustomTextInput/CustomTextInput";
-import Button from "@/components/Button/Button";
+import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 
 const Form = () => {
   return (
@@ -21,7 +21,7 @@ const Form = () => {
             placeholder="Enter your company name"
           />
           <div className={classes.btnContainer}>
-            <Button>Join the waitist</Button>
+            <CustomButton>Join the waitist</CustomButton>
           </div>
         </div>
       </div>

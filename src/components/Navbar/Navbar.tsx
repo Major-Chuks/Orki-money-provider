@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Button from "../Button/Button";
 import classes from "./Navbar.module.css";
 import chevronIcon from "@/assets/chevron.svg";
 import ProductDropdown from "./ProductDropdown/ProductDropdown";
@@ -13,6 +12,7 @@ import Responsive from "../Responsive/Responsive";
 import { useEffect, useState } from "react";
 import { outSideClickHandler } from "@/services/utils";
 import hamburgerIcon from "@/assets/icon-hamburger.svg";
+import CustomButton from "../CustomInput/CustomButton/CustomButton";
 
 // import { useState } from "react";
 
@@ -70,10 +70,12 @@ const Navbar = () => {
 
   const btn = (
     <div className={classes.btnContainer}>
-      <Button onClick={() => router.push(routes.widget)} outline>
+      <CustomButton onClick={() => router.push(routes.widget)} outline>
         Try Widget
-      </Button>
-      <Button onClick={() => router.push(routes.contactUs)}>Contact Us</Button>
+      </CustomButton>
+      <CustomButton onClick={() => router.push(routes.contactUs)}>
+        Contact Us
+      </CustomButton>
     </div>
   );
 

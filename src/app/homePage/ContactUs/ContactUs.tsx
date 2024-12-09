@@ -1,4 +1,3 @@
-import Button from "@/components/Button/Button";
 import classes from "./ContactUs.module.css";
 import bg from "@/assets/contactUs-bg.png";
 import coin1 from "@/assets/coin-1.svg";
@@ -7,6 +6,7 @@ import coin3 from "@/assets/coin-3.svg";
 import coin4 from "@/assets/coin-4.svg";
 import Responsive from "@/components/Responsive/Responsive";
 import Image from "next/image";
+import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 
 const ContactUs = ({
   title,
@@ -30,9 +30,9 @@ const ContactUs = ({
           <div className={classes.title}>{_title}</div>
           <div className={classes.description}>{_description}</div>
         </div>
-        <Button style={{ width: "max-content", alignSelf: "center" }}>
+        <CustomButton style={{ width: "max-content", alignSelf: "center" }}>
           Contact Us
-        </Button>
+        </CustomButton>
         <Image
           className={`${classes.coin} ${classes.coin1} `}
           src={coin1}

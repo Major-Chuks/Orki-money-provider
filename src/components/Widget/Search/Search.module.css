@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  width: 434px;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--gray-100, #f3f4f6);
+  position: relative;
+  border-radius: 32px;
+}
+
+.container img {
+  position: absolute;
+  left: 24px;
+}
+
+.container input {
+  width: 100%;
+  background: transparent;
+  padding: 14px 24px;
+  padding-left: 60px;
+  border-radius: 32px;
+  outline: none;
+  border: none;
+}

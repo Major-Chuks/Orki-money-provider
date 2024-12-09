@@ -1,7 +1,7 @@
 import classes from "./CustomButton.module.css";
 import loadingIcon from "@/assets//icon-loading.svg";
 // import loadingIconAccent from "@/assets/icon-loading-accent.svg";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface ICustomButton {
   onClick?: () => void;
@@ -9,8 +9,10 @@ interface ICustomButton {
   children: React.ReactNode;
   disabled?: boolean;
   outline?: boolean;
-  height?: string;
-  style?: Record<string, string>;
+  leftIcon?: StaticImageData;
+  rightIcon?: StaticImageData;
+  style?: React.CSSProperties;
+  neutral?: boolean;
 }
 
 const CustomButton = ({
@@ -19,25 +21,27 @@ const CustomButton = ({
   loading,
   disabled = false,
   outline,
-  height,
+  leftIcon,
+  rightIcon,
   style,
+  neutral,
 }: ICustomButton) => {
   return (
     <div
-      style={{
-        ...style,
-        height: height,
-        cursor: loading || disabled ? "not-allowed" : "pointer",
-      }}
+      style={{ ...style }}
       onClick={!loading && !disabled ? onClick : () => {}}
       className={`${classes.container} ${disabled && classes.disabled} ${
         outline && classes.outline
-      }`}
+      } ${neutral && classes.neutral}`}
     >
       {loading ? (
         <Image className={classes.loadingIcon} src={loadingIcon} alt="" />
       ) : (
-        <div className={classes.text}>{children}</div>
+        <>
+          {leftIcon ? <Image src={leftIcon} alt="" /> : <div />}
+          <div>{children}</div>
+          {rightIcon ? <Image src={rightIcon} alt="" /> : <div />}
+        </>
       )}
     </div>
   );

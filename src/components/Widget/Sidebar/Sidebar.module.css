@@ -1,0 +1,103 @@
+.container {
+  width: 355px;
+  height: 100%;
+  flex-shrink: 0;
+  border-radius: 0px 8px 8px 0px;
+  background: var(--white, #fff);
+  padding: 32px 24px;
+  padding-bottom: 44px;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.upperSection {
+  width: 100%;
+}
+
+.heading {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  /* text */
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.heading img {
+  cursor: pointer;
+}
+
+.routes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.route {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.route:hover .chevronIcon {
+  transform: translateX(4px);
+}
+
+.chevronIcon {
+  transition: all 150ms;
+}
+
+.iconName {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.iconContainer {
+  background: #f3f4f6;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.name {
+  color: #000;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.location {
+  width: 100%;
+}
+
+.location .title {
+  margin-bottom: 16px;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-200, #8f8f8f);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

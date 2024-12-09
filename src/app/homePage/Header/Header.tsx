@@ -1,9 +1,8 @@
-import Image from "next/image";
 import classes from "./Header.module.css";
-import widget from "@/assets/widget.png";
-import Button from "@/components/Button/Button";
 import Responsive from "@/components/Responsive/Responsive";
 import Tag from "@/components/Tag/Tag";
+import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
+import Widget from "@/components/Widget/Widget";
 
 const Header = () => {
   return (
@@ -24,12 +23,12 @@ const Header = () => {
             </div>
 
             <div className={classes.btnContainer}>
-              <Button outline>Contact Sales</Button>
-              <Button>Get Started</Button>
+              <CustomButton outline>Contact Sales</CustomButton>
+              <CustomButton>Get Started</CustomButton>
             </div>
           </div>
-          <div className={classes.image}>
-            <Image src={widget} alt="" />
+          <div className={classes.widgetWrapper}>
+            <Widget />
           </div>
         </div>
       </Responsive>
