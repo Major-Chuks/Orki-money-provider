@@ -7,6 +7,14 @@
   gap: 12px;
   border-radius: 8px;
   background: #f5f7fd;
+  border: 1px solid transparent;
+  transition: all 300ms;
+  cursor: default;
+}
+
+.container:hover {
+  border-radius: 8px;
+  border: 1px solid var(--Foundation-Brand-brand-500, #5b29ec);
 }
 
 .innerContainer {
