@@ -3,6 +3,17 @@
   top: 0;
   z-index: 999;
   background: #fff;
+  animation: enter 1s forwards;
+}
+
+@keyframes enter {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .desktopView {
@@ -71,6 +82,19 @@
   position: absolute;
   left: 0;
   top: 119px;
+  animation: enter 450ms forwards;
+}
+
+@keyframes enter {
+  from {
+    transform: translateY(-20%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .navItem {

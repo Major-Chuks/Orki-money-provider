@@ -7,6 +7,7 @@ import icon5 from "@/assets/ux-5.svg";
 import icon6 from "@/assets/ux-6.svg";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const data = [
   {
@@ -52,25 +53,31 @@ const UserExperience = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.heading}>
-          <div className={classes.title}>
-            User Experience that will delight your users
-          </div>
-          <div className={classes.description}>
-            Unleash the potential of a unified onramp experience with a single
-            point of connection, and let innovation flow effortlessly into your
-            platform.
-          </div>
+          <SlideUp>
+            <div className={classes.title}>
+              User Experience that will delight your users
+            </div>
+          </SlideUp>
+          <SlideUp>
+            <div className={classes.description}>
+              Unleash the potential of a unified onramp experience with a single
+              point of connection, and let innovation flow effortlessly into
+              your platform.
+            </div>
+          </SlideUp>
         </div>
 
-        <div className={classes.listContainer}>
-          {data.map(({ icon, title, description }, idx) => (
-            <div key={idx} className={classes.box}>
-              <Image src={icon} alt="" />
-              <div className={classes.title}>{title}</div>
-              <div className={classes.description}>{description}</div>
-            </div>
-          ))}
-        </div>
+        <SlideUp>
+          <div className={classes.listContainer}>
+            {data.map(({ icon, title, description }, idx) => (
+              <div key={idx} className={classes.box}>
+                <Image src={icon} alt="" />
+                <div className={classes.title}>{title}</div>
+                <div className={classes.description}>{description}</div>
+              </div>
+            ))}
+          </div>
+        </SlideUp>
       </div>
     </Responsive>
   );

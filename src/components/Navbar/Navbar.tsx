@@ -61,7 +61,10 @@ const Navbar = () => {
       </div>
       <div
         className={classes.navItem}
-        onClick={() => router.push(routes.aboutUs)}
+        onClick={() => {
+          router.push(routes.aboutUs);
+          setIsActive(0);
+        }}
       >
         About Us
       </div>

@@ -16,6 +16,7 @@ import transfi from "@/assets/con-transfi.svg";
 import utorg from "@/assets/con-utorg.svg";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const data = [
   {
@@ -101,28 +102,36 @@ const Connectivity = () => {
       <Responsive>
         <div className={classes.container}>
           <div className={classes.heading}>
-            <h1>Seamless Onramp Connectivity and Global Coverage</h1>
-            <h2>
-              Expand your reach by integrating with a diverse selection of
-              onramps, embracing over 100+ payment options through our
-              integrations API.
-            </h2>
-            <p>
-              We Connect Your Customers to the Perfect Onramp for their Unique
-              Journey, ensuring a smooth ride into the world of opportunities.
-            </p>
+            <SlideUp>
+              <h1>Seamless Onramp Connectivity and Global Coverage</h1>
+            </SlideUp>
+            <SlideUp>
+              <h2>
+                Expand your reach by integrating with a diverse selection of
+                onramps, embracing over 100+ payment options through our
+                integrations API.
+              </h2>
+            </SlideUp>
+            <SlideUp>
+              <p>
+                We Connect Your Customers to the Perfect Onramp for their Unique
+                Journey, ensuring a smooth ride into the world of opportunities.
+              </p>
+            </SlideUp>
           </div>
-          <div className={classes.listContainer}>
-            {data.map(({ icon, isComingSoon, name }, idx) => (
-              <div className={classes.box} key={idx}>
-                <Image src={icon} alt="" />
-                <div className={classes.name}>{name}</div>
-                {isComingSoon && (
-                  <div className={classes.comingSoon}>Coming Soon</div>
-                )}
-              </div>
-            ))}
-          </div>
+          <SlideUp>
+            <div className={classes.listContainer}>
+              {data.map(({ icon, isComingSoon, name }, idx) => (
+                <div className={classes.box} key={idx}>
+                  <Image src={icon} alt="" />
+                  <div className={classes.name}>{name}</div>
+                  {isComingSoon && (
+                    <div className={classes.comingSoon}>Coming Soon</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </SlideUp>
         </div>
       </Responsive>
     </div>

@@ -1,5 +1,6 @@
 import Responsive from "@/components/Responsive/Responsive";
 import classes from "./Statistics.module.css";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const data = [
   {
@@ -24,14 +25,16 @@ const Statistics = () => {
   return (
     <div className={classes.container}>
       <Responsive>
-        <div className={classes.listContainer}>
-          {data.map(({ count, name }, idx) => (
-            <div key={idx} className={classes.box}>
-              <div className={classes.count}>{count}</div>
-              <div className={classes.name}>{name}</div>
-            </div>
-          ))}
-        </div>
+        <SlideUp>
+          <div className={classes.listContainer}>
+            {data.map(({ count, name }, idx) => (
+              <div key={idx} className={classes.box}>
+                <div className={classes.count}>{count}</div>
+                <div className={classes.name}>{name}</div>
+              </div>
+            ))}
+          </div>
+        </SlideUp>
       </Responsive>
     </div>
   );

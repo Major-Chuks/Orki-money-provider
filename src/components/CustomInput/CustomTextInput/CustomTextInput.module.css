@@ -21,3 +21,7 @@
   font-weight: 400 !important;
   line-height: normal !important;
 }
+
+.required {
+  color: #ef4444;
+}

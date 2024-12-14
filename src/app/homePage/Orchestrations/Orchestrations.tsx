@@ -15,6 +15,7 @@ import transfer from "@/assets/gateway-transfer.svg";
 import Image from "next/image";
 import globe from "@/assets/globe.png";
 import Responsive from "@/components/Responsive/Responsive";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const data = [
   {
@@ -56,16 +57,20 @@ const Orchestrations = () => {
     <div className={classes.container}>
       <Responsive>
         <div className={classes.wrapper}>
-          <div className={classes.title}>What we orchestrate for you</div>
+          <SlideUp>
+            <div className={classes.title}>What we orchestrate for you</div>
+          </SlideUp>
 
-          <div className={classes.listContainer}>
-            {data.map(({ count, name }, idx) => (
-              <div key={idx} className={classes.box}>
-                <div className={classes.count}>{count}</div>
-                <div className={classes.name}>{name}</div>
-              </div>
-            ))}
-          </div>
+          <SlideUp>
+            <div className={classes.listContainer}>
+              {data.map(({ count, name }, idx) => (
+                <div key={idx} className={classes.box}>
+                  <div className={classes.count}>{count}</div>
+                  <div className={classes.name}>{name}</div>
+                </div>
+              ))}
+            </div>
+          </SlideUp>
         </div>
       </Responsive>
 
@@ -89,9 +94,11 @@ const Orchestrations = () => {
         ))}
       </div>
 
-      <div className={classes.image}>
-        <Image className={classes.globe} src={globe} alt="" />
-      </div>
+      <SlideUp>
+        <div className={classes.image}>
+          <Image className={classes.globe} src={globe} alt="" />
+        </div>
+      </SlideUp>
     </div>
   );
 };

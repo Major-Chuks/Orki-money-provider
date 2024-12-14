@@ -2,6 +2,7 @@ import classes from "./Visualize.module.css";
 import Responsive from "@/components/Responsive/Responsive";
 import orchestrationLayer from "@/assets/orchestration layer.png";
 import Image from "next/image";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const data = [
   {
@@ -26,22 +27,28 @@ const Visualize = () => {
     <div className={classes.wrapper}>
       <Responsive>
         <div className={classes.container}>
-          <div className={classes.heading}>
-            <div className={classes.title}>
-              Visualize the Onramp Orchestration Layer{" "}
-            </div>
-          </div>
-          <div className={classes.image}>
-            <Image src={orchestrationLayer} alt="" />
-          </div>
-          <div className={classes.listContainer}>
-            {data.map(({ id, description }, idx) => (
-              <div key={idx} className={classes.box}>
-                <div className={classes.id}>{id}</div>
-                <div className={classes.description}>{description}</div>
+          <SlideUp>
+            <div className={classes.heading}>
+              <div className={classes.title}>
+                Visualize the Onramp Orchestration Layer{" "}
               </div>
-            ))}
-          </div>
+            </div>
+          </SlideUp>
+          <SlideUp>
+            <div className={classes.image}>
+              <Image src={orchestrationLayer} alt="" />
+            </div>
+          </SlideUp>
+          <SlideUp>
+            <div className={classes.listContainer}>
+              {data.map(({ id, description }, idx) => (
+                <div key={idx} className={classes.box}>
+                  <div className={classes.id}>{id}</div>
+                  <div className={classes.description}>{description}</div>
+                </div>
+              ))}
+            </div>
+          </SlideUp>
         </div>
       </Responsive>
     </div>

@@ -7,6 +7,7 @@ import icon5 from "@/assets/career-5.svg";
 import icon6 from "@/assets/career-6.svg";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const data = [
   {
@@ -51,20 +52,24 @@ const ValueAndCulture = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <div className={classes.heading}>
-          <div className={classes.accent}>Life at Orki </div>
-          <div className={classes.title}>Our team values and Culture</div>
-        </div>
+        <SlideUp>
+          <div className={classes.heading}>
+            <div className={classes.accent}>Life at Orki </div>
+            <div className={classes.title}>Our team values and Culture</div>
+          </div>
+        </SlideUp>
 
         <div className={classes.listContainer}>
           {data.map(({ icon, title, description }, idx) => (
-            <div key={idx} className={classes.box}>
-              <div className={classes.iconContainer}>
-                <Image src={icon} alt="" />
+            <SlideUp key={idx}>
+              <div className={classes.box}>
+                <div className={classes.iconContainer}>
+                  <Image src={icon} alt="" />
+                </div>
+                <div className={classes.title}>{title}</div>
+                <div className={classes.description}>{description}</div>
               </div>
-              <div className={classes.title}>{title}</div>
-              <div className={classes.description}>{description}</div>
-            </div>
+            </SlideUp>
           ))}
         </div>
       </div>

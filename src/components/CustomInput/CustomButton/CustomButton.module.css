@@ -11,6 +11,7 @@
   border-radius: 12px;
   background: #5b29ec;
   user-select: none;
+  transition: all 150ms;
   /* text */
   color: var(--white, #fff);
   text-align: center;
@@ -23,6 +24,7 @@
 
 .container:hover {
   filter: brightness(90%);
+  transform: scale(0.99);
 }
 
 .container:hover:not(.disabled) img:last-child {

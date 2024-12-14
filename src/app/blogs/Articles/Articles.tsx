@@ -21,6 +21,7 @@ import Paginate from "@/components/Pagination/Paginate";
 import Control from "@/components/Pagination/Control";
 import searchIcon from "@/assets/icon-search2.svg";
 import Image from "next/image";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const filterby = ["All", "Customer Stories", "News", , "Product Updates"];
 
@@ -104,29 +105,31 @@ const Articles = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <div className={classes.heading}>
-          <div className={classes.search}>
-            <input placeholder="Search our latest updates" type="text" />
-            <Image src={searchIcon} alt="" />
-          </div>
-          <div className={classes.filterContainer}>
-            {filterby.map((filter, idx) => (
-              <div
-                key={idx}
-                className={`${classes.filterWrapper} ${
-                  activeFilter === filter && classes.active
-                }`}
-              >
+        <SlideUp>
+          <div className={classes.heading}>
+            <div className={classes.search}>
+              <input placeholder="Search our latest updates" type="text" />
+              <Image src={searchIcon} alt="" />
+            </div>
+            <div className={classes.filterContainer}>
+              {filterby.map((filter, idx) => (
                 <div
-                  onClick={() => setActiveFilter(filter)}
-                  className={classes.filter}
+                  key={idx}
+                  className={`${classes.filterWrapper} ${
+                    activeFilter === filter && classes.active
+                  }`}
                 >
-                  {filter}
+                  <div
+                    onClick={() => setActiveFilter(filter)}
+                    className={classes.filter}
+                  >
+                    {filter}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </SlideUp>
 
         <div className={classes.blogContainer}>
           <Paginate
@@ -135,7 +138,9 @@ const Articles = () => {
             pageCount={pageCount}
             renderItem={(blogs) =>
               blogs.map((blog, idx: number) => (
-                <BlogCard key={idx} data={blog} blogId={`${idx + 1}`} />
+                <SlideUp key={idx}>
+                  <BlogCard data={blog} blogId={`${idx + 1}`} />
+                </SlideUp>
               ))
             }
           />

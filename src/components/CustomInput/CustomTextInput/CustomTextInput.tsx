@@ -7,6 +7,7 @@ import { capitalize as capitalizeText } from "@/services/utils";
 interface IExtendedCustomInput extends ICustomInput {
   type?: "text" | "textarea";
   capitalize?: boolean;
+  required?: boolean;
 }
 
 const CustomTextInput = ({
@@ -23,6 +24,7 @@ const CustomTextInput = ({
   faint,
   plain,
   capitalize = false,
+  required,
 }: IExtendedCustomInput) => {
   return (
     <div
@@ -30,7 +32,11 @@ const CustomTextInput = ({
         getError({ error, id }) && classes.error
       } ${!faint ? outline && classes.outline : classes.faint}`}
     >
-      {label && <div className={classes.label}>{label}</div>}
+      {label && (
+        <div className={classes.label}>
+          {label} {required && <span className={innerClasses.required}>*</span>}
+        </div>
+      )}
       <div className={classes.wrapper}>
         {type === "text" ? (
           <input

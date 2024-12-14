@@ -1,6 +1,7 @@
 import { useState } from "react";
 import classes from "./Openings.module.css";
 import Responsive from "@/components/Responsive/Responsive";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const categories = ["All", "Product", "Sales", "Growth"] as const;
 
@@ -35,48 +36,56 @@ const Openings = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <div className={classes.accent}>Recent Opening</div>
-        <div className={classes.title}>Apply to our current opportunities</div>
-
-        <div className={classes.categoryContainer}>
-          {categories.map((category, idx) => (
-            <div
-              onClick={() => setCategory(category)}
-              key={idx}
-              className={`${classes.category} ${
-                category === activeCategory && classes.active
-              }`}
-            >
-              {category}
-            </div>
-          ))}
+        <div className={classes.accent}>
+          <SlideUp>Recent Opening</SlideUp>
         </div>
+        <div className={classes.title}>
+          <SlideUp>Apply to our current opportunities</SlideUp>
+        </div>
+
+        <SlideUp>
+          <div className={classes.categoryContainer}>
+            {categories.map((category, idx) => (
+              <div
+                onClick={() => setCategory(category)}
+                key={idx}
+                className={`${classes.category} ${
+                  category === activeCategory && classes.active
+                }`}
+              >
+                {category}
+              </div>
+            ))}
+          </div>
+        </SlideUp>
 
         <div className={classes.openingContainer}>
           {openings.map(
             ({ title, description, location, availability }, idx) => (
-              <div key={idx} className={classes.opening}>
-                <div className={classes.rhs}>
-                  <div className={classes.title}>{title}</div>
-                  <div className={classes.description}>{description}</div>
-                </div>
-                <div className={classes.lhs}>
-                  <div className={classes.availability}>
-                    {availability.map((el, idx) => (
-                      <div className={classes.tag} key={idx}>
-                        {el}
-                      </div>
-                    ))}
+              <SlideUp width="100%" key={idx}>
+                <div className={classes.opening}>
+                  <div className={classes.rhs}>
+                    <div className={classes.title}>{title}</div>
+                    <div className={classes.description}>{description}</div>
                   </div>
-                  <div className={classes.location}>
-                    {location.map((el, idx) => (
-                      <div className={classes.tag} key={idx}>
-                        {el}
-                      </div>
-                    ))}
+                  <div className={classes.lhs}>
+                    <div className={classes.availability}>
+                      {availability.map((el, idx) => (
+                        <div className={classes.tag} key={idx}>
+                          {el}
+                        </div>
+                      ))}
+                    </div>
+                    <div className={classes.location}>
+                      {location.map((el, idx) => (
+                        <div className={classes.tag} key={idx}>
+                          {el}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </SlideUp>
             )
           )}
         </div>

@@ -16,6 +16,7 @@ import transfi from "@/assets/comp-transfi.svg";
 import utorg from "@/assets/comp-utorg.svg";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const data = [
   {
@@ -99,20 +100,24 @@ const Aggregates = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <div className={classes.title}>
-          We aggregate all the onramps so you don’t have to choose from one.
-        </div>
-        <div className={classes.listContainer}>
-          {data.map(({ icon, isComingSoon, name }, idx) => (
-            <div className={classes.box} key={idx}>
-              <Image src={icon} alt="" />
-              <div className={classes.name}>{name}</div>
-              {isComingSoon && (
-                <div className={classes.comingSoon}>Coming Soon</div>
-              )}
-            </div>
-          ))}
-        </div>
+        <SlideUp>
+          <div className={classes.title}>
+            We aggregate all the onramps so you don’t have to choose from one.
+          </div>
+        </SlideUp>
+        <SlideUp>
+          <div className={classes.listContainer}>
+            {data.map(({ icon, isComingSoon, name }, idx) => (
+              <div className={classes.box} key={idx}>
+                <Image src={icon} alt="" />
+                <div className={classes.name}>{name}</div>
+                {isComingSoon && (
+                  <div className={classes.comingSoon}>Coming Soon</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </SlideUp>
       </div>
     </Responsive>
   );

@@ -4,6 +4,7 @@ import icon2 from "@/assets/connecting-2.png";
 import icon3 from "@/assets/connecting-3.png";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const data = [
   {
@@ -30,24 +31,28 @@ const Connecting = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <div className={classes.heading}>
-          <h1>Connecting You to Onramps with one API</h1>
-          <p>
-            Unleash the potential of a unified onramp experience with a single
-            point of connection, and let innovation flow effortlessly into your
-            platform.
-          </p>
-        </div>
+        <SlideUp>
+          <div className={classes.heading}>
+            <h1>Connecting You to Onramps with one API</h1>
+            <p>
+              Unleash the potential of a unified onramp experience with a single
+              point of connection, and let innovation flow effortlessly into
+              your platform.
+            </p>
+          </div>
+        </SlideUp>
 
-        <div className={classes.listContainer}>
-          {data.map(({ icon, title, description }, idx) => (
-            <div key={idx} className={classes.box}>
-              <Image src={icon} alt="" />
-              <div className={classes.title}>{title}</div>
-              <div className={classes.description}>{description}</div>
-            </div>
-          ))}
-        </div>
+        <SlideUp>
+          <div className={classes.listContainer}>
+            {data.map(({ icon, title, description }, idx) => (
+              <div key={idx} className={classes.box}>
+                <Image src={icon} alt="" />
+                <div className={classes.title}>{title}</div>
+                <div className={classes.description}>{description}</div>
+              </div>
+            ))}
+          </div>
+        </SlideUp>
       </div>
     </Responsive>
   );

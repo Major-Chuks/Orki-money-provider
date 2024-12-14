@@ -1,3 +1,4 @@
+"use client";
 import classes from "./ContactUs.module.css";
 import bg from "@/assets/contactUs-bg.png";
 import coin1 from "@/assets/coin-1.svg";
@@ -7,6 +8,7 @@ import coin4 from "@/assets/coin-4.svg";
 import Responsive from "@/components/Responsive/Responsive";
 import Image from "next/image";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const ContactUs = ({
   title,
@@ -26,13 +28,17 @@ const ContactUs = ({
         style={{ backgroundImage: `url(${bg.src})` }}
         className={classes.container}
       >
-        <div className={classes.heading}>
-          <div className={classes.title}>{_title}</div>
-          <div className={classes.description}>{_description}</div>
-        </div>
-        <CustomButton style={{ width: "max-content", alignSelf: "center" }}>
-          Contact Us
-        </CustomButton>
+        <SlideUp>
+          <div className={classes.heading}>
+            <div className={classes.title}>{_title}</div>
+            <div className={classes.description}>{_description}</div>
+          </div>
+        </SlideUp>
+        <SlideUp>
+          <CustomButton style={{ width: "max-content", alignSelf: "center" }}>
+            Contact Us
+          </CustomButton>
+        </SlideUp>
         <Image
           className={`${classes.coin} ${classes.coin1} `}
           src={coin1}

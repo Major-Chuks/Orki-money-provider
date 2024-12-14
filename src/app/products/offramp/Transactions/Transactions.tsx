@@ -1,9 +1,11 @@
 import classes from "./Transactions.module.css";
 import icon1 from "@/assets/transactions-1.png";
 import icon2 from "@/assets/transactions-2.png";
-import icon3 from "@/assets/transactions-2.png";
+import icon3 from "@/assets/transactions-3.png";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
+import SlideUp from "@/components/SlideUp/SlideUp";
+import SlideDown from "@/components/SlideDown/SlideDown";
 
 const Transactions = () => {
   return (
@@ -11,26 +13,37 @@ const Transactions = () => {
       <Responsive>
         <div className={classes.container}>
           <div className={classes.heading}>
-            <h1 className={classes.title}>
-              Sell Crypto Effortlessly: Simplifying Transactions for Your Users
-            </h1>
-            <p className={classes.description}>
-              Unlock hassle-free crypto selling with our user-centric
-              platform—seamless, secure, and tailored for swift transactions
-              worldwide.
-            </p>
+            <SlideUp>
+              <h1 className={classes.title}>
+                Sell Crypto Effortlessly: Simplifying Transactions for Your
+                Users
+              </h1>
+            </SlideUp>
+            <SlideUp>
+              <p className={classes.description}>
+                Unlock hassle-free crypto selling with our user-centric
+                platform—seamless, secure, and tailored for swift transactions
+                worldwide.
+              </p>
+            </SlideUp>
           </div>
 
           <div className={classes.listContainer}>
-            <div className={classes.box}>
-              <Image src={icon1} alt="" />
-            </div>
-            <div className={classes.box}>
-              <Image src={icon2} alt="" />
-            </div>
-            <div className={classes.box}>
-              <Image src={icon3} alt="" />
-            </div>
+            <SlideUp>
+              <div className={classes.box}>
+                <Image src={icon1} alt="" />
+              </div>
+            </SlideUp>
+            <SlideDown>
+              <div className={classes.box}>
+                <Image src={icon2} alt="" />
+              </div>
+            </SlideDown>
+            <SlideUp>
+              <div className={classes.box}>
+                <Image src={icon3} alt="" />
+              </div>
+            </SlideUp>
           </div>
         </div>
       </Responsive>
