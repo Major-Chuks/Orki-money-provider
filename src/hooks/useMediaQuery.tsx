@@ -7,8 +7,8 @@ interface ScreenSize {
 
 const useMediaQuery = (): ScreenSize => {
   const [screenSize, setScreenSize] = useState<ScreenSize>({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 0,
+    height: 0,
   });
 
   useEffect(() => {
@@ -18,6 +18,8 @@ const useMediaQuery = (): ScreenSize => {
         height: window.innerHeight,
       });
     };
+
+    handleResize();
 
     window.addEventListener("resize", handleResize);
 
