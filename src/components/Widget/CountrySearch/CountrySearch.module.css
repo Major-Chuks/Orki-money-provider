@@ -94,6 +94,18 @@
   background: var(--white, #fff);
   padding: 0 24px;
   padding-top: 34px;
+  transform: translateY(100%);
+  animation: enter 200ms forwards;
+}
+
+@keyframes enter {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 .heading {

@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  animation: fade-in 450ms forwards;
 }
 
 .overlay {
@@ -20,4 +21,14 @@
   height: 100%;
   background: transparent;
   z-index: -1;
+}
+
+@keyframes fade-in {
+  from {
+    background: rgba(16, 11, 35, 0);
+  }
+
+  to {
+    background: rgba(16, 11, 35, 0.2);
+  }
 }

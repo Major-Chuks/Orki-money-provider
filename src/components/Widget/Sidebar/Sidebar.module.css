@@ -11,6 +11,18 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+  transform: translateX(100%);
+  animation: enter 200ms forwards;
+}
+
+@keyframes enter {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .upperSection {

@@ -53,20 +53,22 @@ const FiatCurrencySearch = () => {
       {toggleOverlay && (
         <Overlay onClose={() => setToggleOverlay(false)}>
           <div className={classes.wrapper}>
-            <div className={classes.heading}>
-              Select Fiat Currency{" "}
-              <Image
-                onClick={() => setToggleOverlay(false)}
-                src={closeIcon}
-                alt=""
-              />
-            </div>
+            <div className={classes.headingSearch}>
+              <div className={classes.heading}>
+                Select Fiat Currency{" "}
+                <Image
+                  onClick={() => setToggleOverlay(false)}
+                  src={closeIcon}
+                  alt=""
+                />
+              </div>
 
-            <div className={classes.searchWrapper}>
-              <Search
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
+              <div className={classes.searchWrapper}>
+                <Search
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+              </div>
             </div>
 
             <div className={classes.countryWrapper}>

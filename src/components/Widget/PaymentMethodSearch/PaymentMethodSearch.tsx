@@ -26,16 +26,18 @@ const PaymentMethodSearch = ({ onClose }: { onClose: () => void }) => {
   return (
     <Overlay onClose={onClose}>
       <div className={classes.wrapper}>
-        <div className={classes.heading}>
-          Select Payment Method{" "}
-          <Image onClick={onClose} src={closeIcon} alt="" />
-        </div>
+        <div className={classes.headingSearch}>
+          <div className={classes.heading}>
+            Select Payment Method{" "}
+            <Image onClick={onClose} src={closeIcon} alt="" />
+          </div>
 
-        <div className={classes.searchWrapper}>
-          <Search
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
+          <div className={classes.searchWrapper}>
+            <Search
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className={classes.countryWrapper}>
