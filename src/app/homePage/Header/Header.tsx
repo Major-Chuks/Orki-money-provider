@@ -43,11 +43,11 @@ const Header = () => {
               </div>
             </div>
           </SlideUp>
-          <SlideDown>
+          <SlideUp>
             <div className={classes.widgetWrapper}>
               <Widget />
             </div>
-          </SlideDown>
+          </SlideUp>
         </div>
       </Responsive>
     </div>

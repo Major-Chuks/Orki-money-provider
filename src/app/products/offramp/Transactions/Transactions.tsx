@@ -34,11 +34,11 @@ const Transactions = () => {
                 <Image src={icon1} alt="" />
               </div>
             </SlideUp>
-            <SlideDown>
+            <SlideUp>
               <div className={classes.box}>
                 <Image src={icon2} alt="" />
               </div>
-            </SlideDown>
+            </SlideUp>
             <SlideUp>
               <div className={classes.box}>
                 <Image src={icon3} alt="" />

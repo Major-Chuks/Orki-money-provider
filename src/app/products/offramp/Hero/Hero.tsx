@@ -18,11 +18,11 @@ const Hero = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <SlideDown>
+        <SlideUp>
           <div className={classes.image}>
             <Image src={offRamp} alt="" />
           </div>
-        </SlideDown>
+        </SlideUp>
         <div className={classes.details_button}>
           <div className={classes.heading}>
             <SlideUp>

@@ -18,21 +18,21 @@ const Hero = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.details}>
-          <SlideDown>
+          <SlideUp>
             <Tag />
-          </SlideDown>
-          <SlideDown>
+          </SlideUp>
+          <SlideUp>
             <div className={classes.title}>
               Seamless Access, Instant Onramp from Anywhere
             </div>
-          </SlideDown>
-          <SlideDown>
+          </SlideUp>
+          <SlideUp>
             <div className={classes.description}>
               Your “one-stop-shop” for Onramp Solution! Everything Aggregated
               and Tailored to Your Preferences
             </div>
-          </SlideDown>
-          <SlideDown>
+          </SlideUp>
+          <SlideUp>
             <div className={classes.listContainer}>
               {data.map((item, idx) => (
                 <div key={idx} className={classes.box}>
@@ -41,13 +41,13 @@ const Hero = () => {
                 </div>
               ))}
             </div>
-          </SlideDown>
+          </SlideUp>
         </div>
-        <SlideUp>
-          <div className={classes.widgetWrapper}>
+        <div className={classes.widgetWrapper}>
+          <SlideUp>
             <Widget />
-          </div>
-        </SlideUp>
+          </SlideUp>
+        </div>
       </div>
     </Responsive>
   );

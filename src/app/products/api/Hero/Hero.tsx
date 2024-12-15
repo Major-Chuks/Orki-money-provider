@@ -14,16 +14,16 @@ const Hero = () => {
         <div className={classes.container}>
           <div className={classes.details_button}>
             <div className={classes.heading}>
-              <SlideDown>
+              <SlideUp>
                 <Tag mobile={{ center: true }} />
-              </SlideDown>
-              <SlideDown>
+              </SlideUp>
+              <SlideUp>
                 <div className={classes.title}>
                   The ultimate onramp experience, featuring a single, cohesive
                   API
                 </div>
-              </SlideDown>
-              <SlideDown>
+              </SlideUp>
+              <SlideUp>
                 <div className={classes.description}>
                   Simplifying the intricate orchestration of onramp providers
                   across multiple platforms, our unified solution harmonizes the
@@ -32,16 +32,16 @@ const Hero = () => {
                   data feeds, ensuring effortless connectivity and intelligent
                   order routing for a seamless user experience.
                 </div>
-              </SlideDown>
+              </SlideUp>
             </div>
 
-            <SlideDown>
+            <SlideUp>
               <div className={classes.btnContainer}>
                 <CustomButton style={{ width: "max-content" }}>
                   Contact Sales
                 </CustomButton>
               </div>
-            </SlideDown>
+            </SlideUp>
           </div>
           <SlideUp>
             <div className={classes.image}>
