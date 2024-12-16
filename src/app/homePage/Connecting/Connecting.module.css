@@ -105,6 +105,10 @@
 }
 
 @media screen and (max-width: 992px) {
+  .container {
+    margin-bottom: 88px;
+  }
+
   .listContainer {
     grid-template-columns: auto;
     justify-content: center;
@@ -145,6 +149,12 @@
     right: -0.699px;
     bottom: 0;
     background: #000;
+  }
+
+  .heading h1 {
+    max-width: 620px;
+    font-size: 42px;
+    line-height: 54px;
   }
 }
 

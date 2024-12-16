@@ -133,8 +133,23 @@
 }
 
 @media screen and (max-width: 992px) {
+  .container {
+    margin-bottom: 88px;
+    padding-bottom: 32px;
+  }
+
   .listContainer {
     grid-template-columns: repeat(2, 1fr);
+    margin-top: 56px;
+  }
+
+  .title {
+    font-size: 42px;
+    line-height: 54px;
+  }
+
+  .gatewaysDesktop {
+    margin-bottom: 72px;
   }
 }
 

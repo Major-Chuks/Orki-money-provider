@@ -72,6 +72,34 @@
   right: 32px;
 }
 
+@media screen and (max-width: 992px) {
+  .coin {
+    width: 89.124px;
+    height: 106.587px;
+    flex-shrink: 0;
+  }
+
+  .coin1 {
+    top: 24px;
+    left: 24px;
+  }
+
+  .coin2 {
+    top: 28px;
+    right: 22px;
+  }
+
+  .coin3 {
+    bottom: 16px;
+    left: 22px;
+  }
+
+  .coin4 {
+    bottom: 24px;
+    right: 32px;
+  }
+}
+
 @media screen and (max-width: 540px) {
   .container {
     border-radius: 16px;

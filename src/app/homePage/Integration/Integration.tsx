@@ -17,11 +17,11 @@ const Integration = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <SlideUp>
-          <div className={classes.iconContainer}>
+        <div className={classes.iconContainer}>
+          <SlideUp>
             <Image src={starIcon} alt="" />
-          </div>
-        </SlideUp>
+          </SlideUp>
+        </div>
         <div className={classes.wrapper}>
           <div className={classes.details}>
             <SlideUp>

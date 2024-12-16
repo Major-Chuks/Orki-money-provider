@@ -114,6 +114,12 @@
     flex-direction: column;
     padding: 24px 16px;
     gap: 24px;
+    margin-bottom: 88px;
+  }
+
+  .details > .title {
+    font-size: 32px;
+    line-height: 48px; /* 150% */
   }
 }
 

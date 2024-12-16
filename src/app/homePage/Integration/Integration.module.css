@@ -45,6 +45,7 @@
 }
 
 .details {
+  width: 100%;
   max-width: 551px;
 }
 
@@ -86,15 +87,23 @@
   .wrapper {
     flex-direction: column;
   }
+
+  .container {
+    margin-bottom: 88px;
+  }
+
+  .iconContainer {
+    display: none;
+  }
+
+  .details {
+    max-width: 100%;
+  }
 }
 
 @media screen and (max-width: 540px) {
   .container {
     margin-bottom: 54px;
-  }
-
-  .iconContainer {
-    display: none;
   }
 
   .wrapper {

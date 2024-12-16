@@ -50,6 +50,12 @@
   height: auto;
 }
 
+@media screen and (max-width: 992px) {
+  .container {
+    margin-bottom: 88px;
+  }
+}
+
 @media screen and (max-width: 540px) {
   .container {
     padding: 0;
