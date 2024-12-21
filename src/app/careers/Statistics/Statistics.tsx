@@ -25,16 +25,16 @@ const Statistics = () => {
   return (
     <div className={classes.container}>
       <Responsive>
-        <SlideUp>
-          <div className={classes.listContainer}>
-            {data.map(({ count, name }, idx) => (
-              <div key={idx} className={classes.box}>
+        <div className={classes.listContainer}>
+          {data.map(({ count, name }, idx) => (
+            <SlideUp key={idx}>
+              <div className={classes.box}>
                 <div className={classes.count}>{count}</div>
                 <div className={classes.name}>{name}</div>
               </div>
-            ))}
-          </div>
-        </SlideUp>
+            </SlideUp>
+          ))}
+        </div>
       </Responsive>
     </div>
   );

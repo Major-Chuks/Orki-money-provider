@@ -24,28 +24,28 @@ const Integration = () => {
         </div>
         <div className={classes.wrapper}>
           <div className={classes.details}>
-            <SlideUp>
-              <div className={classes.title}>
+            <div className={classes.title}>
+              <SlideUp>
                 Integrate our widget with just few lines of{" "}
                 <span className={classes.accent}>{"{code}"}</span>
-              </div>
-            </SlideUp>
-            <SlideUp>
-              <div className={classes.listContainer}>
-                {data.map((item, idx) => (
-                  <div key={idx} className={classes.box}>
+              </SlideUp>
+            </div>
+            <div className={classes.listContainer}>
+              {data.map((item, idx) => (
+                <SlideUp key={idx}>
+                  <div className={classes.box}>
                     <Image src={checkIcon} alt="" />
                     <div className={classes.item}>{item}</div>
                   </div>
-                ))}
-              </div>
+                </SlideUp>
+              ))}
+            </div>
+          </div>
+          <div className={classes.image}>
+            <SlideUp>
+              <Image src={code} alt="" />
             </SlideUp>
           </div>
-          <SlideUp>
-            <div className={classes.image}>
-              <Image src={code} alt="" />
-            </div>
-          </SlideUp>
         </div>
       </div>
     </Responsive>

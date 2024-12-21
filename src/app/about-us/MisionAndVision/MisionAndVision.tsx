@@ -16,14 +16,16 @@ const MisionAndVision = () => {
             </SlideUp>
           </div>
           <div className={classes.details}>
-            <SlideUp threshold={0.8}>
-              <div className={classes.heading}>
-                <div className={classes.tag}>OUR MISSION </div>
-                <div className={classes.title}>Who we are</div>
+            <div className={classes.heading}>
+              <div className={classes.tag}>
+                <SlideUp threshold={0.8}>OUR MISSION</SlideUp>
               </div>
-            </SlideUp>
-            <SlideUp>
-              <div className={classes.description}>
+              <div className={classes.title}>
+                <SlideUp threshold={0.8}>Who we are</SlideUp>
+              </div>
+            </div>
+            <div className={classes.description}>
+              <SlideUp>
                 Orki On-Ramp is dedicated to revolutionizing the onramp
                 experience to cryptocurrencies. Our mission is to provide a
                 secure, user-friendly, and inclusive platform, fostering
@@ -32,8 +34,8 @@ const MisionAndVision = () => {
                 to bridge the gap between traditional and digital finance,
                 empowering users to seamlessly navigate the evolving landscape
                 of cryptocurrencies with confidence and ease.
-              </div>
-            </SlideUp>
+              </SlideUp>
+            </div>
           </div>
         </div>
 
@@ -44,14 +46,16 @@ const MisionAndVision = () => {
             </SlideUp>
           </div>
           <div className={classes.details}>
-            <SlideUp threshold={0.8}>
-              <div className={classes.heading}>
-                <div className={classes.tag}>OUR VISION </div>
-                <div className={classes.title}>Who we are</div>
+            <div className={classes.heading}>
+              <div className={classes.tag}>
+                <SlideUp threshold={0.8}>OUR VISION </SlideUp>
               </div>
-            </SlideUp>
-            <SlideUp>
-              <div className={classes.description}>
+              <div className={classes.title}>
+                <SlideUp threshold={0.8}>Who we are</SlideUp>
+              </div>
+            </div>
+            <div className={classes.description}>
+              <SlideUp>
                 Orki On-Ramp envisions a future where financial empowerment
                 knows no bounds. We aspire to be at the forefront of pioneering
                 onramp solutions that transcend barriers, making cryptocurrency
@@ -63,8 +67,8 @@ const MisionAndVision = () => {
                 to be the catalyst for a more inclusive and interconnected
                 financial landscape, where individuals can navigate and thrive
                 in the world of digital assets with unparalleled ease.
-              </div>
-            </SlideUp>
+              </SlideUp>
+            </div>
           </div>
         </div>
       </div>

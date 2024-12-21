@@ -72,6 +72,22 @@
   height: auto;
 }
 
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    margin-bottom: 88px;
+  }
+
+  .title {
+    font-size: 42px;
+    line-height: 54px;
+  }
+
+  .subTitle,
+  .description {
+    font-size: 16px;
+  }
+}
+
 @media screen and (max-width: 540px) {
   .wrapper {
     margin-bottom: 40px;

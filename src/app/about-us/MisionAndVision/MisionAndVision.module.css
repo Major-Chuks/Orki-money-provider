@@ -65,9 +65,10 @@
   line-height: 28px; /* 155.556% */
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .container {
     gap: 68px;
+    margin-bottom: 88px;
   }
 
   .section {

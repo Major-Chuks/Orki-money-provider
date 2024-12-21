@@ -10,36 +10,40 @@ import SlideUp from "@/components/SlideUp/SlideUp";
 const Hero = () => {
   return (
     <div className={classes.wrapper}>
-      <div className={classes.bg}></div>
+      {/* <div className={classes.bg}></div> */}
       <Responsive>
         <div className={classes.container}>
           <div className={classes.heading}>
-            <SlideUp>
-              <div className={classes.title}>
+            <div className={classes.title}>
+              <SlideUp>
                 Empowering Seamless Access to Cryptocurrencies: Our Journey at
                 Orki On-Ramp
-              </div>
-              <SlideUp>
-                <div className={classes.description}>
-                  Our journey is rooted in the belief that the onramp experience
-                  should be as seamless as possible, ushering users into the
-                  future of digital finance effortlessly.
-                </div>
               </SlideUp>
+            </div>
+            <div className={classes.description}>
+              <SlideUp>
+                Our journey is rooted in the belief that the onramp experience
+                should be as seamless as possible, ushering users into the
+                future of digital finance effortlessly.
+              </SlideUp>
+            </div>
+          </div>
+          <div className={classes.desktopImage}>
+            <SlideUp>
+              <Image src={about} alt="" />
             </SlideUp>
           </div>
-          <SlideUp>
-            <div className={classes.desktopImage}>
-              <Image src={about} alt="" />
-            </div>
-          </SlideUp>
-          <SlideUp>
-            <div className={classes.mobileImage}>
+          <div className={classes.mobileImage}>
+            <SlideUp>
               <Image src={img1} alt="" />
+            </SlideUp>
+            <SlideUp>
               <Image src={img2} alt="" />
+            </SlideUp>
+            <SlideUp>
               <Image src={img3} alt="" />
-            </div>
-          </SlideUp>
+            </SlideUp>
+          </div>
         </div>
       </Responsive>
     </div>

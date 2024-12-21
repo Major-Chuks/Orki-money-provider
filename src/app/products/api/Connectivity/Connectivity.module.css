@@ -108,7 +108,26 @@
   line-height: 16px; /* 160% */
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    padding: 88px 0;
+    margin-bottom: 68px;
+  }
+
+  .heading h1 {
+    font-size: 42px;
+    line-height: 54px;
+    margin-bottom: 32px;
+  }
+
+  .heading h2 {
+    font-size: 18px;
+  }
+
+  .heading p {
+    font-size: 16px;
+  }
+
   .listContainer {
     grid-template-columns: repeat(4, 1fr);
   }

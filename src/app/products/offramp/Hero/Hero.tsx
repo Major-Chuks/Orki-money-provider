@@ -6,7 +6,6 @@ import offRamp from "@/assets/off-ramp.png";
 import Tag from "@/components/Tag/Tag";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import SlideUp from "@/components/SlideUp/SlideUp";
-import SlideDown from "@/components/SlideDown/SlideDown";
 
 const data = [
   "Simplified Integration",
@@ -18,37 +17,35 @@ const Hero = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <SlideUp>
-          <div className={classes.image}>
+        <div className={classes.image}>
+          <SlideUp>
             <Image src={offRamp} alt="" />
-          </div>
-        </SlideUp>
+          </SlideUp>
+        </div>
         <div className={classes.details_button}>
           <div className={classes.heading}>
-            <SlideUp>
-              <Tag />
-            </SlideUp>
-            <SlideUp>
-              <h1>
+            <Tag />
+            <h1>
+              <SlideUp>
                 Seamless Crypto-to-Cash Conversion: Effortless and Accessible.
-              </h1>
-            </SlideUp>
-            <SlideUp>
-              <p>
+              </SlideUp>
+            </h1>
+            <p>
+              <SlideUp>
                 Effortless Offramping, One Integration: Streamline Global
                 Cashouts for Your Users.
-              </p>
-            </SlideUp>
-            <SlideUp>
-              <div className={classes.listContainer}>
-                {data.map((item, idx) => (
-                  <div key={idx} className={classes.box}>
+              </SlideUp>
+            </p>
+            <div className={classes.listContainer}>
+              {data.map((item, idx) => (
+                <SlideUp key={idx}>
+                  <div className={classes.box}>
                     <Image src={checkIcon} alt="" />
                     <div className={classes.item}>{item}</div>
                   </div>
-                ))}
-              </div>
-            </SlideUp>
+                </SlideUp>
+              ))}
+            </div>
             <SlideUp>
               <CustomButton style={{ width: "max-content" }}>
                 Join Waitlist

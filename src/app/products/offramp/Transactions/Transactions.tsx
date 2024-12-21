@@ -5,7 +5,6 @@ import icon3 from "@/assets/transactions-3.png";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
-import SlideDown from "@/components/SlideDown/SlideDown";
 
 const Transactions = () => {
   return (
@@ -13,19 +12,19 @@ const Transactions = () => {
       <Responsive>
         <div className={classes.container}>
           <div className={classes.heading}>
-            <SlideUp>
-              <h1 className={classes.title}>
+            <h1 className={classes.title}>
+              <SlideUp>
                 Sell Crypto Effortlessly: Simplifying Transactions for Your
                 Users
-              </h1>
-            </SlideUp>
-            <SlideUp>
-              <p className={classes.description}>
+              </SlideUp>
+            </h1>
+            <p className={classes.description}>
+              <SlideUp>
                 Unlock hassle-free crypto selling with our user-centric
                 platform—seamless, secure, and tailored for swift transactions
                 worldwide.
-              </p>
-            </SlideUp>
+              </SlideUp>
+            </p>
           </div>
 
           <div className={classes.listContainer}>

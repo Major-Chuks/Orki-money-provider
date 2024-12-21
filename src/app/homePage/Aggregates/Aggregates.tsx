@@ -100,24 +100,24 @@ const Aggregates = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <SlideUp>
-          <div className={classes.title}>
+        <div className={classes.title}>
+          <SlideUp>
             We aggregate all the onramps so you don’t have to choose from one.
-          </div>
-        </SlideUp>
-        <SlideUp>
-          <div className={classes.listContainer}>
-            {data.map(({ icon, isComingSoon, name }, idx) => (
-              <div className={classes.box} key={idx}>
+          </SlideUp>
+        </div>
+        <div className={classes.listContainer}>
+          {data.map(({ icon, isComingSoon, name }, idx) => (
+            <SlideUp key={idx}>
+              <div className={classes.box}>
                 <Image src={icon} alt="" />
                 <div className={classes.name}>{name}</div>
                 {isComingSoon && (
                   <div className={classes.comingSoon}>Coming Soon</div>
                 )}
               </div>
-            ))}
-          </div>
-        </SlideUp>
+            </SlideUp>
+          ))}
+        </div>
       </div>
     </Responsive>
   );

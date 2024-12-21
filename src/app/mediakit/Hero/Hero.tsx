@@ -5,15 +5,15 @@ import classes from "./Hero.module.css";
 const Hero = () => {
   return (
     <div className={classes.container}>
-      <SlideUp>
-        <div className={classes.title}>Media Kit</div>
-      </SlideUp>
-      <SlideUp>
-        <div className={classes.description}>
+      <div className={classes.title}>
+        <SlideUp>Media Kit</SlideUp>
+      </div>
+      <div className={classes.description}>
+        <SlideUp>
           Orki media Kit offers a comprehensive suite of resources to help you
           tell our story
-        </div>
-      </SlideUp>
+        </SlideUp>
+      </div>
     </div>
   );
 };

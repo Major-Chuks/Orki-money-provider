@@ -84,7 +84,7 @@
   gap: 8px;
 }
 
-.title {
+.opening .title {
   color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
   font-family: "Space Grotesk";
   font-size: 24px;
@@ -109,6 +109,48 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    margin-bottom: 88px;
+  }
+
+  .accent {
+    font-size: 28px;
+    line-height: normal;
+    margin-bottom: 16px;
+  }
+
+  .container .title {
+    font-size: 42px;
+    line-height: 54px;
+  }
+
+  .categoryContainer {
+    margin-top: 28px;
+    margin-bottom: 42px;
+  }
+
+  .category {
+    font-size: 16px;
+  }
+
+  .opening {
+    padding: 24px;
+  }
+
+  .opening .title {
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .opening .rhs {
+    gap: 8px;
+  }
 }
 
 @media screen and (max-width: 540px) {
@@ -150,7 +192,7 @@
     border-radius: 8px;
   }
 
-  .title {
+  .opening .title {
     font-size: 16px;
     font-weight: 700;
   }

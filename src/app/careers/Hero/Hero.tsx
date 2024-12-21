@@ -11,28 +11,28 @@ const Hero = () => {
       <Responsive>
         <div className={classes.container}>
           <div className={classes.details_button}>
-            <SlideUp>
-              <div className={classes.details}>
-                <div className={classes.tag}>Hiring</div>
-                <div className={classes.title}>
-                  Join the team changing the future of On-ramp
-                </div>
+            <div className={classes.details}>
+              <div className={classes.tag}>
+                <SlideUp>Hiring</SlideUp>
               </div>
-            </SlideUp>
+              <div className={classes.title}>
+                <SlideUp>Join the team changing the future of On-ramp</SlideUp>
+              </div>
+            </div>
 
-            <SlideUp>
-              <div className={classes.btnContainer}>
+            <div className={classes.btnContainer}>
+              <SlideUp>
                 <CustomButton style={{ width: "max-content" }}>
                   View Open Roles
                 </CustomButton>
-              </div>
+              </SlideUp>
+            </div>
+          </div>
+          <div className={classes.image}>
+            <SlideUp>
+              <Image src={career} alt="" />
             </SlideUp>
           </div>
-          <SlideUp>
-            <div className={classes.image}>
-              <Image src={career} alt="" />
-            </div>
-          </SlideUp>
         </div>
       </Responsive>
     </div>

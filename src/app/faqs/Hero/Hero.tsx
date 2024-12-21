@@ -1,12 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
+import SlideUp from "@/components/SlideUp/SlideUp";
 import classes from "./Hero.module.css";
 
 const Hero = () => {
   return (
     <div className={classes.container}>
-      <div className={classes.title}>Frequently Asked Questions</div>
+      <div className={classes.title}>
+        <SlideUp>Frequently Asked Questions</SlideUp>
+      </div>
       <div className={classes.description}>
-        get answers to your questions about Orki
+        <SlideUp>get answers to your questions about Orki</SlideUp>
       </div>
     </div>
   );

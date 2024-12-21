@@ -31,28 +31,30 @@ const Connecting = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <SlideUp>
-          <div className={classes.heading}>
-            <h1>Connecting You to Onramps with one API</h1>
-            <p>
+        <div className={classes.heading}>
+          <h1>
+            <SlideUp>Connecting You to Onramps with one API</SlideUp>
+          </h1>
+          <p>
+            <SlideUp>
               Unleash the potential of a unified onramp experience with a single
               point of connection, and let innovation flow effortlessly into
               your platform.
-            </p>
-          </div>
-        </SlideUp>
+            </SlideUp>
+          </p>
+        </div>
 
-        <SlideUp>
-          <div className={classes.listContainer}>
-            {data.map(({ icon, title, description }, idx) => (
-              <div key={idx} className={classes.box}>
+        <div className={classes.listContainer}>
+          {data.map(({ icon, title, description }, idx) => (
+            <SlideUp key={idx}>
+              <div className={classes.box}>
                 <Image src={icon} alt="" />
                 <div className={classes.title}>{title}</div>
                 <div className={classes.description}>{description}</div>
               </div>
-            ))}
-          </div>
-        </SlideUp>
+            </SlideUp>
+          ))}
+        </div>
       </div>
     </Responsive>
   );

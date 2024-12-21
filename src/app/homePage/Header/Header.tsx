@@ -5,7 +5,6 @@ import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import Widget from "@/components/Widget/Widget";
 import SlideUp from "@/components/SlideUp/SlideUp";
 import { useEffect } from "react";
-import SlideDown from "@/components/SlideDown/SlideDown";
 
 const Header = () => {
   useEffect(() => {
@@ -19,35 +18,39 @@ const Header = () => {
     <div className={classes.wrapper}>
       <Responsive>
         <div className={classes.container}>
-          <SlideUp>
-            <div className={classes.details_button}>
-              <div className={classes.details}>
-                <Tag />
-                <div className={classes.title}>
-                  Buying crypto just got a lot easier
-                </div>
-                <div className={classes.description}>
+          <div className={classes.details_button}>
+            <div className={classes.details}>
+              <Tag />
+              <div className={classes.title}>
+                <SlideUp>Buying crypto just got a lot easier</SlideUp>
+              </div>
+              <div className={classes.description}>
+                <SlideUp>
                   Maximize coverage, conversion and revenue for your Crypto or
                   NFT platform and that to providing 20x more coverage as
                   compared to working with single onramp.
-                </div>
+                </SlideUp>
               </div>
+            </div>
 
-              <div className={classes.btnContainer}>
+            <div className={classes.btnContainer}>
+              <SlideUp>
                 <CustomButton style={{ width: "max-content" }} outline>
                   Contact Sales
                 </CustomButton>
+              </SlideUp>
+              <SlideUp>
                 <CustomButton style={{ width: "max-content" }}>
                   Get Started
                 </CustomButton>
-              </div>
+              </SlideUp>
             </div>
-          </SlideUp>
-          <SlideUp>
-            <div className={classes.widgetWrapper}>
+          </div>
+          <div className={classes.widgetWrapper}>
+            <SlideUp>
               <Widget />
-            </div>
-          </SlideUp>
+            </SlideUp>
+          </div>
         </div>
       </Responsive>
     </div>

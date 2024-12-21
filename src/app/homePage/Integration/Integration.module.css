@@ -14,15 +14,6 @@
   align-self: flex-start;
 }
 
-.accent {
-  color: var(--Foundation-Brand-brand-500, #5b29ec);
-  font-family: "Space Grotesk";
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 64.8px;
-}
-
 .wrapper {
   width: 100%;
   display: flex;
@@ -40,8 +31,8 @@
   line-height: 64.8px; /* 135% */
 }
 
-.wrapper {
-  gap: 32px;
+.accent {
+  color: var(--Foundation-Brand-brand-500, #5b29ec);
 }
 
 .details {
@@ -83,7 +74,7 @@
   height: auto;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .wrapper {
     flex-direction: column;
   }
@@ -99,15 +90,15 @@
   .details {
     max-width: 100%;
   }
+
+  .title {
+    font-size: 36px;
+  }
 }
 
 @media screen and (max-width: 540px) {
   .container {
     margin-bottom: 54px;
-  }
-
-  .wrapper {
-    /* gap: 32px; */
   }
 
   .title,

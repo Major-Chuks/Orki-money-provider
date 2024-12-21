@@ -52,12 +52,14 @@ const ValueAndCulture = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <SlideUp>
-          <div className={classes.heading}>
-            <div className={classes.accent}>Life at Orki </div>
-            <div className={classes.title}>Our team values and Culture</div>
+        <div className={classes.heading}>
+          <div className={classes.accent}>
+            <SlideUp>Life at Orki</SlideUp>
           </div>
-        </SlideUp>
+          <div className={classes.title}>
+            <SlideUp>Our team values and Culture</SlideUp>
+          </div>
+        </div>
 
         <div className={classes.listContainer}>
           {data.map(({ icon, title, description }, idx) => (

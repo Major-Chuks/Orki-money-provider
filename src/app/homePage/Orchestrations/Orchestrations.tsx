@@ -57,20 +57,20 @@ const Orchestrations = () => {
     <div className={classes.container}>
       <Responsive>
         <div className={classes.wrapper}>
-          <SlideUp>
-            <div className={classes.title}>What we orchestrate for you</div>
-          </SlideUp>
+          <div className={classes.title}>
+            <SlideUp>What we orchestrate for you</SlideUp>
+          </div>
 
-          <SlideUp>
-            <div className={classes.listContainer}>
-              {data.map(({ count, name }, idx) => (
-                <div key={idx} className={classes.box}>
+          <div className={classes.listContainer}>
+            {data.map(({ count, name }, idx) => (
+              <SlideUp key={idx}>
+                <div className={classes.box}>
                   <div className={classes.count}>{count}</div>
                   <div className={classes.name}>{name}</div>
                 </div>
-              ))}
-            </div>
-          </SlideUp>
+              </SlideUp>
+            ))}
+          </div>
         </div>
       </Responsive>
 
@@ -94,11 +94,11 @@ const Orchestrations = () => {
         ))}
       </div>
 
-      <SlideUp>
-        <div className={classes.image}>
+      <div className={classes.image}>
+        <SlideUp>
           <Image className={classes.globe} src={globe} alt="" />
-        </div>
-      </SlideUp>
+        </SlideUp>
+      </div>
     </div>
   );
 };

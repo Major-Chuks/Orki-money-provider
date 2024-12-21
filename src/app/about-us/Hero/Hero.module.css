@@ -70,6 +70,21 @@
   display: none;
 }
 
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    /* margin-bottom: 88px; */
+  }
+
+  .container {
+    /* gap: 82px; */
+  }
+
+  .title {
+    font-size: 36px;
+    line-height: normal;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .desktopImage {
     display: none;
@@ -86,6 +101,9 @@
   .mobileImage img {
     width: 100%;
     height: auto;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
   }
 }
 
@@ -115,5 +133,9 @@
     font-weight: 400;
     line-height: 20px; /* 142.857% */
     text-align: left;
+  }
+
+  .mobileImage img {
+    max-height: 182px;
   }
 }

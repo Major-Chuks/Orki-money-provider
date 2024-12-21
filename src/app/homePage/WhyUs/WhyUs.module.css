@@ -109,7 +109,7 @@
   overflow: hidden;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .container {
     flex-direction: column;
     padding: 24px 16px;

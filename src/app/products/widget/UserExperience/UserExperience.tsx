@@ -53,31 +53,29 @@ const UserExperience = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.heading}>
-          <SlideUp>
-            <div className={classes.title}>
-              User Experience that will delight your users
-            </div>
-          </SlideUp>
-          <SlideUp>
-            <div className={classes.description}>
+          <div className={classes.title}>
+            <SlideUp>User Experience that will delight your users</SlideUp>
+          </div>
+          <div className={classes.description}>
+            <SlideUp>
               Unleash the potential of a unified onramp experience with a single
               point of connection, and let innovation flow effortlessly into
               your platform.
-            </div>
-          </SlideUp>
+            </SlideUp>
+          </div>
         </div>
 
-        <SlideUp>
-          <div className={classes.listContainer}>
-            {data.map(({ icon, title, description }, idx) => (
-              <div key={idx} className={classes.box}>
+        <div className={classes.listContainer}>
+          {data.map(({ icon, title, description }, idx) => (
+            <SlideUp key={idx}>
+              <div className={classes.box}>
                 <Image src={icon} alt="" />
                 <div className={classes.title}>{title}</div>
                 <div className={classes.description}>{description}</div>
               </div>
-            ))}
-          </div>
-        </SlideUp>
+            </SlideUp>
+          ))}
+        </div>
       </div>
     </Responsive>
   );

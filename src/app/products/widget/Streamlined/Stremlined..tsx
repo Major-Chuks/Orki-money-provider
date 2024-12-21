@@ -5,7 +5,6 @@ import icon3 from "@/assets/streamlined-3.png";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
-import SlideDown from "@/components/SlideDown/SlideDown";
 
 const Streamlined = () => {
   return (
@@ -13,27 +12,27 @@ const Streamlined = () => {
       <Responsive>
         <div className={classes.container}>
           <div className={classes.heading}>
-            <SlideUp>
-              <div className={classes.title}>
+            <div className={classes.title}>
+              <SlideUp>
                 Streamlined Access: Your Gateway to All Onramps in One Unified
                 API.
-              </div>
-            </SlideUp>
-            <SlideUp>
-              <div className={classes.subTitle}>
+              </SlideUp>
+            </div>
+            <div className={classes.subTitle}>
+              <SlideUp>
                 Navigate Your Path with Orki: Where Every Entry Unlocks
                 Possibilities.
-              </div>
-            </SlideUp>
-            <SlideUp>
-              <div
-                className={classes.description}
-                style={{ textAlign: "center", maxWidth: "859px" }}
-              >
+              </SlideUp>
+            </div>
+            <div
+              className={classes.description}
+              style={{ textAlign: "center", maxWidth: "859px" }}
+            >
+              <SlideUp>
                 We Connect Your Customers to the Perfect Onramp for their Unique
                 Journey, ensuring a smooth ride into the world of opportunities.
-              </div>
-            </SlideUp>
+              </SlideUp>
+            </div>
           </div>
 
           <div className={classes.listContainer}>

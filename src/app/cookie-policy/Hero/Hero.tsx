@@ -1,11 +1,16 @@
 /* eslint-disable react/no-unescaped-entities */
+import SlideUp from "@/components/SlideUp/SlideUp";
 import classes from "./Hero.module.css";
 
 const Hero = () => {
   return (
     <div className={classes.container}>
-      <div className={classes.title}>Cookie Policy</div>
-      <div className={classes.update}>Last updated November, 2023</div>
+      <div className={classes.title}>
+        <SlideUp>Cookie Policy</SlideUp>
+      </div>
+      <div className={classes.update}>
+        <SlideUp>Last updated November, 2023</SlideUp>
+      </div>
     </div>
   );
 };

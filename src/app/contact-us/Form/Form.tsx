@@ -16,6 +16,7 @@ import CustomEmailInput from "@/components/CustomInput/CustomEmailInput/CustomEm
 import envelopIcon from "@/assets/icon-envelop.png";
 import Responsive from "@/components/Responsive/Responsive";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
+import SlideUp from "@/components/SlideUp/SlideUp";
 
 const Form = () => {
   const [error, setError] = useState<ErrorState>({
@@ -82,104 +83,130 @@ const Form = () => {
         <div className={classes.leftSide}>
           <div className={classes.heading}>
             <div className={classes.title}>
-              Contact our <br />
-              Support Team
+              <SlideUp>
+                Contact our <br />
+                Support Team
+              </SlideUp>
             </div>
             <div className={classes.description}>
-              Have questions about Orki? Fill out the form and our sales expert
-              will be in touch directly
+              <SlideUp>
+                Have questions about Orki? Fill out the form and our sales
+                expert will be in touch directly
+              </SlideUp>
             </div>
           </div>
           <div className={classes.imageContainer}>
-            <Image src={teamImage} alt="" />
+            <SlideUp>
+              <Image src={teamImage} alt="" />
+            </SlideUp>
           </div>
         </div>
         <>
           {!submitted ? (
             <div className={classes.rightSide}>
               <div className={classes.inputContainer}>
-                <CustomTextInput
-                  id={"name"}
-                  label="Company Name"
-                  placeholder="Enter Company Name"
-                  onChange={handleChange}
-                  value={input}
-                  error={error}
-                  errorMsg=""
-                  outline={false}
-                />
+                <SlideUp>
+                  <CustomTextInput
+                    id={"name"}
+                    label="Company Name"
+                    placeholder="Enter Company Name"
+                    onChange={handleChange}
+                    value={input}
+                    error={error}
+                    errorMsg=""
+                    outline={false}
+                  />
+                </SlideUp>
               </div>
 
               <div className={classes.inputContainer}>
-                <CustomEmailInput
-                  id={"email"}
-                  label="Work Email"
-                  placeholder="Enter Company Email"
-                  onChange={handleChange}
-                  value={input}
-                  error={error}
-                  errorMsg=""
-                  outline={false}
-                />
+                <SlideUp>
+                  <CustomEmailInput
+                    id={"email"}
+                    label="Work Email"
+                    placeholder="Enter Company Email"
+                    onChange={handleChange}
+                    value={input}
+                    error={error}
+                    errorMsg=""
+                    outline={false}
+                  />
+                </SlideUp>
               </div>
 
               <div className={classes.inputContainer}>
-                <CustomTextInput
-                  id={"support"}
-                  label="How can our team help?"
-                  placeholder="Enter a subject"
-                  onChange={handleChange}
-                  value={input}
-                  error={error}
-                  errorMsg=""
-                  outline={false}
-                />
+                <SlideUp>
+                  <CustomTextInput
+                    id={"support"}
+                    label="How can our team help?"
+                    placeholder="Enter a subject"
+                    onChange={handleChange}
+                    value={input}
+                    error={error}
+                    errorMsg=""
+                    outline={false}
+                  />
+                </SlideUp>
               </div>
 
               <div className={classes.inputContainer}>
-                <CustomTextInput
-                  id={"message"}
-                  label="Write Message"
-                  placeholder="Write us a message"
-                  onChange={handleChange}
-                  value={input}
-                  error={error}
-                  errorMsg=""
-                  outline={false}
-                  type="textarea"
-                />
+                <SlideUp>
+                  <CustomTextInput
+                    id={"message"}
+                    label="Write Message"
+                    placeholder="Write us a message"
+                    onChange={handleChange}
+                    value={input}
+                    error={error}
+                    errorMsg=""
+                    outline={false}
+                    type="textarea"
+                  />
+                </SlideUp>
               </div>
 
               <div className={classes.terms}>
-                <CustomCheckbox
-                  isChecked={isChecked}
-                  value=""
-                  onChange={handleCheckbox}
-                />
+                <SlideUp>
+                  <CustomCheckbox
+                    isChecked={isChecked}
+                    value=""
+                    onChange={handleCheckbox}
+                  />
+                </SlideUp>
                 <div>
-                  By submitting this form, i confirm that I have read and
-                  understood orki's <a href="">Privacy Statement.</a>
+                  <SlideUp>
+                    By submitting this form, i confirm that I have read and
+                    understood orki's <a href="">Privacy Statement.</a>
+                  </SlideUp>
                 </div>
               </div>
 
               <div className={classes.btnContainer}>
-                <CustomButton
-                  onClick={handleSubmit}
-                  loading={loading}
-                  disabled={disabled}
-                >
-                  Submit
-                </CustomButton>
+                <SlideUp>
+                  <CustomButton
+                    onClick={handleSubmit}
+                    loading={loading}
+                    disabled={disabled}
+                  >
+                    Submit
+                  </CustomButton>
+                </SlideUp>
               </div>
             </div>
           ) : (
             <div className={`${classes.rightSide} ${classes.submission}`}>
-              <Image src={envelopIcon} alt="" />
+              <SlideUp>
+                <Image src={envelopIcon} alt="" />
+              </SlideUp>
 
-              <div className={classes.title}>Thanks for your message</div>
+              <div className={classes.title}>
+                <SlideUp>Thanks for your message</SlideUp>
+              </div>
 
               <div className={classes.description}>
-                Someone from the team will be in touch shortly.
+                <SlideUp>
+                  Someone from the team will be in touch shortly.
+                </SlideUp>
               </div>
             </div>
           )}

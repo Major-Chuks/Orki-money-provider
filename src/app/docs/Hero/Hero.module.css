@@ -43,7 +43,7 @@
   line-height: 32px; /* 133.333% */
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .update {
     font-size: 16px;
     line-height: 26px;

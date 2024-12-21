@@ -27,28 +27,26 @@ const Visualize = () => {
     <div className={classes.wrapper}>
       <Responsive>
         <div className={classes.container}>
-          <SlideUp>
-            <div className={classes.heading}>
-              <div className={classes.title}>
-                Visualize the Onramp Orchestration Layer{" "}
-              </div>
+          <div className={classes.heading}>
+            <div className={classes.title}>
+              <SlideUp>Visualize the Onramp Orchestration Layer</SlideUp>
             </div>
-          </SlideUp>
-          <SlideUp>
-            <div className={classes.image}>
+          </div>
+          <div className={classes.image}>
+            <SlideUp>
               <Image src={orchestrationLayer} alt="" />
-            </div>
-          </SlideUp>
-          <SlideUp>
-            <div className={classes.listContainer}>
-              {data.map(({ id, description }, idx) => (
-                <div key={idx} className={classes.box}>
+            </SlideUp>
+          </div>
+          <div className={classes.listContainer}>
+            {data.map(({ id, description }, idx) => (
+              <SlideUp key={idx}>
+                <div className={classes.box}>
                   <div className={classes.id}>{id}</div>
                   <div className={classes.description}>{description}</div>
                 </div>
-              ))}
-            </div>
-          </SlideUp>
+              </SlideUp>
+            ))}
+          </div>
         </div>
       </Responsive>
     </div>

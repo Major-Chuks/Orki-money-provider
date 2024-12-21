@@ -76,9 +76,12 @@
   line-height: 20px; /* 125% */
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .container {
+    padding-top: 68px;
+    margin-bottom: 88px;
     flex-direction: column-reverse;
+    gap: 0;
   }
 
   .details_button {
@@ -86,7 +89,25 @@
   }
 
   .image {
-    max-width: 100%;
+    max-width: 680px;
+    padding-top: 0;
+  }
+
+  .heading {
+    gap: 24px;
+  }
+
+  .heading h1 {
+    font-size: 42px;
+    line-height: 54px;
+  }
+
+  .heading p {
+    font-size: 16px;
+  }
+
+  .listContainer {
+    gap: 16px;
   }
 }
 

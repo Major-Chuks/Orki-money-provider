@@ -8,23 +8,23 @@ const Solution = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <SlideUp>
-          <div className={classes.details}>
-            <div className={classes.title}>
-              Get all fiat-to-crypto on ramps in one widget
-            </div>
-            <div className={classes.description}>
+        <div className={classes.details}>
+          <div className={classes.title}>
+            <SlideUp>Get all fiat-to-crypto on ramps in one widget</SlideUp>
+          </div>
+          <div className={classes.description}>
+            <SlideUp>
               We have connected all major on ramps to support multiple
               countries, payments methods and tokens in one single API to save
-              your time.{" "}
-            </div>
+              your time.
+            </SlideUp>
           </div>
-        </SlideUp>
-        <SlideUp>
-          <div className={classes.image}>
+        </div>
+        <div className={classes.image}>
+          <SlideUp>
             <Image src={solution} alt="" />
-          </div>
-        </SlideUp>
+          </SlideUp>
+        </div>
       </div>
     </Responsive>
   );

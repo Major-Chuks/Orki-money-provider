@@ -28,12 +28,14 @@ const ContactUs = ({
         style={{ backgroundImage: `url(${bg.src})` }}
         className={classes.container}
       >
-        <SlideUp>
-          <div className={classes.heading}>
-            <div className={classes.title}>{_title}</div>
-            <div className={classes.description}>{_description}</div>
+        <div className={classes.heading}>
+          <div className={classes.title}>
+            <SlideUp>{_title}</SlideUp>
           </div>
-        </SlideUp>
+          <div className={classes.description}>
+            <SlideUp>{_description}</SlideUp>
+          </div>
+        </div>
         <SlideUp>
           <CustomButton style={{ width: "max-content", alignSelf: "center" }}>
             Contact Us

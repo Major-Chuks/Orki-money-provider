@@ -9,9 +9,9 @@ import ContactUs from "../homePage/ContactUs/ContactUs";
 const About = () => {
   return (
     <React.Fragment>
-      {/* <Hero />
+      <Hero />
       <MisionAndVision />
-      <CoreValues /> */}
+      <CoreValues />
       <ContactUs
         title="Unite with us: For Onramping to financial victory!"
         description="Unlock Crypto Success: Your Shortcut to Smarter and Refined Transactions with us."

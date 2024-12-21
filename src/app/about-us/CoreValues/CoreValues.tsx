@@ -32,26 +32,28 @@ const CoreValues = () => {
     <div className={classes.wrapper}>
       <Responsive>
         <div className={classes.container}>
-          <SlideUp>
-            <div className={classes.heading}>
-              <div className={classes.accent}>OUR VALUES</div>
-              <div className={classes.title}>What we stand for</div>
+          <div className={classes.heading}>
+            <div className={classes.accent}>
+              <SlideUp>OUR VALUES</SlideUp>
             </div>
-          </SlideUp>
+            <div className={classes.title}>
+              <SlideUp>What we stand for</SlideUp>
+            </div>
+          </div>
 
-          <SlideUp>
-            <div className={classes.listContainer}>
-              {data.map(({ icon, title, description }, idx) => (
-                <div key={idx} className={classes.box}>
+          <div className={classes.listContainer}>
+            {data.map(({ icon, title, description }, idx) => (
+              <SlideUp key={idx}>
+                <div className={classes.box}>
                   <div className={classes.iconContainer}>
                     <Image src={icon} alt="" />
                   </div>
                   <div className={classes.title}>{title}</div>
                   <div className={classes.description}>{description}</div>
                 </div>
-              ))}
-            </div>
-          </SlideUp>
+              </SlideUp>
+            ))}
+          </div>
         </div>
       </Responsive>
     </div>

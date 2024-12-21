@@ -4,6 +4,8 @@
   z-index: 999;
   background: #fff;
   animation: enter 1s forwards;
+  border-bottom: 1px solid var(--Gray-400, #cbd5e0);
+  background: #fefefe;
 }
 
 @keyframes enter {
@@ -108,7 +110,7 @@
   line-height: 28px; /* 155.556% */
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .desktopView {
     display: none;
   }

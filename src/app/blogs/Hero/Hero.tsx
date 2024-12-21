@@ -5,14 +5,14 @@ import classes from "./Hero.module.css";
 const Hero = () => {
   return (
     <div className={classes.container}>
-      <SlideUp>
-        <div className={classes.title}>ORKI Blog</div>
-      </SlideUp>
-      <SlideUp>
-        <div className={classes.description}>
+      <div className={classes.title}>
+        <SlideUp>ORKI Blog</SlideUp>
+      </div>
+      <div className={classes.description}>
+        <SlideUp>
           Latest cryptocurrency news, opinions and market updates
-        </div>
-      </SlideUp>
+        </SlideUp>
+      </div>
     </div>
   );
 };

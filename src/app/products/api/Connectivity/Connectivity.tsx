@@ -102,22 +102,24 @@ const Connectivity = () => {
       <Responsive>
         <div className={classes.container}>
           <div className={classes.heading}>
-            <SlideUp>
-              <h1>Seamless Onramp Connectivity and Global Coverage</h1>
-            </SlideUp>
-            <SlideUp>
-              <h2>
+            <h1>
+              <SlideUp>
+                Seamless Onramp Connectivity and Global Coverage
+              </SlideUp>
+            </h1>
+            <h2>
+              <SlideUp>
                 Expand your reach by integrating with a diverse selection of
                 onramps, embracing over 100+ payment options through our
                 integrations API.
-              </h2>
-            </SlideUp>
-            <SlideUp>
-              <p>
+              </SlideUp>
+            </h2>
+            <p>
+              <SlideUp>
                 We Connect Your Customers to the Perfect Onramp for their Unique
                 Journey, ensuring a smooth ride into the world of opportunities.
-              </p>
-            </SlideUp>
+              </SlideUp>
+            </p>
           </div>
           <SlideUp>
             <div className={classes.listContainer}>

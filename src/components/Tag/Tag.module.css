@@ -1,4 +1,5 @@
-.category {
+.container {
+  width: max-content !important;
   color: #4f5664;
   font-family: "Space Grotesk";
   font-size: 20px;
@@ -26,15 +27,11 @@
 }
 
 @media screen and (max-width: 540px) {
-  .category {
+  .container {
     width: 100%;
   }
 
-  .category.center {
-    text-align: center;
-  }
-
-  .category,
+  .container,
   .accent,
   .faint {
     font-size: 14px;

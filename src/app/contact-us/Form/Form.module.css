@@ -66,6 +66,10 @@
   margin-bottom: 24px;
 }
 
+.inputContainer > div {
+  width: 100% !important;
+}
+
 .inputContainer textarea::placeholder,
 .inputContainer input::placeholder {
   color: var(--Foundation-Text-color-text-color-200, #8f8f8f);
@@ -180,14 +184,25 @@
   letter-spacing: 0.2px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .container {
     flex-direction: column;
+    gap: 64px;
+    padding-top: 48px;
+  }
+
+  .leftSide {
+    width: 100%;
   }
 
   .rightSide {
     border-radius: 16px;
     max-width: 100%;
+  }
+
+  .title {
+    font-size: 42px;
+    line-height: 54px;
   }
 
   .title br {

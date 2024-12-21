@@ -9,14 +9,14 @@ const Form = () => {
     <Responsive>
       <div className={classes.container}>
         <div className={classes.details}>
-          <SlideUp>
-            <div className={classes.title}>Excited to join the journey?</div>
-          </SlideUp>
-          <SlideUp>
-            <div className={classes.description}>
+          <div className={classes.title}>
+            <SlideUp>Excited to join the journey?</SlideUp>
+          </div>
+          <div className={classes.description}>
+            <SlideUp>
               Be the first in line to experience effortless offramping!
-            </div>
-          </SlideUp>
+            </SlideUp>
+          </div>
         </div>
         <div className={classes.inputWrapper}>
           <SlideUp>
@@ -39,13 +39,13 @@ const Form = () => {
               placeholder="Enter your company name"
             />
           </SlideUp>
-          <SlideUp>
-            <div className={classes.btnContainer}>
+          <div className={classes.btnContainer}>
+            <SlideUp>
               <CustomButton style={{ width: "max-content" }}>
                 Join the waitist
               </CustomButton>
-            </div>
-          </SlideUp>
+            </SlideUp>
+          </div>
         </div>
       </div>
     </Responsive>

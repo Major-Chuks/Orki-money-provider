@@ -132,12 +132,6 @@
   margin-bottom: 24px;
 }
 
-@media screen and (max-width: 1200px) {
-  .container {
-    /* gap: 120px; */
-  }
-}
-
 @media screen and (max-width: 1024px) {
   .navbarWrapper {
     padding-top: 84px;

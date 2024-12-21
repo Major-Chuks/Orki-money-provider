@@ -38,18 +38,19 @@ const WhyUs = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <SlideUp>
-          <div className={classes.image}>
+        <div className={classes.image}>
+          <SlideUp>
             <Image src={img} alt="" />
+          </SlideUp>
+        </div>
+        <div className={classes.details}>
+          <div className={classes.title}>
+            <SlideUp>Why choose us?</SlideUp>
           </div>
-        </SlideUp>
-        <SlideUp>
-          <div className={classes.details}>
-            <div className={classes.title}>Why choose us?</div>
-            <div className={classes.listContainer}>
-              {data.map(({ id, title, description }, idx) => (
+          <div className={classes.listContainer}>
+            {data.map(({ id, title, description }, idx) => (
+              <SlideUp key={idx}>
                 <div
-                  key={idx}
                   className={`${classes.box} ${
                     boxId === idx && classes.active
                   }`}
@@ -66,10 +67,10 @@ const WhyUs = () => {
                     <div className={classes.description}>{description}</div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </SlideUp>
+            ))}
           </div>
-        </SlideUp>
+        </div>
       </div>
     </Responsive>
   );
