@@ -110,6 +110,26 @@
   line-height: 28px; /* 155.556% */
 }
 
+.navDropdownWrapper {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background: white;
+  top: 0;
+  left: 0;
+  animation: enter 450ms forwards;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .desktopView {
     display: none;
@@ -120,5 +140,16 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px 0;
+  }
+
+  .openIcon {
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .mobileView .logo {
+    width: 59px;
+    height: 27px;
   }
 }

@@ -13,11 +13,15 @@ import { useEffect, useState } from "react";
 import { outSideClickHandler } from "@/services/utils";
 import hamburgerIcon from "@/assets/icon-hamburger.svg";
 import CustomButton from "../CustomInput/CustomButton/CustomButton";
+import Dropdown from "./Dropdown/Dropdown";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 // import { useState } from "react";
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(0);
+  const [dropdown, setDropdown] = useState(false);
+  const { width } = useMediaQuery();
 
   const router = useRouter();
 
@@ -28,6 +32,12 @@ const Navbar = () => {
       document: window.document,
     });
   }, []);
+
+  useEffect(() => {
+    if (width >= 1024) {
+      setDropdown(false);
+    }
+  }, [width]);
 
   const nav = (
     <div id="id_nav" className={classes.nav}>
@@ -102,11 +112,22 @@ const Navbar = () => {
             onClick={() => router.push(routes.home)}
             className={classes.logo}
           >
-            <Image src={logo} alt="" />
+            <Image className={classes.logo} src={logo} alt="" />
           </div>
-          <Image src={hamburgerIcon} alt="" />
+          <Image
+            onClick={() => setDropdown(!dropdown)}
+            src={hamburgerIcon}
+            alt=""
+            className={classes.openIcon}
+          />
         </div>
       </Responsive>
+
+      {dropdown && (
+        <div className={classes.navDropdownWrapper}>
+          <Dropdown onClose={() => setDropdown(false)} />
+        </div>
+      )}
     </div>
   );
 };
