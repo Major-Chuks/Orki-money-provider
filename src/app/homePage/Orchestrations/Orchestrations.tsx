@@ -16,6 +16,7 @@ import Image from "next/image";
 import globe from "@/assets/globe.png";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
+import Map from "../OnrampCoverage/OnrampCoverage";
 
 const data = [
   {
@@ -96,7 +97,7 @@ const Orchestrations = () => {
 
       <div className={classes.image}>
         <SlideUp>
-          <Image className={classes.globe} src={globe} alt="" />
+          <Map />
         </SlideUp>
       </div>
     </div>

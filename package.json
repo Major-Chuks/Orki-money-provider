@@ -10,9 +10,13 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@types/react-tooltip": "^4.2.4",
+    "d3": "^7.9.0",
     "next": "14.2.15",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-simple-maps": "^3.0.0",
+    "react-tooltip": "^5.28.0"
   },
   "devDependencies": {
     "@types/node": "^20",
