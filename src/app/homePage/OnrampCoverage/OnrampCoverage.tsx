@@ -4,6 +4,8 @@ import { Tooltip } from "react-tooltip";
 import { onrampCoverageData } from "./data";
 import classes from "./OnrampCoverage.module.css";
 import { onramper } from "./onramper";
+import { COUNTRY_DATA } from "@/constants/country";
+import Image from "next/image";
 
 // GeoJSON URL for world map
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
@@ -36,11 +38,17 @@ const Map: React.FC = () => {
       (c) => c.country.toLowerCase() === country?.name.toLowerCase()
     );
 
+    const flag = COUNTRY_DATA.find(
+      (c) => c.name.toLowerCase() === country?.name.toLowerCase()
+    )?.flag;
+
     if (country && _onramper) {
       setTooltipContent(
         <div className={classes.tooltipContainer}>
           <div className={classes.country_flag}>
-            <div className={classes.flag}></div>
+            <div className={classes.flag}>
+              {flag && <Image width={32} height={32} src={flag} alt="" />}
+            </div>
             <div className={classes.country}>{country.name}</div>
           </div>
           <div className={classes.category}>
