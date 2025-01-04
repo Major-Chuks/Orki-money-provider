@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
 import { onrampCoverageData } from "./data";
+import classes from "./OnrampCoverage.module.css";
+import { onramper } from "./onramper";
 
 // GeoJSON URL for world map
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
@@ -9,12 +11,14 @@ const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 // Define the shape of onrampCoverageData's entries
 interface CountryData {
   name: string;
-  paymentMethods: string;
+  paymentMethods: string[];
   onramps: number;
 }
 
 const Map: React.FC = () => {
-  const [tooltipContent, setTooltipContent] = useState<string>("");
+  const [tooltipContent, setTooltipContent] = useState<React.JSX.Element>(
+    <></>
+  );
 
   // Geo type
   interface Geo {
@@ -28,30 +32,57 @@ const Map: React.FC = () => {
       id as keyof typeof onrampCoverageData
     ] as CountryData | undefined;
 
-    if (country) {
+    const _onramper = onramper.find(
+      (c) => c.country.toLowerCase() === country?.name.toLowerCase()
+    );
+
+    if (country && _onramper) {
       setTooltipContent(
-        `<strong>${country.name}</strong><br/>
-        Payment Methods: ${country.paymentMethods}<br/>
-        No of onramps: ${country.onramps}`
+        <div className={classes.tooltipContainer}>
+          <div className={classes.country_flag}>
+            <div className={classes.flag}></div>
+            <div className={classes.country}>{country.name}</div>
+          </div>
+          <div className={classes.category}>
+            <div className={classes.label}>Payment Methods</div>
+            <div className={classes.list}>
+              {_onramper.local_payment_methods.map((item, idx) => (
+                <div key={idx} className={classes.item}>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={classes.category}>
+            <div className={classes.label}>No of onramps</div>
+            <div className={classes.list}>
+              <div className={`${classes.item} ${classes.round}`}>
+                {_onramper.supported_onramps.length}
+              </div>
+            </div>
+          </div>
+        </div>
       );
     } else {
-      setTooltipContent("No data available");
+      setTooltipContent(
+        <div className={classes.noData}>No data available</div>
+      );
     }
   };
 
   const handleMouseLeave = () => {
-    setTooltipContent("");
+    setTooltipContent(<></>);
   };
 
   return (
     <>
       <ComposableMap data-tip="">
-        <Geographies geography={geoUrl}>
+        <Geographies geography={"./features.json"}>
           {({ geographies }: { geographies: Geo[] }) =>
             geographies.map((geo) => (
               <Geography
                 data-tooltip-id="tooltip"
-                data-tooltip-html={tooltipContent}
+                // data-tooltip-html={tooltipContent}
                 key={geo.rsmKey}
                 geography={geo}
                 onMouseEnter={() => handleMouseEnter(geo)}
@@ -66,7 +97,16 @@ const Map: React.FC = () => {
           }
         </Geographies>
       </ComposableMap>
-      <Tooltip id="tooltip" />
+      <Tooltip
+        style={{
+          padding: "2px",
+          background: "transparent",
+          borderRadius: "32px",
+        }}
+        id="tooltip"
+      >
+        {tooltipContent}
+      </Tooltip>
     </>
   );
 };

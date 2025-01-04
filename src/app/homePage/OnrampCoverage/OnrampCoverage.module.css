@@ -1,0 +1,89 @@
+.tooltipContainer,
+.noData {
+  width: 320px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 32px;
+  border: 1px solid #000;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.noData {
+  width: max-content;
+  color: #111;
+}
+
+.country_flag {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.flag {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgb(240, 240, 240);
+}
+
+.country {
+  color: #111;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px; /* 100% */
+}
+
+.label {
+  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
+  text-align: center;
+  font-family: Manrope;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px; /* 155.556% */
+}
+
+.category {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.item {
+  width: max-content;
+  background: rgb(240, 240, 240);
+  border-radius: 12px;
+  padding: 4px 8px;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.item.round {
+  border-radius: 50%;
+  padding: 8px;
+}

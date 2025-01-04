@@ -77,10 +77,10 @@ const Dropdown = ({ onClose }: { onClose: () => void }) => {
       </div>
 
       <div className={classes.btnContainer}>
-        <CustomButton onClick={() => router.push(routes.widget)} outline>
+        <CustomButton onClick={() => handleRoute(routes.widget)} outline>
           Try Widget
         </CustomButton>
-        <CustomButton onClick={() => router.push(routes.contactUs)}>
+        <CustomButton onClick={() => handleRoute(routes.contactUs)}>
           Contact Us
         </CustomButton>
       </div>
