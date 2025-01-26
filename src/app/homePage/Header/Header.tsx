@@ -5,6 +5,8 @@ import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import Widget from "@/components/Widget/Widget";
 import SlideUp from "@/components/SlideUp/SlideUp";
 import { useEffect } from "react";
+import TransakWidget from "@/components/Transak/TransakWidget";
+import TransakIframe from "@/components/Transak/TransakIframe";
 
 const Header = () => {
   useEffect(() => {
@@ -48,7 +50,8 @@ const Header = () => {
           </div>
           <div className={classes.widgetWrapper}>
             <SlideUp>
-              <Widget />
+              {/* <Widget /> */}
+              <TransakIframe />
             </SlideUp>
           </div>
         </div>

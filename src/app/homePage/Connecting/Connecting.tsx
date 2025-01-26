@@ -35,13 +35,13 @@ const Connecting = () => {
           <h1>
             <SlideUp>Connecting You to Onramps with one API</SlideUp>
           </h1>
-          <p>
+          <div className={classes.subHeading}>
             <SlideUp>
               Unleash the potential of a unified onramp experience with a single
               point of connection, and let innovation flow effortlessly into
               your platform.
             </SlideUp>
-          </p>
+          </div>
         </div>
 
         <div className={classes.listContainer}>

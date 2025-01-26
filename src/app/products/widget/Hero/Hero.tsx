@@ -5,6 +5,7 @@ import checkIcon from "@/assets/widget-checkicon.svg";
 import Tag from "@/components/Tag/Tag";
 import Widget from "@/components/Widget/Widget";
 import SlideUp from "@/components/SlideUp/SlideUp";
+import TransakIframe from "@/components/Transak/TransakIframe";
 
 const data = [
   "Fully customizable.",
@@ -40,7 +41,8 @@ const Hero = () => {
         </div>
         <div className={classes.widgetWrapper}>
           <SlideUp>
-            <Widget />
+            {/* <Widget /> */}
+            <TransakIframe />
           </SlideUp>
         </div>
       </div>

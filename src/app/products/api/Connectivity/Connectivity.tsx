@@ -114,12 +114,12 @@ const Connectivity = () => {
                 integrations API.
               </SlideUp>
             </h2>
-            <p>
+            <div className={classes.subHeading}>
               <SlideUp>
                 We Connect Your Customers to the Perfect Onramp for their Unique
                 Journey, ensuring a smooth ride into the world of opportunities.
               </SlideUp>
-            </p>
+            </div>
           </div>
           <SlideUp>
             <div className={classes.listContainer}>

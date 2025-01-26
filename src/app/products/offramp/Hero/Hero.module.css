@@ -41,7 +41,7 @@
   line-height: 64.8px; /* 124.615% */
 }
 
-.heading p {
+.subHeading {
   color: #4f5664;
   text-align: left;
   font-family: "Space Grotesk";
@@ -102,7 +102,7 @@
     line-height: 54px;
   }
 
-  .heading p {
+  .subHeading {
     font-size: 16px;
   }
 
@@ -127,7 +127,7 @@
     line-height: 40px; /* 125% */
   }
 
-  .heading p {
+  .subHeading {
     font-size: 14px;
     font-weight: 400;
     line-height: 20px; /* 142.857% */

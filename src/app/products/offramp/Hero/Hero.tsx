@@ -30,12 +30,12 @@ const Hero = () => {
                 Seamless Crypto-to-Cash Conversion: Effortless and Accessible.
               </SlideUp>
             </h1>
-            <p>
+            <div className={classes.subHeading}>
               <SlideUp>
                 Effortless Offramping, One Integration: Streamline Global
                 Cashouts for Your Users.
               </SlideUp>
-            </p>
+            </div>
             <div className={classes.listContainer}>
               {data.map((item, idx) => (
                 <SlideUp key={idx}>

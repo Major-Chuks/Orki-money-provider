@@ -10,6 +10,13 @@ import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import CustomButton from "../CustomInput/CustomButton/CustomButton";
 import Sidebar from "./Sidebar/Sidebar";
 import History from "./History/History";
+import {
+  fetchCountries,
+  fetchCryptoCurrencies,
+  fetchFiatCurrencies,
+  fetchPricingQuotes,
+  fetchUserCountry,
+} from "./Widget.script";
 
 const Widget = () => {
   const [active, setActive] = useState<"buy" | "sell">("buy");
@@ -18,6 +25,21 @@ const Widget = () => {
 
   return (
     <div className={classes.container}>
+      <button style={{ cursor: "pointer" }} onClick={fetchPricingQuotes}>
+        Fetch pricing quotes
+      </button>
+      <button style={{ cursor: "pointer" }} onClick={fetchCryptoCurrencies}>
+        Fetch crypto currencies
+      </button>
+      <button style={{ cursor: "pointer" }} onClick={fetchFiatCurrencies}>
+        Fetch fiat currencies
+      </button>
+      <button style={{ cursor: "pointer" }} onClick={fetchCountries}>
+        Fetch countries
+      </button>
+      <button style={{ cursor: "pointer" }} onClick={fetchUserCountry}>
+        Fetch user country
+      </button>
       {toggleSidebar && (
         <Sidebar
           onHistoryClick={() => setToggleHistory(true)}

@@ -18,13 +18,13 @@ const Transactions = () => {
                 Users
               </SlideUp>
             </h1>
-            <p className={classes.description}>
+            <div className={classes.subHeading}>
               <SlideUp>
                 Unlock hassle-free crypto selling with our user-centric
                 platform—seamless, secure, and tailored for swift transactions
                 worldwide.
               </SlideUp>
-            </p>
+            </div>
           </div>
 
           <div className={classes.listContainer}>
