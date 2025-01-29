@@ -3,7 +3,7 @@
   margin-bottom: 40px;
 }
 
-.container > .title {
+.container > .name {
   color: #000;
   font-family: Inter;
   font-size: 14px;
@@ -11,14 +11,16 @@
   font-weight: 500;
   line-height: normal;
   margin-bottom: 24px;
+  text-align: center;
 }
 
 .boxWrapper {
   width: 100%;
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 20px;
+  overflow: auto;
 }
 
 .box {
@@ -65,4 +67,9 @@
 
 .box .description > img {
   cursor: pointer;
+}
+
+.icon {
+  width: 40px;
+  height: auto;
 }

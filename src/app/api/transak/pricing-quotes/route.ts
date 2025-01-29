@@ -10,10 +10,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
     searchParams.forEach((value, key) => {
       queryParams[key] = value;
     });
+    const queryString = new URLSearchParams(queryParams as any).toString();
 
     // Call the Transak API
     const { data } = await axios.get(
-      `https://api-stg.transak.com/api/v1/pricing/public/quotes?${queryParams}`,
+      `https://api-stg.transak.com/api/v1/pricing/public/quotes?${queryString}`,
       {
         headers: {
           Accept: "application/json",

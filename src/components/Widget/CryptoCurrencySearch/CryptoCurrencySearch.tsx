@@ -6,16 +6,22 @@ import arrowIcon from "@/assets/widget/arrow-down.svg";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
 import tickIcon from "@/assets/widget/tick.svg";
-import { CRYPTO_CURRENCY, ICRYPTO_CURRENCY } from "@/constants/cryptoCurrency";
+import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 
-const CryptoCurrencySearch = () => {
+const CryptoCurrencySearch = ({
+  cryptoCurrencies,
+  onCurrencyChange,
+}: {
+  cryptoCurrencies: get_crypto_currencies;
+  onCurrencyChange: (currency: get_crypto_currencies[number]) => void;
+}) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
-  const [selected, setSelected] = useState<ICRYPTO_CURRENCY>(
-    CRYPTO_CURRENCY[0]
-  );
+  const [selected, setSelected] = useState<
+    get_crypto_currencies[number] | null
+  >(null);
   const [searchValue, setSearchValue] = useState("");
-  const [filteredCountry, setFilteredCountry] =
-    useState<ICRYPTO_CURRENCY[]>(CRYPTO_CURRENCY);
+  const [filteredCryptoCurrencies, setFilteredCryptoCurrencies] =
+    useState<get_crypto_currencies>(cryptoCurrencies);
 
   const handleClick = () => {
     setToggleOverlay(!toggleOverlay);
@@ -23,12 +29,20 @@ const CryptoCurrencySearch = () => {
 
   useEffect(() => {
     if (searchValue) {
-      const results = CRYPTO_CURRENCY.filter((c) =>
-        c.name.toLowerCase().includes(searchValue)
+      const results = cryptoCurrencies.filter(
+        (c) =>
+          c.name.toLowerCase().includes(searchValue) ||
+          c.symbol.toLowerCase().includes(searchValue)
       );
-      setFilteredCountry(results);
+      setFilteredCryptoCurrencies(results);
     }
   }, [searchValue]);
+
+  useEffect(() => {
+    if (selected) {
+      onCurrencyChange({ ...selected });
+    }
+  }, [selected]);
 
   return (
     <div className={classes.container}>
@@ -36,11 +50,16 @@ const CryptoCurrencySearch = () => {
         <div className={classes.countryFlag}>
           <span className={classes.iconContainer}>
             {selected && (
-              <Image width={24} height={24} src={selected?.icon} alt="" />
+              <Image
+                width={24}
+                height={24}
+                src={selected?.image.small}
+                alt=""
+              />
             )}
           </span>
           <span className={classes.name}>
-            {selected?.name || "Select country"}
+            {selected?.name || "Select crypto currency"}
           </span>
         </div>
         <Image
@@ -71,7 +90,7 @@ const CryptoCurrencySearch = () => {
             </div>
 
             <div className={classes.countryWrapper}>
-              {filteredCountry.map((c, idx) => (
+              {filteredCryptoCurrencies.map((c, idx) => (
                 <div
                   onClick={() => {
                     setSelected(c);
@@ -82,14 +101,19 @@ const CryptoCurrencySearch = () => {
                 >
                   <div className={classes.countryFlag}>
                     <span className={classes.iconContainer}>
-                      <Image width={24} height={24} src={c.icon} alt="" />
+                      <Image
+                        width={24}
+                        height={24}
+                        src={c.image.small}
+                        alt=""
+                      />
                     </span>
                     <div className={classes.nameCode}>
                       <span className={classes.name}>{c.name}</span>
-                      <span className={classes.code}>{c.id}</span>
+                      <span className={classes.code}>{c.symbol}</span>
                     </div>
                   </div>
-                  <span className={classes.network}>{c.network}</span>
+                  <span className={classes.network}>{c.network.name}</span>
                 </div>
               ))}
             </div>

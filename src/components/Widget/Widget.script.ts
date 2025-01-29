@@ -2,7 +2,7 @@ import backend from "@/services/apis";
 
 export const fetchPricingQuotes = async () => {
   const queryParams = {
-    partnerApiKey: "", // Your API key
+    partnerApiKey: process.env.NEXT_PUBLIC_TRANSAK_API_KEY, // Your API key
     fiatCurrency: "USD", // Fiat currency symbol
     cryptoCurrency: "ETH", // Crypto currency symbol
     isBuyOrSell: "BUY", // BUY or SELL order

@@ -29,3 +29,8 @@
 .chevron {
   cursor: pointer;
 }
+
+.logo {
+  width: auto !important;
+  height: 16px;
+}

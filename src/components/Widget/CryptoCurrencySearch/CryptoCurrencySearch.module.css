@@ -13,6 +13,10 @@
   transition: all 300ms;
 }
 
+.container.isNetwork .selected {
+  width: max-content;
+}
+
 .country {
   padding: 8px 24px;
 }
@@ -60,6 +64,10 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+}
+
+.container.isNetwork .name {
+  text-transform: capitalize;
 }
 
 .code {
