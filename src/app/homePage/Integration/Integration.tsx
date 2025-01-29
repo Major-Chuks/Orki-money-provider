@@ -1,5 +1,5 @@
 import classes from "./Integration.module.css";
-import code from "@/assets/code.png";
+// import code from "@/assets/code.png";
 import Image from "next/image";
 import checkIcon from "@/assets/checkicon.svg";
 import starIcon from "@/assets/star.svg";
