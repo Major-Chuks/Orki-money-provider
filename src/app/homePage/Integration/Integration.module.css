@@ -74,6 +74,14 @@
   height: auto;
 }
 
+.codeBox {
+  background: #090628;
+  width: 100%;
+  max-width: 582px;
+  height: 485px;
+  border-radius: 16px;
+}
+
 @media screen and (max-width: 1024px) {
   .wrapper {
     flex-direction: column;
@@ -117,5 +125,9 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 20px; /* 142.857% */
+  }
+
+  .codeBox {
+    height: 285px;
   }
 }

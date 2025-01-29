@@ -43,7 +43,8 @@ const Integration = () => {
           </div>
           <div className={classes.image}>
             <SlideUp>
-              <Image src={code} alt="" />
+              {/* <Image src={code} alt="" /> */}
+              <div className={classes.codeBox}></div>
             </SlideUp>
           </div>
         </div>
