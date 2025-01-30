@@ -10,6 +10,10 @@
   padding-bottom: 40px;
 }
 
+.widgetWrapper {
+  width: auto;
+}
+
 .container {
   width: 100%;
   display: flex;
@@ -99,6 +103,10 @@
   .wrapper {
     padding-top: 24px;
     margin-bottom: 32px;
+  }
+
+  .widgetWrapper {
+    width: 100%;
   }
 
   .container {

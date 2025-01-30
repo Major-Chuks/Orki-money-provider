@@ -4,27 +4,53 @@ import classes from "./PaymentMethodSearch.module.css";
 import Image from "next/image";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
-import { IPAYMENT_METHOD, PAYMENT_METHOD } from "@/constants/paymentMethod";
+import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 
-const PaymentMethodSearch = ({ onClose }: { onClose: () => void }) => {
-  const [selected, setSelected] = useState<IPAYMENT_METHOD>(
-    PAYMENT_METHOD[101]
-  );
+const PaymentMethodSearch = ({
+  onClose,
+  paymentOptions,
+  onPaymentMethodChange,
+  display,
+}: {
+  onClose: () => void;
+  paymentOptions: get_fiat_currencies[number]["paymentOptions"];
+  onPaymentMethodChange: (
+    option: get_fiat_currencies[number]["paymentOptions"][number]
+  ) => void;
+  display: boolean;
+}) => {
+  const [selected, setSelected] = useState<
+    get_fiat_currencies[number]["paymentOptions"][number]
+  >(paymentOptions[0]);
   const [searchValue, setSearchValue] = useState("");
-  const [filteredCountry, setFilteredCountry] =
-    useState<IPAYMENT_METHOD[]>(PAYMENT_METHOD);
+  const [filteredMethods, setFilteredMethods] =
+    useState<get_fiat_currencies[number]["paymentOptions"][number][]>(
+      paymentOptions
+    );
 
   useEffect(() => {
     if (searchValue) {
-      const results = PAYMENT_METHOD.filter((c) =>
-        c.title.toLowerCase().includes(searchValue)
+      const results = paymentOptions.filter((c) =>
+        c.name.toLowerCase().includes(searchValue)
       );
-      setFilteredCountry(results);
+      setFilteredMethods(results);
+    } else {
+      setFilteredMethods(paymentOptions);
     }
   }, [searchValue]);
 
+  useEffect(() => {
+    if (selected) {
+      onPaymentMethodChange(selected);
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    setFilteredMethods(paymentOptions);
+  }, [display]);
+
   return (
-    <Overlay onClose={onClose}>
+    <Overlay style={{ display: display ? "block" : "none" }} onClose={onClose}>
       <div className={classes.wrapper}>
         <div className={classes.headingSearch}>
           <div className={classes.heading}>
@@ -41,7 +67,7 @@ const PaymentMethodSearch = ({ onClose }: { onClose: () => void }) => {
         </div>
 
         <div className={classes.countryWrapper}>
-          {filteredCountry.map((c, idx) => (
+          {filteredMethods.map((c, idx) => (
             <div
               onClick={() => {
                 setSelected(c);
@@ -52,10 +78,10 @@ const PaymentMethodSearch = ({ onClose }: { onClose: () => void }) => {
             >
               <div className={classes.countryFlag}>
                 <span className={classes.iconContainer}>
-                  <Image width={24} height={24} src={c.icon} alt="" />
+                  <img width={24} height={24} src={c.icon} alt="" />
                 </span>
                 <div className={classes.nameCode}>
-                  <span className={classes.name}>{c.title}</span>
+                  <span className={classes.name}>{c.name}</span>
                 </div>
               </div>
             </div>

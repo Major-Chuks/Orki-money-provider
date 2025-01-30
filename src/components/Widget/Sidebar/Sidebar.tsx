@@ -8,6 +8,7 @@ import supportIcon from "@/assets/widget/24-support.svg";
 import chevronRightIcon from "@/assets/widget/arrow-right.svg";
 import Overlay from "../Overlay/Overlay";
 import CountrySearch from "../CountrySearch/CountrySearch";
+import { ICountryData } from "@/constants/country";
 
 const routes = [
   {
@@ -35,9 +36,11 @@ const routes = [
 const Sidebar = ({
   onClose,
   onHistoryClick,
+  onCountryChange,
 }: {
   onClose: () => void;
   onHistoryClick: () => void;
+  onCountryChange: (country: ICountryData) => void;
 }) => {
   const handleRoute = (link: string) => {
     switch (link) {
@@ -84,7 +87,10 @@ const Sidebar = ({
 
         <div className={classes.location}>
           <div className={classes.title}>Location</div>
-          <CountrySearch onSearchOpen={() => {}} />
+          <CountrySearch
+            onCountryChange={onCountryChange}
+            onSearchOpen={() => {}}
+          />
         </div>
       </div>
     </Overlay>

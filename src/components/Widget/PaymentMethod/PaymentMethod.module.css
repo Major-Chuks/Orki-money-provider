@@ -3,7 +3,7 @@
   margin-bottom: 40px;
 }
 
-.container > .title {
+.title {
   color: #000;
   font-family: Inter;
   font-size: 14px;
@@ -17,8 +17,9 @@
   width: 100%;
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 20px;
+  overflow: auto;
 }
 
 .box {
@@ -40,7 +41,7 @@
   border: 1px solid var(--Foundation-Brand-brand-500, #5b29ec);
 }
 
-.box .title {
+.box .name {
   color: #000;
   font-family: Inter;
   font-size: 12px;
@@ -65,4 +66,9 @@
 
 .box .description > img {
   cursor: pointer;
+}
+
+.icon {
+  width: 24px;
+  height: auto;
 }

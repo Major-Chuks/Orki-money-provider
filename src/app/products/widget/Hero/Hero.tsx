@@ -41,8 +41,8 @@ const Hero = () => {
         </div>
         <div className={classes.widgetWrapper}>
           <SlideUp>
-            {/* <Widget /> */}
-            <TransakIframe />
+            <Widget />
+            {/* <TransakIframe /> */}
           </SlideUp>
         </div>
       </div>

@@ -6,42 +6,84 @@ import arrowIcon from "@/assets/widget/arrow-down.svg";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
 import rightArrowIcon from "@/assets/widget/arrow-right.svg";
-import { FIAT_CURRENCY, ICURENCY } from "@/constants/fiatCurrency";
+import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
+import SvgIcon from "../SvgIcon/SvgIcon";
+import backend from "@/services/apis";
 
-const FiatCurrencySearch = () => {
+const FiatCurrencySearch = ({
+  fiatCurrencies,
+  onCurrencyChange,
+}: {
+  fiatCurrencies: get_fiat_currencies;
+  onCurrencyChange: (symbol: string) => void;
+}) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
-  const [selected, setSelected] = useState<ICURENCY>(FIAT_CURRENCY[0]);
+  const [selected, setSelected] = useState<get_fiat_currencies[number] | null>(
+    null
+  );
   const [searchValue, setSearchValue] = useState("");
-  const [filteredCountry, setFilteredCountry] =
-    useState<ICURENCY[]>(FIAT_CURRENCY);
+  const [filteredCurrencies, setFilteredCurrencies] =
+    useState<get_fiat_currencies>(fiatCurrencies);
 
   const handleClick = () => {
     setToggleOverlay(!toggleOverlay);
   };
 
+  const handleDefaultSelect = async () => {
+    const response = await backend().get_user_country();
+    let countryCode = "US";
+
+    if (response) {
+      countryCode = response.data.country;
+    }
+
+    setFilteredCurrencies(fiatCurrencies);
+
+    const defaultCountry = fiatCurrencies.find((f) =>
+      f.supportingCountries.includes(countryCode)
+    );
+
+    if (defaultCountry) {
+      setSelected(defaultCountry);
+    } else {
+      setSelected(
+        fiatCurrencies.find((f) => f.supportingCountries.includes("US")) ||
+          fiatCurrencies[0]
+      );
+    }
+  };
+
   useEffect(() => {
+    if (!fiatCurrencies) return;
     if (searchValue) {
-      const results = FIAT_CURRENCY.filter(
+      const results = fiatCurrencies.filter(
         (c) =>
-          c.currency.toLowerCase().includes(searchValue) ||
-          c.country.toLowerCase().includes(searchValue) ||
+          c.name.toLowerCase().includes(searchValue) ||
           c.symbol.toLowerCase().includes(searchValue)
       );
-      setFilteredCountry(results);
+      setFilteredCurrencies(results);
     }
   }, [searchValue]);
+
+  useEffect(() => {
+    if (selected) {
+      onCurrencyChange(selected.symbol);
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    handleDefaultSelect();
+  }, [fiatCurrencies]);
 
   return (
     <div className={classes.container}>
       <div onClick={handleClick} className={classes.selected}>
         <div className={classes.countryFlag}>
           <span className={classes.iconContainer}>
-            {selected && (
-              <Image width={24} height={24} src={selected?.flag} alt="" />
-            )}
+            {selected && <SvgIcon svgString={selected.icon} />}
           </span>
           <span className={classes.name}>
-            {selected?.symbol || "Select currency"}
+            {selected?.symbol || "Select fiat currency"}
           </span>
         </div>
         <Image
@@ -72,7 +114,7 @@ const FiatCurrencySearch = () => {
             </div>
 
             <div className={classes.countryWrapper}>
-              {filteredCountry.map((c, idx) => (
+              {filteredCurrencies.map((c, idx) => (
                 <div
                   onClick={() => {
                     setSelected(c);
@@ -83,10 +125,10 @@ const FiatCurrencySearch = () => {
                 >
                   <div className={classes.countryFlag}>
                     <span className={classes.iconContainer}>
-                      <Image width={24} height={24} src={c.flag} alt="" />
+                      <SvgIcon svgString={c.icon} />
                     </span>
                     <div className={classes.nameCode}>
-                      <span className={classes.name}>{c.country}</span>
+                      <span className={classes.name}>{c.name}</span>
                       <span className={classes.code}>{c.symbol}</span>
                     </div>
                   </div>

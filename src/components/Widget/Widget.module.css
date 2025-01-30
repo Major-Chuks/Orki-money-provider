@@ -10,6 +10,14 @@
   overflow: hidden;
 }
 
+.container.loader {
+  width: 482px;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .heading {
   width: 100%;
   display: flex;
@@ -50,7 +58,7 @@
   background: var(--Foundation-Brand-brand-500, #5b29ec);
 }
 
-.underline.sell {
+.underline.SELL {
   left: unset;
   right: 0;
 }
@@ -70,4 +78,21 @@
   justify-content: flex-start;
   gap: 24px;
   margin-bottom: 24px;
+}
+
+.errorText {
+  color: #ff060a;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+}
+
+@media screen and (max-width: 540px) {
+  .container.loader {
+    width: 100%;
+    height: 60vh;
+  }
 }

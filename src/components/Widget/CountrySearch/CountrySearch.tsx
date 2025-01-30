@@ -7,8 +7,15 @@ import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
 import { COUNTRY_DATA, ICountryData } from "@/constants/country";
 import tickIcon from "@/assets/widget/tick.svg";
+import backend from "@/services/apis";
 
-const CountrySearch = ({ onSearchOpen }: { onSearchOpen: () => void }) => {
+const CountrySearch = ({
+  onSearchOpen,
+  onCountryChange,
+}: {
+  onSearchOpen: () => void;
+  onCountryChange: (country: ICountryData) => void;
+}) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
   const [selected, setSelected] = useState<ICountryData>(COUNTRY_DATA[101]);
   const [searchValue, setSearchValue] = useState("");
@@ -19,14 +26,30 @@ const CountrySearch = ({ onSearchOpen }: { onSearchOpen: () => void }) => {
     setToggleOverlay(!toggleOverlay);
   };
 
+  const fetchCountry = async () => {
+    const response = await backend().get_user_country();
+    if (response) {
+    }
+  };
+
   useEffect(() => {
     if (searchValue) {
       const results = COUNTRY_DATA.filter((c) =>
         c.name.toLowerCase().includes(searchValue)
       );
       setFilteredCountry(results);
+    } else {
+      setFilteredCountry(COUNTRY_DATA);
     }
   }, [searchValue]);
+
+  useEffect(() => {
+    onCountryChange(selected);
+  }, [selected]);
+
+  useEffect(() => {
+    // fetchCountry();
+  }, []);
 
   return (
     <div className={classes.container}>

@@ -1,76 +1,79 @@
+/* eslint-disable @next/next/no-img-element */
 import classes from "./PaymentMethod.module.css";
-import visaIcon from "@/assets/widget/visa.svg";
-import bankIcon from "@/assets/widget/bank.svg";
-import payIcon from "@/assets/widget/pay.svg";
-import infoIcon from "@/assets/widget/info.svg";
-import Image, { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
 import PaymentMethodSearch from "../PaymentMethodSearch/PaymentMethodSearch";
+import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
+import payIcon from "@/assets/widget/pay.svg";
+import infoIcon from "@/assets/widget/info.svg";
+import Image from "next/image";
 
-export type PaymentMethod = {
-  icon: StaticImageData;
-  title: string;
-  description: string;
-  info: string;
-};
-
-const paymentMethods = [
-  {
-    icon: visaIcon,
-    title: "Visa/Mastercard",
-    description: "Gateway Fee 1.99%",
-    info: "",
-  },
-  {
-    icon: bankIcon,
-    title: "Bank Transfer",
-    description: "Gateway Fee 1.99%",
-    info: "",
-  },
-
-  {
-    icon: payIcon,
-    title: "Other Options",
-    description: "Gateway Fee 1.99%",
-    info: "",
-  },
-];
-
-const PaymentMethod = () => {
-  const [selected, setSelected] = useState<PaymentMethod>(paymentMethods[0]);
+const PaymentMethod = ({
+  paymentOptions,
+  onPaymentMethodChange,
+}: {
+  paymentOptions: get_fiat_currencies[number]["paymentOptions"];
+  onPaymentMethodChange: (
+    option: get_fiat_currencies[number]["paymentOptions"][number]
+  ) => void;
+}) => {
+  const [selected, setSelected] = useState<
+    get_fiat_currencies[number]["paymentOptions"][number]
+  >(paymentOptions[0]);
   const [togglePaymentMethod, setTogglePaymentMethod] = useState(false);
 
+  // useEffect(() => {
+  //   if (selected.name === "Other Options") {
+  //     setTogglePaymentMethod(true);
+  //   }
+  // }, [selected]);
+
   useEffect(() => {
-    if (selected.title === "Other Options") {
-      setTogglePaymentMethod(true);
+    if (selected) {
+      onPaymentMethodChange(selected);
     }
   }, [selected]);
 
+  useEffect(() => {
+    setSelected(paymentOptions[0]);
+  }, [paymentOptions]);
+
   return (
     <div className={classes.container}>
-      {togglePaymentMethod && (
-        <PaymentMethodSearch onClose={() => setTogglePaymentMethod(false)} />
-      )}
+      <PaymentMethodSearch
+        paymentOptions={paymentOptions}
+        onClose={() => setTogglePaymentMethod(false)}
+        onPaymentMethodChange={setSelected}
+        display={togglePaymentMethod}
+      />
       <div className={classes.title}>Payment method</div>
       <div className={classes.boxWrapper}>
-        {paymentMethods.map((method, idx) => {
-          const { icon, title, description, info } = method;
-          return (
-            <div
-              key={idx}
-              onClick={() => setSelected(method)}
-              className={`${classes.box} ${
-                selected.title === title && classes.active
-              }`}
-            >
-              <Image src={icon} alt="" />
-              <div className={classes.title}>{title}</div>
-              <div className={classes.description}>
-                {description} <Image src={infoIcon} alt="" />{" "}
-              </div>
-            </div>
-          );
-        })}
+        <div className={`${classes.box} ${classes.active}`}>
+          <img
+            className={classes.icon}
+            width={40}
+            height={40}
+            src={selected.icon}
+            alt=""
+          />
+          <div className={classes.name}>{selected.name}</div>
+          <div className={classes.description}>
+            Gateway Fee 1.99% <Image src={infoIcon} alt="" />{" "}
+          </div>
+        </div>
+
+        <div
+          onClick={() => setTogglePaymentMethod(true)}
+          className={`${classes.box}`}
+        >
+          <Image
+            className={classes.icon}
+            width={40}
+            height={40}
+            src={payIcon}
+            alt=""
+          />
+          <div className={classes.name}>Other Options</div>
+        </div>
       </div>
     </div>
   );

@@ -406,3 +406,14 @@ export const openInNewTab = ({ pathname }: { pathname: string }) => {
 export const getCountryByCode = (code: string) => {
   return COUNTRY_DATA.find((c) => c.code === code);
 };
+
+export const formatStringToMoney = (inputValue: string) => {
+  const numericValue = inputValue.replace(/,/g, "").replace(/\D/g, "");
+  return numericValue ? Number(numericValue).toLocaleString() : "";
+};
+
+export const formatMoneyToNumber = (formattedString: string) => {
+  console.log(formattedString);
+
+  return Number(formattedString.replace(/,/g, ""));
+};
