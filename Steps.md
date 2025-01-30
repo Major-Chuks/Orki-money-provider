@@ -9,4 +9,3 @@ FRD
   render fiat-currencies, crypto-currencies, payment-method
   payment-provider(transak)
 - listen for user's input and submit
-- Complete integration
