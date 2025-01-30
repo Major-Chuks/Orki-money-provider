@@ -413,5 +413,7 @@ export const formatStringToMoney = (inputValue: string) => {
 };
 
 export const formatMoneyToNumber = (formattedString: string) => {
+  console.log(formattedString);
+
   return Number(formattedString.replace(/,/g, ""));
 };

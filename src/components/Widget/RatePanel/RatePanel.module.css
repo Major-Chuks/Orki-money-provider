@@ -7,7 +7,7 @@
   padding: 14.5px 12px;
   border-radius: 12px;
   background: var(--Foundation-Brand-brand-900, #261163);
-  margin-bottom: 44px;
+  margin-bottom: 8px;
 }
 
 .container div {
@@ -33,4 +33,13 @@
 .logo {
   width: auto !important;
   height: 16px;
+}
+
+.loadingText {
+  color: var(--Foundation-Text-color-text-color-50, #e7e7e7);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

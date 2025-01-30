@@ -39,15 +39,19 @@ const CryptoPanel = ({
             placeholder="0.00"
           />
         </div>
-        <div className={classes.crypto_network}>
-          <CryptoCurrencySearch
-            onCurrencyChange={setCurrency}
-            cryptoCurrencies={cryptoCurrencies}
-          />
-          <CryptoNetwork
-            network={{ name: currency?.network.name, imgUrl: "" }}
-          />
-        </div>
+        {cryptoCurrencies.length ? (
+          <div className={classes.crypto_network}>
+            <CryptoCurrencySearch
+              onCurrencyChange={setCurrency}
+              cryptoCurrencies={cryptoCurrencies}
+            />
+            <CryptoNetwork
+              network={{ name: currency?.network.name, imgUrl: "" }}
+            />
+          </div>
+        ) : (
+          <div>No crytocurrencies found.</div>
+        )}
       </div>
     </div>
   );

@@ -44,6 +44,11 @@ const CryptoCurrencySearch = ({
     }
   }, [selected]);
 
+  useEffect(() => {
+    setFilteredCryptoCurrencies(cryptoCurrencies);
+    setSelected(cryptoCurrencies[0]);
+  }, [cryptoCurrencies]);
+
   return (
     <div className={classes.container}>
       <div onClick={handleClick} className={classes.selected}>

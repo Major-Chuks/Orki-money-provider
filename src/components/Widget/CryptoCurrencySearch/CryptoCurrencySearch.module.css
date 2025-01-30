@@ -70,6 +70,11 @@
   text-transform: capitalize;
 }
 
+.container.isNetwork .selected:hover {
+  border: transparent;
+  cursor: text;
+}
+
 .code {
   color: var(--Foundation-Text-color-text-color-200, #8f8f8f);
   font-family: Inter;

@@ -10,7 +10,7 @@ const FiatPanel = ({
   onCurrencyChange,
 }: {
   title: string;
-  fiatCurrencies: get_fiat_currencies;
+  fiatCurrencies: get_fiat_currencies | null;
   value: string;
   onCurrencyChange: (symbol: string) => void;
   onAmountChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -28,10 +28,14 @@ const FiatPanel = ({
             placeholder="0.00"
           />
         </div>
-        <FiatCurrencySearch
-          onCurrencyChange={onCurrencyChange}
-          fiatCurrencies={fiatCurrencies}
-        />
+        {fiatCurrencies?.length ? (
+          <FiatCurrencySearch
+            onCurrencyChange={onCurrencyChange}
+            fiatCurrencies={fiatCurrencies}
+          />
+        ) : (
+          <div>No fiat currency found.</div>
+        )}
       </div>
     </div>
   );

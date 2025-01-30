@@ -8,6 +8,7 @@ import Search from "../Search/Search";
 import rightArrowIcon from "@/assets/widget/arrow-right.svg";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import SvgIcon from "../SvgIcon/SvgIcon";
+import backend from "@/services/apis";
 
 const FiatCurrencySearch = ({
   fiatCurrencies,
@@ -28,6 +29,30 @@ const FiatCurrencySearch = ({
     setToggleOverlay(!toggleOverlay);
   };
 
+  const handleDefaultSelect = async () => {
+    const response = await backend().get_user_country();
+    let countryCode = "US";
+
+    if (response) {
+      countryCode = response.data.country;
+    }
+
+    setFilteredCurrencies(fiatCurrencies);
+
+    const defaultCountry = fiatCurrencies.find((f) =>
+      f.supportingCountries.includes(countryCode)
+    );
+
+    if (defaultCountry) {
+      setSelected(defaultCountry);
+    } else {
+      setSelected(
+        fiatCurrencies.find((f) => f.supportingCountries.includes("US")) ||
+          fiatCurrencies[0]
+      );
+    }
+  };
+
   useEffect(() => {
     if (!fiatCurrencies) return;
     if (searchValue) {
@@ -45,6 +70,10 @@ const FiatCurrencySearch = ({
       onCurrencyChange(selected.symbol);
     }
   }, [selected]);
+
+  useEffect(() => {
+    handleDefaultSelect();
+  }, [fiatCurrencies]);
 
   return (
     <div className={classes.container}>

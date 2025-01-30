@@ -3,7 +3,7 @@
   margin-bottom: 40px;
 }
 
-.container > .name {
+.title {
   color: #000;
   font-family: Inter;
   font-size: 14px;
@@ -11,7 +11,6 @@
   font-weight: 500;
   line-height: normal;
   margin-bottom: 24px;
-  text-align: center;
 }
 
 .boxWrapper {
@@ -42,7 +41,7 @@
   border: 1px solid var(--Foundation-Brand-brand-500, #5b29ec);
 }
 
-.box .title {
+.box .name {
   color: #000;
   font-family: Inter;
   font-size: 12px;
@@ -70,6 +69,6 @@
 }
 
 .icon {
-  width: 40px;
+  width: 24px;
   height: auto;
 }

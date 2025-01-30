@@ -10,31 +10,28 @@ import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import CustomButton from "../CustomInput/CustomButton/CustomButton";
 import Sidebar from "./Sidebar/Sidebar";
 import History from "./History/History";
-import {
-  fetchCountries,
-  fetchCryptoCurrencies,
-  fetchFiatCurrencies,
-  fetchPricingQuotes,
-  fetchUserCountry,
-} from "./Widget.script";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import backend from "@/services/apis";
 import FiatPanel from "./FiatPanel/FiatPanel";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
-import { formatStringToMoney } from "@/services/utils";
+import { formatMoneyToNumber, formatStringToMoney } from "@/services/utils";
 import { cryptoCurrenciesResponse } from "./cryptoCurrencies";
 import { fiatCurrenciesResponse } from "./fiatCurrencies";
+import { ICountryData } from "@/constants/country";
+import { get_pricing_quote } from "@/interface/get_pricing_quote";
+import useDebouncedEffect from "@/hooks/useDebounce";
+import LargeLoadingIcon from "@/assets/SvgComponents/LargeLoadingIcon";
 
 const Widget = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [toggleHistory, setToggleHistory] = useState(false);
   const [fiatCurrencies, setFiatCurrencies] =
     useState<get_fiat_currencies | null>(
-      fiatCurrenciesResponse as get_fiat_currencies
+      null //fiatCurrenciesResponse as get_fiat_currencies
     );
   const [cryptoCurrencies, setCryptoCurrencies] =
     useState<get_crypto_currencies | null>(
-      cryptoCurrenciesResponse as get_crypto_currencies
+      null //cryptoCurrenciesResponse as get_crypto_currencies
     );
   const [loading, setLoading] = useState(false);
   const [fiatAmount, setFiatAmount] = useState("");
@@ -44,10 +41,13 @@ const Widget = () => {
   const [network, setNetwork] = useState("");
   const [isBuyOrSell, setIsBuyOrSell] = useState<"BUY" | "SELL">("BUY");
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [quoteCountryCode, setQuoteCountryCode] = useState("");
   const [paymentOptions, setPaymentOptions] = useState<
     get_fiat_currencies[number]["paymentOptions"] | null
   >(null);
+  const [country, setCountry] = useState<ICountryData | null>(null);
+  const [quote, setQuote] = useState<get_pricing_quote | null>(null);
+  const [loadingQuotes, setLoadingQuotes] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleFetch = async () => {
     setLoading(true);
@@ -76,49 +76,119 @@ const Widget = () => {
     setCryptoAmount(formatStringToMoney(event.target.value));
   };
 
+  const handleProceed = () => {
+    const queryParams = Object.fromEntries(
+      Object.entries({
+        apiKey: process.env.NEXT_PUBLIC_TRANSAK_API_KEY,
+        fiatAmount: formatMoneyToNumber(fiatAmount),
+        fiatCurrency,
+        cryptoAmount: formatMoneyToNumber(cryptoAmount),
+        cryptoCurrency,
+        network,
+        isBuyOrSell,
+        paymentMethod,
+      }).filter(([_, value]) => value)
+    );
+    const queryString = new URLSearchParams(queryParams as any).toString();
+    window.open(
+      `https://global-stg.transak.com?${queryString}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
   useEffect(() => {
-    // handleFetch();
+    handleFetch();
   }, []);
 
   useEffect(() => {
     if (!fiatCurrency) return;
-    const popt = fiatCurrencies?.find(
+    const paymentOption = fiatCurrencies?.find(
       (fc) => fc.symbol === fiatCurrency
     )?.paymentOptions;
-    if (popt) {
-      setPaymentOptions(popt);
+    if (paymentOption) {
+      setPaymentOptions(paymentOption);
     } else {
       setPaymentOptions(null);
     }
+    setPaymentMethod("");
   }, [fiatCurrency]);
+
+  useDebouncedEffect(
+    () => {
+      const handleFetchQuote = async () => {
+        setQuote(null);
+        setError(false);
+
+        const queryParams = Object.fromEntries(
+          Object.entries({
+            partnerApiKey: process.env.NEXT_PUBLIC_TRANSAK_API_KEY,
+            ...(isBuyOrSell === "BUY"
+              ? { fiatAmount: formatMoneyToNumber(fiatAmount) }
+              : { cryptoAmount: formatMoneyToNumber(cryptoAmount) }),
+            fiatCurrency,
+            cryptoCurrency,
+            network,
+            isBuyOrSell,
+            paymentMethod,
+          }).filter(([_, value]) => value)
+        );
+
+        const queryParamKeys = [
+          ...(isBuyOrSell === "BUY" ? ["fiatAmount"] : ["cryptoAmount"]),
+          "fiatCurrency",
+          "cryptoCurrency",
+          "network",
+          "isBuyOrSell",
+          "paymentMethod",
+        ];
+
+        const allKeysPresent = queryParamKeys.every(
+          (key) => key in queryParams
+        );
+
+        if (!allKeysPresent) return;
+
+        const queryString = new URLSearchParams(queryParams as any).toString();
+        setLoadingQuotes(true);
+        const response = await backend().get_pricing_quote(queryString);
+        if (response) {
+          setQuote(response.data.response);
+          isBuyOrSell === "BUY"
+            ? setCryptoAmount(String(response.data.response.cryptoAmount))
+            : setFiatAmount(String(response.data.response.fiatAmount));
+        } else {
+          setError(true);
+        }
+        setLoadingQuotes(false);
+      };
+
+      handleFetchQuote();
+    },
+    [
+      isBuyOrSell === "BUY" ? fiatAmount : cryptoAmount,
+      fiatCurrency,
+      cryptoCurrency,
+      network,
+      isBuyOrSell,
+      paymentMethod,
+    ],
+    1000
+  ); // Adjust the debounce delay as needed
 
   return (
     <React.Fragment>
       {loading ? (
-        <div className={classes.container}>
-          <div>Loading...</div>
+        <div className={`${classes.container} ${classes.loader}`}>
+          <LargeLoadingIcon />
         </div>
       ) : (
         <div className={classes.container}>
-          <button style={{ cursor: "pointer" }} onClick={fetchPricingQuotes}>
-            Fetch pricing quotes
-          </button>
-          <button style={{ cursor: "pointer" }} onClick={fetchCryptoCurrencies}>
-            Fetch crypto currencies
-          </button>
-          <button style={{ cursor: "pointer" }} onClick={fetchFiatCurrencies}>
-            Fetch fiat currencies
-          </button>
-          <button style={{ cursor: "pointer" }} onClick={fetchCountries}>
-            Fetch countries
-          </button>
-          <button style={{ cursor: "pointer" }} onClick={fetchUserCountry}>
-            Fetch user country
-          </button>
           {toggleSidebar && (
             <Sidebar
               onHistoryClick={() => setToggleHistory(true)}
               onClose={() => setToggleSidebar(false)}
+              onCountryChange={setCountry}
             />
           )}
           {toggleHistory && <History onClose={() => setToggleHistory(false)} />}
@@ -213,20 +283,30 @@ const Widget = () => {
             </div>
           )}
 
-          <RatePanel
-            fiatAmount={fiatAmount}
-            cryptoAmount={cryptoAmount}
-            fiatCurrency={fiatCurrency}
-            cryptoCurrency={cryptoCurrency}
-            network={network}
-            isBuyOrSell={isBuyOrSell}
-            paymentMethod={paymentMethod}
-            quoteCountryCode={quoteCountryCode}
-          />
+          <div style={{ marginBottom: "44px" }}>
+            <RatePanel
+              cryptoCurrency={cryptoCurrency}
+              quote={quote}
+              loading={loadingQuotes}
+            />
 
-          <PaymentMethod paymentOptions={paymentOptions} />
+            {error && (
+              <div className={classes.errorText}>
+                Unable to retrieve a quote for the provided details.
+              </div>
+            )}
+          </div>
 
-          <CustomButton>Proceed</CustomButton>
+          {paymentOptions && (
+            <PaymentMethod
+              paymentOptions={paymentOptions}
+              onPaymentMethodChange={(pm) => setPaymentMethod(pm.id)}
+            />
+          )}
+
+          <CustomButton disabled={!quote} onClick={handleProceed}>
+            Proceed
+          </CustomButton>
         </div>
       )}
     </React.Fragment>
