@@ -90,7 +90,8 @@
   overflow: hidden;
 }
 
-.iconContainer svg {
+.iconContainer svg,
+.iconContainer img {
   width: 24px;
   height: 24px;
   border-radius: 50%;

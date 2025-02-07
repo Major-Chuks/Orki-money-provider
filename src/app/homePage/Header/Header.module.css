@@ -12,6 +12,8 @@
 
 .widgetWrapper {
   width: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
@@ -19,10 +21,8 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 115px;
+  gap: 56px;
 }
-
-/*  */
 
 .title {
   color: #000;
@@ -46,6 +46,7 @@
 .details_button {
   width: 100%;
   max-width: 554px;
+  flex: 50%;
 }
 
 .details {

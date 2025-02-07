@@ -71,7 +71,7 @@
 }
 
 .container.isNetwork .selected:hover {
-  border: transparent;
+  border: 1px solid transparent;
   cursor: text;
 }
 

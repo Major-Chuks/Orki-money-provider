@@ -3,18 +3,20 @@ import refreshIcon from "@/assets/widget/refresh.svg";
 import approxEqualIcon from "@/assets/widget/approx-equal.svg";
 // import moonpayIcon from "@/assets/widget/moonpay.svg";
 import Image from "next/image";
-// import chevronWhite from "@/assets/widget/chevron-white.svg";
+import chevronWhite from "@/assets/widget/chevron-white.svg";
 import LoadingIcon from "@/assets/SvgComponents/LoadingIcon";
-import { get_pricing_quote } from "@/interface/get_pricing_quote";
+import { post_pricing_quote } from "@/interface/post_pricing_quote";
 
 const RatePanel = ({
-  quote,
   loading,
-  cryptoCurrency,
+  provider,
+  quote,
+  onProviderClick,
 }: {
-  quote: get_pricing_quote | null;
   loading: boolean;
-  cryptoCurrency: string;
+  provider: string;
+  quote: post_pricing_quote | null;
+  onProviderClick: () => void;
 }) => {
   return (
     <>
@@ -35,22 +37,27 @@ const RatePanel = ({
         <div className={classes.container}>
           <div>
             <Image src={refreshIcon} alt="" />
-            <span>1 {cryptoCurrency}</span>
+            <span>1 {quote.quote.crypto_currency.toUpperCase()}</span>
             <Image src={approxEqualIcon} alt="" />
-            <span>{(1 / quote.conversionPrice).toFixed(2)} USD</span>
+            <span>
+              {quote.quote.exchange_rate.toFixed(2)}{" "}
+              {quote.quote.fiat_currency.toUpperCase()}
+            </span>
           </div>
 
-          <div>
+          <div className={classes.provider} onClick={onProviderClick}>
             <span>By</span>
-            {/* <Image src={moonpayIcon} alt="" />
-        <Image className={classes.chevron} src={chevronWhite} alt="" /> */}
-            <Image
-              width={80}
-              height={16}
-              src="https://assets.transak.com/images/website/transak-logo.svg"
-              alt="Transak logo"
-              className={classes.logo}
-            />
+            <span className={classes.providerName}>{provider}</span>
+            {/* {quote?.provider.icon && (
+              <Image
+                width={80}
+                height={16}
+                src={quote?.provider.icon}
+                alt="Transak logo"
+                className={classes.logo}
+              />
+            )} */}
+            <Image className={classes.chevron} src={chevronWhite} alt="" />
           </div>
         </div>
       )}

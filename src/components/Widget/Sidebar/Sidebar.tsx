@@ -45,7 +45,7 @@ const Sidebar = ({
   const handleRoute = (link: string) => {
     switch (link) {
       case "history":
-        onHistoryClick();
+        // onHistoryClick();
         break;
 
       default:

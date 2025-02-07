@@ -4,11 +4,19 @@ import Tag from "@/components/Tag/Tag";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import Widget from "@/components/Widget/Widget";
 import SlideUp from "@/components/SlideUp/SlideUp";
-import { useEffect } from "react";
-import TransakWidget from "@/components/Transak/TransakWidget";
-import TransakIframe from "@/components/Transak/TransakIframe";
+import { useEffect, useState } from "react";
+import TransakWidget from "@/providers/transak/TransakWidget";
+import TransakIframe from "@/components/ProviderIframe/TransakIframe";
+import MoonPayWidget from "@/providers/moonpay/Moonpay";
+import IframeWrapper from "@/components/Widget/IframeWrapper/IframeWrapper";
 
 const Header = () => {
+  const [purchaseLink, setQueryString] = useState("");
+
+  const handleLaunch = (purchaseLink: string) => {
+    setQueryString(purchaseLink);
+  };
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -50,8 +58,24 @@ const Header = () => {
           </div>
           <div className={classes.widgetWrapper}>
             <SlideUp>
-              <Widget />
-              {/* <TransakIframe /> */}
+              <div
+                style={{
+                  display: purchaseLink ? "none" : "block",
+                }}
+              >
+                <Widget onLaunch={handleLaunch} />
+              </div>
+              <IframeWrapper
+                style={{ display: purchaseLink ? "block" : "none" }}
+              >
+                <TransakIframe purchaseLink={purchaseLink} />
+                <CustomButton
+                  onClick={() => setQueryString("")}
+                  style={{ width: "max-content", background: "gainsboro" }}
+                >
+                  Close Modal
+                </CustomButton>
+              </IframeWrapper>
             </SlideUp>
           </div>
         </div>

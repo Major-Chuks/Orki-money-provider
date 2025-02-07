@@ -43,3 +43,11 @@
   font-weight: 400;
   line-height: normal;
 }
+
+.provider {
+  cursor: pointer;
+}
+
+.providerName {
+  text-transform: capitalize;
+}
