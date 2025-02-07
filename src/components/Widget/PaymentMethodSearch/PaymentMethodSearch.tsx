@@ -1,10 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import Overlay from "../Overlay/Overlay";
 import classes from "./PaymentMethodSearch.module.css";
 import Image from "next/image";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
-import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
+import { PaymentMethodType } from "@/services/raw";
 
 const PaymentMethodSearch = ({
   onClose,
@@ -13,20 +14,16 @@ const PaymentMethodSearch = ({
   display,
 }: {
   onClose: () => void;
-  paymentOptions: get_fiat_currencies[number]["paymentOptions"];
-  onPaymentMethodChange: (
-    option: get_fiat_currencies[number]["paymentOptions"][number]
-  ) => void;
+  paymentOptions: PaymentMethodType[];
+  onPaymentMethodChange: (option: PaymentMethodType) => void;
   display: boolean;
 }) => {
-  const [selected, setSelected] = useState<
-    get_fiat_currencies[number]["paymentOptions"][number]
-  >(paymentOptions[0]);
+  const [selected, setSelected] = useState<PaymentMethodType>(
+    paymentOptions[0]
+  );
   const [searchValue, setSearchValue] = useState("");
   const [filteredMethods, setFilteredMethods] =
-    useState<get_fiat_currencies[number]["paymentOptions"][number][]>(
-      paymentOptions
-    );
+    useState<PaymentMethodType[]>(paymentOptions);
 
   useEffect(() => {
     if (searchValue) {
@@ -78,7 +75,7 @@ const PaymentMethodSearch = ({
             >
               <div className={classes.countryFlag}>
                 <span className={classes.iconContainer}>
-                  <img width={24} height={24} src={c.icon} alt="" />
+                  {c.icon && <img width={24} height={24} src={c.icon} alt="" />}
                 </span>
                 <div className={classes.nameCode}>
                   <span className={classes.name}>{c.name}</span>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import Overlay from "../Overlay/Overlay";
 import classes from "./CryptoCurrencySearch.module.css";
@@ -5,23 +6,26 @@ import Image from "next/image";
 import arrowIcon from "@/assets/widget/arrow-down.svg";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
-import tickIcon from "@/assets/widget/tick.svg";
+// import tickIcon from "@/assets/widget/tick.svg";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 
 const CryptoCurrencySearch = ({
   cryptoCurrencies,
   onCurrencyChange,
+  defaultCurrencyCode,
+  defaultCurrencyIcon,
 }: {
-  cryptoCurrencies: get_crypto_currencies;
-  onCurrencyChange: (currency: get_crypto_currencies[number]) => void;
+  cryptoCurrencies: get_crypto_currencies[] | null;
+  onCurrencyChange: (currency: get_crypto_currencies) => void;
+  defaultCurrencyCode?: string;
+  defaultCurrencyIcon?: string;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
-  const [selected, setSelected] = useState<
-    get_crypto_currencies[number] | null
-  >(null);
+  const [selected, setSelected] = useState<get_crypto_currencies | null>(null);
   const [searchValue, setSearchValue] = useState("");
-  const [filteredCryptoCurrencies, setFilteredCryptoCurrencies] =
-    useState<get_crypto_currencies>(cryptoCurrencies);
+  const [filteredCryptoCurrencies, setFilteredCryptoCurrencies] = useState<
+    get_crypto_currencies[] | null
+  >(cryptoCurrencies);
 
   const handleClick = () => {
     setToggleOverlay(!toggleOverlay);
@@ -29,11 +33,12 @@ const CryptoCurrencySearch = ({
 
   useEffect(() => {
     if (searchValue) {
-      const results = cryptoCurrencies.filter(
-        (c) =>
-          c.name.toLowerCase().includes(searchValue) ||
-          c.symbol.toLowerCase().includes(searchValue)
-      );
+      const results =
+        cryptoCurrencies?.filter(
+          (c) =>
+            c.name.toLowerCase().includes(searchValue) ||
+            c.code.toLowerCase().includes(searchValue)
+        ) || null;
       setFilteredCryptoCurrencies(results);
     }
   }, [searchValue]);
@@ -46,7 +51,7 @@ const CryptoCurrencySearch = ({
 
   useEffect(() => {
     setFilteredCryptoCurrencies(cryptoCurrencies);
-    setSelected(cryptoCurrencies[0]);
+    // setSelected(cryptoCurrencies[0]);
   }, [cryptoCurrencies]);
 
   return (
@@ -54,17 +59,14 @@ const CryptoCurrencySearch = ({
       <div onClick={handleClick} className={classes.selected}>
         <div className={classes.countryFlag}>
           <span className={classes.iconContainer}>
-            {selected && (
-              <Image
-                width={24}
-                height={24}
-                src={selected?.image.small}
-                alt=""
-              />
-            )}
+            {selected
+              ? selected.icon && <img src={selected?.icon} alt="" />
+              : defaultCurrencyIcon && <img src={defaultCurrencyIcon} alt="" />}
           </span>
           <span className={classes.name}>
-            {selected?.name || "Select crypto currency"}
+            {selected?.name ||
+              defaultCurrencyCode?.toUpperCase() ||
+              "Select crypto currency"}
           </span>
         </div>
         <Image
@@ -95,7 +97,7 @@ const CryptoCurrencySearch = ({
             </div>
 
             <div className={classes.countryWrapper}>
-              {filteredCryptoCurrencies.map((c, idx) => (
+              {filteredCryptoCurrencies?.map((c, idx) => (
                 <div
                   onClick={() => {
                     setSelected(c);
@@ -106,19 +108,16 @@ const CryptoCurrencySearch = ({
                 >
                   <div className={classes.countryFlag}>
                     <span className={classes.iconContainer}>
-                      <Image
-                        width={24}
-                        height={24}
-                        src={c.image.small}
-                        alt=""
-                      />
+                      {c.icon && (
+                        <img width={24} height={24} src={c.icon} alt="" />
+                      )}
                     </span>
                     <div className={classes.nameCode}>
                       <span className={classes.name}>{c.name}</span>
-                      <span className={classes.code}>{c.symbol}</span>
+                      <span className={classes.code}>{c.code}</span>
                     </div>
                   </div>
-                  <span className={classes.network}>{c.network.name}</span>
+                  <span className={classes.network}>{c.name}</span>
                 </div>
               ))}
             </div>

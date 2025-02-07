@@ -62,6 +62,8 @@
   border-radius: 8px;
   overflow: hidden;
   flex: 0 0 auto;
+
+  cursor: pointer;
 }
 
 .upperSection {

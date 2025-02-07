@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import Overlay from "../Overlay/Overlay";
 import classes from "./FiatCurrencySearch.module.css";
@@ -6,51 +7,29 @@ import arrowIcon from "@/assets/widget/arrow-down.svg";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
 import rightArrowIcon from "@/assets/widget/arrow-right.svg";
-import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import SvgIcon from "../SvgIcon/SvgIcon";
-import backend from "@/services/apis";
+import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 
 const FiatCurrencySearch = ({
   fiatCurrencies,
   onCurrencyChange,
+  defaultCurrencyCode,
+  defaultCurrencyIcon,
 }: {
-  fiatCurrencies: get_fiat_currencies;
+  fiatCurrencies: get_fiat_currencies[] | null;
   onCurrencyChange: (symbol: string) => void;
+  defaultCurrencyCode?: string;
+  defaultCurrencyIcon?: string;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
-  const [selected, setSelected] = useState<get_fiat_currencies[number] | null>(
-    null
-  );
+  const [selected, setSelected] = useState<get_fiat_currencies | null>(null);
   const [searchValue, setSearchValue] = useState("");
-  const [filteredCurrencies, setFilteredCurrencies] =
-    useState<get_fiat_currencies>(fiatCurrencies);
+  const [filteredCurrencies, setFilteredCurrencies] = useState<
+    get_fiat_currencies[] | null
+  >(fiatCurrencies);
 
   const handleClick = () => {
     setToggleOverlay(!toggleOverlay);
-  };
-
-  const handleDefaultSelect = async () => {
-    const response = await backend().get_user_country();
-    let countryCode = "US";
-
-    if (response) {
-      countryCode = response.data.country;
-    }
-
-    setFilteredCurrencies(fiatCurrencies);
-
-    const defaultCountry = fiatCurrencies.find((f) =>
-      f.supportingCountries.includes(countryCode)
-    );
-
-    if (defaultCountry) {
-      setSelected(defaultCountry);
-    } else {
-      setSelected(
-        fiatCurrencies.find((f) => f.supportingCountries.includes("US")) ||
-          fiatCurrencies[0]
-      );
-    }
   };
 
   useEffect(() => {
@@ -59,7 +38,7 @@ const FiatCurrencySearch = ({
       const results = fiatCurrencies.filter(
         (c) =>
           c.name.toLowerCase().includes(searchValue) ||
-          c.symbol.toLowerCase().includes(searchValue)
+          c.code.toLowerCase().includes(searchValue)
       );
       setFilteredCurrencies(results);
     }
@@ -67,23 +46,23 @@ const FiatCurrencySearch = ({
 
   useEffect(() => {
     if (selected) {
-      onCurrencyChange(selected.symbol);
+      onCurrencyChange(selected.code);
     }
   }, [selected]);
-
-  useEffect(() => {
-    handleDefaultSelect();
-  }, [fiatCurrencies]);
 
   return (
     <div className={classes.container}>
       <div onClick={handleClick} className={classes.selected}>
         <div className={classes.countryFlag}>
           <span className={classes.iconContainer}>
-            {selected && <SvgIcon svgString={selected.icon} />}
+            {selected
+              ? selected.icon && <img src={selected.icon} alt="" />
+              : defaultCurrencyIcon && <img src={defaultCurrencyIcon} alt="" />}
           </span>
           <span className={classes.name}>
-            {selected?.symbol || "Select fiat currency"}
+            {selected?.code ||
+              defaultCurrencyCode?.toUpperCase() ||
+              "Select fiat currency"}
           </span>
         </div>
         <Image
@@ -114,7 +93,7 @@ const FiatCurrencySearch = ({
             </div>
 
             <div className={classes.countryWrapper}>
-              {filteredCurrencies.map((c, idx) => (
+              {filteredCurrencies?.map((c, idx) => (
                 <div
                   onClick={() => {
                     setSelected(c);
@@ -125,11 +104,11 @@ const FiatCurrencySearch = ({
                 >
                   <div className={classes.countryFlag}>
                     <span className={classes.iconContainer}>
-                      <SvgIcon svgString={c.icon} />
+                      {c.icon && <SvgIcon svgString={c.icon} />}
                     </span>
                     <div className={classes.nameCode}>
                       <span className={classes.name}>{c.name}</span>
-                      <span className={classes.code}>{c.symbol}</span>
+                      <span className={classes.code}>{c.code}</span>
                     </div>
                   </div>
                   <Image
