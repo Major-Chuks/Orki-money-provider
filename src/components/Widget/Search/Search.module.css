@@ -22,4 +22,21 @@
   border-radius: 32px;
   outline: none;
   border: none;
+
+  color: var(--Foundation-Text-color-text-color-400, #3d3d3d);
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.container input::placeholder {
+  color: var(--Foundation-Text-color-text-color-400, #3d3d3d);
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  opacity: 0.7;
 }

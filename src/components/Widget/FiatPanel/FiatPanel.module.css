@@ -61,3 +61,21 @@
   font-weight: 600;
   line-height: normal;
 }
+
+.error {
+  width: 100%;
+  border-top: 1px solid var(--gray-200, #e5e7eb);
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  /*  */
+  color: var(--red-500, #ef4444);
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+}

@@ -1,6 +1,10 @@
+import ErrorIcon from "@/assets/SvgComponents/ErrorIcon";
 import FiatCurrencySearch from "../FiatCurrencySearch/FiatCurrencySearch";
 import classes from "./FiatPanel.module.css";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
+import { useState } from "react";
+import { Quote } from "@/services/raw";
+import { formatStringToMoney } from "@/services/utils";
 
 const FiatPanel = ({
   title,
@@ -10,6 +14,7 @@ const FiatPanel = ({
   defaultCurrencyIcon,
   onAmountChange,
   onCurrencyChange,
+  provider,
 }: {
   title: string;
   fiatCurrencies: get_fiat_currencies[] | null;
@@ -18,7 +23,38 @@ const FiatPanel = ({
   defaultCurrencyIcon?: string;
   onCurrencyChange: (symbol: string) => void;
   onAmountChange: React.ChangeEventHandler<HTMLInputElement>;
+  provider: Quote | null;
 }) => {
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const minAmount = provider?.asset.min_buy_amount;
+  const maxAmount = provider?.asset.max_buy_amount;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMsg("");
+
+    const value = e.target.value;
+    if (minAmount) {
+      if (Number(value) < Number(minAmount)) {
+        setErrorMsg(
+          `Order value can’t be lower than ${formatStringToMoney(
+            String(minAmount)
+          )} ${provider.asset.fiat_icon_identifier.toUpperCase()}`
+        );
+      }
+    }
+    if (maxAmount) {
+      if (Number(value) > Number(maxAmount)) {
+        setErrorMsg(
+          `Order value can’t be higher than ${formatStringToMoney(
+            String(maxAmount)
+          )} ${provider.asset.fiat_icon_identifier.toUpperCase()}`
+        );
+      }
+    }
+    onAmountChange(e);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.title}>{title}</div>
@@ -27,9 +63,11 @@ const FiatPanel = ({
         <div className={classes.value}>
           <input
             value={value}
-            onChange={onAmountChange}
+            onChange={handleChange}
             type="number"
             placeholder="0.00"
+            min={minAmount}
+            max={maxAmount}
           />
         </div>
         <FiatCurrencySearch
@@ -39,6 +77,12 @@ const FiatPanel = ({
           defaultCurrencyIcon={defaultCurrencyIcon}
         />
       </div>
+
+      {errorMsg && (
+        <div className={classes.error}>
+          <ErrorIcon /> {errorMsg}
+        </div>
+      )}
     </div>
   );
 };

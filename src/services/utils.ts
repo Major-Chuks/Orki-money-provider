@@ -407,23 +407,23 @@ export const getCountryByCode = (code: string) => {
   return COUNTRY_DATA.find((c) => c.code === code);
 };
 
-// export const formatStringToMoney = (inputValue: string) => {
-//   const numericValue = inputValue.replace(/,/g, "").replace(/\D/g, "");
-//   return numericValue ? Number(numericValue).toLocaleString() : "";
-// };
-
 export const formatStringToMoney = (inputValue: string) => {
-  // Remove all non-numeric characters except the decimal point
-  const numericValue = inputValue.replace(/,/g, "").replace(/[^0-9.]/g, "");
-
-  // Ensure only one decimal point is kept
-  const sanitizedValue =
-    numericValue.split(".").length > 2
-      ? numericValue.split(".").slice(0, 2).join(".")
-      : numericValue;
-
-  return sanitizedValue ? Number(sanitizedValue).toLocaleString() : "";
+  const numericValue = inputValue.replace(/,/g, "").replace(/\D/g, "");
+  return numericValue ? Number(numericValue).toLocaleString() : "";
 };
+
+// export const formatStringToMoney = (inputValue: string) => {
+//   // Remove all non-numeric characters except the decimal point
+//   const numericValue = inputValue.replace(/,/g, "").replace(/[^0-9.]/g, "");
+
+//   // Ensure only one decimal point is kept
+//   const sanitizedValue =
+//     numericValue.split(".").length > 2
+//       ? numericValue.split(".").slice(0, 2).join(".")
+//       : numericValue;
+
+//   return sanitizedValue ? Number(sanitizedValue).toLocaleString() : "";
+// };
 
 export const formatMoneyToNumber = (formattedString: string) => {
   return Number(formattedString.replace(/,/g, ""));

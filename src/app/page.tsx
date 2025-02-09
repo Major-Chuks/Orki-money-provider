@@ -15,14 +15,14 @@ export default function Home() {
   return (
     <React.Fragment>
       <Header />
-      {/* <Solution />
+      <Solution />
       <Connecting />
       <WhyUs />
       <Orchestrations />
       <Aggregates />
       <SmartRouting />
       <Integration />
-      <ContactUs /> */}
+      <ContactUs />
     </React.Fragment>
   );
 }

@@ -10,7 +10,7 @@ import CustomButton from "../CustomInput/CustomButton/CustomButton";
 import Sidebar from "./Sidebar/Sidebar";
 import backend from "@/services/apis";
 import FiatPanel from "./FiatPanel/FiatPanel";
-import { formatMoneyToNumber, formatStringToMoney } from "@/services/utils";
+import { formatMoneyToNumber } from "@/services/utils";
 import { ICountryData } from "@/constants/country";
 import useDebouncedEffect from "@/hooks/useDebounce";
 import LargeLoadingIcon from "@/assets/SvgComponents/LargeLoadingIcon";
@@ -56,7 +56,7 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
   const [error, setError] = useState(false);
   const [quote, setQuote] = useState<post_pricing_quote | null>(null);
   const [defaultQuote, setDefaultQuote] = useState<Quote | null>(null);
-  const [provider, setProvider] = useState<SupportedProviders | "">("");
+  const [provider, setProvider] = useState<Quote | null>(null);
   const [purchaseLink, setPurchaseLink] = useState("");
 
   const handleCurrencies = async (_provider: SupportedProviders) => {
@@ -122,8 +122,8 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
     if (!_quote) return;
     setPaymentOptions(_quote.payment_methods);
     setDefaultQuote(_quote);
-    setProvider(_quote.provider.name.toLowerCase() as SupportedProviders);
-    setFiatAmount(formatStringToMoney(String(_quote.asset.min_buy_amount)));
+    setProvider(_quote);
+    setFiatAmount(String(_quote.asset.min_buy_amount));
     setCryptoAmount(String(_quote.amount_to_receive));
     setPaymentMethod(""); // the component handles initiallizing this.
     setCryptoCurrency(_quote.asset.crypto_icon_identifier);
@@ -144,7 +144,7 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
         const queryParams = Object.fromEntries(
           Object.entries({
             // partnerApiKey: process.env.NEXT_PUBLIC_TRANSAK_API_KEY,
-            provider,
+            provider: provider?.provider.name.toLowerCase(),
             fiatAmount: formatMoneyToNumber(fiatAmount),
             cryptoAmount: formatMoneyToNumber(cryptoAmount),
             fiatCurrency,
@@ -176,7 +176,8 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
         const response =
           isBuyOrSell === "BUY"
             ? await backend().post_buy_quote({
-                provider: provider as SupportedProviders,
+                provider:
+                  provider?.provider.name.toLowerCase() as SupportedProviders,
                 fiat_currency: fiatCurrency.toUpperCase(),
                 crypto_currency: cryptoCurrency.toUpperCase(),
                 network: network,
@@ -184,7 +185,8 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
                 amount: formatMoneyToNumber(fiatAmount).toString(),
               })
             : await backend().post_sell_quote({
-                provider: provider as SupportedProviders,
+                provider:
+                  provider?.provider.name.toLowerCase() as SupportedProviders,
                 fiat_currency: fiatCurrency,
                 crypto_amount: cryptoAmount,
                 crypto_currency: cryptoCurrency,
@@ -225,7 +227,9 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
   // whenever a provider changes, fetch the currencies relating to that provider
   useEffect(() => {
     if (!provider) return;
-    handleCurrencies(provider);
+    handleCurrencies(
+      provider.provider.name.toLowerCase() as SupportedProviders
+    );
   }, [provider]);
 
   return (
@@ -292,6 +296,7 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
                 value={fiatAmount}
                 defaultCurrencyCode={defaultQuote?.asset.fiat_icon_identifier}
                 defaultCurrencyIcon={defaultQuote?.asset.fiat_icon}
+                provider={provider}
               />
               <CryptoPanel
                 cryptoCurrencies={cryptoCurrencies}
@@ -328,6 +333,7 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
                 value={fiatAmount}
                 defaultCurrencyCode={defaultQuote?.asset.fiat_icon_identifier}
                 defaultCurrencyIcon={defaultQuote?.asset.fiat_icon}
+                provider={provider}
               />
             </div>
           )}
@@ -337,7 +343,9 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
               loading={loadingQuotes}
               onProviderClick={() => setToggleProvider(true)}
               quote={quote}
-              provider={provider}
+              provider={
+                provider?.provider.name.toLowerCase() as SupportedProviders
+              }
             />
 
             {error && (
