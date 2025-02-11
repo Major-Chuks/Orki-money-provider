@@ -1,0 +1,125 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background: var(--white, #fff);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  padding: 32px 24px;
+  transform: translateY(100%);
+  animation: enter 200ms forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes enter {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.heading {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 102px;
+  /* text */
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.imageContainer {
+  width: 273px;
+  margin-bottom: 39px;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+}
+
+.title {
+  margin-bottom: 16px;
+  /* text */
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 133.333% */
+}
+
+.description {
+  margin-bottom: 71px;
+  /* text */
+  color: #5e5e5e;
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+
+.note {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  /* text */
+  color: #000;
+  font-feature-settings: "liga" off, "clig" off;
+  font-size: 12px;
+  font-style: normal;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.2px;
+}
+
+.btnContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media screen and (max-width: 540px) {
+  .title {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: normal;
+  }
+}

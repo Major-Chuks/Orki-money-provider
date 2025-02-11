@@ -9,7 +9,11 @@ import Search from "../Search/Search";
 // import moonpayIcon from "@/assets/widget/moonpay-logo.svg";
 // import trasakIcon from "@/assets/widget/transak.svg";
 import badgeIcon from "@/assets/widget/badge.svg";
-import { allQuotes, prioritizeBestQuote, Quote } from "@/services/raw";
+import {
+  allProviders,
+  prioritizeBestQuote,
+  ProvidersResponse,
+} from "@/services/raw";
 import { useState } from "react";
 
 const Provider = ({
@@ -17,10 +21,10 @@ const Provider = ({
   onSelect,
 }: {
   onClose: () => void;
-  onSelect: (provider: Quote) => void;
+  onSelect: (provider: ProvidersResponse[number]) => void;
 }) => {
   const [imageLoaded, setImageLoaded] = useState<Record<number, boolean>>({});
-  const sortedQuotes = prioritizeBestQuote(allQuotes);
+  const sortedQuotes = prioritizeBestQuote(allProviders);
 
   return (
     <div className={classes.container}>
@@ -44,12 +48,7 @@ const Provider = ({
               key={idx}
               className={classes.box}
             >
-              {true && (
-                <div className={classes.upperSection}>
-                  No document upload required
-                </div>
-              )}
-              <div className={classes.lowerSection}>
+              <div className={classes.upperSection}>
                 <div className={classes.providerDetails}>
                   <div className={classes.iconContainer}>
                     <img
@@ -85,6 +84,11 @@ const Provider = ({
                   </div>
                 )}
               </div>
+              {false && (
+                <div className={classes.lowerSection}>
+                  No document upload required
+                </div>
+              )}
             </div>
           );
         })}

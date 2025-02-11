@@ -3,8 +3,8 @@ import FiatCurrencySearch from "../FiatCurrencySearch/FiatCurrencySearch";
 import classes from "./FiatPanel.module.css";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import { useState } from "react";
-import { Quote } from "@/services/raw";
 import { formatStringToMoney } from "@/services/utils";
+import { ProvidersResponse } from "@/services/raw";
 
 const FiatPanel = ({
   title,
@@ -23,7 +23,7 @@ const FiatPanel = ({
   defaultCurrencyIcon?: string;
   onCurrencyChange: (symbol: string) => void;
   onAmountChange: React.ChangeEventHandler<HTMLInputElement>;
-  provider: Quote | null;
+  provider: ProvidersResponse[number] | null;
 }) => {
   const [errorMsg, setErrorMsg] = useState("");
 

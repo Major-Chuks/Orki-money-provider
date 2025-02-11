@@ -16,11 +16,11 @@ import useDebouncedEffect from "@/hooks/useDebounce";
 import LargeLoadingIcon from "@/assets/SvgComponents/LargeLoadingIcon";
 import Provider from "./Provider/Provider";
 import {
-  allQuotes,
+  allProviders,
   moonpayCryptoCurrenciesResponse,
   moonpayFiatCurrenciesResponse,
   PaymentMethodType,
-  Quote,
+  ProvidersResponse,
   transakCryptoCurrenciesResponse,
   transakFiatCurrenciesResponse,
 } from "@/services/raw";
@@ -28,6 +28,8 @@ import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import { post_pricing_quote } from "@/interface/post_pricing_quote";
+import Redirect1 from "./Redirect/Redirect1";
+import Redirect2 from "./Redirect/Redirect2";
 
 export type SupportedProviders = "moonpay" | "transak";
 
@@ -55,9 +57,16 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
   const [loadingQuotes, setLoadingQuotes] = useState(false);
   const [error, setError] = useState(false);
   const [quote, setQuote] = useState<post_pricing_quote | null>(null);
-  const [defaultQuote, setDefaultQuote] = useState<Quote | null>(null);
-  const [provider, setProvider] = useState<Quote | null>(null);
+  const [bestProvider, setBestProvider] = useState<
+    ProvidersResponse[number] | null
+  >(null);
+  const [provider, setProvider] = useState<ProvidersResponse[number] | null>(
+    null
+  );
   const [purchaseLink, setPurchaseLink] = useState("");
+  const [toggleFirstRedirect, setToggleFirstRedirect] = useState(false);
+  const [toggleSecondRedirect, setToggleSecondRedirect] = useState(false);
+  const [popupWindow, setPopupWindow] = useState<Window | null>(null);
 
   const handleCurrencies = async (_provider: SupportedProviders) => {
     // setLoading(true);
@@ -111,27 +120,56 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
   };
 
   const handleProceed = () => {
-    window.open(purchaseLink, "_blank", "noopener,noreferrer");
+    // before window will open, show the initial redirect screen.
+    setToggleFirstRedirect(true);
+
+    setTimeout(() => {
+      setToggleFirstRedirect(false);
+      // window.open(purchaseLink, "_blank", "noopener,noreferrer");
+      const popupWindow = window.open(purchaseLink, "popupWindow");
+      if (!popupWindow) return;
+      setToggleSecondRedirect(true);
+
+      setPopupWindow(popupWindow);
+      const checkPopupClosed: NodeJS.Timeout = setInterval(() => {
+        if (popupWindow.closed) {
+          clearInterval(checkPopupClosed);
+          setToggleSecondRedirect(false);
+        }
+      }, 500);
+    }, 1000);
     // onLaunch(purchaseLink);
+  };
+
+  const handleContinueProcess = () => {
+    if (popupWindow && !popupWindow.closed) {
+      popupWindow.focus();
+    }
+  };
+
+  const handleCloseProcess = () => {
+    if (popupWindow && !popupWindow.closed) {
+      popupWindow.close();
+    }
   };
 
   // STEP 1
   // Make an api call to fetch all quotes | Initiallize providers and payment options
   useEffect(() => {
-    const _quote = allQuotes.find((qt) => qt.is_best);
-    if (!_quote) return;
-    setPaymentOptions(_quote.payment_methods);
-    setDefaultQuote(_quote);
-    setProvider(_quote);
-    setFiatAmount(String(_quote.asset.min_buy_amount));
-    setCryptoAmount(String(_quote.amount_to_receive));
+    const _bestProvider = allProviders.find((qt) => qt.is_best);
+    if (!_bestProvider) return;
+    setPaymentOptions(_bestProvider.payment_methods);
+    setBestProvider(_bestProvider);
+    setProvider(_bestProvider);
+    setFiatAmount(String(_bestProvider.asset.min_buy_amount));
+    setCryptoAmount(String(_bestProvider.amount_to_receive));
     setPaymentMethod(""); // the component handles initiallizing this.
-    setCryptoCurrency(_quote.asset.crypto_icon_identifier);
-    setFiatCurrency(_quote.asset.fiat_icon_identifier);
-    setNetwork(_quote.asset.network);
+    setCryptoCurrency(_bestProvider.asset.crypto_icon_identifier);
+    setFiatCurrency(_bestProvider.asset.fiat_icon_identifier);
+    setNetwork(_bestProvider.asset.network);
 
     // Fetch the currencies for the quote provider
-    handleCurrencies(_quote.provider.name as SupportedProviders);
+    handleCurrencies(_bestProvider.provider.name as SupportedProviders);
   }, []);
 
   // STEP 2
@@ -240,6 +278,14 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
         </div>
       ) : (
         <div className={classes.container}>
+          {toggleFirstRedirect && <Redirect1 quote={quote} />}
+          {toggleSecondRedirect && (
+            <Redirect2
+              handleOpenProvider={handleContinueProcess}
+              handleCloseProvider={handleCloseProcess}
+              quote={quote}
+            />
+          )}
           {toggleSidebar && (
             <Sidebar
               onHistoryClick={() => setToggleProvider(true)}
@@ -294,8 +340,8 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
                 fiatCurrencies={fiatCurrencies}
                 title="You Pay"
                 value={fiatAmount}
-                defaultCurrencyCode={defaultQuote?.asset.fiat_icon_identifier}
-                defaultCurrencyIcon={defaultQuote?.asset.fiat_icon}
+                defaultCurrencyCode={bestProvider?.asset.fiat_icon_identifier}
+                defaultCurrencyIcon={bestProvider?.asset.fiat_icon}
                 provider={provider}
               />
               <CryptoPanel
@@ -307,8 +353,8 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
                   setNetwork(network);
                 }}
                 value={cryptoAmount}
-                defaultCurrencyCode={defaultQuote?.asset.crypto_icon_identifier}
-                defaultCurrencyIcon={defaultQuote?.asset.crypto_icon}
+                defaultCurrencyCode={bestProvider?.asset.crypto_icon_identifier}
+                defaultCurrencyIcon={bestProvider?.asset.crypto_icon}
               />
             </div>
           ) : (
@@ -322,8 +368,8 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
                   setNetwork(network);
                 }}
                 value={cryptoAmount}
-                defaultCurrencyCode={defaultQuote?.asset.crypto_icon_identifier}
-                defaultCurrencyIcon={defaultQuote?.asset.crypto_icon}
+                defaultCurrencyCode={bestProvider?.asset.crypto_icon_identifier}
+                defaultCurrencyIcon={bestProvider?.asset.crypto_icon}
               />
               <FiatPanel
                 onAmountChange={handleFiatAmountChange}
@@ -331,8 +377,8 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
                 fiatCurrencies={fiatCurrencies}
                 title="You Receive"
                 value={fiatAmount}
-                defaultCurrencyCode={defaultQuote?.asset.fiat_icon_identifier}
-                defaultCurrencyIcon={defaultQuote?.asset.fiat_icon}
+                defaultCurrencyCode={bestProvider?.asset.fiat_icon_identifier}
+                defaultCurrencyIcon={bestProvider?.asset.fiat_icon}
                 provider={provider}
               />
             </div>
@@ -362,7 +408,11 @@ const Widget = ({ onLaunch }: { onLaunch: (queryString: string) => void }) => {
             />
           )}
 
-          <CustomButton disabled={!purchaseLink} onClick={handleProceed}>
+          <CustomButton
+            style={{ background: "#6148C2" }}
+            disabled={!purchaseLink}
+            onClick={handleProceed}
+          >
             Proceed
           </CustomButton>
         </div>

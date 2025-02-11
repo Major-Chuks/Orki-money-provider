@@ -20,7 +20,7 @@ type Asset = {
   network: string;
 };
 
-export type Quote = {
+type Quote = {
   provider: Provider;
   amount_to_receive: number;
   exchange_rate: number;
@@ -31,9 +31,9 @@ export type Quote = {
   quote_amount: number;
 };
 
-type QuotesResponse = Quote[];
+export type ProvidersResponse = Quote[];
 
-export const allQuotes: QuotesResponse = [
+export const allProviders: ProvidersResponse = [
   {
     provider: {
       name: "Moonpay",
@@ -134,7 +134,7 @@ export const allQuotes: QuotesResponse = [
   },
 ];
 
-export function prioritizeBestQuote(quotes: QuotesResponse) {
+export function prioritizeBestQuote(quotes: ProvidersResponse) {
   const bestIndex = quotes.findIndex((quote) => quote.is_best);
 
   if (bestIndex > 0) {

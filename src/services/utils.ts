@@ -428,3 +428,8 @@ export const formatStringToMoney = (inputValue: string) => {
 export const formatMoneyToNumber = (formattedString: string) => {
   return Number(formattedString.replace(/,/g, ""));
 };
+
+export const toSentenceCase = (str?: string) => {
+  if (!str) return ""; // Handle empty strings
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};

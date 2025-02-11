@@ -66,24 +66,22 @@
   cursor: pointer;
 }
 
-.upperSection {
+.lowerSection {
   width: 100%;
   padding: 12px 16px;
-  border-bottom: 1px solid #d1d5db;
   padding: 12px 16px;
   align-items: center;
-  border-radius: 8px 8px 0px 0px;
-  background: var(--Foundation-Brand-brand-200, #b49df6);
+  border-top: 1px solid #d1d5db;
   /* text */
-  color: #000;
+  color: var(--Foundation-Text-color-text-color-400, #3d3d3d);
   font-family: Inter;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
 
-.lowerSection {
+.upperSection {
   display: flex;
   width: 100%;
   padding: 16px;
