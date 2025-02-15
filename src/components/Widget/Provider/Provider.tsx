@@ -11,10 +11,12 @@ const Provider = ({
   allProviders,
   onClose,
   onSelect,
+  isBuyOrSell,
 }: {
   allProviders: get_defaults | null;
   onClose: () => void;
   onSelect: (provider: get_defaults[number]) => void;
+  isBuyOrSell: "BUY" | "SELL";
 }) => {
   const [imageLoaded, setImageLoaded] = useState<Record<number, boolean>>({});
 
@@ -69,13 +71,17 @@ const Provider = ({
                     <div className={classes.details}>
                       {<span className={classes.gain}>You get</span>}
                       <span className={classes.value}>
-                        {provider.asset.fiat_amount}
+                        {isBuyOrSell === "BUY"
+                          ? provider.asset.crypto_amount
+                          : provider.asset.fiat_amount}
                       </span>
                     </div>
                   ) : (
                     <div className={classes.details}>
                       <span className={classes.value}>
-                        {provider.asset.fiat_amount}
+                        {isBuyOrSell === "BUY"
+                          ? provider.asset.crypto_amount
+                          : provider.asset.fiat_amount}
                       </span>
                       <span
                         className={classes.loss}

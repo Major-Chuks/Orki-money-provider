@@ -210,6 +210,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
               allProviders={allProviders}
               onSelect={setProvider}
               onClose={() => setToggleProvider(false)}
+              isBuyOrSell={isBuyOrSell}
             />
           )}
 
@@ -266,6 +267,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                 }}
                 value={cryptoAmount}
                 defaultCurrencyCode={provider?.asset.crypto}
+                defaultNetwork={provider?.asset.network}
               />
             </div>
           ) : (

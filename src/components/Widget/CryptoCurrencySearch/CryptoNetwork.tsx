@@ -1,15 +1,10 @@
-import Image from "next/image";
 import classes from "./CryptoCurrencySearch.module.css";
 
-const CryptoNetwork = ({
-  network,
-}: {
-  network: { name?: string; imgUrl?: string };
-}) => {
+const CryptoNetwork = ({ network }: { network: string }) => {
   return (
     <div className={`${classes.container} ${classes.isNetwork}`}>
       <div className={classes.selected}>
-        <span className={classes.name}>{network.name}</span>
+        <span className={classes.name}>{network}</span>
       </div>
     </div>
   );
