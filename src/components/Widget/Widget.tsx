@@ -42,7 +42,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     PaymentMethodResponse[] | null
   >(null);
   const [loadingQuotes, setLoadingQuotes] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   // const [quote, setQuote] = useState<post_pricing_quote | null>(null);
 
   const [allProviders, setAllProviders] = useState<get_defaults | null>(null);
@@ -138,7 +138,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   // Fetch quotes
   useDebouncedEffect(
     async () => {
-      setError(false);
+      setError("");
       setLoadingQuotes(true);
       const response = await fetchQuotes({
         fiatAmount,
@@ -160,9 +160,10 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         setCryptoAmount(String(_bestProvider.asset.crypto_amount));
       } else {
         setAllProviders(null);
-        setError(true);
-        if (typeof response === "string") {
-          // console.log({ errorResponse: response });
+        if (response && typeof response === "string") {
+          setError(response);
+        } else {
+          setError("Unable to retrieve a quote for the provided details.");
         }
       }
     },
@@ -299,11 +300,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
               provider={provider}
             />
 
-            {error && (
-              <div className={classes.errorText}>
-                Unable to retrieve a quote for the provided details.
-              </div>
-            )}
+            {error && <div className={classes.errorText}>{error}</div>}
           </div>
 
           {paymentOptions && (
