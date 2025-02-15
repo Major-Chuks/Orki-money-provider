@@ -5,7 +5,7 @@ import classes from "./PaymentMethodSearch.module.css";
 import Image from "next/image";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
-import { PaymentMethodType } from "@/services/raw";
+import { PaymentMethodResponse } from "@/interface/get_fiat_currencies";
 
 const PaymentMethodSearch = ({
   onClose,
@@ -14,21 +14,21 @@ const PaymentMethodSearch = ({
   display,
 }: {
   onClose: () => void;
-  paymentOptions: PaymentMethodType[];
-  onPaymentMethodChange: (option: PaymentMethodType) => void;
+  paymentOptions: PaymentMethodResponse[];
+  onPaymentMethodChange: (option: PaymentMethodResponse) => void;
   display: boolean;
 }) => {
-  const [selected, setSelected] = useState<PaymentMethodType>(
+  const [selected, setSelected] = useState<PaymentMethodResponse>(
     paymentOptions[0]
   );
   const [searchValue, setSearchValue] = useState("");
   const [filteredMethods, setFilteredMethods] =
-    useState<PaymentMethodType[]>(paymentOptions);
+    useState<PaymentMethodResponse[]>(paymentOptions);
 
   useEffect(() => {
     if (searchValue) {
       const results = paymentOptions.filter((c) =>
-        c.name.toLowerCase().includes(searchValue)
+        c.paymentMethodName.toLowerCase().includes(searchValue)
       );
       setFilteredMethods(results);
     } else {
@@ -75,10 +75,17 @@ const PaymentMethodSearch = ({
             >
               <div className={classes.countryFlag}>
                 <span className={classes.iconContainer}>
-                  {c.icon && <img width={24} height={24} src={c.icon} alt="" />}
+                  {c.paymentMethodLogo && (
+                    <img
+                      width={24}
+                      height={24}
+                      src={c.paymentMethodLogo}
+                      alt=""
+                    />
+                  )}
                 </span>
                 <div className={classes.nameCode}>
-                  <span className={classes.name}>{c.name}</span>
+                  <span className={classes.name}>{c.paymentMethodName}</span>
                 </div>
               </div>
             </div>

@@ -14,21 +14,25 @@ const FiatCurrencySearch = ({
   fiatCurrencies,
   onCurrencyChange,
   defaultCurrencyCode,
-  defaultCurrencyIcon,
 }: {
-  fiatCurrencies: get_fiat_currencies[] | null;
+  fiatCurrencies: get_fiat_currencies | null;
   onCurrencyChange: (symbol: string) => void;
   defaultCurrencyCode?: string;
-  defaultCurrencyIcon?: string;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
-  const [selected, setSelected] = useState<get_fiat_currencies | null>(null);
+  const [selected, setSelected] = useState<get_fiat_currencies[number] | null>(
+    null
+  );
   const [searchValue, setSearchValue] = useState("");
-  const [filteredCurrencies, setFilteredCurrencies] = useState<
-    get_fiat_currencies[] | null
-  >(fiatCurrencies);
+  const [filteredCurrencies, setFilteredCurrencies] =
+    useState<get_fiat_currencies | null>(fiatCurrencies);
+  const [defaultCurrencyIcon, setDefaultCurrencyIcon] = useState("");
 
   const handleClick = () => {
+    if (!toggleOverlay) {
+      setFilteredCurrencies(fiatCurrencies);
+      setSearchValue("");
+    }
     setToggleOverlay(!toggleOverlay);
   };
 
@@ -50,14 +54,26 @@ const FiatCurrencySearch = ({
     }
   }, [selected]);
 
+  useEffect(() => {
+    if (!defaultCurrencyCode) return;
+    const afc = fiatCurrencies?.find(
+      (fc) => fc.code.toLowerCase() === defaultCurrencyCode.toLowerCase()
+    );
+    if (afc) {
+      setDefaultCurrencyIcon(afc.fiat_icon);
+    }
+  }, []);
+
   return (
     <div className={classes.container}>
       <div onClick={handleClick} className={classes.selected}>
         <div className={classes.countryFlag}>
           <span className={classes.iconContainer}>
             {selected
-              ? selected.icon && <img src={selected.icon} alt="" />
-              : defaultCurrencyIcon && <img src={defaultCurrencyIcon} alt="" />}
+              ? selected.fiat_icon && <SvgIcon svgString={selected.fiat_icon} />
+              : defaultCurrencyIcon && (
+                  <SvgIcon svgString={defaultCurrencyIcon} />
+                )}
           </span>
           <span className={classes.name}>
             {selected?.code ||
@@ -104,7 +120,7 @@ const FiatCurrencySearch = ({
                 >
                   <div className={classes.countryFlag}>
                     <span className={classes.iconContainer}>
-                      {c.icon && <SvgIcon svgString={c.icon} />}
+                      {c.fiat_icon && <SvgIcon svgString={c.fiat_icon} />}
                     </span>
                     <div className={classes.nameCode}>
                       <span className={classes.name}>{c.name}</span>

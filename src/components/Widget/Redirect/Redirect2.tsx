@@ -6,17 +6,17 @@ import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import ExternalLink from "@/assets/SvgComponents/ExternalLink";
 import CloseIcon from "@/assets/SvgComponents/CloseIcon";
 import Securityicon from "@/assets/SvgComponents/SecurityIcon";
-import { post_pricing_quote } from "@/interface/post_pricing_quote";
 import { toSentenceCase } from "@/services/utils";
+import { get_defaults } from "@/interface/get_defaults";
 
 const Redirect2 = ({
   handleOpenProvider,
   handleCloseProvider,
-  quote,
+  provider,
 }: {
   handleOpenProvider: () => void;
   handleCloseProvider: () => void;
-  quote: post_pricing_quote | null;
+  provider: get_defaults[number] | null;
 }) => {
   return (
     <Overlay onClose={() => {}}>
@@ -37,8 +37,8 @@ const Redirect2 = ({
           </div>
 
           <div className={classes.title}>
-            Complete your purchase with {quote?.provider.name.toLowerCase()} in
-            the new tab
+            Complete your purchase with {provider?.provider.name.toLowerCase()}{" "}
+            in the new tab
           </div>
 
           <div className={classes.description}>
@@ -51,7 +51,7 @@ const Redirect2 = ({
             style={{ background: "#6148C2" }}
           >
             <div className={classes.btnContent}>
-              Open {toSentenceCase(quote?.provider.name)} in new tab
+              Open {toSentenceCase(provider?.provider.name)} in new tab
               <ExternalLink />
             </div>
           </CustomButton>

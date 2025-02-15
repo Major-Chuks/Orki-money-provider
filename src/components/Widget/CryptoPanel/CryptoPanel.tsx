@@ -9,20 +9,19 @@ const CryptoPanel = ({
   cryptoCurrencies,
   value,
   defaultCurrencyCode,
-  defaultCurrencyIcon,
   onCurrencyChange,
   onAmountChange,
 }: {
   title: string;
-  cryptoCurrencies: get_crypto_currencies[] | null;
+  cryptoCurrencies: get_crypto_currencies | null;
   value: string;
   defaultCurrencyCode?: string;
-  defaultCurrencyIcon?: string;
-
   onCurrencyChange: (symbol: string, network: string) => void;
   onAmountChange: React.ChangeEventHandler<HTMLInputElement>;
 }) => {
-  const [currency, setCurrency] = useState<get_crypto_currencies | null>(null);
+  const [currency, setCurrency] = useState<
+    get_crypto_currencies[number] | null
+  >(null);
 
   useEffect(() => {
     if (!currency) return;
@@ -47,7 +46,6 @@ const CryptoPanel = ({
             onCurrencyChange={setCurrency}
             cryptoCurrencies={cryptoCurrencies}
             defaultCurrencyCode={defaultCurrencyCode}
-            defaultCurrencyIcon={defaultCurrencyIcon}
           />
           <CryptoNetwork
             network={{ name: currency?.name || "mainnet", imgUrl: "" }}

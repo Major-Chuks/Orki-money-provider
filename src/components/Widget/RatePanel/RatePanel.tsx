@@ -5,17 +5,15 @@ import approxEqualIcon from "@/assets/widget/approx-equal.svg";
 import Image from "next/image";
 import chevronWhite from "@/assets/widget/chevron-white.svg";
 import LoadingIcon from "@/assets/SvgComponents/LoadingIcon";
-import { post_pricing_quote } from "@/interface/post_pricing_quote";
+import { get_defaults } from "@/interface/get_defaults";
 
 const RatePanel = ({
   loading,
   provider,
-  quote,
   onProviderClick,
 }: {
   loading: boolean;
-  provider: string;
-  quote: post_pricing_quote | null;
+  provider: get_defaults[number] | null;
   onProviderClick: () => void;
 }) => {
   return (
@@ -27,27 +25,29 @@ const RatePanel = ({
             <LoadingIcon /> Fetching best price...
           </div>
         </div>
-      ) : !quote ? (
-        <div className={classes.container}>
-          <div className={classes.loadingText}>
-            Provide payment details to see available quotes.
-          </div>
-        </div>
       ) : (
         <div className={classes.container}>
-          <div>
-            <Image src={refreshIcon} alt="" />
-            <span>1 {quote.quote.crypto_currency.toUpperCase()}</span>
-            <Image src={approxEqualIcon} alt="" />
-            <span>
-              {quote.quote.exchange_rate.toFixed(2)}{" "}
-              {quote.quote.fiat_currency.toUpperCase()}
-            </span>
-          </div>
+          {provider ? (
+            <div>
+              <Image src={refreshIcon} alt="" />
+              <span>1 {provider.asset.crypto.toUpperCase()}</span>
+              <Image src={approxEqualIcon} alt="" />
+              <span>
+                {provider.exchange_rate.toFixed(2)}{" "}
+                {provider.asset.fiat.toUpperCase()}
+              </span>
+            </div>
+          ) : (
+            <div className={classes.loadingText}>
+              Provide payment details to see available quotes.
+            </div>
+          )}
 
           <div className={classes.provider} onClick={onProviderClick}>
             <span>By</span>
-            <span className={classes.providerName}>{provider}</span>
+            <span className={classes.providerName}>
+              {provider?.provider.name}
+            </span>
             {/* {quote?.provider.icon && (
               <Image
                 width={80}

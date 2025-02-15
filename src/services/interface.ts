@@ -1,7 +1,4 @@
-import { SupportedProviders } from "@/components/Widget/Widget";
-
 export type post_buy_quote = {
-  provider: SupportedProviders;
   fiat_currency: string;
   crypto_currency: string;
   network: string;
@@ -10,7 +7,6 @@ export type post_buy_quote = {
 };
 
 export type post_sell_quote = {
-  provider: SupportedProviders;
   fiat_currency: string;
   crypto_currency: string;
   network: string;

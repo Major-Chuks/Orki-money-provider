@@ -1,12 +1,19 @@
+/* eslint-disable @next/next/no-img-element */
 import classes from "./Redirect1.module.css";
 import ArrowIcon from "@/assets/SvgComponents/ArrowIcon";
 import TrippleChevronIcon from "@/assets/SvgComponents/TrippleChevronIcon";
 import Overlay from "../Overlay/Overlay";
-import { post_pricing_quote } from "@/interface/post_pricing_quote";
 import businessLogo from "@/assets/widget/business-logo.svg";
 import Image from "next/image";
+import { get_defaults } from "@/interface/get_defaults";
 
-const Redirect1 = ({ quote }: { quote: post_pricing_quote | null }) => {
+const Redirect1 = ({
+  provider,
+  isBuyOrSell,
+}: {
+  provider: get_defaults[number] | null;
+  isBuyOrSell: "BUY" | "SELL";
+}) => {
   return (
     <Overlay onClose={() => {}}>
       <div className={classes.container}>
@@ -16,22 +23,40 @@ const Redirect1 = ({ quote }: { quote: post_pricing_quote | null }) => {
               <Image src={businessLogo} alt="" />
             </div>
             <TrippleChevronIcon />
-            <div className={classes.businessLogo}></div>
+            <div className={classes.businessLogo}>
+              {provider?.provider.icon && (
+                <img src={provider?.provider.icon} alt="" />
+              )}
+            </div>
           </div>
           <div className={classes.provider}>
-            Connecting you to {quote?.provider.name}
+            Connecting you to {provider?.provider.name}
           </div>
-          <div className={classes.purchase}>
-            <div>
-              {quote?.quote.fiat_amount}{" "}
-              {quote?.quote.fiat_currency.toUpperCase()}
+          {isBuyOrSell === "BUY" ? (
+            <div className={classes.purchase}>
+              <div>
+                {provider?.asset.fiat_amount}{" "}
+                {provider?.asset.fiat.toUpperCase()}
+              </div>
+              <ArrowIcon />
+              <div>
+                {provider?.asset.crypto_amount}{" "}
+                {provider?.asset.crypto.toUpperCase()}
+              </div>
             </div>
-            <ArrowIcon />
-            <div>
-              {quote?.quote.crypto_amount}{" "}
-              {quote?.quote.crypto_currency.toUpperCase()}
+          ) : (
+            <div className={classes.purchase}>
+              <div>
+                {provider?.asset.crypto_amount}{" "}
+                {provider?.asset.crypto.toUpperCase()}
+              </div>
+              <ArrowIcon />
+              <div>
+                {provider?.asset.fiat_amount}{" "}
+                {provider?.asset.fiat.toUpperCase()}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </Overlay>

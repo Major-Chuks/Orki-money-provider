@@ -4,31 +4,29 @@ import classes from "./FiatPanel.module.css";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import { useState } from "react";
 import { formatStringToMoney } from "@/services/utils";
-import { ProvidersResponse } from "@/services/raw";
+import { get_defaults } from "@/interface/get_defaults";
 
 const FiatPanel = ({
   title,
   fiatCurrencies,
   value,
   defaultCurrencyCode,
-  defaultCurrencyIcon,
   onAmountChange,
   onCurrencyChange,
   provider,
 }: {
   title: string;
-  fiatCurrencies: get_fiat_currencies[] | null;
+  fiatCurrencies: get_fiat_currencies | null;
   value: string;
   defaultCurrencyCode?: string;
-  defaultCurrencyIcon?: string;
   onCurrencyChange: (symbol: string) => void;
   onAmountChange: React.ChangeEventHandler<HTMLInputElement>;
-  provider: ProvidersResponse[number] | null;
+  provider: get_defaults[number] | null;
 }) => {
   const [errorMsg, setErrorMsg] = useState("");
 
-  const minAmount = provider?.asset.min_buy_amount;
-  const maxAmount = provider?.asset.max_buy_amount;
+  const minAmount = 0;
+  const maxAmount = 0;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMsg("");
@@ -39,7 +37,7 @@ const FiatPanel = ({
         setErrorMsg(
           `Order value can’t be lower than ${formatStringToMoney(
             String(minAmount)
-          )} ${provider.asset.fiat_icon_identifier.toUpperCase()}`
+          )} ${provider?.asset.fiat.toUpperCase()}`
         );
       }
     }
@@ -48,7 +46,7 @@ const FiatPanel = ({
         setErrorMsg(
           `Order value can’t be higher than ${formatStringToMoney(
             String(maxAmount)
-          )} ${provider.asset.fiat_icon_identifier.toUpperCase()}`
+          )} ${provider?.asset.fiat.toUpperCase()}`
         );
       }
     }
@@ -74,7 +72,6 @@ const FiatPanel = ({
           onCurrencyChange={onCurrencyChange}
           fiatCurrencies={fiatCurrencies}
           defaultCurrencyCode={defaultCurrencyCode}
-          defaultCurrencyIcon={defaultCurrencyIcon}
         />
       </div>
 

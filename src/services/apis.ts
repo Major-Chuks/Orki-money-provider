@@ -1,6 +1,5 @@
 import axios from "axios";
 import { post_buy_quote, post_sell_quote } from "./interface";
-import { SupportedProviders } from "@/components/Widget/Widget";
 
 export const BACKEND_API = axios.create({
   baseURL: "https://3x26dlwune.execute-api.af-south-1.amazonaws.com/api/v1",
@@ -28,8 +27,9 @@ export default function backend() {
       try {
         const response = await BACKEND_API.post(url, payload);
         return response;
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
+        return error.response.data.msg;
       }
     },
 
@@ -38,17 +38,14 @@ export default function backend() {
       try {
         const response = await BACKEND_API.post(url, payload);
         return response;
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
+        return error.response.data.msg;
       }
     },
 
-    get_fiat_currencies: async ({
-      provider,
-    }: {
-      provider: SupportedProviders;
-    }) => {
-      const url = `/fiat-currencies?provider=${provider}`;
+    get_fiat_currencies: async () => {
+      const url = "/fiat-currencies";
       try {
         const response = await BACKEND_API.get(url);
         return response;
@@ -57,12 +54,18 @@ export default function backend() {
       }
     },
 
-    get_crypto_currencies: async ({
-      provider,
-    }: {
-      provider: SupportedProviders;
-    }) => {
-      const url = `/crypto-currencies?provider=${provider}`;
+    get_crypto_currencies: async () => {
+      const url = "/crypto-currencies";
+      try {
+        const response = await BACKEND_API.get(url);
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    get_defaults: async () => {
+      const url = "/defaults";
       try {
         const response = await BACKEND_API.get(url);
         return response;

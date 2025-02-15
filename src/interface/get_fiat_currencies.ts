@@ -1,15 +1,21 @@
-type PaymentMethod = {
-  id: string;
-  name: string;
-  icon: string | null;
+export type PaymentMethodResponse = {
+  paymentMethodName: string;
+  paymentMethodId: string;
+  paymentMethodLogo: string | null;
+  minBuyAmount: number | null;
+  maxBuyAmount: number | null;
+  minSellAmount: number | null;
+  maxSellAmount: number | null;
+  processingTime: string | null;
 };
 
 export type get_fiat_currencies = {
   code: string;
   name: string;
-  icon: string | null;
-  provider: string;
-  min_amount: number | null;
-  max_amount: number | null;
-  payment_methods: PaymentMethod[];
-};
+  logoSymbol: string;
+  fiat_icon: string;
+  transak: PaymentMethodResponse[];
+  moonpay: PaymentMethodResponse[];
+  stripe: PaymentMethodResponse[];
+  wert: PaymentMethodResponse[];
+}[];

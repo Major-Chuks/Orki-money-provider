@@ -5,26 +5,29 @@ import PaymentMethodSearch from "../PaymentMethodSearch/PaymentMethodSearch";
 import payIcon from "@/assets/widget/pay.svg";
 import infoIcon from "@/assets/widget/info.svg";
 import Image from "next/image";
-import { PaymentMethodType } from "@/services/raw";
+import { PaymentMethodResponse } from "@/interface/get_fiat_currencies";
 
 const PaymentMethod = ({
   paymentOptions,
   onPaymentMethodChange,
 }: {
-  paymentOptions: PaymentMethodType[];
-  onPaymentMethodChange: (option: PaymentMethodType) => void;
+  paymentOptions: PaymentMethodResponse[];
+  onPaymentMethodChange: (option: PaymentMethodResponse) => void;
 }) => {
-  const [selected, setSelected] = useState<PaymentMethodType>(
+  const [selected, setSelected] = useState<PaymentMethodResponse>(
     paymentOptions[0]
   );
 
   const [togglePaymentMethod, setTogglePaymentMethod] = useState(false);
-  const [modifiedOptions, setModifiedOptions] = useState<PaymentMethodType[]>();
+  const [modifiedOptions, setModifiedOptions] =
+    useState<PaymentMethodResponse[]>();
 
   useEffect(() => {
     if (selected) {
       onPaymentMethodChange(selected);
-      const modF = paymentOptions.filter((pop) => pop.id !== selected.id);
+      const modF = paymentOptions.filter(
+        (pop) => pop.paymentMethodId !== selected.paymentMethodId
+      );
       setModifiedOptions(modF);
     }
   }, [selected]);
@@ -35,6 +38,8 @@ const PaymentMethod = ({
     modF.shift();
     setModifiedOptions(modF);
   }, [paymentOptions]);
+
+  if (!selected) return null;
 
   return (
     <div className={classes.container}>
@@ -55,16 +60,16 @@ const PaymentMethod = ({
       <div className={classes.title}>Payment method</div>
       <div className={classes.boxWrapper}>
         <div className={`${classes.box} ${classes.active}`}>
-          {selected.icon && (
+          {selected.paymentMethodLogo && (
             <img
               className={classes.icon}
               width={40}
               height={40}
-              src={selected.icon}
+              src={selected.paymentMethodLogo}
               alt=""
             />
           )}
-          <div className={classes.name}>{selected.name}</div>
+          <div className={classes.name}>{selected.paymentMethodName}</div>
           <div className={classes.description}>
             Gateway Fee 1.99% <Image src={infoIcon} alt="" />{" "}
           </div>
@@ -75,16 +80,18 @@ const PaymentMethod = ({
             onClick={() => setSelected(modifiedOptions[0])}
             className={`${classes.box}`}
           >
-            {modifiedOptions[0].icon && (
+            {modifiedOptions[0].paymentMethodLogo && (
               <img
                 className={classes.icon}
                 width={40}
                 height={40}
-                src={modifiedOptions[0].icon}
+                src={modifiedOptions[0].paymentMethodLogo}
                 alt=""
               />
             )}
-            <div className={classes.name}>{modifiedOptions[0].name}</div>
+            <div className={classes.name}>
+              {modifiedOptions[0].paymentMethodName}
+            </div>
             <div className={classes.description}>
               Gateway Fee 1.99% <Image src={infoIcon} alt="" />{" "}
             </div>

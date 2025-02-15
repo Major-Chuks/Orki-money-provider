@@ -1,30 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import classes from "./Provider.module.css";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
-// import topperIcon from "@/assets/widget/topper.svg";
-// import utorgIcon from "@/assets/widget/utorg.svg";
-// import btcDirectIcon from "@/assets/widget/btc-direct.svg";
-// import moonpayIcon from "@/assets/widget/moonpay-logo.svg";
-// import trasakIcon from "@/assets/widget/transak.svg";
 import badgeIcon from "@/assets/widget/badge.svg";
-import {
-  allProviders,
-  prioritizeBestQuote,
-  ProvidersResponse,
-} from "@/services/raw";
 import { useState } from "react";
+import { get_defaults } from "@/interface/get_defaults";
 
 const Provider = ({
+  allProviders,
   onClose,
   onSelect,
 }: {
+  allProviders: get_defaults | null;
   onClose: () => void;
-  onSelect: (provider: ProvidersResponse[number]) => void;
+  onSelect: (provider: get_defaults[number]) => void;
 }) => {
   const [imageLoaded, setImageLoaded] = useState<Record<number, boolean>>({});
-  const sortedQuotes = prioritizeBestQuote(allProviders);
 
   return (
     <div className={classes.container}>
@@ -37,61 +29,71 @@ const Provider = ({
       </div>
 
       <div className={classes.boxContainer}>
-        {sortedQuotes.map((gp, idx) => {
-          const { name, icon } = gp.provider;
-          return (
-            <div
-              onClick={() => {
-                onSelect(gp);
-                onClose();
-              }}
-              key={idx}
-              className={classes.box}
-            >
-              <div className={classes.upperSection}>
-                <div className={classes.providerDetails}>
-                  <div className={classes.iconContainer}>
-                    <img
-                      style={{
-                        visibility: imageLoaded[idx] ? "visible" : "hidden",
-                      }}
-                      onLoad={() => setImageLoaded({ [idx]: true })}
-                      width={32}
-                      height={32}
-                      src={icon}
-                      alt=""
-                    />
+        {allProviders ? (
+          allProviders.map((provider, idx) => {
+            const { name, icon } = provider.provider;
+            return (
+              <div
+                onClick={() => {
+                  onSelect(provider);
+                  onClose();
+                }}
+                key={idx}
+                className={classes.box}
+              >
+                <div className={classes.upperSection}>
+                  <div className={classes.providerDetails}>
+                    <div className={classes.iconContainer}>
+                      <img
+                        style={{
+                          visibility: imageLoaded[idx] ? "visible" : "hidden",
+                        }}
+                        onLoad={() => setImageLoaded({ [idx]: true })}
+                        width={32}
+                        height={32}
+                        src={icon}
+                        alt=""
+                      />
+                    </div>
+                    <div className={classes.priceName}>
+                      <span className={classes.name}>{name}</span>
+                      {provider.is_best && (
+                        <span className={classes.priceLabel}>
+                          <Image src={badgeIcon} alt="" /> Best price
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className={classes.priceName}>
-                    <span className={classes.name}>{name}</span>
-                    {gp.is_best && (
-                      <span className={classes.priceLabel}>
-                        <Image src={badgeIcon} alt="" /> Best price
-                      </span>
-                    )}
-                  </div>
-                </div>
 
-                {gp.is_best ? (
-                  <div className={classes.details}>
-                    {<span className={classes.gain}>You get</span>}
-                    <span className={classes.value}>{"00.0000 USDC"}</span>
-                  </div>
-                ) : (
-                  <div className={classes.details}>
-                    <span className={classes.value}>{"00.0000 USDC"}</span>
-                    <span className={classes.loss}>{"-0.00%"}</span>
+                  {provider.is_best ? (
+                    <div className={classes.details}>
+                      {<span className={classes.gain}>You get</span>}
+                      <span className={classes.value}>
+                        {provider.asset.fiat_amount}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className={classes.details}>
+                      <span className={classes.value}>
+                        {provider.asset.fiat_amount}
+                      </span>
+                      <span
+                        className={classes.loss}
+                      >{`-${provider.percentage_diff}%`}</span>
+                    </div>
+                  )}
+                </div>
+                {false && (
+                  <div className={classes.lowerSection}>
+                    No document upload required
                   </div>
                 )}
               </div>
-              {false && (
-                <div className={classes.lowerSection}>
-                  No document upload required
-                </div>
-              )}
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <div>No providers available</div>
+        )}
       </div>
     </div>
   );

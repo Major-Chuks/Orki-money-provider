@@ -13,21 +13,25 @@ const CryptoCurrencySearch = ({
   cryptoCurrencies,
   onCurrencyChange,
   defaultCurrencyCode,
-  defaultCurrencyIcon,
 }: {
-  cryptoCurrencies: get_crypto_currencies[] | null;
-  onCurrencyChange: (currency: get_crypto_currencies) => void;
+  cryptoCurrencies: get_crypto_currencies | null;
+  onCurrencyChange: (currency: get_crypto_currencies[number]) => void;
   defaultCurrencyCode?: string;
-  defaultCurrencyIcon?: string;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
-  const [selected, setSelected] = useState<get_crypto_currencies | null>(null);
+  const [selected, setSelected] = useState<
+    get_crypto_currencies[number] | null
+  >(null);
   const [searchValue, setSearchValue] = useState("");
-  const [filteredCryptoCurrencies, setFilteredCryptoCurrencies] = useState<
-    get_crypto_currencies[] | null
-  >(cryptoCurrencies);
+  const [filteredCryptoCurrencies, setFilteredCryptoCurrencies] =
+    useState<get_crypto_currencies | null>(cryptoCurrencies);
+  const [defaultCurrencyIcon, setDefaultCurrencyIcon] = useState("");
 
   const handleClick = () => {
+    if (!toggleOverlay) {
+      setFilteredCryptoCurrencies(cryptoCurrencies);
+      setSearchValue("");
+    }
     setToggleOverlay(!toggleOverlay);
   };
 
@@ -50,9 +54,14 @@ const CryptoCurrencySearch = ({
   }, [selected]);
 
   useEffect(() => {
-    setFilteredCryptoCurrencies(cryptoCurrencies);
-    // setSelected(cryptoCurrencies[0]);
-  }, [cryptoCurrencies]);
+    if (!defaultCurrencyCode) return;
+    const cc = cryptoCurrencies?.find(
+      (cc) => cc.code.toLowerCase() === defaultCurrencyCode.toLowerCase()
+    );
+    if (cc) {
+      setDefaultCurrencyIcon(cc.crypto_icon);
+    }
+  }, []);
 
   return (
     <div className={classes.container}>
@@ -60,7 +69,9 @@ const CryptoCurrencySearch = ({
         <div className={classes.countryFlag}>
           <span className={classes.iconContainer}>
             {selected
-              ? selected.icon && <img src={selected?.icon} alt="" />
+              ? selected.crypto_icon && (
+                  <img src={selected?.crypto_icon} alt="" />
+                )
               : defaultCurrencyIcon && <img src={defaultCurrencyIcon} alt="" />}
           </span>
           <span className={classes.name}>
@@ -108,8 +119,13 @@ const CryptoCurrencySearch = ({
                 >
                   <div className={classes.countryFlag}>
                     <span className={classes.iconContainer}>
-                      {c.icon && (
-                        <img width={24} height={24} src={c.icon} alt="" />
+                      {c.crypto_icon && (
+                        <img
+                          width={24}
+                          height={24}
+                          src={c.crypto_icon}
+                          alt=""
+                        />
                       )}
                     </span>
                     <div className={classes.nameCode}>
