@@ -41,8 +41,8 @@ const FiatCurrencySearch = ({
     if (searchValue) {
       const results = fiatCurrencies.filter(
         (c) =>
-          c.name.toLowerCase().includes(searchValue) ||
-          c.code.toLowerCase().includes(searchValue)
+          c.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+          c.code.toLowerCase().includes(searchValue.toLowerCase())
       );
       setFilteredCurrencies(results);
     }

@@ -7,6 +7,14 @@ import {
 import backend from "@/services/apis";
 import { formatMoneyToNumber } from "@/services/utils";
 
+export const sortProviders = (providers: get_defaults | null) => {
+  if (!providers) return null;
+  const supportedProviders = providers.filter((p) => p.is_supported);
+  const noSupported = providers.filter((p) => !p.is_supported);
+
+  return [...supportedProviders, ...noSupported];
+};
+
 export const fetchDefaults = async ({
   setAllProviders,
   setProvider,
@@ -53,18 +61,19 @@ export const fetchDefaults = async ({
     if (!_bestProvider) return;
     setProvider(_bestProvider);
     setProvider(_bestProvider);
-    setFiatAmount(String(_bestProvider.asset.fiat_amount));
-    setCryptoAmount(String(_bestProvider.asset.crypto_amount));
+    setFiatAmount(String(_bestProvider.asset?.fiat_amount));
+    setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
     setPaymentMethod(""); // the component handles the initiallization.
-    setCryptoCurrency(_bestProvider.asset.crypto);
-    setFiatCurrency(_bestProvider.asset.fiat);
-    setNetwork(_bestProvider.asset.network);
+    setCryptoCurrency(_bestProvider.asset?.crypto || "");
+    setFiatCurrency(_bestProvider.asset?.fiat || "");
+    setNetwork(_bestProvider.asset?.network || "");
 
     // find the currency object
     if (fiatRes) {
       const fiatCurrencies: get_fiat_currencies = fiatRes.data.data;
       const afc = fiatCurrencies?.find(
-        (fc) => fc.code.toLowerCase() === _bestProvider.asset.fiat.toLowerCase()
+        (fc) =>
+          fc.code.toLowerCase() === _bestProvider.asset?.fiat.toLowerCase()
       );
 
       if (afc) {

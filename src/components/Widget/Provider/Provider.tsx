@@ -6,6 +6,7 @@ import Search from "../Search/Search";
 import badgeIcon from "@/assets/widget/badge.svg";
 import { useState } from "react";
 import { get_defaults } from "@/interface/get_defaults";
+import { sortProviders } from "../Widget.script";
 
 const Provider = ({
   allProviders,
@@ -18,7 +19,9 @@ const Provider = ({
   onSelect: (provider: get_defaults[number]) => void;
   isBuyOrSell: "BUY" | "SELL";
 }) => {
-  const [imageLoaded, setImageLoaded] = useState<Record<number, boolean>>({});
+  // const [imageLoaded, setImageLoaded] = useState<Record<number, boolean>>({});
+
+  const sortedProviders = sortProviders(allProviders);
 
   return (
     <div className={classes.container}>
@@ -31,26 +34,30 @@ const Provider = ({
       </div>
 
       <div className={classes.boxContainer}>
-        {allProviders ? (
-          allProviders.map((provider, idx) => {
+        {sortedProviders ? (
+          sortedProviders.map((provider, idx) => {
             const { name, icon } = provider.provider;
             return (
               <div
                 onClick={() => {
-                  onSelect(provider);
-                  onClose();
+                  if (provider.is_supported) {
+                    onSelect(provider);
+                    onClose();
+                  }
                 }}
                 key={idx}
-                className={classes.box}
+                className={`${classes.provider} ${
+                  !provider.is_supported && classes.notSupported
+                }`}
               >
                 <div className={classes.upperSection}>
                   <div className={classes.providerDetails}>
                     <div className={classes.iconContainer}>
                       <img
-                        style={{
-                          visibility: imageLoaded[idx] ? "visible" : "hidden",
-                        }}
-                        onLoad={() => setImageLoaded({ [idx]: true })}
+                        // style={{
+                        //   visibility: imageLoaded[idx] ? "visible" : "hidden",
+                        // }}
+                        // onLoad={() => setImageLoaded({ [idx]: true })}
                         width={32}
                         height={32}
                         src={icon}
@@ -71,17 +78,32 @@ const Provider = ({
                     <div className={classes.details}>
                       {<span className={classes.gain}>You get</span>}
                       <span className={classes.value}>
-                        {isBuyOrSell === "BUY"
-                          ? provider.asset.crypto_amount
-                          : provider.asset.fiat_amount}
+                        {isBuyOrSell === "BUY" ? (
+                          <span>
+                            {provider.asset?.crypto_amount}{" "}
+                            {provider.asset?.crypto}
+                          </span>
+                        ) : (
+                          <span>
+                            {provider.asset?.fiat_amount} {provider.asset?.fiat}
+                          </span>
+                        )}
                       </span>
                     </div>
                   ) : (
                     <div className={classes.details}>
                       <span className={classes.value}>
-                        {isBuyOrSell === "BUY"
-                          ? provider.asset.crypto_amount
-                          : provider.asset.fiat_amount}
+                        {isBuyOrSell === "BUY" ? (
+                          <span>
+                            {provider.asset?.crypto_amount || "N/A"}{" "}
+                            {provider.asset?.crypto}
+                          </span>
+                        ) : (
+                          <span>
+                            {provider.asset?.fiat_amount || "N/A"}{" "}
+                            {provider.asset?.fiat}
+                          </span>
+                        )}
                       </span>
                       <span
                         className={classes.loss}

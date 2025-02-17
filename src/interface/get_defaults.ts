@@ -14,11 +14,12 @@ type Asset = {
 
 export type get_defaults = {
   provider: Provider;
-  exchange_rate: number;
+  exchange_rate?: number;
   is_best: boolean;
-  asset: Asset;
-  link: string;
-  client_secret: boolean;
-  quote_amount: number;
+  asset?: Asset;
+  link?: string;
+  client_secret?: boolean;
+  quote_amount?: number;
   percentage_diff: number;
+  is_supported: boolean;
 }[];

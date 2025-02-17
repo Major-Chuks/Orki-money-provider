@@ -156,8 +156,8 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         const _bestProvider = _defaults.find((dp) => dp.is_best);
         if (!_bestProvider) return;
         setProvider(_bestProvider);
-        setFiatAmount(String(_bestProvider.asset.fiat_amount));
-        setCryptoAmount(String(_bestProvider.asset.crypto_amount));
+        setFiatAmount(String(_bestProvider.asset?.fiat_amount));
+        setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
       } else {
         setAllProviders(null);
         if (response && typeof response === "string") {
@@ -254,7 +254,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                 fiatCurrencies={fiatCurrencies}
                 title="You Pay"
                 value={fiatAmount}
-                defaultCurrencyCode={provider?.asset.fiat}
+                defaultCurrencyCode={provider?.asset?.fiat}
                 provider={provider}
               />
               <CryptoPanel
@@ -266,8 +266,8 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                   setNetwork(network);
                 }}
                 value={cryptoAmount}
-                defaultCurrencyCode={provider?.asset.crypto}
-                defaultNetwork={provider?.asset.network}
+                defaultCurrencyCode={provider?.asset?.crypto}
+                defaultNetwork={provider?.asset?.network}
               />
             </div>
           ) : (
@@ -281,7 +281,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                   setNetwork(network);
                 }}
                 value={cryptoAmount}
-                defaultCurrencyCode={provider?.asset.crypto}
+                defaultCurrencyCode={provider?.asset?.crypto}
               />
               <FiatPanel
                 onAmountChange={handleFiatAmountChange}
@@ -289,7 +289,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                 fiatCurrencies={fiatCurrencies}
                 title="You Receive"
                 value={fiatAmount}
-                defaultCurrencyCode={provider?.asset.fiat}
+                defaultCurrencyCode={provider?.asset?.fiat}
                 provider={provider}
               />
             </div>

@@ -55,15 +55,26 @@
   padding-right: 2px;
 }
 
-.box {
+.provider {
   width: 100%;
   border: 1px solid var(--gray-300, #d1d5db);
   background: #fff;
   border-radius: 8px;
   overflow: hidden;
   flex: 0 0 auto;
-
   cursor: pointer;
+  transition: border 100ms;
+}
+
+.provider.notSupported {
+  filter: grayscale(100%);
+  opacity: 0.2;
+  border: 1px solid var(--gray-300, #979797);
+  cursor: default;
+}
+
+.provider:not(.notSupported):hover {
+  border: 1px solid var(--gray-300, #979797);
 }
 
 .lowerSection {
@@ -166,6 +177,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  text-transform: uppercase;
 }
 
 .loss {

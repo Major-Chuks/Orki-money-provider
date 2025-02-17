@@ -37,7 +37,7 @@ const FiatPanel = ({
         setErrorMsg(
           `Order value can’t be lower than ${formatStringToMoney(
             String(minAmount)
-          )} ${provider?.asset.fiat.toUpperCase()}`
+          )} ${provider?.asset?.fiat.toUpperCase()}`
         );
       }
     }
@@ -46,7 +46,7 @@ const FiatPanel = ({
         setErrorMsg(
           `Order value can’t be higher than ${formatStringToMoney(
             String(maxAmount)
-          )} ${provider?.asset.fiat.toUpperCase()}`
+          )} ${provider?.asset?.fiat.toUpperCase()}`
         );
       }
     }

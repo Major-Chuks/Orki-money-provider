@@ -35,25 +35,25 @@ const Redirect1 = ({
           {isBuyOrSell === "BUY" ? (
             <div className={classes.purchase}>
               <div>
-                {provider?.asset.fiat_amount}{" "}
-                {provider?.asset.fiat.toUpperCase()}
+                {provider?.asset?.fiat_amount}{" "}
+                {provider?.asset?.fiat.toUpperCase()}
               </div>
               <ArrowIcon />
               <div>
-                {provider?.asset.crypto_amount}{" "}
-                {provider?.asset.crypto.toUpperCase()}
+                {provider?.asset?.crypto_amount}{" "}
+                {provider?.asset?.crypto.toUpperCase()}
               </div>
             </div>
           ) : (
             <div className={classes.purchase}>
               <div>
-                {provider?.asset.crypto_amount}{" "}
-                {provider?.asset.crypto.toUpperCase()}
+                {provider?.asset?.crypto_amount}{" "}
+                {provider?.asset?.crypto.toUpperCase()}
               </div>
               <ArrowIcon />
               <div>
-                {provider?.asset.fiat_amount}{" "}
-                {provider?.asset.fiat.toUpperCase()}
+                {provider?.asset?.fiat_amount}{" "}
+                {provider?.asset?.fiat.toUpperCase()}
               </div>
             </div>
           )}

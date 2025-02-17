@@ -30,11 +30,11 @@ const RatePanel = ({
           {provider ? (
             <div>
               <Image src={refreshIcon} alt="" />
-              <span>1 {provider.asset.crypto.toUpperCase()}</span>
+              <span>1 {provider.asset?.crypto.toUpperCase()}</span>
               <Image src={approxEqualIcon} alt="" />
               <span>
-                {provider.exchange_rate.toFixed(2)}{" "}
-                {provider.asset.fiat.toUpperCase()}
+                {provider.exchange_rate?.toFixed(2)}{" "}
+                {provider.asset?.fiat.toUpperCase()}
               </span>
             </div>
           ) : (

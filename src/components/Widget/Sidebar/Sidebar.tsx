@@ -9,8 +9,10 @@ import chevronRightIcon from "@/assets/widget/arrow-right.svg";
 import Overlay from "../Overlay/Overlay";
 import CountrySearch from "../CountrySearch/CountrySearch";
 import { ICountryData } from "@/constants/country";
+import { routes } from "@/services/routes";
+import { openInNewTab } from "@/services/utils";
 
-const routes = [
+const sideMenu = [
   {
     icon: clockIcon,
     name: "History",
@@ -19,17 +21,17 @@ const routes = [
   {
     icon: documentIcon,
     name: "Terms of Usage ",
-    link: "terms",
+    link: routes.termsOfUse,
   },
   {
     icon: securitySafeIcon,
     name: "Privacy Policy",
-    link: "privacyPolicy",
+    link: routes.privacyPolicy,
   },
   {
     icon: supportIcon,
     name: "Help & Support",
-    link: "help",
+    link: routes.contactUs,
   },
 ];
 
@@ -43,14 +45,8 @@ const Sidebar = ({
   onCountryChange: (country: ICountryData) => void;
 }) => {
   const handleRoute = (link: string) => {
-    switch (link) {
-      case "history":
-        // onHistoryClick();
-        break;
-
-      default:
-        break;
-    }
+    if (link === "history") return;
+    openInNewTab({ pathname: link });
   };
 
   return (
@@ -61,8 +57,8 @@ const Sidebar = ({
             Menu <Image onClick={onClose} src={closeIcon} alt="" />
           </div>
 
-          <div className={classes.routes}>
-            {routes.map(({ icon, name, link }, idx) => (
+          <div className={classes.sideMenu}>
+            {sideMenu.map(({ icon, name, link }, idx) => (
               <div
                 onClick={() => handleRoute(link)}
                 key={idx}
@@ -85,13 +81,13 @@ const Sidebar = ({
           </div>
         </div>
 
-        <div className={classes.location}>
+        {/* <div className={classes.location}>
           <div className={classes.title}>Location</div>
           <CountrySearch
             onCountryChange={onCountryChange}
             onSearchOpen={() => {}}
           />
-        </div>
+        </div> */}
       </div>
     </Overlay>
   );
