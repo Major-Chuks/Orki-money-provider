@@ -129,11 +129,11 @@ const CryptoCurrencySearch = ({
                       )}
                     </span>
                     <div className={classes.nameCode}>
-                      <span className={classes.name}>{c.name}</span>
-                      <span className={classes.code}>{c.code}</span>
+                      <span className={classes.name}>{c.code}</span>
+                      <span className={classes.code}>{c.name}</span>
                     </div>
                   </div>
-                  <span className={classes.network}>{c.name}</span>
+                  <span className={classes.network}>{c.network}</span>
                 </div>
               ))}
             </div>

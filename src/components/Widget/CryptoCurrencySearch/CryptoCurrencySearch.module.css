@@ -57,6 +57,10 @@
   justify-content: flex-start;
 }
 
+.nameCode .name {
+  text-transform: uppercase;
+}
+
 .name {
   color: #000;
   font-family: Inter;
@@ -174,4 +178,5 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  text-transform: capitalize;
 }
