@@ -5,6 +5,12 @@
       "type": "GeometryCollection",
       "geometries": [
         {
+          "type": "Polygon",
+          "arcs": [[0, 1, 2, 3, 4, 5]],
+          "id": "AFG",
+          "properties": { "name": "Afghanistan" }
+        },
+        {
           "type": "MultiPolygon",
           "arcs": [[[6, 7, 8, 9]], [[10, 11, 12]]],
           "id": "AGO",
@@ -499,6 +505,18 @@
         },
         {
           "type": "Polygon",
+          "arcs": [[387, -6, 388, 389, 390, 391, 392, -51, -34, -53, 393]],
+          "id": "IRN",
+          "properties": { "name": "Iran" }
+        },
+        {
+          "type": "Polygon",
+          "arcs": [[-391, 394, 395, 396, 397, 398, 399, 400]],
+          "id": "IRQ",
+          "properties": { "name": "Iraq" }
+        },
+        {
+          "type": "Polygon",
           "arcs": [[401]],
           "id": "ISL",
           "properties": { "name": "Iceland" }
@@ -600,6 +618,12 @@
         },
         {
           "type": "Polygon",
+          "arcs": [[461, -268, 462, 463, -272, 464, 465]],
+          "id": "LBY",
+          "properties": { "name": "Libya" }
+        },
+        {
+          "type": "Polygon",
           "arcs": [[466]],
           "id": "LKA",
           "properties": { "name": "Sri Lanka" }
@@ -663,6 +687,12 @@
           "arcs": [[484, -262, 485, -71, -207, -332, 486]],
           "id": "MLI",
           "properties": { "name": "Mali" }
+        },
+        {
+          "type": "Polygon",
+          "arcs": [[487, -75, -384, -187, -456, 488]],
+          "id": "MMR",
+          "properties": { "name": "Myanmar" }
         },
         {
           "type": "Polygon",
@@ -814,6 +844,12 @@
         },
         {
           "type": "Polygon",
+          "arcs": [[565, -447, 566, -183]],
+          "id": "PRK",
+          "properties": { "name": "North Korea" }
+        },
+        {
+          "type": "Polygon",
           "arcs": [[-284, 567]],
           "id": "PRT",
           "properties": { "name": "Portugal" }
@@ -837,6 +873,34 @@
           "properties": { "name": "Romania" }
         },
         {
+          "type": "MultiPolygon",
+          "arcs": [
+            [[574]],
+            [[-562, 575, -469]],
+            [[576]],
+            [[577]],
+            [[578]],
+            [[579]],
+            [[580]],
+            [[581]],
+            [[582]],
+            [
+              [
+                -181, 583, 584, 585, -177, 586, -175, 587, -202, 588, -200, 589,
+                -198, -499, 590, 591, -496, 592, -494, 593, -492, -196, -433,
+                594, -431, 595, 596, -428, 597, -426, 598, 599, 600, -55, 601,
+                -322, 602, -320, 603, 604, 605, 606, 607, 608, 609, 610, 611,
+                -95, 612, -93, -474, -287, 613, 614, -299, 615
+              ]
+            ],
+            [[616]],
+            [[617]],
+            [[618]]
+          ],
+          "id": "RUS",
+          "properties": { "name": "Russia" }
+        },
+        {
           "type": "Polygon",
           "arcs": [[619, 620, -57, -220, 621]],
           "id": "RWA",
@@ -853,6 +917,20 @@
           "arcs": [[623, -415, -397, -454, 624, -570, 625, -23, -543, 626]],
           "id": "SAU",
           "properties": { "name": "Saudi Arabia" }
+        },
+        {
+          "type": "Polygon",
+          "arcs": [
+            [627, 628, -124, 629, -465, -271, 630, -279, 631, -298, 632]
+          ],
+          "id": "SDN",
+          "properties": { "name": "Sudan" }
+        },
+        {
+          "type": "Polygon",
+          "arcs": [[633, -296, -438, 634, 635, -226, -126, 636, -628]],
+          "id": "SSD",
+          "properties": { "name": "South Sudan" }
         },
         {
           "type": "Polygon",
@@ -877,6 +955,12 @@
           "arcs": [[645, -346, -351]],
           "id": "SLV",
           "properties": { "name": "El Salvador" }
+        },
+        {
+          "type": "Polygon",
+          "arcs": [[646, 647, -291, -253, 648, -439, -294]],
+          "id": "SOM",
+          "properties": { "name": "Somalia" }
         },
         {
           "type": "Polygon",
@@ -1066,6 +1150,12 @@
         },
         {
           "type": "Polygon",
+          "arcs": [[708, -627, -542]],
+          "id": "YEM",
+          "properties": { "name": "Yemen" }
+        },
+        {
+          "type": "Polygon",
           "arcs": [[-523, -119, 709, -505, -657, -503, 710], [-468]],
           "id": "ZAF",
           "properties": { "name": "South Africa" }
@@ -1075,6 +1165,12 @@
           "arcs": [[-512, -507, 711, -121, -522, -7, -223, 712, -680]],
           "id": "ZMB",
           "properties": { "name": "Zambia" }
+        },
+        {
+          "type": "Polygon",
+          "arcs": [[-710, -122, -712, -506]],
+          "id": "ZWE",
+          "properties": { "name": "Zimbabwe" }
         },
         {
           "type": "MultiPolygon",
