@@ -85,7 +85,10 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     setTimeout(() => {
       setToggleFirstRedirect(false);
       // window.open(purchaseLink, "_blank", "noopener,noreferrer");
-      const popupWindow = window.open(provider.link, "popupWindow");
+      const popupWindow = window.open(
+        provider.link,
+        `${provider.provider.name}_${network}_${fiatAmount}_${fiatCurrency}_${cryptoAmount}_${cryptoCurrency}`
+      );
       if (!popupWindow) return;
       setToggleSecondRedirect(true);
 
@@ -110,6 +113,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     // if (popupWindow && !popupWindow.closed) {
     //   popupWindow.close();
     // }
+    setToggleSecondRedirect(false);
   };
 
   // STEP 1
