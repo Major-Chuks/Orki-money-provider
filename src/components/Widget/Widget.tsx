@@ -107,9 +107,9 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   };
 
   const handleCloseProcess = () => {
-    if (popupWindow && !popupWindow.closed) {
-      popupWindow.close();
-    }
+    // if (popupWindow && !popupWindow.closed) {
+    //   popupWindow.close();
+    // }
   };
 
   // STEP 1

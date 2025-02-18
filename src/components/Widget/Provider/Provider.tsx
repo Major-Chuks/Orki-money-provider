@@ -120,7 +120,7 @@ const Provider = ({
             );
           })
         ) : (
-          <div>No providers available</div>
+          <div className={classes.lowerSection}>No providers available</div>
         )}
       </div>
     </div>
