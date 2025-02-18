@@ -35,7 +35,7 @@ const CountrySearch = ({
   useEffect(() => {
     if (searchValue) {
       const results = COUNTRY_DATA.filter((c) =>
-        c.name.toLowerCase().includes(searchValue)
+        c.name.toLowerCase().includes(searchValue.toLowerCase())
       );
       setFilteredCountry(results);
     } else {

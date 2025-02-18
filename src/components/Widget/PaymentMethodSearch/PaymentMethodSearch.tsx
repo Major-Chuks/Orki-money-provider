@@ -28,7 +28,7 @@ const PaymentMethodSearch = ({
   useEffect(() => {
     if (searchValue) {
       const results = paymentOptions.filter((c) =>
-        c.paymentMethodName.toLowerCase().includes(searchValue)
+        c.paymentMethodName.toLowerCase().includes(searchValue.toLowerCase())
       );
       setFilteredMethods(results);
     } else {
