@@ -51,18 +51,6 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [toggleSecondRedirect, setToggleSecondRedirect] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
 
-  const handleFiatAmountChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFiatAmount(event.target.value);
-  };
-
-  const handleCryptoAmountChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setCryptoAmount(event.target.value);
-  };
-
   const handleFiatCurrencyChange = (c: string) => {
     setFiatCurrency(c);
 
@@ -166,9 +154,10 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         setAllProviders(null);
         if (response && typeof response === "string") {
           setError(response);
-        } else {
-          setError("Unable to retrieve a quote for the provided details.");
         }
+        // else {
+        //   setError("Unable to retrieve a quote for the provided details.");
+        // }
       }
     },
     [
@@ -253,18 +242,21 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
           {isBuyOrSell === "BUY" ? (
             <div className={classes.panelWrapper}>
               <FiatPanel
-                onAmountChange={handleFiatAmountChange}
+                onAmountChange={setFiatAmount}
                 onCurrencyChange={handleFiatCurrencyChange}
                 fiatCurrencies={fiatCurrencies}
+                fiatCurrency={fiatCurrency}
                 title="You Pay"
                 value={fiatAmount}
                 defaultCurrencyCode={provider?.asset?.fiat}
                 provider={provider}
+                paymentMethod={paymentMethod}
+                error={error}
               />
               <CryptoPanel
                 cryptoCurrencies={cryptoCurrencies}
                 title="You Receive"
-                onAmountChange={handleCryptoAmountChange}
+                onAmountChange={setCryptoAmount}
                 onCurrencyChange={(symbol, network) => {
                   setCryptoCurrency(symbol);
                   setNetwork(network);
@@ -279,7 +271,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
               <CryptoPanel
                 cryptoCurrencies={cryptoCurrencies}
                 title="You Sell"
-                onAmountChange={handleCryptoAmountChange}
+                onAmountChange={setCryptoAmount}
                 onCurrencyChange={(symbol, network) => {
                   setCryptoCurrency(symbol);
                   setNetwork(network);
@@ -288,13 +280,16 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                 defaultCurrencyCode={provider?.asset?.crypto}
               />
               <FiatPanel
-                onAmountChange={handleFiatAmountChange}
+                onAmountChange={setFiatAmount}
                 onCurrencyChange={handleFiatCurrencyChange}
                 fiatCurrencies={fiatCurrencies}
+                fiatCurrency={fiatCurrency}
                 title="You Receive"
                 value={fiatAmount}
                 defaultCurrencyCode={provider?.asset?.fiat}
                 provider={provider}
+                paymentMethod={paymentMethod}
+                error={error}
               />
             </div>
           )}
@@ -306,8 +301,6 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
               provider={provider}
               hasError={!!error}
             />
-
-            {error && <div className={classes.errorText}>{error}</div>}
           </div>
 
           {paymentOptions && (
