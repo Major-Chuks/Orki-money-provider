@@ -217,6 +217,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
               overlayOnly={true}
               onCountryChange={getCountryDefault}
               onClose={() => setToggleCountryModal(false)}
+              fiatCurrency={fiatCurrency}
             />
           )}
           {toggleFirstRedirect && (
@@ -234,6 +235,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
               onHistoryClick={() => setToggleProvider(true)}
               onClose={() => setToggleSidebar(false)}
               onCountrySearch={() => setToggleCountryModal(true)}
+              fiatCurrency={fiatCurrency}
             />
           )}
           {toggleProvider && (

@@ -39,10 +39,12 @@ const Sidebar = ({
   onClose,
   onHistoryClick,
   onCountrySearch,
+  fiatCurrency,
 }: {
   onClose: () => void;
   onHistoryClick: () => void;
   onCountrySearch: () => void;
+  fiatCurrency: string;
 }) => {
   const handleRoute = (link: string) => {
     if (link === "history") return;
@@ -89,6 +91,7 @@ const Sidebar = ({
               onCountrySearch();
               onClose();
             }}
+            fiatCurrency={fiatCurrency}
           />
         </div>
       </div>

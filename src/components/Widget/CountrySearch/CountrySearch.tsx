@@ -9,18 +9,20 @@ import { COUNTRY_DATA, ICountryData } from "@/constants/country";
 import tickIcon from "@/assets/widget/tick.svg";
 
 const CountrySearch = ({
-  onCountryChange,
   overlayOnly,
+  fiatCurrency,
   onClick,
   onClose,
+  onCountryChange,
 }: {
-  onCountryChange: (country: ICountryData) => void;
   overlayOnly?: boolean;
+  fiatCurrency: string;
   onClick?: () => void;
   onClose?: () => void;
+  onCountryChange: (country: ICountryData) => void;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(overlayOnly);
-  const [selected, setSelected] = useState<ICountryData>(COUNTRY_DATA[101]);
+  const [selected, setSelected] = useState<ICountryData | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const [filteredCountry, setFilteredCountry] =
     useState<ICountryData[]>(COUNTRY_DATA);
@@ -50,16 +52,25 @@ const CountrySearch = ({
     }
   }, [searchValue]);
 
+  // useEffect(() => {
+  //   const countryData = COUNTRY_DATA.find(
+  //     (c) => c.currency.toLowerCase() === fiatCurrency.toLowerCase()
+  //   );
+  //   if (countryData) {
+  //     setSelected(countryData);
+  //   }
+  // }, [fiatCurrency]);
+
   return (
     <div className={classes.container}>
       {!overlayOnly && (
         <div onClick={handleClick} className={classes.selected}>
           <div className={classes.countryFlag}>
-            <span className={classes.iconContainer}>
+            {/* <span className={classes.iconContainer}>
               {selected && (
                 <Image width={24} height={24} src={selected?.flag} alt="" />
               )}
-            </span>
+            </span> */}
             <span className={classes.name}>
               {selected?.name || "Select country"}
             </span>
