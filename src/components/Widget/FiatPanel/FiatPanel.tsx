@@ -12,7 +12,6 @@ const FiatPanel = ({
   fiatCurrencies,
   fiatCurrency,
   value,
-  defaultCurrencyCode,
   onAmountChange,
   onCurrencyChange,
   provider,
@@ -23,7 +22,6 @@ const FiatPanel = ({
   fiatCurrencies: get_fiat_currencies | null;
   fiatCurrency: string;
   value: string;
-  defaultCurrencyCode?: string;
   onCurrencyChange: (symbol: string) => void;
   onAmountChange: (value: string) => void;
   provider: get_defaults[number] | null;
@@ -105,7 +103,7 @@ const FiatPanel = ({
         <FiatCurrencySearch
           onCurrencyChange={onCurrencyChange}
           fiatCurrencies={fiatCurrencies}
-          defaultCurrencyCode={defaultCurrencyCode}
+          fiatCurrency={fiatCurrency}
         />
       </div>
 

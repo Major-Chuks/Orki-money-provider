@@ -11,14 +11,14 @@ const PaymentMethod = ({
   onPaymentMethodChange,
   paymentMethod,
 }: {
-  paymentOptions: PaymentMethodResponse[];
+  paymentOptions: PaymentMethodResponse[] | null;
   paymentMethod: string;
   onPaymentMethodChange: (option: PaymentMethodResponse) => void;
 }) => {
   const [togglePaymentMethod, setTogglePaymentMethod] = useState(false);
 
   const getMethodName = () => {
-    return paymentOptions.find((pm) => pm.paymentMethodId === paymentMethod)
+    return paymentOptions?.find((pm) => pm.paymentMethodId === paymentMethod)
       ?.paymentMethodName;
   };
 

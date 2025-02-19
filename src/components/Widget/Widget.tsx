@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./Widget.module.css";
 import menuIcon from "@/assets/widget/menu.svg";
 import Image from "next/image";
@@ -21,9 +21,13 @@ import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import Redirect1 from "./Redirect/Redirect1";
 import Redirect2 from "./Redirect/Redirect2";
 import { get_defaults } from "@/interface/get_defaults";
-import { fetchDefaults, fetchQuotes } from "./Widget.script";
+import {
+  fetchDefaults,
+  fetchDefaultsByCountry,
+  fetchQuotes,
+} from "./Widget.script";
 import CountrySearch from "./CountrySearch/CountrySearch";
-import { ICountryData } from "@/constants/country";
+import { COUNTRY_DATA, ICountryData } from "@/constants/country";
 import backend from "@/services/apis";
 
 const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
@@ -54,6 +58,8 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [toggleSecondRedirect, setToggleSecondRedirect] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
   const [toggleCountryModal, setToggleCountryModal] = useState(false);
+  const isFirstQuoteRender = useRef(0);
+  const isFirstDefaultRender = useRef(0);
 
   const handleFiatCurrencyChange = (c: string) => {
     setFiatCurrency(c);
@@ -101,43 +107,35 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     }
   };
 
-  const getCountryDefault = async (country: ICountryData) => {
+  const handleCountryChange = async (country: ICountryData) => {
+    isFirstQuoteRender.current = 0;
     setLoading(true);
-    setError("");
-    const response = await backend().post_change_location(country.code);
-    if (response) {
-      const _defaults: get_defaults = response.data.data;
-      setAllProviders(_defaults);
-      const _bestProvider = _defaults.find((dp) => dp.is_best);
-      if (!_bestProvider) return;
-      setProvider(_bestProvider);
-      setFiatAmount(String(_bestProvider.asset?.fiat_amount));
-      setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
-      // setPaymentMethod(""); // the component handles the initiallization.
-      setCryptoCurrency(_bestProvider.asset?.crypto || "");
-      setFiatCurrency(_bestProvider.asset?.fiat || "");
-      setNetwork(_bestProvider.asset?.network || "");
-      const afc = fiatCurrencies?.find(
-        (fc) =>
-          fc.code.toLowerCase() === _bestProvider.asset?.fiat.toLowerCase()
-      );
-
-      if (afc) {
-        const _provider = _bestProvider.provider.name.toLowerCase();
-        const _paymentOptions = afc[_provider as keyof typeof afc];
-        setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
-      }
-    } else {
-      setError(
-        "This currency is not supported. Please select a different currency."
-      );
-    }
+    await fetchDefaultsByCountry({
+      country,
+      setAllProviders,
+      setProvider,
+      setFiatAmount,
+      setCryptoAmount,
+      setFiatCurrency,
+      setCryptoCurrency,
+      setPaymentMethod,
+      setNetwork,
+      setFiatCurrencies,
+      setCryptoCurrencies,
+      setPaymentOptions,
+      setError,
+    });
     setLoading(false);
   };
 
   // STEP 1
   // Make an api call to fetch all providers and currencies
   useEffect(() => {
+    if (isFirstDefaultRender.current !== 1) {
+      isFirstDefaultRender.current += 1;
+      return; // Exit early on first render
+    }
+
     (async () => {
       setLoading(true);
       await fetchDefaults({
@@ -152,6 +150,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         setFiatCurrencies,
         setCryptoCurrencies,
         setPaymentOptions,
+        setError,
       });
       setLoading(false);
     })();
@@ -161,6 +160,11 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   // Fetch quotes
   useDebouncedEffect(
     async () => {
+      if (isFirstQuoteRender.current !== 2) {
+        isFirstQuoteRender.current += 1;
+        return; // Exit early on first render
+      }
+
       setError("");
       setLoadingQuotes(true);
       const response = await fetchQuotes({
@@ -181,14 +185,17 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         setProvider(_bestProvider);
         setFiatAmount(String(_bestProvider.asset?.fiat_amount));
         setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
-      } else {
+      } else if (response && typeof response === "string") {
         setAllProviders(null);
-        if (response && typeof response === "string") {
-          setError(response);
+        setError(response);
+        setError(response);
+      } else {
+        const countryData = COUNTRY_DATA.find(
+          (c) => c.currency.toLowerCase() === fiatCurrency.toLowerCase()
+        );
+        if (countryData) {
+          handleCountryChange(countryData);
         }
-        // else {
-        //   setError("Unable to retrieve a quote for the provided details.");
-        // }
       }
     },
     [
@@ -215,7 +222,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
           {toggleCountryModal && (
             <CountrySearch
               overlayOnly={true}
-              onCountryChange={getCountryDefault}
+              onCountryChange={handleCountryChange}
               onClose={() => setToggleCountryModal(false)}
               fiatCurrency={fiatCurrency}
             />
@@ -288,7 +295,6 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                 fiatCurrency={fiatCurrency}
                 title="You Pay"
                 value={fiatAmount}
-                defaultCurrencyCode={provider?.asset?.fiat}
                 provider={provider}
                 paymentMethod={paymentMethod}
                 error={error}
@@ -302,7 +308,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                   setNetwork(network);
                 }}
                 value={cryptoAmount}
-                defaultCurrencyCode={provider?.asset?.crypto}
+                cryptoCurrency={cryptoCurrency}
                 defaultNetwork={provider?.asset?.network}
               />
             </div>
@@ -317,7 +323,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                   setNetwork(network);
                 }}
                 value={cryptoAmount}
-                defaultCurrencyCode={provider?.asset?.crypto}
+                cryptoCurrency={cryptoCurrency}
               />
               <FiatPanel
                 onAmountChange={setFiatAmount}
@@ -326,7 +332,6 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
                 fiatCurrency={fiatCurrency}
                 title="You Receive"
                 value={fiatAmount}
-                defaultCurrencyCode={provider?.asset?.fiat}
                 provider={provider}
                 paymentMethod={paymentMethod}
                 error={error}
@@ -343,15 +348,11 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
             />
           </div>
 
-          {paymentOptions && (
-            <PaymentMethod
-              paymentOptions={paymentOptions}
-              onPaymentMethodChange={(pm) =>
-                setPaymentMethod(pm.paymentMethodId)
-              }
-              paymentMethod={paymentMethod}
-            />
-          )}
+          <PaymentMethod
+            paymentOptions={paymentOptions}
+            onPaymentMethodChange={(pm) => setPaymentMethod(pm.paymentMethodId)}
+            paymentMethod={paymentMethod}
+          />
 
           <CustomButton
             style={{ background: "#6148C2" }}

@@ -11,13 +11,13 @@ import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import CaretIcon from "@/assets/SvgComponents/CaretIcon";
 
 const FiatCurrencySearch = ({
+  fiatCurrency,
   fiatCurrencies,
   onCurrencyChange,
-  defaultCurrencyCode,
 }: {
+  fiatCurrency: string;
   fiatCurrencies: get_fiat_currencies | null;
   onCurrencyChange: (symbol: string) => void;
-  defaultCurrencyCode?: string;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
   const [selected, setSelected] = useState<get_fiat_currencies[number] | null>(
@@ -55,9 +55,9 @@ const FiatCurrencySearch = ({
   }, [selected]);
 
   useEffect(() => {
-    if (!defaultCurrencyCode) return;
+    if (!fiatCurrency) return;
     const afc = fiatCurrencies?.find(
-      (fc) => fc.code.toLowerCase() === defaultCurrencyCode.toLowerCase()
+      (fc) => fc.code.toLowerCase() === fiatCurrency.toLowerCase()
     );
     if (afc) {
       setDefaultCurrencyIcon(afc.fiat_icon);
@@ -77,7 +77,7 @@ const FiatCurrencySearch = ({
           </span>
           <span className={classes.name}>
             {selected?.code ||
-              defaultCurrencyCode?.toUpperCase() ||
+              fiatCurrency?.toUpperCase() ||
               "Select fiat currency"}
           </span>
         </div>

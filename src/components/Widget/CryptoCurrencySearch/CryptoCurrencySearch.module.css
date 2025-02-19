@@ -92,7 +92,7 @@
 .iconContainer {
   width: 24px;
   height: 24px;
-  background: gainsboro;
+  background: #f6f6f6;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;

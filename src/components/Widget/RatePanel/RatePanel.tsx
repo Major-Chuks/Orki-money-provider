@@ -7,6 +7,7 @@ import Image from "next/image";
 import LoadingIcon from "@/assets/SvgComponents/LoadingIcon";
 import { get_defaults } from "@/interface/get_defaults";
 import CaretIcon from "@/assets/SvgComponents/CaretIcon";
+import { formatStringToMoney } from "@/services/utils";
 
 const RatePanel = ({
   loading,
@@ -36,19 +37,17 @@ const RatePanel = ({
               <span>1 {provider.asset?.crypto.toUpperCase()}</span>
               <Image src={approxEqualIcon} alt="" />
               <span>
-                {provider.exchange_rate?.toFixed(2)}{" "}
+                {Number(provider.exchange_rate).toLocaleString()}{" "}
                 {provider.asset?.fiat.toUpperCase()}
               </span>
             </div>
           ) : (
-            <div className={classes.loadingText}>
-              Provide payment details to see available quotes.
-            </div>
+            <div className={classes.loadingText}></div>
           )}
 
           {!hasError ? (
             <div className={classes.provider} onClick={onProviderClick}>
-              <span>By</span>
+              {provider?.provider.name && <span>By</span>}
               {provider?.provider.icon && (
                 <img
                   width={80}

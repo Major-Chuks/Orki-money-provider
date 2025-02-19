@@ -8,16 +8,16 @@ import ErrorIcon from "@/assets/SvgComponents/ErrorIcon";
 const CryptoPanel = ({
   title,
   cryptoCurrencies,
+  cryptoCurrency,
   value,
-  defaultCurrencyCode,
   defaultNetwork,
   onCurrencyChange,
   onAmountChange,
 }: {
   title: string;
   cryptoCurrencies: get_crypto_currencies | null;
+  cryptoCurrency: string;
   value: string;
-  defaultCurrencyCode?: string;
   defaultNetwork?: string;
   onCurrencyChange: (symbol: string, network: string) => void;
   onAmountChange: (value: string) => void;
@@ -68,7 +68,7 @@ const CryptoPanel = ({
           <CryptoCurrencySearch
             onCurrencyChange={setCurrency}
             cryptoCurrencies={cryptoCurrencies}
-            defaultCurrencyCode={defaultCurrencyCode}
+            cryptoCurrency={cryptoCurrency}
           />
           <CryptoNetwork network={currency?.network || defaultNetwork || ""} />
         </div>

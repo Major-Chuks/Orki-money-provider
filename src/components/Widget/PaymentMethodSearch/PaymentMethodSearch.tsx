@@ -14,23 +14,24 @@ const PaymentMethodSearch = ({
   display,
 }: {
   onClose: () => void;
-  paymentOptions: PaymentMethodResponse[];
+  paymentOptions: PaymentMethodResponse[] | null;
   onPaymentMethodChange: (option: PaymentMethodResponse) => void;
   display: boolean;
 }) => {
-  const [selected, setSelected] = useState<PaymentMethodResponse>(
-    paymentOptions[0]
-  );
+  const [selected, setSelected] = useState<PaymentMethodResponse | null>(null);
   const [searchValue, setSearchValue] = useState("");
-  const [filteredMethods, setFilteredMethods] =
-    useState<PaymentMethodResponse[]>(paymentOptions);
+  const [filteredMethods, setFilteredMethods] = useState<
+    PaymentMethodResponse[] | null
+  >(null);
 
   useEffect(() => {
     if (searchValue) {
-      const results = paymentOptions.filter((c) =>
+      const results = paymentOptions?.filter((c) =>
         c.paymentMethodName.toLowerCase().includes(searchValue.toLowerCase())
       );
-      setFilteredMethods(results);
+      if (results) {
+        setFilteredMethods(results);
+      }
     } else {
       setFilteredMethods(paymentOptions);
     }
@@ -45,6 +46,12 @@ const PaymentMethodSearch = ({
   useEffect(() => {
     setFilteredMethods(paymentOptions);
   }, [display]);
+
+  useEffect(() => {
+    if (!paymentOptions) return;
+    setSelected(paymentOptions[0]);
+    setFilteredMethods(paymentOptions);
+  }, [paymentOptions]);
 
   return (
     <Overlay style={{ display: display ? "block" : "none" }} onClose={onClose}>
@@ -64,7 +71,7 @@ const PaymentMethodSearch = ({
         </div>
 
         <div className={classes.paymentMethodContainer}>
-          {filteredMethods.length ? (
+          {filteredMethods && filteredMethods.length ? (
             filteredMethods.map((c, idx) => (
               <div
                 onClick={() => {

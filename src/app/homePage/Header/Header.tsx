@@ -71,7 +71,7 @@ const Header = () => {
                 <TransakIframe purchaseLink={purchaseLink} />
                 <CustomButton
                   onClick={() => setQueryString("")}
-                  style={{ width: "max-content", background: "gainsboro" }}
+                  style={{ width: "max-content", background: "#f6f6f6" }}
                 >
                   Close Modal
                 </CustomButton>

@@ -12,11 +12,11 @@ import CaretIcon from "@/assets/SvgComponents/CaretIcon";
 const CryptoCurrencySearch = ({
   cryptoCurrencies,
   onCurrencyChange,
-  defaultCurrencyCode,
+  cryptoCurrency,
 }: {
   cryptoCurrencies: get_crypto_currencies | null;
   onCurrencyChange: (currency: get_crypto_currencies[number]) => void;
-  defaultCurrencyCode?: string;
+  cryptoCurrency?: string;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
   const [selected, setSelected] = useState<
@@ -54,9 +54,9 @@ const CryptoCurrencySearch = ({
   }, [selected]);
 
   useEffect(() => {
-    if (!defaultCurrencyCode) return;
+    if (!cryptoCurrency) return;
     const cc = cryptoCurrencies?.find(
-      (cc) => cc.code.toLowerCase() === defaultCurrencyCode.toLowerCase()
+      (cc) => cc.code.toLowerCase() === cryptoCurrency.toLowerCase()
     );
     if (cc) {
       setDefaultCurrencyIcon(cc.crypto_icon);
@@ -76,7 +76,7 @@ const CryptoCurrencySearch = ({
           </span>
           <span className={classes.name}>
             {selected?.name ||
-              defaultCurrencyCode?.toUpperCase() ||
+              cryptoCurrency?.toUpperCase() ||
               "Select crypto currency"}
           </span>
         </div>

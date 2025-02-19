@@ -1,3 +1,4 @@
+import { ICountryData } from "@/constants/country";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import { get_defaults } from "@/interface/get_defaults";
 import {
@@ -6,6 +7,7 @@ import {
 } from "@/interface/get_fiat_currencies";
 import backend from "@/services/apis";
 import { formatMoneyToNumber } from "@/services/utils";
+import { SetStateAction } from "react";
 
 export const sortProviders = (providers: get_defaults | null) => {
   if (!providers) return null;
@@ -15,7 +17,93 @@ export const sortProviders = (providers: get_defaults | null) => {
   return [...supportedProviders, ...noSupported];
 };
 
+export const fetchDefaultsByCountry = async ({
+  country,
+  setError,
+  setAllProviders,
+  setProvider,
+  setFiatAmount,
+  setCryptoAmount,
+  setFiatCurrency,
+  setCryptoCurrency,
+  setPaymentMethod,
+  setNetwork,
+  setFiatCurrencies,
+  setCryptoCurrencies,
+  setPaymentOptions,
+}: {
+  country: ICountryData;
+  setAllProviders: React.Dispatch<React.SetStateAction<get_defaults | null>>;
+  setProvider: React.Dispatch<
+    React.SetStateAction<get_defaults[number] | null>
+  >;
+  setError: React.Dispatch<SetStateAction<string>>;
+  setFiatAmount: React.Dispatch<React.SetStateAction<string>>;
+  setCryptoAmount: React.Dispatch<React.SetStateAction<string>>;
+  setCryptoCurrency: React.Dispatch<React.SetStateAction<string>>;
+  setFiatCurrency: React.Dispatch<React.SetStateAction<string>>;
+  setNetwork: React.Dispatch<React.SetStateAction<string>>;
+  setPaymentMethod: React.Dispatch<React.SetStateAction<string>>;
+  setFiatCurrencies: React.Dispatch<
+    React.SetStateAction<get_fiat_currencies | null>
+  >;
+  setCryptoCurrencies: React.Dispatch<
+    React.SetStateAction<get_crypto_currencies | null>
+  >;
+  setPaymentOptions: React.Dispatch<
+    React.SetStateAction<PaymentMethodResponse[] | null>
+  >;
+}) => {
+  setError("");
+  setFiatCurrency(country.currency.toUpperCase());
+
+  const [fiatRes, cryptoRes, defaultRes] = await Promise.all([
+    backend().get_fiat_currencies(),
+    backend().get_crypto_currencies(),
+    backend().post_change_location(country.code),
+  ]);
+
+  if (defaultRes) {
+    const _defaults: get_defaults = defaultRes.data.data;
+    setAllProviders(_defaults);
+    const _bestProvider = _defaults.find((dp) => dp.is_best);
+    if (!_bestProvider) return;
+    setProvider(_bestProvider);
+    setFiatAmount(String(_bestProvider.asset?.fiat_amount));
+    setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
+    // setPaymentMethod(""); // the component handles the initiallization.
+    setCryptoCurrency(_bestProvider.asset?.crypto || "");
+    setFiatCurrency(_bestProvider.asset?.fiat || "");
+    setNetwork(_bestProvider.asset?.network || "");
+
+    // find the currency object
+    if (fiatRes) {
+      const fiatCurrencies: get_fiat_currencies = fiatRes.data.data;
+      const afc = fiatCurrencies?.find(
+        (fc) =>
+          fc.code.toLowerCase() === _bestProvider.asset?.fiat.toLowerCase()
+      );
+
+      if (afc) {
+        const _provider = _bestProvider.provider.name.toLowerCase();
+        const _paymentOptions = afc[_provider as keyof typeof afc];
+        setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
+      }
+      setFiatCurrencies(fiatCurrencies);
+    }
+    if (cryptoRes) {
+      const cryptoCurrencies = cryptoRes.data.data;
+      setCryptoCurrencies(cryptoCurrencies);
+    }
+  } else {
+    setError(
+      "This currency is not supported. Please select a different currency."
+    );
+  }
+};
+
 export const fetchDefaults = async ({
+  setError,
   setAllProviders,
   setProvider,
   setFiatAmount,
@@ -32,6 +120,7 @@ export const fetchDefaults = async ({
   setProvider: React.Dispatch<
     React.SetStateAction<get_defaults[number] | null>
   >;
+  setError: React.Dispatch<SetStateAction<string>>;
   setFiatAmount: React.Dispatch<React.SetStateAction<string>>;
   setCryptoAmount: React.Dispatch<React.SetStateAction<string>>;
   setCryptoCurrency: React.Dispatch<React.SetStateAction<string>>;
@@ -86,6 +175,23 @@ export const fetchDefaults = async ({
       const cryptoCurrencies = cryptoRes.data.data;
       setCryptoCurrencies(cryptoCurrencies);
     }
+  } else {
+    setError(
+      "This currency is not supported. Please select a different currency."
+    );
+    // fetch user country
+    if (cryptoRes) {
+      const cryptoCurrencies: get_crypto_currencies = cryptoRes.data.data;
+      setCryptoCurrencies(cryptoCurrencies);
+      setCryptoCurrency(""); //cryptoCurrencies[0].code // set to countrie's default currency
+    }
+    if (fiatRes) {
+      const fiatCurrencies: get_fiat_currencies = fiatRes.data.data;
+      setFiatCurrencies(fiatCurrencies);
+      setFiatCurrency(""); //fiatCurrencies[0].code // set to countrie's default currency
+    }
+    setFiatAmount("0.00");
+    setCryptoAmount("0.00");
   }
 };
 
