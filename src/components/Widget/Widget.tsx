@@ -131,10 +131,10 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   // STEP 1
   // Make an api call to fetch all providers and currencies
   useEffect(() => {
-    if (isFirstDefaultRender.current !== 1) {
-      isFirstDefaultRender.current += 1;
-      return; // Exit early on first render
-    }
+    // if (isFirstDefaultRender.current !== 1) {
+    //   isFirstDefaultRender.current += 1;
+    //   return; // Exit early on first render
+    // }
 
     (async () => {
       setLoading(true);
@@ -160,7 +160,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   // Fetch quotes
   useDebouncedEffect(
     async () => {
-      if (isFirstQuoteRender.current !== 2) {
+      if (isFirstQuoteRender.current !== 1) {
         isFirstQuoteRender.current += 1;
         return; // Exit early on first render
       }
