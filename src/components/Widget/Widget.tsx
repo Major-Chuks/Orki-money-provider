@@ -25,6 +25,8 @@ import {
   fetchDefaults,
   fetchDefaultsByCountry,
   fetchQuotes,
+  getQuoteLimit,
+  isValidQuoteLimit,
 } from "./Widget.script";
 import CountrySearch from "./CountrySearch/CountrySearch";
 import { COUNTRY_DATA, ICountryData } from "@/constants/country";
@@ -164,6 +166,23 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         isFirstQuoteRender.current += 1;
         return; // Exit early on first render
       }
+
+      const { minBuyAmount, maxBuyAmount } = getQuoteLimit({
+        fiatCurrencies,
+        fiatCurrency,
+        providerName: provider?.provider.name || "",
+        paymentMethod,
+      });
+
+      const isValid = isValidQuoteLimit({
+        minBuyAmount,
+        maxBuyAmount,
+        fiatAmount: Number(fiatAmount),
+        fiatCurrency,
+        setError,
+      });
+
+      if (!isValid) return;
 
       setError("");
       setLoadingQuotes(true);

@@ -257,3 +257,65 @@ export const fetchQuotes = async ({
 
   return response;
 };
+
+export const getQuoteLimit = ({
+  fiatCurrencies,
+  providerName,
+  paymentMethod,
+  fiatCurrency,
+}: {
+  providerName: string;
+  fiatCurrency: string;
+  paymentMethod: string;
+  fiatCurrencies: get_fiat_currencies | null;
+}) => {
+  // validate input when fiat currency or input value changes
+  const afc = fiatCurrencies?.find(
+    (fc) => fc.code.toLowerCase() === fiatCurrency.toLowerCase()
+  );
+  if (afc && providerName) {
+    const _paymentOptions = afc[providerName.toLowerCase() as keyof typeof afc];
+    if (typeof _paymentOptions !== "string") {
+      const _paymentMethod = _paymentOptions.find(
+        (pm) => pm.paymentMethodId === paymentMethod
+      );
+      if (_paymentMethod) {
+        return {
+          minBuyAmount: _paymentMethod?.minBuyAmount || 0,
+          maxBuyAmount: _paymentMethod?.maxBuyAmount || 0,
+        };
+      }
+    }
+  }
+  return { minBuyAmount: 0, maxBuyAmount: 0 };
+};
+
+export const isValidQuoteLimit = ({
+  maxBuyAmount,
+  minBuyAmount,
+  fiatAmount,
+  fiatCurrency,
+  setError,
+}: {
+  minBuyAmount: number;
+  maxBuyAmount: number;
+  fiatAmount: number;
+  fiatCurrency: string;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  if (fiatAmount < minBuyAmount) {
+    setError(
+      `Order value can’t be lesser than ${fiatCurrency.toUpperCase()} ${minBuyAmount.toLocaleString()}`
+    );
+    return false;
+  }
+  if (maxBuyAmount) {
+    if (fiatAmount > maxBuyAmount) {
+      setError(
+        `Order value can’t be higher than ${fiatCurrency.toUpperCase()} ${maxBuyAmount.toLocaleString()}`
+      );
+      return false;
+    }
+  }
+  return true;
+};

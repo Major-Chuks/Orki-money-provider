@@ -6,6 +6,7 @@ import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import { useEffect, useState } from "react";
 import { formatStringToMoney } from "@/services/utils";
 import { get_defaults } from "@/interface/get_defaults";
+import { getQuoteLimit, isValidQuoteLimit } from "../Widget.script";
 
 const FiatPanel = ({
   title,
@@ -28,50 +29,29 @@ const FiatPanel = ({
   paymentMethod: string;
   error: string;
 }) => {
-  const [errorMsg, setErrorMsg] = useState(error);
+  const [errorMsg, setError] = useState(error);
   const [inputValue, setInputValue] = useState(value);
 
   const validateInput = () => {
-    let minAmount = 0;
-    let maxAmount = 0;
+    setError("");
 
-    // validate input when fiat currency or input value changes
-    const afc = fiatCurrencies?.find(
-      (fc) => fc.code.toLowerCase() === fiatCurrency.toLowerCase()
-    );
-    if (afc && provider) {
-      const _provider = provider.provider.name.toLowerCase();
-      const _paymentOptions = afc[_provider as keyof typeof afc];
-      if (typeof _paymentOptions !== "string") {
-        const _paymentMethod = _paymentOptions.find(
-          (pm) => pm.paymentMethodId === paymentMethod
-        );
-        if (_paymentMethod) {
-          minAmount = _paymentMethod?.minBuyAmount || 0;
-          maxAmount = _paymentMethod?.maxBuyAmount || 0;
-        }
-      }
-    }
+    const { minBuyAmount, maxBuyAmount } = getQuoteLimit({
+      fiatCurrencies,
+      fiatCurrency,
+      providerName: provider?.provider.name || "",
+      paymentMethod,
+    });
 
-    setErrorMsg("");
-    if (Number(inputValue) < Number(minAmount)) {
-      setErrorMsg(
-        `Order value can’t be lesser than ${provider?.asset?.fiat.toUpperCase()} ${formatStringToMoney(
-          String(minAmount)
-        )}`
-      );
-      return;
-    }
-    if (maxAmount) {
-      if (Number(inputValue) > Number(maxAmount)) {
-        setErrorMsg(
-          `Order value can’t be higher than ${provider?.asset?.fiat.toUpperCase()} ${formatStringToMoney(
-            String(maxAmount)
-          )}`
-        );
-        return;
-      }
-    }
+    const isValid = isValidQuoteLimit({
+      minBuyAmount,
+      maxBuyAmount,
+      fiatAmount: Number(inputValue),
+      fiatCurrency,
+      setError,
+    });
+
+    if (!isValid) return;
+
     onAmountChange(inputValue);
   };
 
@@ -84,7 +64,7 @@ const FiatPanel = ({
   }, [value]);
 
   useEffect(() => {
-    setErrorMsg(error);
+    setError(error);
   }, [error]);
 
   return (
