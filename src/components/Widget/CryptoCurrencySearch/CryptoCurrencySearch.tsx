@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import Overlay from "../Overlay/Overlay";
 import classes from "./CryptoCurrencySearch.module.css";
 import Image from "next/image";
-import arrowIcon from "@/assets/widget/arrow-down.svg";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
 // import tickIcon from "@/assets/widget/tick.svg";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
+import CaretIcon from "@/assets/SvgComponents/CaretIcon";
 
 const CryptoCurrencySearch = ({
   cryptoCurrencies,
@@ -80,11 +80,7 @@ const CryptoCurrencySearch = ({
               "Select crypto currency"}
           </span>
         </div>
-        <Image
-          className={`${toggleOverlay && classes.arrowUp}`}
-          src={arrowIcon}
-          alt=""
-        />
+        <CaretIcon />
       </div>
       {toggleOverlay && (
         <Overlay onClose={() => setToggleOverlay(false)}>

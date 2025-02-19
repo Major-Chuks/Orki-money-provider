@@ -304,6 +304,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
               loading={loadingQuotes}
               onProviderClick={() => setToggleProvider(true)}
               provider={provider}
+              hasError={!!error}
             />
 
             {error && <div className={classes.errorText}>{error}</div>}
@@ -315,6 +316,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
               onPaymentMethodChange={(pm) =>
                 setPaymentMethod(pm.paymentMethodId)
               }
+              paymentMethod={paymentMethod}
             />
           )}
 

@@ -1,118 +1,45 @@
 /* eslint-disable @next/next/no-img-element */
 import classes from "./PaymentMethod.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PaymentMethodSearch from "../PaymentMethodSearch/PaymentMethodSearch";
-import payIcon from "@/assets/widget/pay.svg";
-import infoIcon from "@/assets/widget/info.svg";
-import Image from "next/image";
 import { PaymentMethodResponse } from "@/interface/get_fiat_currencies";
+import InstitutionIcon from "@/assets/SvgComponents/InstitutionIcon";
+import ChevronDownIcon from "@/assets/SvgComponents/ChevronDownIcon";
 
 const PaymentMethod = ({
   paymentOptions,
   onPaymentMethodChange,
+  paymentMethod,
 }: {
   paymentOptions: PaymentMethodResponse[];
+  paymentMethod: string;
   onPaymentMethodChange: (option: PaymentMethodResponse) => void;
 }) => {
-  const [selected, setSelected] = useState<PaymentMethodResponse>(
-    paymentOptions[0]
-  );
-
   const [togglePaymentMethod, setTogglePaymentMethod] = useState(false);
-  const [modifiedOptions, setModifiedOptions] =
-    useState<PaymentMethodResponse[]>();
 
-  useEffect(() => {
-    if (selected) {
-      onPaymentMethodChange(selected);
-      const modF = paymentOptions.filter(
-        (pop) => pop.paymentMethodId !== selected.paymentMethodId
-      );
-      setModifiedOptions(modF);
-    }
-  }, [selected]);
-
-  useEffect(() => {
-    setSelected(paymentOptions[0]);
-    const modF = [...paymentOptions];
-    modF.shift();
-    setModifiedOptions(modF);
-  }, [paymentOptions]);
-
-  if (!selected) return null;
+  const getMethodName = () => {
+    return paymentOptions.find((pm) => pm.paymentMethodId === paymentMethod)
+      ?.paymentMethodName;
+  };
 
   return (
     <div className={classes.container}>
-      {modifiedOptions &&
-        modifiedOptions.length &&
-        (() => {
-          const modF = [...modifiedOptions];
-          modF.shift();
-          return (
-            <PaymentMethodSearch
-              paymentOptions={modF}
-              onClose={() => setTogglePaymentMethod(false)}
-              onPaymentMethodChange={setSelected}
-              display={togglePaymentMethod}
-            />
-          );
-        })()}
+      <PaymentMethodSearch
+        paymentOptions={paymentOptions}
+        onClose={() => setTogglePaymentMethod(false)}
+        onPaymentMethodChange={onPaymentMethodChange}
+        display={togglePaymentMethod}
+      />
       <div className={classes.title}>Payment method</div>
-      <div className={classes.boxWrapper}>
-        <div className={`${classes.box} ${classes.active}`}>
-          {selected.paymentMethodLogo && (
-            <img
-              className={classes.icon}
-              width={40}
-              height={40}
-              src={selected.paymentMethodLogo}
-              alt=""
-            />
-          )}
-          <div className={classes.name}>{selected.paymentMethodName}</div>
-          <div className={classes.description}>
-            Gateway Fee 1.99% <Image src={infoIcon} alt="" />{" "}
-          </div>
+      <div
+        onClick={() => setTogglePaymentMethod(true)}
+        className={classes.selectionBox}
+      >
+        <div>
+          <InstitutionIcon />
+          {getMethodName() || "Select payment method"}
         </div>
-
-        {modifiedOptions && (
-          <div
-            onClick={() => setSelected(modifiedOptions[0])}
-            className={`${classes.box}`}
-          >
-            {modifiedOptions[0].paymentMethodLogo && (
-              <img
-                className={classes.icon}
-                width={40}
-                height={40}
-                src={modifiedOptions[0].paymentMethodLogo}
-                alt=""
-              />
-            )}
-            <div className={classes.name}>
-              {modifiedOptions[0].paymentMethodName}
-            </div>
-            <div className={classes.description}>
-              Gateway Fee 1.99% <Image src={infoIcon} alt="" />{" "}
-            </div>
-          </div>
-        )}
-
-        {modifiedOptions && modifiedOptions.length && (
-          <div
-            onClick={() => setTogglePaymentMethod(true)}
-            className={`${classes.box}`}
-          >
-            <Image
-              className={classes.icon}
-              width={40}
-              height={40}
-              src={payIcon}
-              alt=""
-            />
-            <div className={classes.name}>Other Options</div>
-          </div>
-        )}
+        <ChevronDownIcon />
       </div>
     </div>
   );

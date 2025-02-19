@@ -2,9 +2,7 @@
 import Image from "next/image";
 import classes from "./Provider.module.css";
 import closeIcon from "@/assets/widget/close.svg";
-import Search from "../Search/Search";
 import badgeIcon from "@/assets/widget/badge.svg";
-import { useState } from "react";
 import { get_defaults } from "@/interface/get_defaults";
 import { sortProviders } from "../Widget.script";
 
@@ -29,9 +27,9 @@ const Provider = ({
         Select Onramp <Image onClick={onClose} src={closeIcon} alt="" />
       </div>
 
-      <div className={classes.searchContainer}>
+      {/* <div className={classes.searchContainer}>
         <Search />
-      </div>
+      </div> */}
 
       <div className={classes.boxContainer}>
         {sortedProviders ? (
@@ -120,7 +118,7 @@ const Provider = ({
             );
           })
         ) : (
-          <div className={classes.lowerSection}>No providers available</div>
+          <div className={classes.emptyState}>No providers found</div>
         )}
       </div>
     </div>

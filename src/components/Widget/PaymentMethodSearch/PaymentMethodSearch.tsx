@@ -63,33 +63,39 @@ const PaymentMethodSearch = ({
           </div>
         </div>
 
-        <div className={classes.countryWrapper}>
-          {filteredMethods.map((c, idx) => (
-            <div
-              onClick={() => {
-                setSelected(c);
-                onClose();
-              }}
-              key={idx}
-              className={classes.country}
-            >
-              <div className={classes.countryFlag}>
-                <span className={classes.iconContainer}>
-                  {c.paymentMethodLogo && (
-                    <img
-                      width={24}
-                      height={24}
-                      src={c.paymentMethodLogo}
-                      alt=""
-                    />
-                  )}
-                </span>
-                <div className={classes.nameCode}>
-                  <span className={classes.name}>{c.paymentMethodName}</span>
+        <div className={classes.paymentMethodContainer}>
+          {filteredMethods.length ? (
+            filteredMethods.map((c, idx) => (
+              <div
+                onClick={() => {
+                  setSelected(c);
+                  onClose();
+                }}
+                key={idx}
+                className={classes.paymentMethod}
+              >
+                <div>
+                  <span className={classes.iconContainer}>
+                    {c.paymentMethodLogo && (
+                      <img
+                        width={24}
+                        height={24}
+                        src={c.paymentMethodLogo}
+                        alt=""
+                      />
+                    )}
+                  </span>
+                  <div className={classes.nameCode}>
+                    <span className={classes.name}>{c.paymentMethodName}</span>
+                  </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className={classes.emptyState}>
+              No payment method available
             </div>
-          ))}
+          )}
         </div>
       </div>
     </Overlay>

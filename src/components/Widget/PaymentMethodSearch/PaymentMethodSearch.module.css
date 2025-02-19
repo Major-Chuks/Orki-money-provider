@@ -1,39 +1,48 @@
-.container {
+.wrapper {
   width: 100%;
 }
 
-.country {
+.paymentMethodContainer {
+  width: 100%;
+  height: calc(100% - 118px);
+  overflow: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.paymentMethod {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  padding: 8px 24px;
   padding: 0 24px;
   transition: all 100ms;
 }
 
-/* .country:hover {
-  background: rgba(90, 41, 236, 0.03);
-} */
-
-.country .nameCode {
-  border-top: 1px solid #e5e7eb;
+.paymentMethod:hover .nameCode {
+  background: #f5f7fd;
 }
 
-.country:first-child .nameCode {
+.paymentMethod:hover .nameCode {
   border-top: 1px solid transparent;
 }
 
-.countryFlag {
+.paymentMethod .nameCode {
+  border-top: 1px solid #e5e7eb;
+}
+
+.paymentMethod:first-child .nameCode {
+  border-top: 1px solid transparent;
+}
+
+.paymentMethod > div {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 12px;
-}
-
-.country .countryFlag {
   gap: 18px;
 }
 
@@ -66,6 +75,8 @@
 }
 
 .iconContainer {
+  width: 41px;
+  height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -129,12 +140,15 @@
   margin-bottom: 15px;
 }
 
-.countryWrapper {
+.emptyState {
   width: 100%;
-  height: calc(100% - 116px);
-  overflow: auto;
-  padding-right: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  padding: 12px 16px;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
 }

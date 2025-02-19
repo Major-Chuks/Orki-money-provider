@@ -106,10 +106,6 @@
   object-fit: cover;
 }
 
-.arrowUp {
-  transform: rotate(180deg);
-}
-
 .wrapper {
   width: 100%;
   height: 70%;

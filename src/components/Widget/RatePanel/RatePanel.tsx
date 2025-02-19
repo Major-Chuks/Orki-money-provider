@@ -1,20 +1,23 @@
+/* eslint-disable @next/next/no-img-element */
 import classes from "./RatePanel.module.css";
 import refreshIcon from "@/assets/widget/refresh.svg";
 import approxEqualIcon from "@/assets/widget/approx-equal.svg";
 // import moonpayIcon from "@/assets/widget/moonpay.svg";
 import Image from "next/image";
-import chevronWhite from "@/assets/widget/chevron-white.svg";
 import LoadingIcon from "@/assets/SvgComponents/LoadingIcon";
 import { get_defaults } from "@/interface/get_defaults";
+import CaretIcon from "@/assets/SvgComponents/CaretIcon";
 
 const RatePanel = ({
   loading,
   provider,
   onProviderClick,
+  hasError,
 }: {
   loading: boolean;
   provider: get_defaults[number] | null;
   onProviderClick: () => void;
+  hasError: boolean;
 }) => {
   return (
     <>
@@ -43,22 +46,28 @@ const RatePanel = ({
             </div>
           )}
 
-          <div className={classes.provider} onClick={onProviderClick}>
-            <span>By</span>
-            <span className={classes.providerName}>
-              {provider?.provider.name}
-            </span>
-            {/* {quote?.provider.icon && (
-              <Image
-                width={80}
-                height={16}
-                src={quote?.provider.icon}
-                alt="Transak logo"
-                className={classes.logo}
-              />
-            )} */}
-            <Image className={classes.chevron} src={chevronWhite} alt="" />
-          </div>
+          {!hasError ? (
+            <div className={classes.provider} onClick={onProviderClick}>
+              <span>By</span>
+              {provider?.provider.icon && (
+                <img
+                  width={80}
+                  height={16}
+                  src={provider?.provider.icon}
+                  alt="provider logo"
+                  className={classes.logo}
+                />
+              )}
+              <span className={classes.providerName}>
+                {provider?.provider.name}
+              </span>
+              <CaretIcon fill="#E7E7E7" />
+            </div>
+          ) : (
+            <div style={{ cursor: "default" }} className={classes.provider}>
+              <CaretIcon fill="#E7E7E7" />
+            </div>
+          )}
         </div>
       )}
     </>

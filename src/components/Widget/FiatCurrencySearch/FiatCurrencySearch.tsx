@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import Overlay from "../Overlay/Overlay";
 import classes from "./FiatCurrencySearch.module.css";
 import Image from "next/image";
-import arrowIcon from "@/assets/widget/arrow-down.svg";
 import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
 import rightArrowIcon from "@/assets/widget/arrow-right.svg";
 import SvgIcon from "../SvgIcon/SvgIcon";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
+import CaretIcon from "@/assets/SvgComponents/CaretIcon";
 
 const FiatCurrencySearch = ({
   fiatCurrencies,
@@ -81,11 +81,7 @@ const FiatCurrencySearch = ({
               "Select fiat currency"}
           </span>
         </div>
-        <Image
-          className={`${toggleOverlay && classes.arrowUp}`}
-          src={arrowIcon}
-          alt=""
-        />
+        <CaretIcon />
       </div>
       {toggleOverlay && (
         <Overlay onClose={() => setToggleOverlay(false)}>
