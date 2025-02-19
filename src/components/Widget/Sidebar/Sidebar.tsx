@@ -38,11 +38,11 @@ const sideMenu = [
 const Sidebar = ({
   onClose,
   onHistoryClick,
-  onCountryChange,
+  onCountrySearch,
 }: {
   onClose: () => void;
   onHistoryClick: () => void;
-  onCountryChange: (country: ICountryData) => void;
+  onCountrySearch: () => void;
 }) => {
   const handleRoute = (link: string) => {
     if (link === "history") return;
@@ -81,13 +81,16 @@ const Sidebar = ({
           </div>
         </div>
 
-        {/* <div className={classes.location}>
+        <div className={classes.location}>
           <div className={classes.title}>Location</div>
           <CountrySearch
-            onCountryChange={onCountryChange}
-            onSearchOpen={() => {}}
+            onCountryChange={() => {}}
+            onClick={() => {
+              onCountrySearch();
+              onClose();
+            }}
           />
-        </div> */}
+        </div>
       </div>
     </Overlay>
   );

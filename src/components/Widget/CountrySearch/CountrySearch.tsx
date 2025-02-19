@@ -7,16 +7,19 @@ import closeIcon from "@/assets/widget/close.svg";
 import Search from "../Search/Search";
 import { COUNTRY_DATA, ICountryData } from "@/constants/country";
 import tickIcon from "@/assets/widget/tick.svg";
-import backend from "@/services/apis";
 
 const CountrySearch = ({
-  onSearchOpen,
   onCountryChange,
+  overlayOnly,
+  onClick,
+  onClose,
 }: {
-  onSearchOpen: () => void;
   onCountryChange: (country: ICountryData) => void;
+  overlayOnly?: boolean;
+  onClick?: () => void;
+  onClose?: () => void;
 }) => {
-  const [toggleOverlay, setToggleOverlay] = useState(false);
+  const [toggleOverlay, setToggleOverlay] = useState(overlayOnly);
   const [selected, setSelected] = useState<ICountryData>(COUNTRY_DATA[101]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredCountry, setFilteredCountry] =
@@ -24,11 +27,15 @@ const CountrySearch = ({
 
   const handleClick = () => {
     setToggleOverlay(!toggleOverlay);
+    if (onClick) {
+      onClick();
+    }
   };
 
-  const fetchCountry = async () => {
-    const response = await backend().get_user_country();
-    if (response) {
+  const handleClose = () => {
+    setToggleOverlay(false);
+    if (onClose) {
+      onClose();
     }
   };
 
@@ -43,50 +50,42 @@ const CountrySearch = ({
     }
   }, [searchValue]);
 
-  useEffect(() => {
-    onCountryChange(selected);
-  }, [selected]);
-
-  useEffect(() => {
-    // fetchCountry();
-  }, []);
-
   return (
     <div className={classes.container}>
-      <div onClick={handleClick} className={classes.selected}>
-        <div className={classes.countryFlag}>
-          <span className={classes.iconContainer}>
-            {selected && (
-              <Image width={24} height={24} src={selected?.flag} alt="" />
-            )}
-          </span>
-          <span className={classes.name}>
-            {selected?.name || "Select country"}
-          </span>
+      {!overlayOnly && (
+        <div onClick={handleClick} className={classes.selected}>
+          <div className={classes.countryFlag}>
+            <span className={classes.iconContainer}>
+              {selected && (
+                <Image width={24} height={24} src={selected?.flag} alt="" />
+              )}
+            </span>
+            <span className={classes.name}>
+              {selected?.name || "Select country"}
+            </span>
+          </div>
+          <Image
+            className={`${toggleOverlay && classes.arrowUp}`}
+            src={arrowIcon}
+            alt=""
+          />
         </div>
-        <Image
-          className={`${toggleOverlay && classes.arrowUp}`}
-          src={arrowIcon}
-          alt=""
-        />
-      </div>
+      )}
       {toggleOverlay && (
-        <Overlay onClose={() => setToggleOverlay(false)}>
+        <Overlay onClose={handleClose}>
           <div className={classes.wrapper}>
-            <div className={classes.heading}>
-              Select Country{" "}
-              <Image
-                onClick={() => setToggleOverlay(false)}
-                src={closeIcon}
-                alt=""
-              />
-            </div>
+            <div className={classes.headingContainer}>
+              <div className={classes.heading}>
+                Select Country{" "}
+                <Image onClick={handleClose} src={closeIcon} alt="" />
+              </div>
 
-            <div className={classes.searchWrapper}>
-              <Search
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
+              <div className={classes.searchWrapper}>
+                <Search
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+              </div>
             </div>
 
             <div className={classes.countryWrapper}>
@@ -94,7 +93,8 @@ const CountrySearch = ({
                 <div
                   onClick={() => {
                     setSelected(c);
-                    setToggleOverlay(false);
+                    onCountryChange(c);
+                    handleClose();
                   }}
                   key={idx}
                   className={classes.country}

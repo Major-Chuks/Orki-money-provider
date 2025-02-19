@@ -5,17 +5,12 @@ export const BACKEND_API = axios.create({
   baseURL: "https://3x26dlwune.execute-api.af-south-1.amazonaws.com/api/v1",
 });
 
-// BACKEND_API.interceptors.request.use(async (config) => {
-//   config.headers.Authorization = `Bearer ${"apiKey"}`;
-//   return config;
-// });
-
 export default function backend() {
   return {
-    get_user_country: async () => {
-      const url = "/user-country";
+    post_change_location: async (country: string) => {
+      const url = "/change-location";
       try {
-        const response = await BACKEND_API.get(url);
+        const response = await BACKEND_API.post(url, { country });
         return response;
       } catch (error) {
         console.error(error);

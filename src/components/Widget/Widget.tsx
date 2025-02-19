@@ -22,6 +22,9 @@ import Redirect1 from "./Redirect/Redirect1";
 import Redirect2 from "./Redirect/Redirect2";
 import { get_defaults } from "@/interface/get_defaults";
 import { fetchDefaults, fetchQuotes } from "./Widget.script";
+import CountrySearch from "./CountrySearch/CountrySearch";
+import { ICountryData } from "@/constants/country";
+import backend from "@/services/apis";
 
 const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -50,6 +53,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [toggleFirstRedirect, setToggleFirstRedirect] = useState(false);
   const [toggleSecondRedirect, setToggleSecondRedirect] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
+  const [toggleCountryModal, setToggleCountryModal] = useState(false);
 
   const handleFiatCurrencyChange = (c: string) => {
     setFiatCurrency(c);
@@ -97,11 +101,38 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     }
   };
 
-  const handleCloseProcess = () => {
-    // if (popupWindow && !popupWindow.closed) {
-    //   popupWindow.close();
-    // }
-    setToggleSecondRedirect(false);
+  const getCountryDefault = async (country: ICountryData) => {
+    setLoading(true);
+    setError("");
+    const response = await backend().post_change_location(country.code);
+    if (response) {
+      const _defaults: get_defaults = response.data.data;
+      setAllProviders(_defaults);
+      const _bestProvider = _defaults.find((dp) => dp.is_best);
+      if (!_bestProvider) return;
+      setProvider(_bestProvider);
+      setFiatAmount(String(_bestProvider.asset?.fiat_amount));
+      setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
+      // setPaymentMethod(""); // the component handles the initiallization.
+      setCryptoCurrency(_bestProvider.asset?.crypto || "");
+      setFiatCurrency(_bestProvider.asset?.fiat || "");
+      setNetwork(_bestProvider.asset?.network || "");
+      const afc = fiatCurrencies?.find(
+        (fc) =>
+          fc.code.toLowerCase() === _bestProvider.asset?.fiat.toLowerCase()
+      );
+
+      if (afc) {
+        const _provider = _bestProvider.provider.name.toLowerCase();
+        const _paymentOptions = afc[_provider as keyof typeof afc];
+        setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
+      }
+    } else {
+      setError(
+        "This currency is not supported. Please select a different currency."
+      );
+    }
+    setLoading(false);
   };
 
   // STEP 1
@@ -181,13 +212,20 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         </div>
       ) : (
         <div className={classes.container}>
+          {toggleCountryModal && (
+            <CountrySearch
+              overlayOnly={true}
+              onCountryChange={getCountryDefault}
+              onClose={() => setToggleCountryModal(false)}
+            />
+          )}
           {toggleFirstRedirect && (
             <Redirect1 isBuyOrSell={isBuyOrSell} provider={provider} />
           )}
           {toggleSecondRedirect && (
             <Redirect2
               handleOpenProvider={handleContinueProcess}
-              handleCloseProvider={handleCloseProcess}
+              handleCloseProvider={() => setToggleSecondRedirect(false)}
               provider={provider}
             />
           )}
@@ -195,7 +233,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
             <Sidebar
               onHistoryClick={() => setToggleProvider(true)}
               onClose={() => setToggleSidebar(false)}
-              onCountryChange={() => {}}
+              onCountrySearch={() => setToggleCountryModal(true)}
             />
           )}
           {toggleProvider && (

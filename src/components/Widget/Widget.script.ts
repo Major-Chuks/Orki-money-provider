@@ -60,7 +60,6 @@ export const fetchDefaults = async ({
     const _bestProvider = _defaults.find((dp) => dp.is_best);
     if (!_bestProvider) return;
     setProvider(_bestProvider);
-    setProvider(_bestProvider);
     setFiatAmount(String(_bestProvider.asset?.fiat_amount));
     setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
     // setPaymentMethod(""); // the component handles the initiallization.
