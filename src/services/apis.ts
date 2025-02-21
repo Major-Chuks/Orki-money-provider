@@ -8,6 +8,7 @@ export const BACKEND_API = axios.create({
 export default function backend() {
   return {
     get_user_location: async () => {
+      return;
       const url = "/api/user-location";
       try {
         const response = await axios.get(url);

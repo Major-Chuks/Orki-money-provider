@@ -57,11 +57,11 @@ const CountrySearch = ({
       {!overlayOnly && (
         <div onClick={handleClick} className={classes.selected}>
           <div className={classes.countryFlag}>
-            <span className={classes.iconContainer}>
-              {selected && (
+            {selected && (
+              <span className={classes.iconContainer}>
                 <Image width={24} height={24} src={selected?.flag} alt="" />
-              )}
-            </span>
+              </span>
+            )}
             <span className={classes.name}>
               {selected?.name || "Select country"}
             </span>
