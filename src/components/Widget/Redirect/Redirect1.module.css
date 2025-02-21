@@ -45,7 +45,10 @@
   height: 72px;
   flex-shrink: 0;
   border-radius: 99px;
-  background: #16110d;
+  /* background: #16110d; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .businessLogo img {

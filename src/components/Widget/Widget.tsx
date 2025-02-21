@@ -30,7 +30,6 @@ import {
 } from "./Widget.script";
 import CountrySearch from "./CountrySearch/CountrySearch";
 import { COUNTRY_DATA, ICountryData } from "@/constants/country";
-import backend from "@/services/apis";
 
 const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -52,16 +51,14 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   >(null);
   const [loadingQuotes, setLoadingQuotes] = useState(false);
   const [error, setError] = useState("");
-  // const [quote, setQuote] = useState<post_pricing_quote | null>(null);
-
   const [allProviders, setAllProviders] = useState<get_defaults | null>(null);
   const [provider, setProvider] = useState<get_defaults[number] | null>(null);
   const [toggleFirstRedirect, setToggleFirstRedirect] = useState(false);
   const [toggleSecondRedirect, setToggleSecondRedirect] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
   const [toggleCountryModal, setToggleCountryModal] = useState(false);
+  const [country, setCountry] = useState<ICountryData | null>(null);
   const isFirstQuoteRender = useRef(0);
-  const isFirstDefaultRender = useRef(0);
 
   const handleFiatCurrencyChange = (c: string) => {
     setFiatCurrency(c);
@@ -109,7 +106,9 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     }
   };
 
+  // CHANGE USER LOCATION
   const handleCountryChange = async (country: ICountryData) => {
+    setCountry(country);
     isFirstQuoteRender.current = 0;
     setLoading(true);
     await fetchDefaultsByCountry({
@@ -133,11 +132,6 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   // STEP 1
   // Make an api call to fetch all providers and currencies
   useEffect(() => {
-    // if (isFirstDefaultRender.current !== 1) {
-    //   isFirstDefaultRender.current += 1;
-    //   return; // Exit early on first render
-    // }
-
     (async () => {
       setLoading(true);
       await fetchDefaults({
@@ -153,6 +147,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         setCryptoCurrencies,
         setPaymentOptions,
         setError,
+        setCountry,
       });
       setLoading(false);
     })();
@@ -162,8 +157,10 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   // Fetch quotes
   useDebouncedEffect(
     async () => {
-      if (isFirstQuoteRender.current !== 2) {
+      if (isFirstQuoteRender.current !== 1) {
         isFirstQuoteRender.current += 1;
+        console.log("exited");
+
         return; // Exit early on first render
       }
 
@@ -227,7 +224,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
       isBuyOrSell,
       paymentMethod,
     ],
-    1000
+    500
   ); // Adjust the debounce delay as needed
 
   return (
@@ -241,9 +238,9 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
           {toggleCountryModal && (
             <CountrySearch
               overlayOnly={true}
+              country={country}
               onCountryChange={handleCountryChange}
               onClose={() => setToggleCountryModal(false)}
-              fiatCurrency={fiatCurrency}
             />
           )}
           {toggleFirstRedirect && (
@@ -258,10 +255,9 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
           )}
           {toggleSidebar && (
             <Sidebar
-              onHistoryClick={() => setToggleProvider(true)}
+              country={country}
               onClose={() => setToggleSidebar(false)}
               onCountrySearch={() => setToggleCountryModal(true)}
-              fiatCurrency={fiatCurrency}
             />
           )}
           {toggleProvider && (

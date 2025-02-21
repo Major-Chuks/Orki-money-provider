@@ -9,20 +9,20 @@ import { COUNTRY_DATA, ICountryData } from "@/constants/country";
 import tickIcon from "@/assets/widget/tick.svg";
 
 const CountrySearch = ({
+  country,
   overlayOnly,
-  fiatCurrency,
   onClick,
   onClose,
   onCountryChange,
 }: {
+  country: ICountryData | null;
   overlayOnly?: boolean;
-  fiatCurrency: string;
   onClick?: () => void;
   onClose?: () => void;
   onCountryChange: (country: ICountryData) => void;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(overlayOnly);
-  const [selected, setSelected] = useState<ICountryData | null>(null);
+  const [selected, setSelected] = useState<ICountryData | null>(country);
   const [searchValue, setSearchValue] = useState("");
   const [filteredCountry, setFilteredCountry] =
     useState<ICountryData[]>(COUNTRY_DATA);
@@ -51,15 +51,6 @@ const CountrySearch = ({
       setFilteredCountry(COUNTRY_DATA);
     }
   }, [searchValue]);
-
-  // useEffect(() => {
-  //   const countryData = COUNTRY_DATA.find(
-  //     (c) => c.currency.toLowerCase() === fiatCurrency.toLowerCase()
-  //   );
-  //   if (countryData) {
-  //     setSelected(countryData);
-  //   }
-  // }, [fiatCurrency]);
 
   return (
     <div className={classes.container}>

@@ -1,4 +1,4 @@
-import { ICountryData } from "@/constants/country";
+import { COUNTRY_DATA, ICountryData } from "@/constants/country";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import { get_defaults } from "@/interface/get_defaults";
 import {
@@ -115,6 +115,7 @@ export const fetchDefaults = async ({
   setFiatCurrencies,
   setCryptoCurrencies,
   setPaymentOptions,
+  setCountry,
 }: {
   setAllProviders: React.Dispatch<React.SetStateAction<get_defaults | null>>;
   setProvider: React.Dispatch<
@@ -136,12 +137,25 @@ export const fetchDefaults = async ({
   setPaymentOptions: React.Dispatch<
     React.SetStateAction<PaymentMethodResponse[] | null>
   >;
+  setCountry: React.Dispatch<React.SetStateAction<ICountryData | null>>;
 }) => {
-  const [fiatRes, cryptoRes, defaultRes] = await Promise.all([
+  const [fiatRes, cryptoRes, defaultRes, locationRes] = await Promise.all([
     backend().get_fiat_currencies(),
     backend().get_crypto_currencies(),
     backend().get_defaults(),
+    backend().get_user_location(),
   ]);
+
+  let countryInfo: ICountryData | null = null;
+
+  if (locationRes) {
+    const cc = locationRes.data.country;
+    const country = COUNTRY_DATA.find((cd) => cd.code === cc);
+    if (country) {
+      countryInfo = country;
+      setCountry(country);
+    }
+  }
 
   if (defaultRes) {
     const _defaults: get_defaults = defaultRes.data.data;
@@ -183,12 +197,21 @@ export const fetchDefaults = async ({
     if (cryptoRes) {
       const cryptoCurrencies: get_crypto_currencies = cryptoRes.data.data;
       setCryptoCurrencies(cryptoCurrencies);
-      setCryptoCurrency(""); //cryptoCurrencies[0].code // set to countrie's default currency
+      setCryptoCurrency(cryptoCurrencies[1].code);
     }
     if (fiatRes) {
       const fiatCurrencies: get_fiat_currencies = fiatRes.data.data;
       setFiatCurrencies(fiatCurrencies);
-      setFiatCurrency(""); //fiatCurrencies[0].code // set to countrie's default currency
+      if (countryInfo) {
+        const currency = fiatCurrencies.find(
+          (fc) => fc.code.toLowerCase() === countryInfo.currency.toLowerCase()
+        );
+        if (currency) {
+          setFiatCurrency(currency.code);
+        }
+      } else {
+        setFiatCurrency("");
+      }
     }
     setFiatAmount("0.00");
     setCryptoAmount("0.00");

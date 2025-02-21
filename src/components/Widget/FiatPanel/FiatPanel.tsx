@@ -3,10 +3,7 @@ import ErrorIcon from "@/assets/SvgComponents/ErrorIcon";
 import FiatCurrencySearch from "../FiatCurrencySearch/FiatCurrencySearch";
 import classes from "./FiatPanel.module.css";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
-import { useEffect, useState } from "react";
-import { formatStringToMoney } from "@/services/utils";
 import { get_defaults } from "@/interface/get_defaults";
-import { getQuoteLimit, isValidQuoteLimit } from "../Widget.script";
 
 const FiatPanel = ({
   title,
@@ -29,53 +26,15 @@ const FiatPanel = ({
   paymentMethod: string;
   error: string;
 }) => {
-  const [errorMsg, setError] = useState(error);
-  const [inputValue, setInputValue] = useState(value);
-
-  const validateInput = () => {
-    setError("");
-
-    const { minBuyAmount, maxBuyAmount } = getQuoteLimit({
-      fiatCurrencies,
-      fiatCurrency,
-      providerName: provider?.provider.name || "",
-      paymentMethod,
-    });
-
-    const isValid = isValidQuoteLimit({
-      minBuyAmount,
-      maxBuyAmount,
-      fiatAmount: Number(inputValue),
-      fiatCurrency,
-      setError,
-    });
-
-    if (!isValid) return;
-
-    onAmountChange(inputValue);
-  };
-
-  useEffect(() => {
-    validateInput();
-  }, [fiatCurrency, value, provider, paymentMethod, inputValue]);
-
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
-
-  useEffect(() => {
-    setError(error);
-  }, [error]);
-
   return (
-    <div className={`${classes.container} ${errorMsg && classes.error}`}>
+    <div className={`${classes.container} ${error && classes.error}`}>
       <div className={classes.title}>{title}</div>
 
       <div className={classes.innerContainer}>
         <div className={classes.value}>
           <input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            value={value}
+            onChange={(e) => onAmountChange(e.target.value)}
             type="number"
             placeholder="0.00"
           />
@@ -87,9 +46,9 @@ const FiatPanel = ({
         />
       </div>
 
-      {errorMsg && (
+      {error && (
         <div className={classes.error}>
-          <ErrorIcon /> {errorMsg}
+          <ErrorIcon /> {error}
         </div>
       )}
     </div>

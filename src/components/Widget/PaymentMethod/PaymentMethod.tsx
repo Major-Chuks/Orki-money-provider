@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import classes from "./PaymentMethod.module.css";
 import { useState } from "react";
-import PaymentMethodSearch from "../PaymentMethodSearch/PaymentMethodSearch";
 import { PaymentMethodResponse } from "@/interface/get_fiat_currencies";
 import InstitutionIcon from "@/assets/SvgComponents/InstitutionIcon";
 import ChevronDownIcon from "@/assets/SvgComponents/ChevronDownIcon";
+import PaymentMethodList from "../PaymentMethodList/PaymentMethodList";
 
 const PaymentMethod = ({
   paymentOptions,
@@ -24,8 +24,9 @@ const PaymentMethod = ({
 
   return (
     <div className={classes.container}>
-      <PaymentMethodSearch
+      <PaymentMethodList
         paymentOptions={paymentOptions}
+        paymentMethod={paymentMethod}
         onClose={() => setTogglePaymentMethod(false)}
         onPaymentMethodChange={onPaymentMethodChange}
         display={togglePaymentMethod}

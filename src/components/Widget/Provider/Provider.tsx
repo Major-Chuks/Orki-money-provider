@@ -17,8 +17,6 @@ const Provider = ({
   onSelect: (provider: get_defaults[number]) => void;
   isBuyOrSell: "BUY" | "SELL";
 }) => {
-  // const [imageLoaded, setImageLoaded] = useState<Record<number, boolean>>({});
-
   const sortedProviders = sortProviders(allProviders);
 
   return (
@@ -26,10 +24,6 @@ const Provider = ({
       <div className={classes.heading}>
         Select Onramp <Image onClick={onClose} src={closeIcon} alt="" />
       </div>
-
-      {/* <div className={classes.searchContainer}>
-        <Search />
-      </div> */}
 
       <div className={classes.boxContainer}>
         {sortedProviders ? (
@@ -51,16 +45,7 @@ const Provider = ({
                 <div className={classes.upperSection}>
                   <div className={classes.providerDetails}>
                     <div className={classes.iconContainer}>
-                      <img
-                        // style={{
-                        //   visibility: imageLoaded[idx] ? "visible" : "hidden",
-                        // }}
-                        // onLoad={() => setImageLoaded({ [idx]: true })}
-                        width={32}
-                        height={32}
-                        src={icon}
-                        alt=""
-                      />
+                      <img width={32} height={32} src={icon} alt="" />
                     </div>
                     <div className={classes.priceName}>
                       <span className={classes.name}>{name}</span>

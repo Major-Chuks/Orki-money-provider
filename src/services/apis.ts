@@ -7,6 +7,16 @@ export const BACKEND_API = axios.create({
 
 export default function backend() {
   return {
+    get_user_location: async () => {
+      const url = "/api/user-location";
+      try {
+        const response = await axios.get(url);
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     post_change_location: async (country: string) => {
       const url = "/change-location";
       try {

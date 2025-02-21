@@ -21,7 +21,7 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error: any) {
     return NextResponse.json(
-      { message: "Failed to fetch user country", error: error.message },
+      { message: "Failed to fetch user location", error: error.message },
       { status: error.response?.status || 500 }
     );
   }

@@ -2,12 +2,10 @@
 import classes from "./RatePanel.module.css";
 import refreshIcon from "@/assets/widget/refresh.svg";
 import approxEqualIcon from "@/assets/widget/approx-equal.svg";
-// import moonpayIcon from "@/assets/widget/moonpay.svg";
 import Image from "next/image";
 import LoadingIcon from "@/assets/SvgComponents/LoadingIcon";
 import { get_defaults } from "@/interface/get_defaults";
 import CaretIcon from "@/assets/SvgComponents/CaretIcon";
-import { formatStringToMoney } from "@/services/utils";
 
 const RatePanel = ({
   loading,

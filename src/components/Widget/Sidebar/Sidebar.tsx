@@ -8,9 +8,9 @@ import supportIcon from "@/assets/widget/24-support.svg";
 import chevronRightIcon from "@/assets/widget/arrow-right.svg";
 import Overlay from "../Overlay/Overlay";
 import CountrySearch from "../CountrySearch/CountrySearch";
-import { ICountryData } from "@/constants/country";
 import { routes } from "@/services/routes";
 import { openInNewTab } from "@/services/utils";
+import { ICountryData } from "@/constants/country";
 
 const sideMenu = [
   {
@@ -36,15 +36,13 @@ const sideMenu = [
 ];
 
 const Sidebar = ({
+  country,
   onClose,
-  onHistoryClick,
   onCountrySearch,
-  fiatCurrency,
 }: {
+  country: ICountryData | null;
   onClose: () => void;
-  onHistoryClick: () => void;
   onCountrySearch: () => void;
-  fiatCurrency: string;
 }) => {
   const handleRoute = (link: string) => {
     if (link === "history") return;
@@ -86,12 +84,12 @@ const Sidebar = ({
         <div className={classes.location}>
           <div className={classes.title}>Location</div>
           <CountrySearch
+            country={country}
             onCountryChange={() => {}}
             onClick={() => {
               onCountrySearch();
               onClose();
             }}
-            fiatCurrency={fiatCurrency}
           />
         </div>
       </div>

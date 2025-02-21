@@ -2,6 +2,61 @@
   width: 100%;
 }
 
+@keyframes enter {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.headingContainer {
+  padding: 0 24px;
+}
+
+.heading {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  /* text */
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.heading img {
+  cursor: pointer;
+}
+
+.searchWrapper {
+  margin-bottom: 15px;
+}
+
+.wrapper {
+  width: 100%;
+  height: 90%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 24px 24px 0px 0px;
+  background: var(--white, #fff);
+  padding-top: 34px;
+  transform: translateY(100%);
+  animation: enter 200ms forwards;
+}
+
+.countryWrapper {
+  width: 100%;
+  height: calc(100% - 118px);
+  overflow: auto;
+}
+
 .selected,
 .country {
   width: 100%;
@@ -11,18 +66,26 @@
   cursor: pointer;
   padding: 8px 0;
   transition: all 100ms;
+  border: 1px solid transparent;
 }
 
-.country:hover,
-.selected:hover {
-  /* background: #f3f4f6; */
+.selected {
+  border-radius: 99px;
+}
+
+.country {
+  padding: 8px 24px;
+}
+
+.country:hover {
+  border-top: 1px solid #d1d5db;
+  border-bottom: 1px solid #d1d5db;
 }
 
 .tickIcon {
   visibility: hidden;
 }
 
-.country:hover .tickIcon,
 .tickIcon.active {
   visibility: visible;
 }
@@ -69,75 +132,20 @@
   height: 24px;
   background: #f6f6f6;
   border-radius: 50%;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border: 1px solid #d1d5db;
+  flex-shrink: 0;
 }
 
 .iconContainer img {
-  width: 100%;
+  width: auto;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .arrowUp {
   transform: rotate(180deg);
-}
-
-.wrapper {
-  width: 100%;
-  height: 90%;
-  position: absolute;
-  bottom: 0;
-  border-radius: 24px 24px 0px 0px;
-  background: var(--white, #fff);
-  padding-top: 34px;
-  transform: translateY(100%);
-  animation: enter 200ms forwards;
-}
-
-@keyframes enter {
-  from {
-    transform: translateY(100%);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-.headingContainer {
-  padding: 0 24px;
-}
-
-.heading {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 32px;
-  /* text */
-  color: #000;
-  font-family: Inter;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-}
-
-.heading img {
-  cursor: pointer;
-}
-
-.searchWrapper {
-  margin-bottom: 15px;
-}
-
-.countryWrapper {
-  width: 100%;
-  height: calc(100% - 116px);
-  overflow: auto;
-  padding-right: 4px;
-  padding-left: 24px;
 }
