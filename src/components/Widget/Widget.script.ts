@@ -149,7 +149,7 @@ export const fetchDefaults = async ({
   let countryInfo: ICountryData | null = null;
 
   if (locationRes) {
-    const cc = locationRes.data.country;
+    const cc = locationRes.data.data.country;
     const country = COUNTRY_DATA.find((cd) => cd.code === cc);
     if (country) {
       countryInfo = country;
