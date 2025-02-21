@@ -10,6 +10,7 @@ type Asset = {
   crypto: string;
   crypto_amount: string;
   network: string;
+  payment_method: string;
 };
 
 export type get_defaults = {

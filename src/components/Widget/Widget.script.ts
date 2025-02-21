@@ -71,7 +71,7 @@ export const fetchDefaultsByCountry = async ({
     setProvider(_bestProvider);
     setFiatAmount(String(_bestProvider.asset?.fiat_amount));
     setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
-    // setPaymentMethod(""); // the component handles the initiallization.
+    setPaymentMethod(String(_bestProvider.asset?.payment_method));
     setCryptoCurrency(_bestProvider.asset?.crypto || "");
     setFiatCurrency(_bestProvider.asset?.fiat || "");
     setNetwork(_bestProvider.asset?.network || "");
@@ -165,7 +165,7 @@ export const fetchDefaults = async ({
     setProvider(_bestProvider);
     setFiatAmount(String(_bestProvider.asset?.fiat_amount));
     setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
-    // setPaymentMethod(""); // the component handles the initiallization.
+    setPaymentMethod(String(_bestProvider.asset?.payment_method));
     setCryptoCurrency(_bestProvider.asset?.crypto || "");
     setFiatCurrency(_bestProvider.asset?.fiat || "");
     setNetwork(_bestProvider.asset?.network || "");

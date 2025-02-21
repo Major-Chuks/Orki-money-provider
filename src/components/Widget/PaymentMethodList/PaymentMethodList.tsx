@@ -28,10 +28,10 @@ const PaymentMethodList = ({
     }
   }, [selected]);
 
-  useEffect(() => {
-    if (!paymentOptions) return;
-    setSelected(paymentOptions[0]);
-  }, [paymentOptions]);
+  // useEffect(() => {
+  //   if (!paymentOptions) return;
+  //   setSelected(paymentOptions[0]);
+  // }, [paymentOptions]);
 
   return (
     <Overlay style={{ display: display ? "block" : "none" }} onClose={onClose}>
