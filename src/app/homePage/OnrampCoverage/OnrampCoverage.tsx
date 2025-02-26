@@ -10,6 +10,20 @@ import Image from "next/image";
 // GeoJSON URL for world map
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
+const unSupportedLocations = [
+  "AFG",
+  "IRN",
+  "IRQ",
+  "LBY",
+  "MMR",
+  "PRK",
+  "RUS",
+  "SSD",
+  "SOM",
+  "YEM",
+  "ZWE",
+];
+
 // Define the shape of onrampCoverageData's entries
 interface CountryData {
   name: string;
@@ -85,23 +99,35 @@ const Map: React.FC = () => {
   return (
     <>
       <ComposableMap data-tip="">
-        <Geographies geography={"./features.json"}>
+        <Geographies geography={"./geo-locations.json"}>
           {({ geographies }: { geographies: Geo[] }) =>
-            geographies.map((geo) => (
-              <Geography
-                data-tooltip-id="tooltip"
-                // data-tooltip-html={tooltipContent}
-                key={geo.rsmKey}
-                geography={geo}
-                onMouseEnter={() => handleMouseEnter(geo)}
-                onMouseLeave={handleMouseLeave}
-                style={{
-                  default: { fill: "#AEACFF", outline: "none" },
-                  hover: { fill: "#2D29D7", outline: "none" },
-                  pressed: { fill: "#2D29D7", outline: "none" },
-                }}
-              />
-            ))
+            geographies.map((geo) => {
+              const isNotSupported = unSupportedLocations.includes(geo.id);
+              return (
+                <Geography
+                  data-tooltip-id="tooltip"
+                  // data-tooltip-html={tooltipContent}
+                  key={geo.rsmKey}
+                  geography={geo}
+                  onMouseEnter={() => !isNotSupported && handleMouseEnter(geo)}
+                  onMouseLeave={() => !isNotSupported && handleMouseLeave()}
+                  style={{
+                    default: {
+                      fill: isNotSupported ? "#e6e6e6" : "#AEACFF",
+                      outline: "none",
+                    },
+                    hover: {
+                      fill: isNotSupported ? "#e6e6e6" : "#2D29D7",
+                      outline: "none",
+                    },
+                    pressed: {
+                      fill: isNotSupported ? "#e6e6e6" : "#2D29D7",
+                      outline: "none",
+                    },
+                  }}
+                />
+              );
+            })
           }
         </Geographies>
       </ComposableMap>
