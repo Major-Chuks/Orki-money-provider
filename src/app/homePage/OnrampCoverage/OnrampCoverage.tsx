@@ -80,7 +80,7 @@ const Map: React.FC = () => {
             <div className={classes.label}>No of onramps</div>
             <div className={classes.list}>
               <div className={`${classes.item} ${classes.round}`}>
-                {_onramper?.supported_onramps.length}
+                {_onramper?.supported_onramps.length || 0}
               </div>
             </div>
           </div>

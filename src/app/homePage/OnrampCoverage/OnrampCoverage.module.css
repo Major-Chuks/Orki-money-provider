@@ -92,5 +92,7 @@
 
 .item.round {
   border-radius: 50%;
-  padding: 8px;
+  min-width: 24px;
+  min-height: 24px;
+  flex-shrink: 0;
 }
