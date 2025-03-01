@@ -6,6 +6,7 @@ import classes from "./OnrampCoverage.module.css";
 import { onramper } from "./onramper";
 import { COUNTRY_DATA } from "@/constants/country";
 import Image from "next/image";
+import TooltipComponentWrapper from "./TooltipComponentWrapper/TooltipComponentWrapper";
 
 // GeoJSON URL for world map
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
@@ -56,19 +57,19 @@ const Map: React.FC = () => {
       (c) => c.name.toLowerCase() === country?.name.toLowerCase()
     )?.flag;
 
-    if (country && _onramper) {
-      setTooltipContent(
+    setTooltipContent(
+      <TooltipComponentWrapper id={id}>
         <div className={classes.tooltipContainer}>
           <div className={classes.country_flag}>
             <div className={classes.flag}>
               {flag && <Image width={32} height={32} src={flag} alt="" />}
             </div>
-            <div className={classes.country}>{country.name}</div>
+            <div className={classes.country}>{country?.name}</div>
           </div>
           <div className={classes.category}>
             <div className={classes.label}>Payment Methods</div>
             <div className={classes.list}>
-              {_onramper.local_payment_methods.map((item, idx) => (
+              {_onramper?.local_payment_methods.map((item, idx) => (
                 <div key={idx} className={classes.item}>
                   {item}
                 </div>
@@ -79,17 +80,13 @@ const Map: React.FC = () => {
             <div className={classes.label}>No of onramps</div>
             <div className={classes.list}>
               <div className={`${classes.item} ${classes.round}`}>
-                {_onramper.supported_onramps.length}
+                {_onramper?.supported_onramps.length}
               </div>
             </div>
           </div>
         </div>
-      );
-    } else {
-      setTooltipContent(
-        <div className={classes.noData}>No data available</div>
-      );
-    }
+      </TooltipComponentWrapper>
+    );
   };
 
   const handleMouseLeave = () => {
@@ -109,8 +106,8 @@ const Map: React.FC = () => {
                   // data-tooltip-html={tooltipContent}
                   key={geo.rsmKey}
                   geography={geo}
-                  onMouseEnter={() => !isNotSupported && handleMouseEnter(geo)}
-                  onMouseLeave={() => !isNotSupported && handleMouseLeave()}
+                  onMouseEnter={() => handleMouseEnter(geo)}
+                  onMouseLeave={() => handleMouseLeave()}
                   style={{
                     default: {
                       fill: isNotSupported ? "#e6e6e6" : "#AEACFF",
