@@ -36,6 +36,10 @@
   line-height: 28px; /* 155.556% */
 }
 
+.container ul {
+  padding-left: 32px;
+}
+
 @media screen and (max-width: 540px) {
   .container {
     margin-bottom: 64px;
