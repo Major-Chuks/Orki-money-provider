@@ -85,7 +85,7 @@ export const fetchDefaultsByCountry = async ({
       );
 
       if (afc) {
-        const _provider = _bestProvider.provider.name.toLowerCase();
+        const _provider = _bestProvider.provider.identifier;
         const _paymentOptions = afc[_provider as keyof typeof afc];
         setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
       }
@@ -179,7 +179,7 @@ export const fetchDefaults = async ({
       );
 
       if (afc) {
-        const _provider = _bestProvider.provider.name.toLowerCase();
+        const _provider = _bestProvider.provider.identifier;
         const _paymentOptions = afc[_provider as keyof typeof afc];
         setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
       }
@@ -299,7 +299,7 @@ export const getQuoteLimit = ({
   if (afc && providerName) {
     const _paymentOptions = afc[providerName.toLowerCase() as keyof typeof afc];
     if (typeof _paymentOptions !== "string") {
-      const _paymentMethod = _paymentOptions.find(
+      const _paymentMethod = _paymentOptions?.find(
         (pm) => pm.paymentMethodId === paymentMethod
       );
       if (_paymentMethod) {

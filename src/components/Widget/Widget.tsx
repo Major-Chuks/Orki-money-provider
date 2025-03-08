@@ -68,7 +68,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
       (fc) => fc.code.toLowerCase() === c.toLowerCase()
     );
     if (afc && provider) {
-      const _provider = provider.provider.name.toLowerCase();
+      const _provider = provider.provider.identifier;
       const _paymentOptions = afc[_provider as keyof typeof afc];
       setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
     }
@@ -84,7 +84,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
       // window.open(purchaseLink, "_blank", "noopener,noreferrer");
       const popupWindow = window.open(
         provider.link,
-        `${provider.provider.name}_${network}_${fiatAmount}_${fiatCurrency}_${cryptoAmount}_${cryptoCurrency}`
+        `${provider.provider.identifier}_${network}_${fiatAmount}_${fiatCurrency}_${cryptoAmount}_${cryptoCurrency}`
       );
       if (!popupWindow) return;
       setToggleSecondRedirect(true);
@@ -165,7 +165,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
       const { minBuyAmount, maxBuyAmount } = getQuoteLimit({
         fiatCurrencies,
         fiatCurrency,
-        providerName: provider?.provider.name || "",
+        providerName: provider?.provider.identifier || "",
         paymentMethod,
       });
 
