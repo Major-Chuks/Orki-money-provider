@@ -63,15 +63,17 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const handleFiatCurrencyChange = (c: string) => {
     setFiatCurrency(c);
 
-    // update payment options when fiat currency changes
-    const afc = fiatCurrencies?.find(
-      (fc) => fc.code.toLowerCase() === c.toLowerCase()
-    );
-    if (afc && provider) {
-      const _provider = provider.provider.identifier;
-      const _paymentOptions = afc[_provider as keyof typeof afc];
-      setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
-    }
+    // // update payment options when fiat currency changes
+    // const afc = fiatCurrencies?.find(
+    //   (fc) => fc.code.toLowerCase() === c.toLowerCase()
+    // );
+    // if (afc && provider) {
+    //   const _provider = provider.provider.identifier;
+    //   const _paymentOptions = afc[_provider as keyof typeof afc];
+    //   console.log(_paymentOptions, _provider);
+
+    //   setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
+    // }
   };
 
   const handleProceed = () => {
@@ -199,6 +201,16 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         setProvider(_bestProvider);
         setFiatAmount(String(_bestProvider.asset?.fiat_amount));
         setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
+
+        // update payment options
+        const afc = fiatCurrencies?.find(
+          (fc) => fc.code.toLowerCase() === fiatCurrency.toLowerCase()
+        );
+        if (afc && _bestProvider) {
+          const _provider = _bestProvider.provider.identifier;
+          const _paymentOptions = afc[_provider as keyof typeof afc];
+          setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
+        }
       } else if (response && typeof response === "string") {
         setAllProviders(null);
         setError(response);
