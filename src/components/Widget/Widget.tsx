@@ -131,6 +131,18 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    // update payment options
+    const afc = fiatCurrencies?.find(
+      (fc) => fc.code.toLowerCase() === fiatCurrency.toLowerCase()
+    );
+    if (afc && provider) {
+      const _provider = provider.provider.identifier;
+      const _paymentOptions = afc[_provider as keyof typeof afc];
+      setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
+    }
+  }, [provider]);
+
   // STEP 1
   // Make an api call to fetch all providers and currencies
   useEffect(() => {
