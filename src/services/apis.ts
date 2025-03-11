@@ -17,6 +17,16 @@ export default function backend() {
       }
     },
 
+    get_coverage: async () => {
+      const url = "/coverage";
+      try {
+        const response = await BACKEND_API.get(url);
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     post_change_location: async (country: string) => {
       const url = "/change-location";
       try {

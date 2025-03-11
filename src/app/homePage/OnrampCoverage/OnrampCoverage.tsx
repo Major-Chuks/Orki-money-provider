@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
-import { onrampCoverageData } from "./data";
+// import { onrampCoverageData } from "./data";
 import classes from "./OnrampCoverage.module.css";
 import { onramper } from "./onramper";
 import { COUNTRY_DATA } from "@/constants/country";
 import Image from "next/image";
 import TooltipComponentWrapper from "./TooltipComponentWrapper/TooltipComponentWrapper";
+import backend from "@/services/apis";
+import { COUNTRY, ICountry } from "@/services/country";
+import { OnramperCoverage } from "@/services/onramperCoverage";
 
 // GeoJSON URL for world map
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
@@ -32,10 +35,28 @@ interface CountryData {
   onramps: number;
 }
 
+type Coverage = {
+  country: string;
+  payment_methods: string[];
+  providers: string[];
+}[];
+
+type OnrampCoverage = Record<
+  string,
+  {
+    name: string;
+    flag: string;
+    paymentMethods: string[];
+    onramps: number;
+  }
+>;
+
 const Map: React.FC = () => {
   const [tooltipContent, setTooltipContent] = useState<React.JSX.Element>(
     <></>
   );
+  const [onrampCoverageData, setOnramperCoverageData] =
+    useState<OnrampCoverage>({});
 
   // Geo type
   interface Geo {
@@ -45,9 +66,7 @@ const Map: React.FC = () => {
 
   const handleMouseEnter = (geo: Geo) => {
     const id = geo.id;
-    const country = onrampCoverageData[
-      id as keyof typeof onrampCoverageData
-    ] as CountryData | undefined;
+    const country = onrampCoverageData[id];
 
     const _onramper = onramper.find(
       (c) => c.country.toLowerCase() === country?.name.toLowerCase()
@@ -92,6 +111,48 @@ const Map: React.FC = () => {
   const handleMouseLeave = () => {
     setTooltipContent(<></>);
   };
+
+  const handleOnramperCoverage = (coverage: Coverage) => {
+    const mapCountryByName: Record<string, ICountry> = {};
+    COUNTRY.forEach((c) => {
+      mapCountryByName[c.name.toLowerCase()] = c;
+    });
+
+    const coverageData: OnrampCoverage = {};
+
+    for (const data of coverage) {
+      const country = mapCountryByName[data.country.toLowerCase()];
+      if (!country) {
+        continue;
+      }
+      coverageData[country.country_code] = {
+        name: country.name,
+        flag: country.flag,
+        paymentMethods: data.payment_methods,
+        onramps: data.providers.length,
+      };
+    }
+
+    setOnramperCoverageData(coverageData);
+  };
+
+  const handleFetch = async () => {
+    handleOnramperCoverage(OnramperCoverage);
+
+    const response = await backend().get_coverage();
+
+    if (response) {
+      handleOnramperCoverage(response.data);
+    }
+  };
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
+
+  useEffect(() => {
+    console.log(onrampCoverageData);
+  }, [onrampCoverageData]);
 
   return (
     <>
