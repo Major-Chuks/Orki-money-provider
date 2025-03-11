@@ -150,10 +150,6 @@ const Map: React.FC = () => {
     handleFetch();
   }, []);
 
-  useEffect(() => {
-    console.log(onrampCoverageData);
-  }, [onrampCoverageData]);
-
   return (
     <>
       <ComposableMap data-tip="">
