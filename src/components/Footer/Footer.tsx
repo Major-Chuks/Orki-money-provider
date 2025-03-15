@@ -48,7 +48,9 @@ const Footer = () => {
             </div>
           </div>
           <div className={classes.bottom}>
-            <div className={classes.left}>Copyright ©2023 Orki Inc</div>
+            <div className={classes.left}>
+              Copyright ©{new Date().getFullYear()} Orki Inc
+            </div>
 
             <div className={classes.socialLinkContainer}>
               <Image src={xIcon} alt="" />

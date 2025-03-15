@@ -1,25 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 import classes from "./PaymentMethod.module.css";
 import { useState } from "react";
-import { PaymentMethodResponse } from "@/interface/get_fiat_currencies";
 import InstitutionIcon from "@/assets/SvgComponents/InstitutionIcon";
 import ChevronDownIcon from "@/assets/SvgComponents/ChevronDownIcon";
 import PaymentMethodList from "../PaymentMethodList/PaymentMethodList";
+import { PaymentMethodResponse } from "@/interface/get_payment_methods";
 
 const PaymentMethod = ({
   paymentOptions,
   onPaymentMethodChange,
   paymentMethod,
+  loading,
 }: {
-  paymentOptions: PaymentMethodResponse[] | null;
+  paymentOptions: PaymentMethodResponse | null;
   paymentMethod: string;
-  onPaymentMethodChange: (option: PaymentMethodResponse) => void;
+  loading: boolean;
+  onPaymentMethodChange: (option: PaymentMethodResponse[number]) => void;
 }) => {
   const [togglePaymentMethod, setTogglePaymentMethod] = useState(false);
 
   const getMethodName = () => {
-    return paymentOptions?.find((pm) => pm.paymentMethodId === paymentMethod)
-      ?.paymentMethodName;
+    return paymentOptions?.find((pm) => pm.orki_id === paymentMethod)?.name;
   };
 
   return (
@@ -33,8 +34,8 @@ const PaymentMethod = ({
       />
       <div className={classes.title}>Payment method</div>
       <div
-        onClick={() => setTogglePaymentMethod(true)}
-        className={classes.selectionBox}
+        onClick={() => !loading && setTogglePaymentMethod(true)}
+        className={`${classes.selectionBox} ${loading && classes.loading}`}
       >
         <div>
           <InstitutionIcon />

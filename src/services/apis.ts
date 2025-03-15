@@ -37,6 +37,16 @@ export default function backend() {
       }
     },
 
+    get_payment_methods: async (fiat: string) => {
+      const url = `/payment-methods?fiat=${fiat}`;
+      try {
+        const response = await BACKEND_API.get(url);
+        return response;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     post_sell_quote: async (payload: post_sell_quote) => {
       const url = `/quotes/sell`;
       try {

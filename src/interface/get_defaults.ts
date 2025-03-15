@@ -19,7 +19,6 @@ export type get_defaults = {
   is_best: boolean;
   asset?: Asset;
   link?: string;
-  client_secret?: boolean;
   quote_amount?: number;
   percentage_diff: number;
   is_supported: boolean;

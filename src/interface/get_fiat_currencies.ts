@@ -1,4 +1,4 @@
-export type PaymentMethodResponse = {
+type PaymentMethodResponse = {
   paymentMethodName: string;
   paymentMethodId: string;
   paymentMethodLogo: string | null;

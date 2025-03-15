@@ -13,10 +13,7 @@ import useDebouncedEffect from "@/hooks/useDebounce";
 import LargeLoadingIcon from "@/assets/SvgComponents/LargeLoadingIcon";
 import Provider from "./Provider/Provider";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
-import {
-  get_fiat_currencies,
-  PaymentMethodResponse,
-} from "@/interface/get_fiat_currencies";
+import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import Redirect1 from "./Redirect/Redirect1";
 import Redirect2 from "./Redirect/Redirect2";
@@ -24,12 +21,14 @@ import { get_defaults } from "@/interface/get_defaults";
 import {
   fetchDefaults,
   fetchDefaultsByCountry,
+  fetchPaymentMethods,
   fetchQuotes,
   getQuoteLimit,
   isValidQuoteLimit,
 } from "./Widget.script";
 import CountrySearch from "./CountrySearch/CountrySearch";
 import { COUNTRY_DATA, ICountryData } from "@/constants/country";
+import { PaymentMethodResponse } from "@/interface/get_payment_methods";
 
 const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -46,9 +45,8 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [network, setNetwork] = useState("");
   const [isBuyOrSell, setIsBuyOrSell] = useState<"BUY" | "SELL">("BUY");
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [paymentOptions, setPaymentOptions] = useState<
-    PaymentMethodResponse[] | null
-  >(null);
+  const [paymentOptions, setPaymentOptions] =
+    useState<PaymentMethodResponse | null>(null);
   const [loadingQuotes, setLoadingQuotes] = useState(false);
   const [error, setError] = useState("");
   const [allProviders, setAllProviders] = useState<get_defaults | null>(null);
@@ -58,22 +56,19 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
   const [toggleCountryModal, setToggleCountryModal] = useState(false);
   const [country, setCountry] = useState<ICountryData | null>(null);
+  const [loadingPaymentMethods, setLoadingPaymentMethods] = useState(false);
   const isFirstQuoteRender = useRef(0);
 
-  const handleFiatCurrencyChange = (c: string) => {
+  const handleFiatCurrencyChange = async (c: string) => {
+    const paymentMethods = await fetchPaymentMethods(
+      c,
+      setLoadingPaymentMethods
+    );
+    setPaymentOptions(paymentMethods);
+    if (paymentMethods) {
+      setPaymentMethod(paymentMethods[0].orki_id);
+    }
     setFiatCurrency(c);
-
-    // // update payment options when fiat currency changes
-    // const afc = fiatCurrencies?.find(
-    //   (fc) => fc.code.toLowerCase() === c.toLowerCase()
-    // );
-    // if (afc && provider) {
-    //   const _provider = provider.provider.identifier;
-    //   const _paymentOptions = afc[_provider as keyof typeof afc];
-    //   console.log(_paymentOptions, _provider);
-
-    //   setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
-    // }
   };
 
   const handleProceed = () => {
@@ -130,18 +125,6 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     });
     setLoading(false);
   };
-
-  useEffect(() => {
-    // update payment options
-    const afc = fiatCurrencies?.find(
-      (fc) => fc.code.toLowerCase() === fiatCurrency.toLowerCase()
-    );
-    if (afc && provider) {
-      const _provider = provider.provider.identifier;
-      const _paymentOptions = afc[_provider as keyof typeof afc];
-      setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
-    }
-  }, [provider]);
 
   // STEP 1
   // Make an api call to fetch all providers and currencies
@@ -214,18 +197,10 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         setFiatAmount(String(_bestProvider.asset?.fiat_amount));
         setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
 
-        // update payment options
-        const afc = fiatCurrencies?.find(
-          (fc) => fc.code.toLowerCase() === fiatCurrency.toLowerCase()
-        );
-        if (afc && _bestProvider) {
-          const _provider = _bestProvider.provider.identifier;
-          const _paymentOptions = afc[_provider as keyof typeof afc];
-          setPaymentOptions(_paymentOptions as PaymentMethodResponse[]);
-        }
+        // removed the function to fetch payment options from here
       } else if (response && typeof response === "string") {
         setAllProviders(null);
-        setError(response);
+        setProvider(null);
         setError(response);
       } else {
         const countryData = COUNTRY_DATA.find(
@@ -238,8 +213,6 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     },
     [
       isBuyOrSell === "BUY" ? fiatAmount : cryptoAmount,
-      // fiatAmount,
-      // cryptoAmount,
       fiatCurrency,
       cryptoCurrency,
       network,
@@ -387,8 +360,9 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
 
           <PaymentMethod
             paymentOptions={paymentOptions}
-            onPaymentMethodChange={(pm) => setPaymentMethod(pm.paymentMethodId)}
+            onPaymentMethodChange={(pm) => setPaymentMethod(pm.orki_id)}
             paymentMethod={paymentMethod}
+            loading={loadingPaymentMethods}
           />
 
           <CustomButton

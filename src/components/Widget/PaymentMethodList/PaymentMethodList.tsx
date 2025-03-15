@@ -4,8 +4,8 @@ import Overlay from "../Overlay/Overlay";
 import classes from "./PaymentMethodList.module.css";
 import Image from "next/image";
 import closeIcon from "@/assets/widget/close.svg";
-import { PaymentMethodResponse } from "@/interface/get_fiat_currencies";
 import TickIcon from "@/assets/SvgComponents/TickIcon";
+import { PaymentMethodResponse } from "@/interface/get_payment_methods";
 
 const PaymentMethodList = ({
   onClose,
@@ -15,23 +15,20 @@ const PaymentMethodList = ({
   display,
 }: {
   onClose: () => void;
-  paymentOptions: PaymentMethodResponse[] | null;
+  paymentOptions: PaymentMethodResponse | null;
   paymentMethod: string;
-  onPaymentMethodChange: (option: PaymentMethodResponse) => void;
+  onPaymentMethodChange: (option: PaymentMethodResponse[number]) => void;
   display: boolean;
 }) => {
-  const [selected, setSelected] = useState<PaymentMethodResponse | null>(null);
+  const [selected, setSelected] = useState<
+    PaymentMethodResponse[number] | null
+  >(null);
 
   useEffect(() => {
     if (selected) {
       onPaymentMethodChange(selected);
     }
   }, [selected]);
-
-  // useEffect(() => {
-  //   if (!paymentOptions) return;
-  //   setSelected(paymentOptions[0]);
-  // }, [paymentOptions]);
 
   return (
     <Overlay style={{ display: display ? "block" : "none" }} onClose={onClose}>
@@ -51,25 +48,18 @@ const PaymentMethodList = ({
                 }}
                 key={idx}
                 className={`${classes.paymentMethod} ${
-                  option.paymentMethodId === paymentMethod && classes.active
+                  option.orki_id === paymentMethod && classes.active
                 } `}
               >
                 <span className={classes.iconContainer}>
-                  {option.paymentMethodLogo && (
-                    <img
-                      width={24}
-                      height={24}
-                      src={option.paymentMethodLogo}
-                      alt=""
-                    />
+                  {option.logo && (
+                    <img width={24} height={24} src={option.logo} alt="logo" />
                   )}
                 </span>
 
                 <div className={classes.detailsWrapper}>
                   <div className={classes.details}>
-                    <span className={classes.name}>
-                      {option.paymentMethodName}
-                    </span>
+                    <span className={classes.name}>{option.name}</span>
                     {/* <span className={classes.description}></span> */}
                   </div>
 
