@@ -40,7 +40,7 @@ const Hero = () => {
           </div>
         </div>
         <div className={classes.widgetWrapper}>
-          <SlideUp>
+          <SlideUp width="100%">
             <Widget onLaunch={() => {}} />
             {/* <TransakIframe /> */}
           </SlideUp>
