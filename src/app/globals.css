@@ -26,19 +26,19 @@ a {
   text-decoration: none;
 }
 
+/* Hide the arrows in Webkit browsers (Chrome, Safari) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide the arrows in Mozilla browsers (Firefox) */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 @media screen and (min-width: 540px) {
-  /* Hide the arrows in Webkit browsers (Chrome, Safari) */
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  /* Hide the arrows in Mozilla browsers (Firefox) */
-  input[type="number"] {
-    -moz-appearance: textfield;
-  }
-
   ::-webkit-scrollbar {
     width: 10px;
   }

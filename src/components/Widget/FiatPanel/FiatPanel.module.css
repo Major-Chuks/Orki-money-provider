@@ -27,7 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 48px;
+  gap: 16px;
 }
 
 .title {
@@ -82,4 +82,11 @@
   font-weight: 400;
   line-height: normal;
   text-align: center;
+}
+
+@media screen and (max-width: 540px) {
+  .value input,
+  .value input::placeholder {
+    font-size: 16px;
+  }
 }
