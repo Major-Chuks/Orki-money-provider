@@ -112,6 +112,10 @@
     padding-top: 24px;
   }
 
+  .widgetWrapper {
+    width: 100%;
+  }
+
   .details {
     margin-bottom: 0;
     gap: 16px;
