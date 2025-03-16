@@ -57,7 +57,7 @@ const Header = () => {
             </div>
           </div>
           <div className={classes.widgetWrapper}>
-            <SlideUp>
+            <SlideUp width="100%">
               <div
                 style={{
                   display: purchaseLink ? "none" : "block",
