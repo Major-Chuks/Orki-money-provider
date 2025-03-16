@@ -2,8 +2,8 @@
 
 import Hero from "./Hero/Hero";
 
-const MediaKit = () => {
+const Docs = () => {
   return <Hero />;
 };
 
-export default MediaKit;
+export default Docs;
