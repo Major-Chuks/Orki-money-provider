@@ -5,4 +5,7 @@ type PaymentMethod = {
   tagline: string;
 };
 
-export type PaymentMethodResponse = PaymentMethod[];
+export type PaymentMethodResponse = {
+  payment_methods: PaymentMethod[];
+  recommended: string;
+};

@@ -70,3 +70,21 @@
     background: rgb(234, 234, 234);
   }
 }
+
+.iconContainer {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background: #f5f7fd;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.iconContainer > * {
+  width: 100%;
+  height: auto;
+}

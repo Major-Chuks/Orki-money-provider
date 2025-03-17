@@ -66,7 +66,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     );
     setPaymentOptions(paymentMethods);
     if (paymentMethods) {
-      setPaymentMethod(paymentMethods[0].orki_id);
+      setPaymentMethod(paymentMethods.recommended);
     }
     setFiatCurrency(c);
   };

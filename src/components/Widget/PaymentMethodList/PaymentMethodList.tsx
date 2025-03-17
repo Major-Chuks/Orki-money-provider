@@ -17,11 +17,13 @@ const PaymentMethodList = ({
   onClose: () => void;
   paymentOptions: PaymentMethodResponse | null;
   paymentMethod: string;
-  onPaymentMethodChange: (option: PaymentMethodResponse[number]) => void;
+  onPaymentMethodChange: (
+    option: PaymentMethodResponse["payment_methods"][number]
+  ) => void;
   display: boolean;
 }) => {
   const [selected, setSelected] = useState<
-    PaymentMethodResponse[number] | null
+    PaymentMethodResponse["payment_methods"][number] | null
   >(null);
 
   useEffect(() => {
@@ -39,8 +41,8 @@ const PaymentMethodList = ({
         </div>
 
         <div className={classes.paymentMethodContainer}>
-          {paymentOptions && paymentOptions.length ? (
-            paymentOptions.map((option, idx) => (
+          {paymentOptions && paymentOptions.payment_methods.length ? (
+            paymentOptions.payment_methods.map((option, idx) => (
               <div
                 onClick={() => {
                   setSelected(option);

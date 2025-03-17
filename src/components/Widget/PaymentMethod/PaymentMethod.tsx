@@ -15,12 +15,16 @@ const PaymentMethod = ({
   paymentOptions: PaymentMethodResponse | null;
   paymentMethod: string;
   loading: boolean;
-  onPaymentMethodChange: (option: PaymentMethodResponse[number]) => void;
+  onPaymentMethodChange: (
+    option: PaymentMethodResponse["payment_methods"][number]
+  ) => void;
 }) => {
   const [togglePaymentMethod, setTogglePaymentMethod] = useState(false);
 
-  const getMethodName = () => {
-    return paymentOptions?.find((pm) => pm.orki_id === paymentMethod)?.name;
+  const getMethod = () => {
+    return paymentOptions?.payment_methods.find(
+      (pm) => pm.orki_id === paymentMethod
+    );
   };
 
   return (
@@ -38,8 +42,12 @@ const PaymentMethod = ({
         className={`${classes.selectionBox} ${loading && classes.loading}`}
       >
         <div>
-          <InstitutionIcon />
-          {getMethodName() || "Select payment method"}
+          <span className={classes.iconContainer}>
+            {getMethod() && getMethod()?.logo && (
+              <img width={24} height={24} src={getMethod()?.logo} alt="logo" />
+            )}
+          </span>
+          {getMethod()?.name || "Select payment method"}
         </div>
         <ChevronDownIcon />
       </div>
