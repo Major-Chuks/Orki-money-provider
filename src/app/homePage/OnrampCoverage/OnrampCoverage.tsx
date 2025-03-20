@@ -10,6 +10,7 @@ import TooltipComponentWrapper from "./TooltipComponentWrapper/TooltipComponentW
 import backend from "@/services/apis";
 import { COUNTRY, ICountry } from "@/services/country";
 import { OnramperCoverage } from "@/services/onramperCoverage";
+import { useGetCoverage, useGetFiatCurrencies } from "@/services/tanStackApi";
 
 // GeoJSON URL for world map
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
@@ -57,6 +58,9 @@ const Map: React.FC = () => {
   );
   const [onrampCoverageData, setOnramperCoverageData] =
     useState<OnrampCoverage>({});
+
+  const { data: coverageResponse, isSuccess: isCoverageSuccess } =
+    useGetCoverage();
 
   // Geo type
   interface Geo {
@@ -136,19 +140,13 @@ const Map: React.FC = () => {
     setOnramperCoverageData(coverageData);
   };
 
-  const handleFetch = async () => {
-    handleOnramperCoverage(OnramperCoverage);
-
-    const response = await backend().get_coverage();
-
-    if (response) {
-      handleOnramperCoverage(response.data);
-    }
-  };
-
   useEffect(() => {
-    handleFetch();
-  }, []);
+    if (isCoverageSuccess) {
+      handleOnramperCoverage(coverageResponse.data);
+    } else {
+      handleOnramperCoverage(OnramperCoverage);
+    }
+  }, [isCoverageSuccess]);
 
   return (
     <>

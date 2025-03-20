@@ -19,16 +19,22 @@ import Redirect1 from "./Redirect/Redirect1";
 import Redirect2 from "./Redirect/Redirect2";
 import { get_defaults } from "@/interface/get_defaults";
 import {
-  fetchDefaults,
-  fetchDefaultsByCountry,
-  fetchPaymentMethods,
   fetchQuotes,
   getQuoteLimit,
-  isValidQuoteLimit,
+  InitStates,
+  validQuoteLimit,
 } from "./Widget.script";
 import CountrySearch from "./CountrySearch/CountrySearch";
 import { COUNTRY_DATA, ICountryData } from "@/constants/country";
 import { PaymentMethodResponse } from "@/interface/get_payment_methods";
+import {
+  useGetCryptoCurencies,
+  useGetDefaults,
+  useGetFiatCurrencies,
+  useGetPaymentMethods,
+  useGetUserLocation,
+  usePostChangeLocation,
+} from "@/services/tanStackApi";
 
 const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -56,18 +62,26 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
   const [toggleCountryModal, setToggleCountryModal] = useState(false);
   const [country, setCountry] = useState<ICountryData | null>(null);
-  const [loadingPaymentMethods, setLoadingPaymentMethods] = useState(false);
   const isFirstQuoteRender = useRef(0);
 
+  const { data: fiatResponse, isSuccess: isFiatSuccess } =
+    useGetFiatCurrencies();
+  const { data: cryptoResponse, isSuccess: isCryptoSuccess } =
+    useGetCryptoCurencies();
+  const { data: defaultsResponse, isSuccess: isDefaultsSuccess } =
+    useGetDefaults();
+  const { data: locationResponse, isSuccess: isLocationSuccess } =
+    useGetUserLocation();
+  const {
+    data: paymentMethodResponse,
+    isPending: isPaymentMethodPending,
+    isSuccess: isPaymentMethodSuccess,
+    refetch: refetchPaymentMethods,
+  } = useGetPaymentMethods(fiatCurrency);
+
+  const { mutateAsync } = usePostChangeLocation();
+
   const handleFiatCurrencyChange = async (c: string) => {
-    const paymentMethods = await fetchPaymentMethods(
-      c,
-      setLoadingPaymentMethods
-    );
-    setPaymentOptions(paymentMethods);
-    if (paymentMethods) {
-      setPaymentMethod(paymentMethods.recommended);
-    }
     setFiatCurrency(c);
   };
 
@@ -103,13 +117,13 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     }
   };
 
-  // CHANGE USER LOCATION
-  const handleCountryChange = async (country: ICountryData) => {
-    setCountry(country);
-    isFirstQuoteRender.current = 0;
-    setLoading(true);
-    await fetchDefaultsByCountry({
-      country,
+  const handleInitStates = (defaultsData?: get_defaults) => {
+    InitStates({
+      isChangeLocation: !!defaultsData,
+      fiatData: fiatResponse?.data.data,
+      cryptoData: cryptoResponse?.data.data,
+      defaultData: defaultsData ?? defaultsResponse?.data.data,
+      locationData: locationResponse?.data.data,
       setAllProviders,
       setProvider,
       setFiatAmount,
@@ -122,38 +136,54 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
       setCryptoCurrencies,
       setPaymentOptions,
       setError,
+      setCountry,
     });
+  };
+
+  const handleCountryChange = async (country: ICountryData) => {
+    setCountry(country);
+    isFirstQuoteRender.current = 1;
+    setLoading(true);
+    try {
+      const response = await mutateAsync(country.code);
+      handleInitStates(response.data.data);
+    } catch (err) {
+      console.error(err);
+    }
     setLoading(false);
   };
 
-  // STEP 1
-  // Make an api call to fetch all providers and currencies
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      await fetchDefaults({
-        setAllProviders,
-        setProvider,
-        setFiatAmount,
-        setCryptoAmount,
-        setFiatCurrency,
-        setCryptoCurrency,
-        setPaymentMethod,
-        setNetwork,
-        setFiatCurrencies,
-        setCryptoCurrencies,
-        setPaymentOptions,
-        setError,
-        setCountry,
-      });
+    setLoading(true);
+    if (isFiatSuccess && isCryptoSuccess && isDefaultsSuccess) {
       setLoading(false);
-    })();
-  }, []);
+    }
+  }, [isFiatSuccess, isCryptoSuccess, isDefaultsSuccess]);
 
-  // STEP 2
+  useEffect(() => {
+    if (isPaymentMethodSuccess) {
+      setPaymentOptions(paymentMethodResponse.data.data);
+      setPaymentMethod(paymentMethodResponse.data.data.recommended);
+    }
+  }, [isPaymentMethodSuccess]);
+
+  // Initiallize states
+  useEffect(() => {
+    if (
+      isFiatSuccess &&
+      isCryptoSuccess &&
+      isDefaultsSuccess &&
+      isLocationSuccess
+    ) {
+      handleInitStates();
+    }
+  }, [isFiatSuccess, isCryptoSuccess, isDefaultsSuccess, isLocationSuccess]);
+
   // Fetch quotes
   useDebouncedEffect(
     async () => {
+      console.log("init", isFirstQuoteRender.current);
+
       if (isFirstQuoteRender.current !== 2) {
         isFirstQuoteRender.current += 1;
         return; // Exit early on first render
@@ -166,7 +196,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
         paymentMethod,
       });
 
-      const isValid = isValidQuoteLimit({
+      const isValid = validQuoteLimit({
         minBuyAmount,
         maxBuyAmount,
         fiatAmount: Number(fiatAmount),
@@ -362,7 +392,7 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
             paymentOptions={paymentOptions}
             onPaymentMethodChange={(pm) => setPaymentMethod(pm.orki_id)}
             paymentMethod={paymentMethod}
-            loading={loadingPaymentMethods}
+            loading={isPaymentMethodPending}
           />
 
           <CustomButton

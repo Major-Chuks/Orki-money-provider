@@ -1,5 +1,5 @@
 import axios from "axios";
-import { post_buy_quote, post_sell_quote } from "./interface";
+import { post_buy_quote_type, post_sell_quote_type } from "./interface";
 
 export const BACKEND_API = axios.create({
   baseURL: "https://3x26dlwune.execute-api.af-south-1.amazonaws.com/api/v1",
@@ -7,47 +7,7 @@ export const BACKEND_API = axios.create({
 
 export default function backend() {
   return {
-    get_user_location: async () => {
-      const url = "/get-location";
-      try {
-        const response = await BACKEND_API.get(url);
-        return response;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    get_coverage: async () => {
-      const url = "/coverage";
-      try {
-        const response = await BACKEND_API.get(url);
-        return response;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    post_change_location: async (country: string) => {
-      const url = "/change-location";
-      try {
-        const response = await BACKEND_API.post(url, { country });
-        return response;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    get_payment_methods: async (fiat: string) => {
-      const url = `/payment-methods?fiat=${fiat}`;
-      try {
-        const response = await BACKEND_API.get(url);
-        return response;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    post_sell_quote: async (payload: post_sell_quote) => {
+    post_sell_quote: async (payload: post_sell_quote_type) => {
       const url = `/quotes/sell`;
       try {
         const response = await BACKEND_API.post(url, payload);
@@ -58,7 +18,7 @@ export default function backend() {
       }
     },
 
-    post_buy_quote: async (payload: post_buy_quote) => {
+    post_buy_quote: async (payload: post_buy_quote_type) => {
       const url = `/quotes/buy`;
       try {
         const response = await BACKEND_API.post(url, payload);
@@ -68,55 +28,5 @@ export default function backend() {
         return error.response.data.msg;
       }
     },
-
-    get_fiat_currencies: async () => {
-      const url = "/fiat-currencies";
-      try {
-        const response = await BACKEND_API.get(url);
-        return response;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    get_crypto_currencies: async () => {
-      const url = "/crypto-currencies";
-      try {
-        const response = await BACKEND_API.get(url);
-        return response;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    get_defaults: async () => {
-      const url = "/defaults";
-      try {
-        const response = await BACKEND_API.get(url);
-        return response;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    // get_pricing_quote: async (queryString: string) => {
-    //   const url = `/pricing-quotes?${queryString}`;
-    //   try {
-    //     const response = await BACKEND_API.get(url);
-    //     return response;
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
-
-    // get_countries: async () => {
-    //   const url = "/countries";
-    //   try {
-    //     const response = await BACKEND_API.get(url);
-    //     return response;
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
   };
 }
