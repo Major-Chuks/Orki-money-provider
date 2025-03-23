@@ -19,6 +19,7 @@ const CustomPasswordInput = ({
   label,
   note,
   outline = true,
+  leftIcon,
 }: ExtendedInput) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,16 +30,14 @@ const CustomPasswordInput = ({
       } ${outline && classes.outline}`}
     >
       {label && <div className={classes.label}>{label}</div>}
-      <div className={classes.wrapper}>
-        <div className={classes.section}>
-          <div className={classes.left}>
-            {/* {!!getError({ error, id }) ? (
-              <Image src={lockIconDark} alt="" />
-            ) : (
-              <Image src={lockIcon} alt="" />
-            )} */}
+      <div className={`${classes.wrapper} ${leftIcon && classes.leftIcon}`}>
+        {leftIcon && (
+          <div className={classes.section}>
+            <div className={classes.left}>
+              <Image src={leftIcon} alt="" />
+            </div>
           </div>
-        </div>
+        )}
         <input
           className={classes.input}
           type={showPassword ? "text" : "password"}

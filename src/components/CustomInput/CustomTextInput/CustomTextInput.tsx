@@ -3,6 +3,7 @@ import innerClasses from "./CustomTextInput.module.css";
 
 import { ICustomInput, getError, getValue } from "../CustomInput.script";
 import { capitalize as capitalizeText } from "@/services/utils";
+import Image from "next/image";
 
 interface IExtendedCustomInput extends ICustomInput {
   type?: "text" | "textarea";
@@ -25,6 +26,7 @@ const CustomTextInput = ({
   plain,
   capitalize = false,
   required,
+  leftIcon,
 }: IExtendedCustomInput) => {
   return (
     <div
@@ -37,7 +39,14 @@ const CustomTextInput = ({
           {label} {required && <span className={innerClasses.required}>*</span>}
         </div>
       )}
-      <div className={classes.wrapper}>
+      <div className={`${classes.wrapper} ${leftIcon && classes.leftIcon}`}>
+        {leftIcon && (
+          <div className={classes.section}>
+            <div className={classes.left}>
+              <Image src={leftIcon} alt="" />
+            </div>
+          </div>
+        )}
         {type === "text" ? (
           <input
             className={`${classes.input} ${innerClasses.input} ${

@@ -72,7 +72,7 @@ const CustomCheckbox = ({
           />
         )}
       </div>
-      <label>{label}</label>
+      {label && <label>{label}</label>}
     </div>
   );
 };

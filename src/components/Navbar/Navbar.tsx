@@ -86,8 +86,8 @@ const Navbar = () => {
       <CustomButton onClick={() => router.push(routes.widget)} outline>
         Try Widget
       </CustomButton>
-      <CustomButton onClick={() => router.push(routes.contactUs)}>
-        Contact Us
+      <CustomButton onClick={() => router.push(routes.signUp)}>
+        Get Started
       </CustomButton>
     </div>
   );

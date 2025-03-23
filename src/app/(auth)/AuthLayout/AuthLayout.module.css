@@ -1,0 +1,127 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+
+  max-width: 1536px;
+  margin: 0 auto;
+}
+
+.container > div {
+  position: sticky;
+  top: 0;
+}
+
+.main {
+  flex: 50%;
+  height: 100%;
+  padding: 64px 100px;
+}
+
+.rightSide {
+  flex: 50%;
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 86px;
+  padding: 42px;
+  padding-top: 100px;
+  padding-bottom: 76px;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.title {
+  max-width: 638px;
+  color: #fbfbfb;
+  text-align: center;
+  font-family: "Plus Jakarta Sans";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 58px; /* 145% */
+}
+
+.bannerImageContainer {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bannerImageContainer img {
+  width: 100%;
+  height: auto;
+}
+
+.coreList {
+  max-width: 286px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.coreItem {
+  display: flex;
+  padding: 6px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 32px;
+  background: rgba(161, 107, 240, 0.64);
+
+  /* text */
+  color: #fff;
+  font-family: "DM Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+}
+
+@media screen and (max-width: 1280px) {
+  .main {
+    padding: 64px 32px;
+  }
+
+  .rightSide {
+    padding: 32px;
+    padding-top: 98px;
+    gap: 48px;
+  }
+
+  .title {
+    font-size: 32px;
+    line-height: 46px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .rightSide {
+    display: none;
+  }
+
+  .main {
+    max-width: 540px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .main {
+    padding: 32px 16px;
+  }
+}

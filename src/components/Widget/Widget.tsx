@@ -182,8 +182,6 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
   // Fetch quotes
   useDebouncedEffect(
     async () => {
-      console.log("init", isFirstQuoteRender.current);
-
       if (isFirstQuoteRender.current !== 2) {
         isFirstQuoteRender.current += 1;
         return; // Exit early on first render

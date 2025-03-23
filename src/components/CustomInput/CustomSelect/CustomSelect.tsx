@@ -7,8 +7,8 @@ import chevronIcon from "@/assets/icon-chevron-down.svg";
 import { capitalize, outSideClickHandler } from "@/services/utils";
 
 export type Option = {
-  id: number | string;
-  title: string;
+  id: string;
+  name: string;
   icon?: StaticImageData | string;
   [key: string]: any;
 };
@@ -32,11 +32,11 @@ const CustomSelect = ({
   value: selectedValue,
 }: ExtendedInput) => {
   const [selected, setSelected] = useState<Option>(
-    defaultValue || { title: "", id: "", icon: "" }
+    defaultValue || { name: "", id: "", icon: "" }
   );
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [value, setValue] = useState(
-    defaultValue || { title: "", id: "", icon: "" }
+    defaultValue || { name: "", id: "", icon: "" }
   );
 
   const handleClick = (option: Option) => {
@@ -62,14 +62,14 @@ const CustomSelect = ({
   useEffect(() => {
     const sv = getValue({ value: selectedValue, id });
 
-    let match = options.find((c) => c.title.toLowerCase() === sv.toLowerCase());
+    let match = options.find((c) => c.name.toLowerCase() === sv.toLowerCase());
 
     if (match) {
       setValue(match);
       setSelected(match);
     } else {
-      setValue({ title: "", id: "", icon: "" });
-      setSelected({ title: "", id: "", icon: "" });
+      setValue({ name: "", id: "", icon: "" });
+      setSelected({ name: "", id: "", icon: "" });
     }
   }, [selectedValue]);
 
@@ -99,7 +99,7 @@ const CustomSelect = ({
           } ${plain && innerClasses.plain}`}
           type="text"
           placeholder={placeholder}
-          value={format ? capitalize(value?.title) : value?.title}
+          value={format ? capitalize(value?.name) : value?.name}
           onChange={() => {}}
         />
         <div
@@ -130,13 +130,13 @@ const CustomSelect = ({
                   onClick={() => handleClick(option)}
                   key={index}
                   className={`${innerClasses.item} ${
-                    selected.title === option.title && innerClasses.active
+                    selected.name === option.name && innerClasses.active
                   }`}
                 >
                   {option.icon && (
                     <Image width={20} height={20} src={option.icon} alt="" />
                   )}
-                  {format ? capitalize(option.title) : option.title}
+                  {format ? capitalize(option.name) : option.name}
                 </div>
               ))}
             </div>

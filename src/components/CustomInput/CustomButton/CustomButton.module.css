@@ -70,3 +70,10 @@
 .loadingIcon {
   color: var(--neutral-01100, #fefefe);
 }
+
+@media screen and (max-width: 540px) {
+  .container {
+    height: 40px !important;
+    border-radius: 8px !important;
+  }
+}
