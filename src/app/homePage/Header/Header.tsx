@@ -9,9 +9,13 @@ import TransakWidget from "@/providers/transak/TransakWidget";
 import TransakIframe from "@/components/ProviderIframe/TransakIframe";
 import MoonPayWidget from "@/providers/moonpay/Moonpay";
 import IframeWrapper from "@/components/Widget/IframeWrapper/IframeWrapper";
+import { useRouter } from "next/navigation";
+import { routes } from "@/services/routes";
 
 const Header = () => {
   const [purchaseLink, setQueryString] = useState("");
+
+  const router = useRouter();
 
   const handleLaunch = (purchaseLink: string) => {
     setQueryString(purchaseLink);
@@ -50,14 +54,17 @@ const Header = () => {
                 </CustomButton>
               </SlideUp>
               <SlideUp>
-                <CustomButton style={{ width: "max-content" }}>
+                <CustomButton
+                  onClick={() => router.push(routes.signUp)}
+                  style={{ width: "max-content" }}
+                >
                   Get Started
                 </CustomButton>
               </SlideUp>
             </div>
           </div>
           <div className={classes.widgetWrapper}>
-            <SlideUp width="100%">
+            <div className={classes.animationContainer}>
               <div
                 style={{
                   display: purchaseLink ? "none" : "block",
@@ -76,7 +83,7 @@ const Header = () => {
                   Close Modal
                 </CustomButton>
               </IframeWrapper>
-            </SlideUp>
+            </div>
           </div>
         </div>
       </Responsive>

@@ -1,7 +1,7 @@
 .container {
   width: 100%;
-  transform: translateY(20%);
-  transition: all 650ms;
+  transform: translateY(40%);
+  transition: all 1050ms;
   opacity: 0;
 }
 

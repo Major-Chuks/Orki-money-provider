@@ -40,10 +40,10 @@ const Hero = () => {
           </div>
         </div>
         <div className={classes.widgetWrapper}>
-          <SlideUp width="100%">
+          <div className={classes.animationContainer}>
             <Widget onLaunch={() => {}} />
             {/* <TransakIframe /> */}
-          </SlideUp>
+          </div>
         </div>
       </div>
     </Responsive>

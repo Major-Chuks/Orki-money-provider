@@ -16,6 +16,25 @@
   justify-content: center;
 }
 
+.animationContainer {
+  width: 100%;
+  opacity: 0;
+  transform: translateX(-20%);
+  animation: enter 1s 850ms forwards;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .container {
   width: 100%;
   display: flex;
@@ -97,6 +116,22 @@
     align-items: center;
     margin-bottom: 54px;
     padding-top: 0;
+  }
+
+  .animationContainer {
+    transform: translateY(20%);
+  }
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateX(0) translateY(20%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0) translateY(0);
+    }
   }
 }
 

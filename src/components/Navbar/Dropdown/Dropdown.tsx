@@ -80,8 +80,8 @@ const Dropdown = ({ onClose }: { onClose: () => void }) => {
         <CustomButton onClick={() => handleRoute(routes.widget)} outline>
           Try Widget
         </CustomButton>
-        <CustomButton onClick={() => handleRoute(routes.contactUs)}>
-          Contact Us
+        <CustomButton onClick={() => handleRoute(routes.signUp)}>
+          Get Started
         </CustomButton>
       </div>
     </div>

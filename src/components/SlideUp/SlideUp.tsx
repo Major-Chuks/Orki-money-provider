@@ -6,10 +6,12 @@ const SlideUp = ({
   children,
   threshold,
   width,
+  animationDelay,
 }: {
   children: React.ReactNode;
   threshold?: number;
   width?: string;
+  animationDelay?: string;
 }) => {
   const [intersecting, setIntersecting] = useState(false);
 
@@ -24,6 +26,7 @@ const SlideUp = ({
           className={`${clases.container} ${
             intersecting && clases.intersecting
           }`}
+          style={{ transitionDelay: animationDelay }}
         >
           {children}
         </div>

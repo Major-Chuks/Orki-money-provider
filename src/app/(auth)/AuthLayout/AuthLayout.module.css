@@ -53,11 +53,78 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .bannerImageContainer img {
   width: 100%;
   height: auto;
+}
+
+.bannerImageContainer img:first-child {
+  width: 241px;
+  height: 347px;
+  flex-shrink: 0;
+  position: absolute;
+  opacity: 0;
+  animation: pop-left 6s 650ms forwards cubic-bezier(0.8, 0.08, 0.07, 1.36);
+}
+
+.bannerImageContainer img:nth-child(2) {
+  width: 273px;
+  height: 397px;
+  flex-shrink: 0;
+  aspect-ratio: 273/397;
+  z-index: 1;
+  transform: translateY(0);
+  opacity: 0;
+  animation: pop-up 3s 650ms forwards cubic-bezier(0.8, 0.08, 0.07, 1.36);
+}
+
+.bannerImageContainer img:nth-child(3) {
+  width: 241px;
+  height: 347px;
+  transform: rotate(-8.414deg);
+  flex-shrink: 0;
+  position: absolute;
+  opacity: 0;
+  animation: pop-right 6s 650ms forwards cubic-bezier(0.8, 0.08, 0.07, 1.36);
+}
+
+@keyframes pop-up {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pop-left {
+  from {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pop-right {
+  from {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(50%);
+  }
 }
 
 .coreList {
@@ -77,6 +144,7 @@
   gap: 8px;
   border-radius: 32px;
   background: rgba(161, 107, 240, 0.64);
+  cursor: default;
 
   /* text */
   color: #fff;
@@ -85,6 +153,30 @@
   font-style: normal;
   font-weight: 400;
   line-height: 16px; /* 133.333% */
+  animation: wamble 2s forwards infinite linear;
+  animation-play-state: paused;
+}
+
+.coreItem:hover {
+  animation-play-state: running;
+}
+
+@keyframes wamble {
+  0% {
+    transform: translateY(-4px) translateX(0);
+  }
+  25% {
+    transform: translateY(0) translateX(4%);
+  }
+  50% {
+    transform: translateY(4px) translateX(0);
+  }
+  75% {
+    transform: translateY(0) translateX(-4%);
+  }
+  100% {
+    transform: translateY(-4px) translateX(0);
+  }
 }
 
 @media screen and (max-width: 1280px) {

@@ -52,7 +52,10 @@ const Login = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.logoContainer}>
+      <div
+        onClick={() => router.push(routes.home)}
+        className={classes.logoContainer}
+      >
         <Image src={logo} alt="" />
       </div>
 
