@@ -95,7 +95,12 @@ const Login = () => {
           Login
         </CustomButton>
 
-        <div className={classes.forgotPassword}>Forgot your password?</div>
+        <div
+          onClick={() => router.push(routes.newPassword)}
+          className={classes.forgotPassword}
+        >
+          Forgot your password?
+        </div>
       </div>
 
       <div className={classes.otherOption}>

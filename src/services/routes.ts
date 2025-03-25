@@ -1,7 +1,9 @@
 export const routes = {
   // auth
-  login: "/login",
-  signUp: "/sign-up",
+  login: "/users/login",
+  signUp: "/users/sign-up",
+  newPassword: "/users/password/new",
+
   // main
   home: "/",
   aboutUs: "/about-us",

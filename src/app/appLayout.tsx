@@ -7,13 +7,14 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { usePathname } from "next/navigation";
 import AuthLayout from "./(auth)/AuthLayout/AuthLayout";
+import { routes } from "@/services/routes";
 
 export const queryClient = new QueryClient();
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
-  const authRoutes = ["/sign-up", "/login"];
+  const authRoutes = [routes.signUp, routes.login, routes.newPassword];
 
   if (authRoutes.includes(pathname)) {
     return (

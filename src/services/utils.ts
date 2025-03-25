@@ -433,3 +433,46 @@ export const toSentenceCase = (str?: string) => {
   if (!str) return ""; // Handle empty strings
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
+
+export const formatCounter = (time: number) => {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  return `${minutes}:${seconds}`;
+};
+
+export const validatePasswordV2 = (password: string) => {
+  const validation = {
+    "8 characters": false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    "Special Character": false,
+  };
+
+  // Minimum 8 characters
+  if (password.length > 8) {
+    validation["8 characters"] = true;
+  }
+
+  // At least one lowercase letter
+  if (/[a-z]/.test(password)) {
+    validation.lowercase = true;
+  }
+
+  // At least one uppercase letter
+  if (/[A-Z]/.test(password)) {
+    validation.uppercase = true;
+  }
+
+  // At least a number
+  if (/[0-9]/.test(password)) {
+    validation.number = true;
+  }
+
+  // At least one special character
+  if (/[^a-zA-Z0-9]/.test(password)) {
+    validation["Special Character"] = true;
+  }
+
+  return validation;
+};

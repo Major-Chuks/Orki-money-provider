@@ -57,6 +57,7 @@
   /* background: var(--disabled); */
   cursor: not-allowed;
   opacity: 0.5;
+  color: #000 !important;
 }
 
 .disabled {

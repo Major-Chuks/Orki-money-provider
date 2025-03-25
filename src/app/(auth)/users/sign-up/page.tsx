@@ -10,7 +10,7 @@ import CustomPasswordInput from "@/components/CustomInput/CustomPasswordInput/Cu
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import CustomCheckbox from "@/components/CustomInput/CustomCheckbox/CustomCheckbox";
 import { openInNewTab } from "@/services/utils";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { routes } from "@/services/routes";
 import userIcon from "@/assets/auth/user-icon.svg";
 import emailIcon from "@/assets/auth/email-icon.svg";
@@ -24,6 +24,7 @@ import {
   resetValidation,
   validateInput,
 } from "@/components/CustomInput/CustomInput.script";
+import VerifyAccount from "./VerifyAccount";
 
 const roles = [
   { id: "developer", name: "Developer" },
@@ -44,6 +45,7 @@ const SignUp = () => {
     confirmPassword: false,
     role: false,
   });
+  const [verifyAccount, setVerifyAccount] = useState(false);
 
   const [input, setInput] = useState({
     firstName: "",
@@ -81,6 +83,8 @@ const SignUp = () => {
       setDisabled(true);
     }
   }, [input, isChecked]);
+
+  if (verifyAccount) return <VerifyAccount />;
 
   return (
     <div className={classes.container}>
@@ -187,6 +191,7 @@ const SignUp = () => {
           padding: "16px 8px",
           borderRadius: "12px",
         }}
+        onClick={() => setVerifyAccount(true)}
         disabled={disabled}
       >
         Create account
