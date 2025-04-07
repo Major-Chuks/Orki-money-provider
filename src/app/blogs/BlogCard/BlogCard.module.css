@@ -4,8 +4,12 @@
   width: 100%;
   border-radius: 16px;
   background: #fbfbfb;
-  box-shadow: 1px 1px 8px 2px rgba(74, 74, 74, 0.24);
   cursor: pointer;
+  transition: all 300ms;
+}
+
+.container:hover {
+  box-shadow: 1px 1px 8px 2px rgba(74, 74, 74, 0.24);
 }
 
 .imageContainer {

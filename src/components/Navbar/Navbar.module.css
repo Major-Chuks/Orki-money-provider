@@ -3,18 +3,19 @@
   top: 0;
   z-index: 999;
   background: #fff;
-  animation: enter 1s forwards;
+  animation: wrapper_enter 1s 1s forwards;
   border-bottom: 1px solid var(--Gray-400, #cbd5e0);
   background: #fefefe;
+  transform: translateY(-100%);
 }
 
-@keyframes enter {
+@keyframes wrapper_enter {
   from {
     transform: translateY(-100%);
   }
 
   to {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
@@ -84,10 +85,10 @@
   position: absolute;
   left: 0;
   top: 119px;
-  animation: enter 450ms forwards;
+  animation: dropdownContainer_enter 450ms forwards;
 }
 
-@keyframes enter {
+@keyframes dropdownContainer_enter {
   from {
     transform: translateY(-20%);
     opacity: 0;
@@ -117,10 +118,10 @@
   background: white;
   top: 0;
   left: 0;
-  animation: enter 450ms forwards;
+  animation: navDropdownWrapper_enter 450ms forwards;
 }
 
-@keyframes enter {
+@keyframes navDropdownWrapper_enter {
   from {
     opacity: 0;
   }

@@ -1,5 +1,7 @@
 .container {
   animation: fadein 250ms forwards cubic-bezier(0.1, 0.89, 0.72, 0.99);
+  position: relative;
+  z-index: 999;
 }
 
 @keyframes fadein {

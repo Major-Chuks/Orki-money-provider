@@ -49,7 +49,7 @@ const Footer = () => {
           </div>
           <div className={classes.bottom}>
             <div className={classes.left}>
-              Copyright ©{new Date().getFullYear()} Orki Inc
+              Copyright © {new Date().getFullYear()} Orki Inc
             </div>
 
             <div className={classes.socialLinkContainer}>

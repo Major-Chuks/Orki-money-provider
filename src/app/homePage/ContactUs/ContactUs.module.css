@@ -55,21 +55,34 @@
 .coin1 {
   top: 8px;
   left: 24px;
+  animation: coin1 10000ms forwards infinite linear;
 }
 
 .coin2 {
   top: 28px;
   right: 52px;
+  animation: coin1 9000ms 100ms forwards infinite linear;
 }
 
 .coin3 {
   bottom: 16px;
   left: 52px;
+  animation: coin1 8000ms 200ms forwards infinite linear;
 }
 
 .coin4 {
   bottom: 16px;
   right: 32px;
+  animation: coin1 7000ms 300ms forwards infinite linear;
+}
+
+@keyframes coin1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media screen and (max-width: 1024px) {

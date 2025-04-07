@@ -96,9 +96,7 @@ const Orchestrations = () => {
       </div>
 
       <div className={classes.image}>
-        <SlideUp>
-          <Map />
-        </SlideUp>
+        <Map />
       </div>
     </div>
   );

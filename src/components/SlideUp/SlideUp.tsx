@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IntersectionObserver from "../IntersectionObserver/IntersectionObserver";
 import clases from "./SlideUp.module.css";
 
@@ -7,13 +7,21 @@ const SlideUp = ({
   threshold,
   width,
   animationDelay,
+  onIntersecting,
 }: {
   children: React.ReactNode;
   threshold?: number;
   width?: string;
   animationDelay?: string;
+  onIntersecting?: (state: boolean) => void;
 }) => {
   const [intersecting, setIntersecting] = useState(false);
+
+  useEffect(() => {
+    if (onIntersecting) {
+      onIntersecting(intersecting);
+    }
+  }, [intersecting]);
 
   return (
     <React.Fragment>

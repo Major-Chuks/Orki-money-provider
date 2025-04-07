@@ -138,9 +138,7 @@ const Articles = () => {
             pageCount={pageCount}
             renderItem={(blogs) =>
               blogs.map((blog, idx: number) => (
-                <SlideUp key={idx}>
-                  <BlogCard data={blog} blogId={`${idx + 1}`} />
-                </SlideUp>
+                <BlogCard key={idx} data={blog} blogId={`${idx + 1}`} />
               ))
             }
           />
