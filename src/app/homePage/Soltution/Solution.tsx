@@ -1,9 +1,14 @@
 import classes from "./Solution.module.css";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
-import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import { LottieRefCurrentProps } from "lottie-react";
 import animationData from "@/assets/animation/widget_animation.json";
 import { useEffect, useRef, useState } from "react";
+
+import dynamic from "next/dynamic";
+
+// Dynamically import Lottie with no SSR
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const Solution = () => {
   const [intersecting, setIntersecting] = useState(false);
