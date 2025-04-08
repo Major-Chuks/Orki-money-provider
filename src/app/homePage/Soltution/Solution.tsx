@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Solution = () => {
   const [intersecting, setIntersecting] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
@@ -17,6 +18,10 @@ const Solution = () => {
       }, 500);
     }
   }, [intersecting]);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <Responsive>
@@ -39,12 +44,14 @@ const Solution = () => {
           {/* <SlideUp>
             <Image src={solution} alt="" />
           </SlideUp> */}
-          <Lottie
-            animationData={animationData}
-            loop={true}
-            autoplay={false}
-            lottieRef={lottieRef}
-          />
+          {isClient && (
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              autoplay={false}
+              lottieRef={lottieRef}
+            />
+          )}
         </div>
       </div>
     </Responsive>
