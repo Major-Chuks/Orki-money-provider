@@ -1,16 +1,31 @@
-import Image from "next/image";
 import classes from "./Solution.module.css";
-import solution from "@/assets/solution.png";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import animationData from "@/assets/animation/widget_animation.json";
+import { useEffect, useRef, useState } from "react";
 
 const Solution = () => {
+  const [intersecting, setIntersecting] = useState(false);
+
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+
+  useEffect(() => {
+    if (intersecting && lottieRef.current) {
+      setTimeout(() => {
+        lottieRef?.current?.play();
+      }, 500);
+    }
+  }, [intersecting]);
+
   return (
     <Responsive>
       <div className={classes.container}>
         <div className={classes.details}>
           <div className={classes.title}>
-            <SlideUp>Get all fiat-to-crypto on ramps in one widget</SlideUp>
+            <SlideUp onIntersecting={setIntersecting}>
+              Get all fiat-to-crypto on ramps in one widget
+            </SlideUp>
           </div>
           <div className={classes.description}>
             <SlideUp>
@@ -21,9 +36,15 @@ const Solution = () => {
           </div>
         </div>
         <div className={classes.image}>
-          <SlideUp>
+          {/* <SlideUp>
             <Image src={solution} alt="" />
-          </SlideUp>
+          </SlideUp> */}
+          <Lottie
+            animationData={animationData}
+            loop={true}
+            autoplay={false}
+            lottieRef={lottieRef}
+          />
         </div>
       </div>
     </Responsive>
