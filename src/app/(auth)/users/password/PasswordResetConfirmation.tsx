@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/services/routes";
 
 const PasswordResetConfirmation = ({
-  input,
+  input: { email },
   classes,
 }: {
   input: Record<string, string>;
@@ -14,7 +14,7 @@ const PasswordResetConfirmation = ({
   const router = useRouter();
 
   const handleLogin = () => {
-    //TODO: encrypt user email and pass it to the login route
+    window.localStorage.setItem("email", email);
     router.push(routes.login);
   };
 

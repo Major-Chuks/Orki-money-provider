@@ -1,10 +1,11 @@
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
-import CustomEmailInput from "@/components/CustomInput/CustomEmailInput/CustomEmailInput";
-import emailIcon from "@/assets/auth/email-icon.svg";
 import { ErrorState } from "@/components/CustomInput/CustomInput.script";
 import CustomPasswordInput from "@/components/CustomInput/CustomPasswordInput/CustomPasswordInput";
 import lockIcon from "@/assets/auth/lock-icon.svg";
 import CustomPasswordValidator from "@/components/CustomInput/CustomPasswordValidator/CustomPasswordValidator";
+import { InputState } from "./new/page";
+import backend from "@/services/apis";
+import { useState } from "react";
 
 const SetPassword = ({
   error,
@@ -14,14 +15,25 @@ const SetPassword = ({
   onSubmit,
 }: {
   error: ErrorState;
-  input: Record<string, string>;
+  input: InputState;
   classes: Record<string, string>;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onSubmit: () => void;
 }) => {
-  const handleCreatePassword = () => {
-    // TODO: create password
-    onSubmit();
+  const [loading, setLoading] = useState(false);
+
+  const handleCreatePassword = async () => {
+    setLoading(true);
+    const { email, password, otp } = input;
+    const response = await backend().post_change_password({
+      email,
+      password,
+      otp,
+    });
+    if (response) {
+      onSubmit();
+    }
+    setLoading(false);
   };
 
   return (
@@ -57,6 +69,7 @@ const SetPassword = ({
           borderRadius: "12px",
         }}
         disabled={input["password"] !== input["confirmPassword"]}
+        loading={loading}
         onClick={handleCreatePassword}
       >
         Reset Password

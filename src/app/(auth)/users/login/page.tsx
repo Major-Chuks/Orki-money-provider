@@ -17,10 +17,12 @@ import {
   validateInput,
 } from "@/components/CustomInput/CustomInput.script";
 import { useEffect, useState } from "react";
+import backend from "@/services/apis";
 
 const Login = () => {
   const router = useRouter();
   const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorState>({
     email: false,
     password: false,
@@ -41,6 +43,15 @@ const Login = () => {
     }
   };
 
+  const handleLogin = async () => {
+    setLoading(true);
+    const response = await backend().post_login(input);
+    if (response) {
+      router.push(routes.widget);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     const isValid = validateInput({ input: input, setError: () => {} });
     if (isValid) {
@@ -49,6 +60,14 @@ const Login = () => {
       setDisabled(true);
     }
   }, [input]);
+
+  useEffect(() => {
+    const email = window.localStorage.getItem("email");
+    if (email) {
+      window.localStorage.removeItem("email");
+      setInput((i) => ({ ...i, email }));
+    }
+  }, []);
 
   return (
     <div className={classes.container}>
@@ -91,6 +110,8 @@ const Login = () => {
             borderRadius: "12px",
           }}
           disabled={disabled}
+          onClick={handleLogin}
+          loading={loading}
         >
           Login
         </CustomButton>

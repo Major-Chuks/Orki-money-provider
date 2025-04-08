@@ -10,7 +10,7 @@ import CustomPasswordInput from "@/components/CustomInput/CustomPasswordInput/Cu
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import CustomCheckbox from "@/components/CustomInput/CustomCheckbox/CustomCheckbox";
 import { openInNewTab } from "@/services/utils";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { routes } from "@/services/routes";
 import userIcon from "@/assets/auth/user-icon.svg";
 import emailIcon from "@/assets/auth/email-icon.svg";
@@ -25,6 +25,7 @@ import {
   validateInput,
 } from "@/components/CustomInput/CustomInput.script";
 import VerifyAccount from "./VerifyAccount";
+import backend from "@/services/apis";
 
 const roles = [
   { id: "developer", name: "Developer" },
@@ -38,18 +39,18 @@ const SignUp = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [error, setError] = useState<ErrorState>({
-    firstName: false,
-    lastName: false,
+    firstname: false,
+    lastname: false,
     email: false,
     password: false,
     confirmPassword: false,
     role: false,
   });
   const [verifyAccount, setVerifyAccount] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -75,6 +76,16 @@ const SignUp = () => {
     }
   };
 
+  const handleCreateAccount = async () => {
+    const { confirmPassword, ...payload } = input;
+    setLoading(true);
+    const response = await backend().post_create_account(payload);
+    if (response) {
+      setVerifyAccount(true);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     const isValid = validateInput({ input: input, setError: () => {} });
     if (isValid && isChecked) {
@@ -84,7 +95,7 @@ const SignUp = () => {
     }
   }, [input, isChecked]);
 
-  if (verifyAccount) return <VerifyAccount />;
+  if (verifyAccount) return <VerifyAccount email={input.email} />;
 
   return (
     <div className={classes.container}>
@@ -105,7 +116,7 @@ const SignUp = () => {
       <div className={classes.inputWrapper}>
         <div className={classes.group}>
           <CustomTextInput
-            id="firstName"
+            id="firstname"
             leftIcon={userIcon}
             label="First Name"
             placeholder="First Name"
@@ -114,7 +125,7 @@ const SignUp = () => {
             error={error}
           />
           <CustomTextInput
-            id="lastName"
+            id="lastname"
             leftIcon={userIcon}
             label="Last Name"
             placeholder="Last Name"
@@ -191,8 +202,9 @@ const SignUp = () => {
           padding: "16px 8px",
           borderRadius: "12px",
         }}
-        onClick={() => setVerifyAccount(true)}
+        onClick={handleCreateAccount}
         disabled={disabled}
+        loading={loading}
       >
         Create account
       </CustomButton>

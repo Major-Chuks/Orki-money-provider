@@ -23,6 +23,13 @@ enum Steps {
   PASSWORD_RESET_CONFIRMATION,
 }
 
+export type InputState = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  otp: string;
+};
+
 const NewPassword = () => {
   const router = useRouter();
   const [error, setError] = useState<ErrorState>({
@@ -34,6 +41,7 @@ const NewPassword = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    otp: "",
   });
 
   const [step, setStep] = useState<Steps>(Steps.INPUT_EMAIL);
@@ -83,7 +91,11 @@ const NewPassword = () => {
       {step === Steps.VERIFY_EMAIL && (
         <VerifyEmail
           classes={classes}
-          onSubmit={() => setStep(Steps.SET_NEW_PASSWORD)}
+          input={input}
+          onSubmit={(otp) => {
+            setStep(Steps.SET_NEW_PASSWORD);
+            setInput((i) => ({ ...i, otp }));
+          }}
         />
       )}
 

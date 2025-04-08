@@ -13,3 +13,19 @@ export type post_sell_quote_type = {
   payment_method: string;
   crypto_amount: string;
 };
+
+export enum Role {
+  developer,
+  executive,
+  marketing,
+  product,
+  operations,
+}
+
+export type post_create_account = {
+  email: string;
+  firstname: string;
+  lastname: string;
+  role: string;
+  password: string;
+};

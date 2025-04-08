@@ -7,43 +7,41 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { routes } from "@/services/routes";
 import logo from "@/assets/logo-3.svg";
+import backend from "@/services/apis";
 
 const initialCounter = 59;
 
-const VerifyAccount = () => {
-  const [code, setCode] = useState("");
+const VerifyAccount = ({ email }: { email: string }) => {
+  const [otp, setCode] = useState("");
   const [counter, setCounter] = useState(initialCounter);
   const [resendLoading, setResendLoading] = useState(false);
   const [validateLoading, setValidateLoading] = useState(false);
 
   const router = useRouter();
 
-  // const handleResendToken = async () => {
-  // // check for valid email address
+  const handleResendToken = async () => {
+    setResendLoading(true);
+    const response = await backend().post_resend_verification_otp({
+      email,
+    });
+    if (response) {
+      setCounter(initialCounter);
+    }
+    setResendLoading(false);
+  };
 
-  //   setResendLoading(true);
-  //   const response = await backend().post_requestPasswordReset({
-  //     email: user-email,
-  //   });
-  //   if (response) {
-  //     dispatch(
-  //       setNotification({
-  //         type: "success",
-  //         message: response.data.message || `Email sent to ${user-email}`,
-  //       })
-  //     );
-  //   }
-  //   setResendLoading(false);
-
-  //   setCounter(initialCounter);
-  // };
-
-  // const handleValidate = async () => {
-  //   setValidateLoading(true);
-  //   const response = await backend().get_verifyResetToken({ token: code });
-  // // take the user to the next section to create a new password
-  //   setValidateLoading(false);
-  // };
+  const handleValidate = async () => {
+    setValidateLoading(true);
+    const response = await backend().post_verify_email({
+      email,
+      otp,
+    });
+    if (response) {
+      window.localStorage.setItem("email", email);
+      router.push(routes.login);
+    }
+    setValidateLoading(false);
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -60,10 +58,6 @@ const VerifyAccount = () => {
     return () => clearInterval(intervalId);
   }, [counter]);
 
-  useEffect(() => {
-    // dispatch(resetNotification());
-  }, [code]);
-
   return (
     <div className={classes.container}>
       <div
@@ -77,13 +71,12 @@ const VerifyAccount = () => {
 
       <div className={classes.main}>
         <div className={classes.description}>
-          We sent a verification code to {"darshan@gmail.com."} Please enter the
-          code below.
+          We sent a verification code to {email} Please enter the code below.
         </div>
 
         <CustomOTPInput
           style={{ marginBottom: "24px", marginTop: "32px" }}
-          onChange={(code) => setCode(code)}
+          onChange={(otp) => setCode(otp)}
           error={false} // handle notification
         />
 
@@ -93,18 +86,13 @@ const VerifyAccount = () => {
           </div>
         )}
 
-        {code.length !== 6 && (
+        {otp.length !== 6 && (
           <div className={classes.note}>
             Didn’t receive a code?{" "}
             {counter ? (
               <span className={classes.counter}>{formatCounter(counter)}</span>
             ) : (
-              <span
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  // handleResendToken();
-                }}
-              >
+              <span style={{ cursor: "pointer" }} onClick={handleResendToken}>
                 {resendLoading ? "..." : "Send new code"}
               </span>
             )}
@@ -118,10 +106,8 @@ const VerifyAccount = () => {
             borderRadius: "12px",
             marginTop: "32px",
           }}
-          disabled={code.length !== 6}
-          onClick={() => {
-            // handleValidate();
-          }}
+          disabled={otp.length !== 6}
+          onClick={handleValidate}
           loading={validateLoading}
         >
           Verify

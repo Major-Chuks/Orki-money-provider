@@ -35,11 +35,20 @@ const CustomButton = ({
       } ${neutral && classes.neutral}`}
     >
       {loading ? (
-        <Image className={classes.loadingIcon} src={loadingIcon} alt="" />
+        <>
+          <div />
+          <Image
+            style={{ alignSelf: "center" }}
+            className={classes.loadingIcon}
+            src={loadingIcon}
+            alt=""
+          />
+          <div />
+        </>
       ) : (
         <>
           {leftIcon ? <Image src={leftIcon} alt="" /> : <div />}
-          <div>{children}</div>
+          <div className={classes.text}>{children}</div>
           {rightIcon ? <Image src={rightIcon} alt="" /> : <div />}
         </>
       )}

@@ -3,6 +3,9 @@ import CustomEmailInput from "@/components/CustomInput/CustomEmailInput/CustomEm
 import emailIcon from "@/assets/auth/email-icon.svg";
 import { ErrorState } from "@/components/CustomInput/CustomInput.script";
 import { isValidEmail } from "@/services/utils";
+import backend from "@/services/apis";
+import { InputState } from "./new/page";
+import { useState } from "react";
 
 const InputEmail = ({
   error,
@@ -12,14 +15,22 @@ const InputEmail = ({
   onSubmit,
 }: {
   error: ErrorState;
-  input: Record<string, string>;
+  input: InputState;
   classes: Record<string, string>;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onSubmit: () => void;
 }) => {
-  const handleReset = () => {
-    // TODO: Trigger an action to send a reset token to user email
-    onSubmit();
+  const [loading, setLoading] = useState(false);
+
+  const handleReset = async () => {
+    setLoading(true);
+    const response = await backend().post_reset_password_otp({
+      email: input.email,
+    });
+    if (response) {
+      onSubmit();
+    }
+    setLoading(false);
   };
 
   return (
@@ -44,6 +55,7 @@ const InputEmail = ({
         }}
         disabled={!isValidEmail(input["email"])}
         onClick={handleReset}
+        loading={loading}
       >
         Reset Password
       </CustomButton>

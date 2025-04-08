@@ -2,50 +2,34 @@ import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import { useEffect, useState } from "react";
 import { formatCounter } from "@/services/utils";
 import CustomOTPInput from "@/components/CustomInput/CustomOTPInput/CustomOTPInput";
-import { useSearchParams } from "next/navigation";
+import { InputState } from "./new/page";
+import backend from "@/services/apis";
 
 const initialCounter = 59;
 
 const VerifyEmail = ({
   classes,
+  input: { email },
   onSubmit,
 }: {
+  input: InputState;
   classes: Record<string, string>;
-  onSubmit: () => void;
+  onSubmit: (otp: string) => void;
 }) => {
-  const [code, setCode] = useState("");
+  const [otp, setOtp] = useState("");
   const [counter, setCounter] = useState(initialCounter);
   const [resendLoading, setResendLoading] = useState(false);
-  const [validateLoading, setValidateLoading] = useState(false);
 
-  const searchParams = useSearchParams();
-
-  // const handleResendToken = async () => {
-  // // check for valid email address
-
-  //   setResendLoading(true);
-  //   const response = await backend().post_requestPasswordReset({
-  //     email: user-email,
-  //   });
-  //   if (response) {
-  //     dispatch(
-  //       setNotification({
-  //         type: "success",
-  //         message: response.data.message || `Email sent to ${user-email}`,
-  //       })
-  //     );
-  //   }
-  //   setResendLoading(false);
-
-  //   setCounter(initialCounter);
-  // };
-
-  // const handleValidate = async () => {
-  //   setValidateLoading(true);
-  //   const response = await backend().get_verifyResetToken({ token: code });
-  // // take the user to the next section to create a new password
-  //   setValidateLoading(false);
-  // };
+  const handleResendToken = async () => {
+    setResendLoading(true);
+    const response = await backend().post_resend_verification_otp({
+      email,
+    });
+    if (response) {
+      setCounter(initialCounter);
+    }
+    setResendLoading(false);
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -62,20 +46,15 @@ const VerifyEmail = ({
     return () => clearInterval(intervalId);
   }, [counter]);
 
-  useEffect(() => {
-    // dispatch(resetNotification());
-  }, [code]);
-
   return (
     <div className={classes.main}>
       <div className={classes.description}>
-        We sent a verification code to {"darshan@gmail.com."} Please enter the
-        code below.
+        We sent a verification code to {email} Please enter the code below.
       </div>
 
       <CustomOTPInput
         style={{ marginBottom: "24px", marginTop: "32px" }}
-        onChange={(code) => setCode(code)}
+        onChange={(otp) => setOtp(otp)}
         error={false} // handle notification
       />
 
@@ -85,18 +64,13 @@ const VerifyEmail = ({
         </div>
       )}
 
-      {code.length !== 6 && (
+      {otp.length !== 6 && (
         <div className={classes.note}>
           Didn’t receive a code?{" "}
           {counter ? (
             <span className={classes.counter}>{formatCounter(counter)}</span>
           ) : (
-            <span
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                // handleResendToken();
-              }}
-            >
+            <span style={{ cursor: "pointer" }} onClick={handleResendToken}>
               {resendLoading ? "..." : "Send new code"}
             </span>
           )}
@@ -110,12 +84,8 @@ const VerifyEmail = ({
           borderRadius: "12px",
           marginTop: "32px",
         }}
-        disabled={code.length !== 6}
-        onClick={() => {
-          // handleValidate();
-          onSubmit();
-        }}
-        loading={validateLoading}
+        disabled={otp.length !== 6}
+        onClick={() => onSubmit(otp)}
       >
         Validate
       </CustomButton>
