@@ -13,26 +13,27 @@ import upi from "@/assets/gateway-upi.svg";
 import visa from "@/assets/gateway-visa.svg";
 import transfer from "@/assets/gateway-transfer.svg";
 import Image from "next/image";
-import globe from "@/assets/globe.png";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
 import Map from "../OnrampCoverage/OnrampCoverage";
+import useSpringProgress from "@/hooks/useSpring";
+import { useState } from "react";
 
 const data = [
   {
-    count: "95+",
+    count: 95,
     name: "Supported Fiat Currency",
   },
   {
-    count: "180+",
+    count: 180,
     name: "Supported Countries",
   },
   {
-    count: "200+",
+    count: 200,
     name: "Supported Cryptocurrencies",
   },
   {
-    count: "16+",
+    count: 16,
     name: "Local Payment Methods",
   },
 ];
@@ -64,12 +65,7 @@ const Orchestrations = () => {
 
           <div className={classes.listContainer}>
             {data.map(({ count, name }, idx) => (
-              <SlideUp key={idx}>
-                <div className={classes.box}>
-                  <div className={classes.count}>{count}</div>
-                  <div className={classes.name}>{name}</div>
-                </div>
-              </SlideUp>
+              <StatCard key={idx} count={count} name={name} />
             ))}
           </div>
         </div>
@@ -103,3 +99,17 @@ const Orchestrations = () => {
 };
 
 export default Orchestrations;
+
+const StatCard = ({ count, name }: { count: number; name: string }) => {
+  const [intersecting, setIntersecting] = useState(false);
+  const progress = useSpringProgress(1, count, intersecting);
+
+  return (
+    <SlideUp onIntersecting={setIntersecting}>
+      <div className={classes.box}>
+        <div className={classes.count}>{Math.round(progress)}+</div>
+        <div className={classes.name}>{name}</div>
+      </div>
+    </SlideUp>
+  );
+};

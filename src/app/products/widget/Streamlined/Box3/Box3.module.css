@@ -14,6 +14,7 @@
 
 .title {
   width: 100%;
+  max-width: 276px;
   color: #fff;
   font-family: "Space Grotesk";
   font-size: 24px;
@@ -30,17 +31,24 @@
 
 .logoWrapper {
   width: max-content;
-  max-width: 80px;
   height: 48px;
   padding: 0px 17px;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  gap: 8px;
   border-radius: 4px;
   border: 1px solid #2d29d7;
   background: #fff;
   transition: transform 1.65s;
+  white-space: nowrap;
+  /* text */
+  color: #111;
+  font-family: "Space Grotesk";
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px; /* 136.842% */
 }
 
 .sectionWrapper {
@@ -86,21 +94,21 @@
 
 @keyframes left-slide {
   from {
-    transform: translateX(-100%);
+    transform: translateX(100%);
   }
 
   to {
-    transform: translateX(0);
+    transform: translateX(-20%);
   }
 }
 
 @keyframes right-slide {
   from {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
 
   to {
-    transform: translateX(0);
+    transform: translateX(-27%);
   }
 }
 

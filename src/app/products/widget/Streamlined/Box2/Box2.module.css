@@ -1,0 +1,136 @@
+.container {
+  width: 372px;
+  height: 372px;
+  border-radius: 50%;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 90px;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+.title {
+  width: 100%;
+  color: #fff;
+  font-family: "Space Grotesk";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: -0.2px;
+  text-align: center;
+}
+
+.title span {
+  color: #aeacff;
+}
+
+.bannerImageContainer {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 1250ms;
+}
+
+.bannerImageContainer img {
+  width: 100%;
+  height: auto;
+}
+
+.bannerImageContainer img:first-child {
+  width: 202px;
+  height: 314.783px;
+  flex-shrink: 0;
+  object-fit: contain;
+  position: absolute;
+  opacity: 0;
+}
+
+.bannerImageContainer.trigger img:first-child {
+  animation: pop-left 6s forwards cubic-bezier(0.8, 0.08, 0.07, 1.36);
+}
+
+.bannerImageContainer img:nth-child(2) {
+  width: 202px;
+  height: 314.783px;
+  flex-shrink: 0;
+  object-fit: contain;
+  z-index: 1;
+  transform: translateY(0);
+  opacity: 0;
+}
+
+.bannerImageContainer.trigger img:nth-child(2) {
+  animation: pop-up 3s forwards cubic-bezier(0.8, 0.08, 0.07, 1.36);
+}
+
+.bannerImageContainer img:nth-child(3) {
+  width: 202px;
+  height: 314.783px;
+  flex-shrink: 0;
+  object-fit: contain;
+  position: absolute;
+  opacity: 0;
+}
+
+.bannerImageContainer.trigger img:nth-child(3) {
+  animation: pop-right 6s forwards cubic-bezier(0.8, 0.08, 0.07, 1.36);
+}
+
+.container:hover .bannerImageContainer {
+  transform: translateY(-3%);
+}
+
+@keyframes pop-up {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pop-left {
+  from {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-25%);
+  }
+}
+
+@keyframes pop-right {
+  from {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(25%);
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .container {
+    width: 320px;
+    height: 320px;
+    padding-top: 60px;
+  }
+
+  .title {
+    max-width: 220px;
+  }
+}

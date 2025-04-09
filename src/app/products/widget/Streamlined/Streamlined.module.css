@@ -56,9 +56,11 @@
 .listContainer {
   width: 100%;
   margin: 0 auto;
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 38px;
-  grid-template-columns: repeat(3, 1fr);
 }
 
 .box {
@@ -113,9 +115,5 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 20px; /* 142.857% */
-  }
-
-  .listContainer {
-    grid-template-columns: auto;
   }
 }
