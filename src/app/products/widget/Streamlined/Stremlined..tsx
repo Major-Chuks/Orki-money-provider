@@ -1,8 +1,4 @@
 import classes from "./Streamlined.module.css";
-import icon1 from "@/assets/streamlined-1.png";
-import icon2 from "@/assets/streamlined-2.png";
-import icon3 from "@/assets/streamlined-3.png";
-import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
 import Box1 from "./Box1/Box1";
@@ -12,7 +8,9 @@ import Box3 from "./Box3/Box3";
 import Box2 from "./Box2/Box2";
 
 const Streamlined = () => {
-  const [intersecting, setIntersecting] = useState(false);
+  const [isBox1, setIsBox1] = useState(false);
+  const [isBox2, setIsBox2] = useState(false);
+  const [isBox3, setIsBox3] = useState(false);
 
   return (
     <div className={classes.wrapper}>
@@ -42,19 +40,17 @@ const Streamlined = () => {
             </div>
           </div>
 
-          <IntersectionObserver onIntersect={setIntersecting}>
-            <div className={classes.listContainer}>
-              <SlideUp>
-                <Box1 trigger={intersecting} />
-              </SlideUp>
-              <SlideUp>
-                <Box2 trigger={intersecting} />
-              </SlideUp>
-              <SlideUp>
-                <Box3 trigger={intersecting} />
-              </SlideUp>
-            </div>
-          </IntersectionObserver>
+          <div className={classes.listContainer}>
+            <IntersectionObserver onIntersecting={setIsBox1}>
+              <Box1 trigger={isBox1} />
+            </IntersectionObserver>
+            <IntersectionObserver onIntersecting={setIsBox2}>
+              <Box2 trigger={isBox2} />
+            </IntersectionObserver>
+            <IntersectionObserver onIntersecting={setIsBox3}>
+              <Box3 trigger={isBox3} />
+            </IntersectionObserver>
+          </div>
         </div>
       </Responsive>
     </div>

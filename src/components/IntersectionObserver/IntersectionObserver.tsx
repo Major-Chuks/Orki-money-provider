@@ -6,12 +6,12 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 const IntersectionObserver = ({
   children,
   threshold,
-  onIntersect,
+  onIntersecting,
   width = "auto",
 }: {
   children: React.ReactNode;
   threshold?: number;
-  onIntersect?: (intersecting: boolean) => void;
+  onIntersecting?: (intersecting: boolean) => void;
   width?: string;
 }) => {
   const { width: _width } = useMediaQuery();
@@ -21,8 +21,8 @@ const IntersectionObserver = ({
   });
 
   useEffect(() => {
-    onIntersect && onIntersect(intersecting);
-  }, [intersecting, onIntersect]);
+    onIntersecting && onIntersecting(intersecting);
+  }, [intersecting, onIntersecting]);
 
   return (
     <div

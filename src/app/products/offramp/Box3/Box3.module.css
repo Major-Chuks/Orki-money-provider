@@ -2,18 +2,19 @@
   width: 372px;
   height: 372px;
   border-radius: 50%;
-  background: #000;
+  background: #aeacff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding-top: 90px;
-  padding-bottom: 0;
+  padding-top: 60px;
+  padding-bottom: 40px;
   overflow: hidden;
 }
 
 .title {
   width: 100%;
+  max-width: 292px;
   color: #fff;
   font-family: "Space Grotesk";
   font-size: 24px;
@@ -25,7 +26,7 @@
 }
 
 .title span {
-  color: #aeacff;
+  color: #2d29d7;
 }
 
 .bannerImageContainer {
@@ -41,62 +42,29 @@
 .bannerImageContainer img {
   width: 100%;
   height: auto;
+  transition: all 650ms;
 }
 
-.bannerImageContainer img:first-child {
-  width: 202px;
-  height: 314.783px;
+.bannerImageContainer img:first-child,
+.bannerImageContainer img:nth-child(2) {
+  width: 185px;
   flex-shrink: 0;
   object-fit: contain;
   position: absolute;
+  bottom: -44px;
   opacity: 0;
 }
 
 .bannerImageContainer.trigger img:first-child {
-  animation: pop-left 3.5s forwards cubic-bezier(0.8, 0.08, 0.07, 1.36);
-}
-
-.bannerImageContainer img:nth-child(2) {
-  width: 202px;
-  height: 314.783px;
-  flex-shrink: 0;
-  object-fit: contain;
-  z-index: 1;
-  transform: translateY(0);
-  opacity: 0;
+  animation: pop-left 1.65s forwards cubic-bezier(0.19, 0.07, 0.05, 1);
 }
 
 .bannerImageContainer.trigger img:nth-child(2) {
-  animation: pop-up 1.65s forwards cubic-bezier(0.8, 0.08, 0.07, 1.36);
+  animation: pop-right 1.65s forwards cubic-bezier(0.19, 0.07, 0.05, 1);
 }
 
-.bannerImageContainer img:nth-child(3) {
-  width: 202px;
-  height: 314.783px;
-  flex-shrink: 0;
-  object-fit: contain;
-  position: absolute;
-  opacity: 0;
-}
-
-.bannerImageContainer.trigger img:nth-child(3) {
-  animation: pop-right 3.5s forwards cubic-bezier(0.8, 0.08, 0.07, 1.36);
-}
-
-.container:hover .bannerImageContainer {
-  transform: translateY(-3%);
-}
-
-@keyframes pop-up {
-  from {
-    transform: translateY(50%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.container:hover .bannerImageContainer img {
+  bottom: -68px;
 }
 
 @keyframes pop-left {
@@ -107,7 +75,7 @@
 
   to {
     opacity: 1;
-    transform: translateX(-25%);
+    transform: translateX(-30%);
   }
 }
 
@@ -119,7 +87,7 @@
 
   to {
     opacity: 1;
-    transform: translateX(25%);
+    transform: translateX(30%);
   }
 }
 
@@ -130,7 +98,8 @@
     padding-top: 60px;
   }
 
-  .title {
-    max-width: 220px;
+  .bannerImageContainer img:first-child,
+  .bannerImageContainer img:nth-child(2) {
+    width: 158px;
   }
 }

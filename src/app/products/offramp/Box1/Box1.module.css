@@ -1,0 +1,128 @@
+.container {
+  width: 372px;
+  height: 372px;
+  border-radius: 50%;
+  background: #aeacff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 90px;
+  padding-bottom: 60px;
+  overflow: hidden;
+}
+
+.title {
+  width: 100%;
+  color: #fff;
+  font-family: "Space Grotesk";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: -0.2px;
+  text-align: center;
+}
+
+.title span {
+  color: #2d29d7;
+}
+
+.logoWrapper {
+  width: max-content;
+  height: 42px;
+  padding: 0px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  border: 1px solid #2d29d7;
+  background: #fff;
+  transition: transform 1.65s;
+  white-space: nowrap;
+  /* text */
+  color: #111;
+  font-family: "Space Grotesk";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px; /* 136.842% */
+}
+
+.sectionWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.section:first-child {
+  transform: translateX(-100%);
+}
+
+.section:nth-child(2) {
+  transform: translateX(100%);
+}
+
+.sectionWrapper.trigger .section:first-child {
+  animation: left-slide 1.65s forwards cubic-bezier(0.19, 0.07, 0.05, 1);
+}
+
+.sectionWrapper.trigger .section:nth-child(2) {
+  animation: right-slide 1.65s forwards cubic-bezier(0.19, 0.07, 0.05, 1);
+}
+
+.container:hover .section:first-child .logoWrapper {
+  transform: translateX(30%);
+}
+
+.container:hover .section:nth-child(2) .logoWrapper {
+  transform: translateX(-30%);
+}
+
+@keyframes left-slide {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(-15%);
+  }
+}
+
+@keyframes right-slide {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .container {
+    width: 320px;
+    height: 320px;
+    padding-top: 60px;
+  }
+
+  .title {
+    max-width: 220px;
+  }
+
+  .sectionWrapper {
+    gap: 12px;
+  }
+}

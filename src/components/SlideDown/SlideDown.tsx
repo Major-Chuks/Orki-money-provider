@@ -13,7 +13,10 @@ const SlideDown = ({
 
   return (
     <React.Fragment>
-      <IntersectionObserver threshold={threshold} onIntersect={setIntersecting}>
+      <IntersectionObserver
+        threshold={threshold}
+        onIntersecting={setIntersecting}
+      >
         <div
           className={`${clases.container} ${
             intersecting && clases.intersecting

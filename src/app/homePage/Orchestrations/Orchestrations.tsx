@@ -18,6 +18,7 @@ import SlideUp from "@/components/SlideUp/SlideUp";
 import Map from "../OnrampCoverage/OnrampCoverage";
 import useSpringProgress from "@/hooks/useSpring";
 import { useState } from "react";
+import IntersectionObserver from "@/components/IntersectionObserver/IntersectionObserver";
 
 const data = [
   {
@@ -105,11 +106,11 @@ const StatCard = ({ count, name }: { count: number; name: string }) => {
   const progress = useSpringProgress(1, count, intersecting);
 
   return (
-    <SlideUp onIntersecting={setIntersecting}>
+    <IntersectionObserver onIntersecting={setIntersecting}>
       <div className={classes.box}>
         <div className={classes.count}>{Math.round(progress)}+</div>
         <div className={classes.name}>{name}</div>
       </div>
-    </SlideUp>
+    </IntersectionObserver>
   );
 };

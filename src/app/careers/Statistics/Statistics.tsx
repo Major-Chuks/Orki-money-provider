@@ -1,8 +1,8 @@
 import Responsive from "@/components/Responsive/Responsive";
 import classes from "./Statistics.module.css";
-import SlideUp from "@/components/SlideUp/SlideUp";
 import { useState } from "react";
 import useSpringProgress from "@/hooks/useSpring";
+import IntersectionObserver from "@/components/IntersectionObserver/IntersectionObserver";
 
 const data = [
   {
@@ -44,11 +44,11 @@ const StatCard = ({ count, name }: { count: number; name: string }) => {
   const progress = useSpringProgress(1, count, intersecting);
 
   return (
-    <SlideUp onIntersecting={setIntersecting}>
+    <IntersectionObserver onIntersecting={setIntersecting}>
       <div className={classes.box}>
         <div className={classes.count}>{Math.round(progress)}+</div>
         <div className={classes.name}>{name}</div>
       </div>
-    </SlideUp>
+    </IntersectionObserver>
   );
 };

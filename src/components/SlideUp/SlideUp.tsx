@@ -28,7 +28,7 @@ const SlideUp = ({
       <IntersectionObserver
         width={width}
         threshold={threshold}
-        onIntersect={setIntersecting}
+        onIntersecting={setIntersecting}
       >
         <div
           className={`${clases.container} ${
