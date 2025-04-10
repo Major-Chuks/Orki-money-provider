@@ -6,7 +6,7 @@ import {
 } from "./interface";
 
 export const BACKEND_API = axios.create({
-  baseURL: "https://3x26dlwune.execute-api.af-south-1.amazonaws.com/api/v1",
+  baseURL: "https://api.money.orki.io/api/v1",
 });
 
 export const AUTH_API = axios.create({
