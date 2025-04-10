@@ -36,10 +36,10 @@ const Transactions = () => {
             <IntersectionObserver onIntersecting={setIsBox1}>
               <Box1 trigger={isBox1} />
             </IntersectionObserver>
-            <IntersectionObserver onIntersecting={setIsBox3}>
+            <IntersectionObserver onIntersecting={setIsBox2}>
               <Box2 trigger={isBox2} />
             </IntersectionObserver>
-            <IntersectionObserver onIntersecting={setIsBox2}>
+            <IntersectionObserver onIntersecting={setIsBox3}>
               <Box3 trigger={isBox3} />
             </IntersectionObserver>
           </div>
