@@ -10,7 +10,9 @@ body {
 }
 
 /* Apply to the entire document */
-html {
+html,
+html * {
+  scrollbar-color: #cccccc #f1f1f1;
   scrollbar-width: thin; /* Options: auto | thin | none */
 }
 

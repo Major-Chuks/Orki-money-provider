@@ -1,0 +1,164 @@
+.container {
+  width: 550.447px;
+  height: 384.664px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.container * {
+  /* border: 1px solid red; */
+}
+
+.ring {
+  width: 182px;
+  height: 182px;
+  border-width: 14px;
+  border-color: #5b29ec;
+  border-style: solid;
+  border-radius: 50%;
+  position: relative;
+}
+
+.shade1,
+.shade2,
+.btcIcon,
+.euroIcon,
+.image1,
+.image2,
+.image3 {
+  position: absolute;
+}
+
+.btcIcon img,
+.euroIcon img,
+.image1 img,
+.image2 img,
+.image3 img {
+  width: 100%;
+  height: auto;
+}
+
+.image1,
+.image2 {
+  width: 148.838px;
+  height: 148.838px;
+  transform: rotate(-11.907deg);
+  z-index: 9;
+}
+
+.btcIcon,
+.euroIcon {
+  width: 63.085px;
+  height: 63.085px;
+  transform: rotate(-16.907deg);
+  z-index: 99;
+}
+
+.image1 {
+  animation: orbit1 20s linear infinite;
+  bottom: 0px;
+  right: 0;
+}
+
+.image2 {
+  animation: orbit2 20s linear infinite;
+  top: 0px;
+  left: 0;
+}
+
+.image3 {
+  width: 444px;
+  height: 444px;
+  z-index: 5;
+  animation: rotate 12s forwards infinite linear;
+  border-radius: 50%;
+}
+
+.btcIcon {
+  left: 0;
+  top: 0;
+  animation: rotate 10s forwards infinite linear,
+    reverse-opacity 2.5s forwards infinite alternate;
+}
+
+.euroIcon {
+  right: 0;
+  bottom: 0;
+  animation: rotate 10s forwards infinite linear,
+    opacity 2.5s forwards infinite alternate;
+}
+
+.shade1,
+.shade2 {
+  width: 235.084px;
+  height: 235.084px;
+  border-radius: 50%;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(46, 113, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: 0;
+  transform: translateY(-25%);
+}
+
+.shade1 {
+  left: 0;
+  transform: translateY(-25%);
+}
+
+.shade2 {
+  right: 0;
+  transform: translateY(25%);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes reverse-opacity {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes orbit1 {
+  0% {
+    transform: rotate(0deg) translateX(-65%) translateY(-65%) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(-65%) translateY(-65%) rotate(-360deg);
+  }
+}
+
+@keyframes orbit2 {
+  0% {
+    transform: rotate(0deg) translateX(65%) translateY(65%) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(65%) translateY(65%) rotate(-360deg);
+  }
+}

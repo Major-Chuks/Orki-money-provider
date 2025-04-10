@@ -8,6 +8,21 @@
   margin-bottom: 92px;
 }
 
+.shade {
+  border-radius: 813.896px;
+  opacity: 0.75;
+  background: linear-gradient(
+    245deg,
+    rgba(45, 41, 215, 0.12) 27.67%,
+    rgba(174, 172, 255, 0.13) 86.62%
+  );
+  filter: blur(100px);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+}
+
 .image {
   width: 100%;
   max-width: 483px;

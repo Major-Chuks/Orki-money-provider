@@ -6,6 +6,7 @@ import offRamp from "@/assets/off-ramp.png";
 import Tag from "@/components/Tag/Tag";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import SlideUp from "@/components/SlideUp/SlideUp";
+import AnimatedBox from "./Box/AnimatedBox";
 
 const data = [
   "Simplified Integration",
@@ -17,9 +18,11 @@ const Hero = () => {
   return (
     <Responsive>
       <div className={classes.container}>
+        {/* <div className={classes.shade}></div> */}
+
         <div className={classes.image}>
           <SlideUp>
-            <Image src={offRamp} alt="" />
+            <AnimatedBox />
           </SlideUp>
         </div>
         <div className={classes.details_button}>
