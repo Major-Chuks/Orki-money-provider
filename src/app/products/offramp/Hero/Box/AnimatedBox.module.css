@@ -6,10 +6,8 @@
   align-items: center;
   justify-content: center;
   position: relative;
-}
-
-.container * {
-  /* border: 1px solid red; */
+  animation: visibility 3s 200ms forwards cubic-bezier(0.28, 0.07, 0, 0.97);
+  visibility: hidden;
 }
 
 .ring {
@@ -103,6 +101,7 @@
   );
   z-index: 0;
   transform: translateY(-25%);
+  opacity: 0.5;
 }
 
 .shade1 {
@@ -145,6 +144,21 @@
   }
 }
 
+@keyframes visibility {
+  0%,
+  20% {
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  100% {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes orbit1 {
   0% {
     transform: rotate(0deg) translateX(-65%) translateY(-65%) rotate(0deg);
@@ -160,5 +174,22 @@
   }
   100% {
     transform: rotate(360deg) translateX(65%) translateY(65%) rotate(-360deg);
+  }
+}
+
+@media screen and (max-width: 540px) {
+  @keyframes visibility {
+    0%,
+    20% {
+      visibility: hidden;
+      opacity: 0;
+      transform: scale(0.25);
+    }
+
+    100% {
+      visibility: visible;
+      opacity: 1;
+      transform: scale(0.7);
+    }
   }
 }
