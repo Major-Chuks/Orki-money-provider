@@ -9,27 +9,9 @@
   overflow: hidden;
 }
 
-.shade {
-  width: 813.896px;
-  height: 813.896px;
-  transform: rotate(-90.24deg);
-  flex-shrink: 0;
-  border-radius: 813.896px;
-  opacity: 0.75;
-  background: linear-gradient(
-    245deg,
-    rgba(45, 41, 215, 0.12) 27.67%,
-    rgba(174, 172, 255, 0.13) 86.62%
-  );
-  filter: blur(100px);
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 99;
-}
-
 .image {
   width: 100%;
+  flex: 40%;
   padding-top: 68px;
   display: flex;
   align-items: center;
@@ -44,6 +26,7 @@
 .details_button {
   width: 100%;
   max-width: 651px;
+  flex: 60%;
 }
 
 .heading {
@@ -123,6 +106,7 @@
 
   .image {
     padding-top: 0;
+    max-width: 100%;
   }
 
   .heading {

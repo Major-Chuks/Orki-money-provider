@@ -18,8 +18,6 @@ const Hero = () => {
   return (
     <Responsive>
       <div className={classes.container}>
-        <div className={classes.shade}></div>
-
         <div className={classes.image}>
           <SlideUp>
             <AnimatedBox />

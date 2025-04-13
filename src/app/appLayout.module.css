@@ -4,4 +4,25 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.shade {
+  width: 813.896px;
+  height: 813.896px;
+  transform: rotate(-90.24deg);
+  flex-shrink: 0;
+  border-radius: 813.896px;
+  opacity: 0.75;
+  background: linear-gradient(
+    245deg,
+    rgba(45, 41, 215, 0.12) 27.67%,
+    rgba(174, 172, 255, 0.13) 86.62%
+  );
+  filter: blur(100px);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
 }

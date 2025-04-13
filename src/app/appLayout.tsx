@@ -27,7 +27,10 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Navbar />
-      <div className={classes.main}>{children}</div>
+      <div className={classes.main}>
+        <div className={classes.shade}></div>
+        {children}
+      </div>
       <Footer />
     </QueryClientProvider>
   );
