@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Glowing Grid Dots</title>
+    <style>
+      body {
+        margin: 0;
+        background: #ede9fe;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        position: relative;
+        width: 360px;
+        height: 360px;
+      }
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+      }
+
+      .dot {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background-color: #5b4bff;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 0 rgba(91, 75, 255, 0); /* initial glow off */
+        animation-name: glow;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+      }
+
+      @keyframes glow {
+        0%,
+        100% {
+          box-shadow: 0 0 0 rgba(91, 75, 255, 0);
+          opacity: 0.6;
+        }
+        50% {
+          box-shadow: 0 0 12px rgba(91, 75, 255, 0.8);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <canvas id="gridCanvas" width="360" height="360"></canvas>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("gridCanvas");
+      const ctx = canvas.getContext("2d");
+      const container = document.querySelector(".container");
+
+      const cols = 12;
+      const rows = 12;
+      const spacingX = canvas.width / (cols - 1);
+      const spacingY = canvas.height / (rows - 1);
+
+      // Draw grid lines
+      ctx.strokeStyle = "#5b4bff22";
+      ctx.lineWidth = 1;
+
+      for (let x = 0; x < cols; x++) {
+        ctx.beginPath();
+        ctx.moveTo(x * spacingX, 0);
+        ctx.lineTo(x * spacingX, canvas.height);
+        ctx.stroke();
+      }
+
+      for (let y = 0; y < rows; y++) {
+        ctx.beginPath();
+        ctx.moveTo(0, y * spacingY);
+        ctx.lineTo(canvas.width, y * spacingY);
+        ctx.stroke();
+      }
+
+      // Create dots at intersections with random glow timing
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const dot = document.createElement("div");
+          dot.className = "dot";
+          dot.style.left = `${x * spacingX}px`;
+          dot.style.top = `${y * spacingY}px`;
+
+          // Random animation duration and delay
+          const duration = (Math.random() * 2 + 1).toFixed(2); // 1s–3s
+          const delay = (Math.random() * 4).toFixed(2); // 0s–4s
+
+          dot.style.animationDuration = `${duration}s`;
+          dot.style.animationDelay = `${delay}s`;
+
+          container.appendChild(dot);
+        }
+      }
+    </script>
+  </body>
+</html>

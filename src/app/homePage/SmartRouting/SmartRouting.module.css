@@ -43,16 +43,75 @@
 
 .image {
   width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.image img {
+.routeImg {
   width: 100%;
-  height: auto;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  transform: scale(0.88);
+}
+
+.animatedBox {
+  position: absolute;
+}
+
+.coin1,
+.coin2 {
+  position: absolute;
+  width: 75.369px;
+  height: 80.666px;
+  flex-shrink: 0;
+}
+
+.coin1 {
+  left: 20px;
+  bottom: 20px;
+  animation: bounceSpinLeft 10s infinite linear;
+}
+
+.coin2 {
+  right: 20px;
+  top: 20px;
+  animation: bounceSpinRight 10s infinite linear;
+}
+
+@keyframes bounceSpinLeft {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(360deg);
+  }
+}
+
+@keyframes bounceSpinRight {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-360deg);
+  }
 }
 
 @media screen and (max-width: 1024px) {
   .container {
     margin-bottom: 88px;
+  }
+
+  .coin1,
+  .coin2 {
+    width: 45px;
+    height: 50px;
   }
 }
 
@@ -81,5 +140,19 @@
     font-weight: 400;
     line-height: 19px; /* 158.333% */
     padding: 0 16px;
+  }
+
+  .coin1,
+  .coin2 {
+    width: 35px;
+    height: 40px;
+  }
+
+  .coin1 {
+    bottom: 0;
+  }
+
+  .coin2 {
+    top: 10px;
   }
 }
