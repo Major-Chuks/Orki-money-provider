@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import classes from "./Widget.module.css";
 import menuIcon from "@/assets/widget/menu.svg";
 import Image from "next/image";
@@ -249,6 +249,16 @@ const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
     ],
     500
   ); // Adjust the debounce delay as needed
+
+  useEffect(() => {
+    if (provider) {
+      if (isBuyOrSell === "BUY") {
+        setCryptoAmount(String(provider.quote_amount));
+      } else {
+        setFiatAmount(String(provider.quote_amount));
+      }
+    }
+  }, [provider]);
 
   return (
     <React.Fragment>

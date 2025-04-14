@@ -30,7 +30,7 @@ import backend from "@/services/apis";
 const roles = [
   { id: "developer", name: "Developer" },
   { id: "product", name: "Product" },
-  { id: "executive", name: "Excecutive" },
+  { id: "executive", name: "Executive" },
   { id: "operations", name: "Operations" },
   { id: "marketing", name: "Marketing" },
 ];
