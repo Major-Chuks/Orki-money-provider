@@ -13,6 +13,7 @@
   flex-direction: column;
   margin-bottom: 84px;
   position: relative;
+  overflow: hidden;
 }
 
 .heading {
@@ -24,6 +25,12 @@
   gap: 24px;
   margin-bottom: 62px;
   padding: 0 32px;
+}
+
+.heading,
+.btnContainer {
+  position: relative;
+  z-index: 9;
 }
 
 .title {
@@ -50,6 +57,7 @@
 
 .coin {
   position: absolute;
+  z-index: 9;
 }
 
 .coin1 {
@@ -74,6 +82,11 @@
   bottom: 16px;
   right: 32px;
   animation: coin1 7000ms 300ms forwards infinite linear;
+}
+
+.animatedBox {
+  position: absolute;
+  right: 0;
 }
 
 @keyframes coin1 {
