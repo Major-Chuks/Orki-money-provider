@@ -72,6 +72,7 @@ const Header = () => {
               >
                 <Widget onLaunch={handleLaunch} />
               </div>
+              {/* Intended to integrate provider iframes */}
               <IframeWrapper
                 style={{ display: purchaseLink ? "block" : "none" }}
               >

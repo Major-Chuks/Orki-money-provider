@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./IntersectionObserver.module.css";
 import useIntersectionObserver from "../../hooks/useObserver";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -16,12 +16,18 @@ const IntersectionObserver = ({
 }) => {
   const { width: _width } = useMediaQuery();
   const [targetRef, intersecting] = useIntersectionObserver({
-    root: null, // Set to null to use the viewport as the root
-    threshold: _width > 1024 ? threshold || 0.4 : 0.2, // Trigger when 50% of the element is visible
+    root: null,
+    threshold: _width > 1024 ? threshold || 0.4 : 0.2,
   });
 
+  // This ref will help us run onIntersecting only once
+  const hasIntersectedRef = useRef(false);
+
   useEffect(() => {
-    onIntersecting && onIntersecting(intersecting);
+    if (intersecting && !hasIntersectedRef.current) {
+      hasIntersectedRef.current = true;
+      onIntersecting?.(true); // Only call when intersecting for the first time
+    }
   }, [intersecting, onIntersecting]);
 
   return (
