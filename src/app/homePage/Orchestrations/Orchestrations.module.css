@@ -10,6 +10,8 @@
   );
   margin-bottom: 150px;
   padding-top: 72px;
+  position: relative;
+  z-index: 99;
 }
 
 .wrapper {
