@@ -11,6 +11,8 @@ import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import SlideUp from "@/components/SlideUp/SlideUp";
 import GlowingDotGrid from "@/components/GlowingDotGrid/GlowingDotGrid";
 import useWidth from "@/hooks/useWidth";
+import { openInNewTab } from "@/services/utils";
+import { routes } from "@/services/routes";
 
 const ContactUs = ({
   title,
@@ -49,6 +51,7 @@ const ContactUs = ({
                 position: "relative",
                 zIndex: "9",
               }}
+              onClick={() => openInNewTab({ pathname: routes.contactUs })}
             >
               Contact Us
             </CustomButton>
