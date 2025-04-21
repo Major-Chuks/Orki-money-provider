@@ -5,6 +5,7 @@ import checkIcon from "@/assets/checkicon.svg";
 import starIcon from "@/assets/star.svg";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
+import Code from "./Code/Code";
 // import elipse from "@/assets/elipse.png"
 
 const data = [
@@ -44,7 +45,9 @@ const Integration = () => {
           <div className={classes.image}>
             <SlideUp>
               {/* <Image src={code} alt="" /> */}
-              <div className={classes.codeBox}></div>
+              <div className={classes.codeBox}>
+                <Code />
+              </div>
             </SlideUp>
           </div>
         </div>

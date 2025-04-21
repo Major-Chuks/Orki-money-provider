@@ -78,8 +78,13 @@
   background: #090628;
   width: 100%;
   max-width: 582px;
-  height: 485px;
+  /* height: 485px; */
   border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 1024px) {
@@ -132,6 +137,6 @@
   }
 
   .codeBox {
-    height: 285px;
+    /* height: 285px; */
   }
 }

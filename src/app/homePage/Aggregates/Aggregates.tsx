@@ -1,98 +1,54 @@
 import classes from "./Aggregates.module.css";
-import alchemypay from "@/assets/comp-alchemy.svg";
-import btcDirect from "@/assets/comp-btc-direct.svg";
-import conify from "@/assets/comp-conify.svg";
-import guardian from "@/assets/comp-guardian.svg";
-import itez from "@/assets/comp-itez.svg";
-import localRamp from "@/assets/comp-local-ramp.svg";
-import marcuryo from "@/assets/comp-marcuryo.svg";
-import moonpay from "@/assets/comp-moonpay.svg";
-import onrampMoney from "@/assets/comp-onramp-money.svg";
-import payfura from "@/assets/comp-payfura.svg";
-import sardine from "@/assets/comp-sardine.svg";
-import tapper from "@/assets/comp-tapper.svg";
-import transac from "@/assets/comp-transac.svg";
-import transfi from "@/assets/comp-transfi.svg";
-import utorg from "@/assets/comp-utorg.svg";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
+import lines from "@/assets/homepage/lines-aggregator.svg";
 
 const data = [
   {
-    icon: tapper,
-    name: "Topper",
-    isComingSoon: true,
-  },
-  {
-    icon: payfura,
-    name: "Payfura",
-    isComingSoon: true,
-  },
-  {
-    icon: btcDirect,
-    name: "BTC Direct",
-    isComingSoon: true,
-  },
-  {
-    icon: transfi,
-    name: "TransFi",
-    isComingSoon: true,
-  },
-  {
-    icon: localRamp,
-    name: "Local ramp",
-    isComingSoon: true,
-  },
-  {
-    icon: marcuryo,
-    name: "Mercuryo",
-    isComingSoon: true,
-  },
-  {
-    icon: alchemypay,
-    name: "Alchemy Pay",
-    isComingSoon: true,
-  },
-  {
-    icon: sardine,
-    name: "Sardine",
-    isComingSoon: true,
-  },
-  {
-    icon: itez,
-    name: "Itez",
-    isComingSoon: true,
-  },
-  {
-    icon: transac,
+    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/transak.svg",
     name: "Transak",
-    isComingSoon: true,
+    isComingSoon: false,
   },
   {
-    icon: conify,
-    name: "Coinify",
-    isComingSoon: true,
-  },
-  {
-    icon: moonpay,
+    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/moonpay.svg",
     name: "MoonPay",
     isComingSoon: true,
   },
   {
-    icon: utorg,
-    name: "Utorg",
-    isComingSoon: true,
+    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/stripe.svg",
+    name: "Stripe",
+    isComingSoon: false,
   },
   {
-    icon: onrampMoney,
-    name: "Onramp.Money",
-    isComingSoon: true,
+    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/wert.svg",
+    name: "Wert",
+    isComingSoon: false,
   },
   {
-    icon: guardian,
+    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/unlimit.svg",
+    name: "Unlimit",
+    isComingSoon: false,
+  },
+  {
+    icon: "",
+    name: "Fnbnk",
+    isComingSoon: false,
+  },
+  {
+    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/transfi.svg",
+    name: "Transfi",
+    isComingSoon: false,
+  },
+  {
+    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/yellowcard.svg",
+    name: "Yellowcard",
+    isComingSoon: false,
+  },
+  {
+    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/guardarian.svg",
     name: "Guardarian",
-    isComingSoon: true,
+    isComingSoon: false,
   },
 ];
 
@@ -100,6 +56,11 @@ const Aggregates = () => {
   return (
     <Responsive>
       <div className={classes.container}>
+        <div className={classes.leftShade}></div>
+        <div className={classes.rightShade}></div>
+        <div className={classes.lines}>
+          <Image src={lines} alt="" />
+        </div>
         <div className={classes.title}>
           <SlideUp>
             We aggregate all the onramps so you don’t have to choose from one.
@@ -109,7 +70,9 @@ const Aggregates = () => {
           {data.map(({ icon, isComingSoon, name }, idx) => (
             <SlideUp key={idx}>
               <div className={classes.box}>
-                <Image src={icon} alt="" />
+                <div className={classes.iconContainer}>
+                  {icon && <Image width={0} height={0} src={icon} alt="" />}
+                </div>
                 <div className={classes.name}>{name}</div>
                 {isComingSoon && (
                   <div className={classes.comingSoon}>Coming Soon</div>

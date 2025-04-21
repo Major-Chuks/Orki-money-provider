@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  overflow-x: auto;
+  padding: 46px 24px;
+}
+
+.container * {
+  word-break: break-all;
+}
