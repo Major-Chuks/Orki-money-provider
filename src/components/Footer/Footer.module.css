@@ -22,13 +22,13 @@
 }
 
 .logo {
-  color: var(--neutral-5, #b1b5c3);
-  font-family: "Robert Sans 800";
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 28px; /* 87.5% */
+  width: 98px;
   margin-bottom: 24px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
 }
 
 .brandDescription {
@@ -183,5 +183,9 @@
 @media screen and (max-width: 540px) {
   .container {
     padding-bottom: 16px;
+  }
+
+  .logo {
+    width: 72px;
   }
 }
