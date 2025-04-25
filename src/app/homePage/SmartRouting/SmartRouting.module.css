@@ -66,20 +66,20 @@
 .coin1,
 .coin2 {
   position: absolute;
-  width: 75.369px;
-  height: 80.666px;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
 }
 
 .coin1 {
-  left: 20px;
-  bottom: 20px;
+  left: 30px;
+  bottom: 0px;
   animation: bounceSpinLeft 10s infinite linear;
 }
 
 .coin2 {
-  right: 20px;
-  top: 20px;
+  right: 10px;
+  top: 10px;
   animation: bounceSpinRight 10s infinite linear;
 }
 
@@ -108,10 +108,34 @@
     margin-bottom: 88px;
   }
 
+  .routeImg {
+    transform: scale(0.86);
+  }
+
   .coin1,
   .coin2 {
-    width: 45px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .coin1 {
+    left: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .routeImg {
+    transform: scale(0.84);
+  }
+
+  .coin1,
+  .coin2 {
+    width: 40px;
+    height: 40px;
+  }
+
+  .coin1 {
+    left: 10px;
   }
 }
 

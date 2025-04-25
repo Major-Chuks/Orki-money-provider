@@ -11,9 +11,11 @@ import MoonPayWidget from "@/providers/moonpay/Moonpay";
 import IframeWrapper from "@/components/Widget/IframeWrapper/IframeWrapper";
 import { useRouter } from "next/navigation";
 import { routes } from "@/services/routes";
+import useWidth from "@/hooks/useWidth";
 
 const Header = () => {
   const [purchaseLink, setQueryString] = useState("");
+  const width = useWidth();
 
   const router = useRouter();
 
@@ -49,14 +51,23 @@ const Header = () => {
 
             <div className={classes.btnContainer}>
               <SlideUp>
-                <CustomButton style={{ width: "max-content" }} outline>
+                <CustomButton
+                  style={{
+                    padding: "12px",
+                    width: width > 768 ? "155px" : "116px",
+                  }}
+                  outline
+                >
                   Contact Sales
                 </CustomButton>
               </SlideUp>
               <SlideUp>
                 <CustomButton
                   onClick={() => router.push(routes.signUp)}
-                  style={{ width: "max-content" }}
+                  style={{
+                    padding: "12px",
+                    width: width > 768 ? "155px" : "116px",
+                  }}
                 >
                   Get Started
                 </CustomButton>

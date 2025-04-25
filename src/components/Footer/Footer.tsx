@@ -1,21 +1,28 @@
 import classes from "./Footer.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/logo-3.png";
+import logo from "@/assets/logo-4.svg";
 import xIcon from "@/assets/icon-x.svg";
 import facebookIcon from "@/assets/icon-facebook.svg";
 import linkedInIcon from "@/assets/icon-linkedin.svg";
 import { footerData } from "./Footer.script";
 import Responsive from "../Responsive/Responsive";
+import { useRouter } from "next/navigation";
+import { routes } from "@/services/routes";
 
 const Footer = () => {
+  const router = useRouter();
+
   return (
     <div className={classes.wrapper}>
       <Responsive>
         <div className={classes.container}>
           <div className={classes.top}>
             <div className={classes.left}>
-              <div className={classes.logo}>
+              <div
+                onClick={() => router.push(routes.home)}
+                className={classes.logo}
+              >
                 <Image src={logo} alt="" />
               </div>
               <div className={classes.brandDescription}>

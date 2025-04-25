@@ -3,52 +3,55 @@ import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
 import lines from "@/assets/homepage/lines-aggregator.svg";
+import transakIcon from "@/assets/onramp-providers/transak.svg";
+import moonpayIcon from "@/assets/onramp-providers/moonpay.svg";
+import stripeIcon from "@/assets/onramp-providers/stripe.svg";
+import wertIcon from "@/assets/onramp-providers/wert.svg";
+import unlimitIcon from "@/assets/onramp-providers/unlimit.svg";
+import fonbnkIcon from "@/assets/onramp-providers/fonbnk.svg";
+import transfiIcon from "@/assets/onramp-providers/transfi.svg";
+import yellowCardIcon from "@/assets/onramp-providers/yellow-card.svg";
 
 const data = [
   {
-    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/transak.svg",
+    icon: transakIcon,
     name: "Transak",
     isComingSoon: false,
   },
   {
-    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/moonpay.svg",
-    name: "MoonPay",
-    isComingSoon: true,
-  },
-  {
-    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/stripe.svg",
+    icon: stripeIcon,
     name: "Stripe",
     isComingSoon: false,
   },
   {
-    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/wert.svg",
+    icon: wertIcon,
     name: "Wert",
     isComingSoon: false,
   },
   {
-    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/unlimit.svg",
+    icon: unlimitIcon,
     name: "Unlimit",
     isComingSoon: false,
   },
   {
-    icon: "",
-    name: "Fnbnk",
+    icon: fonbnkIcon,
+    name: "Fonbnk",
     isComingSoon: false,
   },
   {
-    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/transfi.svg",
+    icon: transfiIcon,
     name: "Transfi",
     isComingSoon: false,
   },
   {
-    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/yellowcard.svg",
+    icon: yellowCardIcon,
     name: "Yellowcard",
     isComingSoon: false,
   },
   {
-    icon: "https://d31sk3i6y53c7h.cloudfront.net/assets/providers/guardarian.svg",
-    name: "Guardarian",
-    isComingSoon: false,
+    icon: moonpayIcon,
+    name: "MoonPay",
+    isComingSoon: true,
   },
 ];
 
@@ -66,21 +69,25 @@ const Aggregates = () => {
             We aggregate all the onramps so you don’t have to choose from one.
           </SlideUp>
         </div>
-        <div className={classes.listContainer}>
-          {data.map(({ icon, isComingSoon, name }, idx) => (
-            <SlideUp key={idx}>
-              <div className={classes.box}>
+        <SlideUp>
+          <div className={classes.listContainer}>
+            {data.map(({ icon, isComingSoon, name }, idx) => (
+              <div key={idx} className={classes.box}>
                 <div className={classes.iconContainer}>
-                  {icon && <Image width={0} height={0} src={icon} alt="" />}
+                  <Image src={icon} alt="" />
                 </div>
                 <div className={classes.name}>{name}</div>
-                {isComingSoon && (
+                {isComingSoon ? (
                   <div className={classes.comingSoon}>Coming Soon</div>
+                ) : (
+                  <div className={classes.live}>
+                    <span className={classes.dot}></span> Live
+                  </div>
                 )}
               </div>
-            </SlideUp>
-          ))}
-        </div>
+            ))}
+          </div>
+        </SlideUp>
       </div>
     </Responsive>
   );

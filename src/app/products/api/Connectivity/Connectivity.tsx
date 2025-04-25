@@ -1,97 +1,55 @@
 import classes from "./Connectivity.module.css";
-import alchemypay from "@/assets/con-alchemy-pay.svg";
-import btcDirect from "@/assets/con-btc-dircect.svg";
-import conify from "@/assets/con-conify.svg";
-import guardian from "@/assets/con-guardian.svg";
-import itez from "@/assets/con-itez.svg";
-import localRamp from "@/assets/con-local-ramp.svg";
-import marcuryo from "@/assets/con-marcuryo.svg";
-import moonpay from "@/assets/con-moonpay.svg";
-import onrampMoney from "@/assets/con-onramp-money.svg";
-import payfura from "@/assets/con-payfura.svg";
-import sardine from "@/assets/con-sardine.svg";
-import binance from "@/assets/con-binance.svg";
-import transak from "@/assets/con-transak.svg";
-import transfi from "@/assets/con-transfi.svg";
-import utorg from "@/assets/con-utorg.svg";
+import transakIcon from "@/assets/onramp-providers/transak.svg";
+import moonpayIcon from "@/assets/onramp-providers/moonpay.svg";
+import stripeIcon from "@/assets/onramp-providers/stripe.svg";
+import wertIcon from "@/assets/onramp-providers/wert.svg";
+import unlimitIcon from "@/assets/onramp-providers/unlimit.svg";
+import fonbnkIcon from "@/assets/onramp-providers/fonbnk.svg";
+import transfiIcon from "@/assets/onramp-providers/transfi.svg";
+import yellowCardIcon from "@/assets/onramp-providers/yellow-card.svg";
 import Image from "next/image";
 import Responsive from "@/components/Responsive/Responsive";
 import SlideUp from "@/components/SlideUp/SlideUp";
 
 const data = [
   {
-    icon: binance,
-    name: "Binance Connect",
-    isComingSoon: true,
-  },
-  {
-    icon: payfura,
-    name: "Payfura",
-    isComingSoon: true,
-  },
-  {
-    icon: btcDirect,
-    name: "BTC Direct",
-    isComingSoon: true,
-  },
-  {
-    icon: transfi,
-    name: "TransFi",
-    isComingSoon: true,
-  },
-  {
-    icon: localRamp,
-    name: "Local ramp",
-    isComingSoon: true,
-  },
-  {
-    icon: marcuryo,
-    name: "Mercuryo",
-    isComingSoon: true,
-  },
-  {
-    icon: alchemypay,
-    name: "Alchemy Pay",
-    isComingSoon: true,
-  },
-  {
-    icon: sardine,
-    name: "Sardine",
-    isComingSoon: true,
-  },
-  {
-    icon: itez,
-    name: "Itez",
-    isComingSoon: true,
-  },
-  {
-    icon: transak,
+    icon: transakIcon,
     name: "Transak",
-    isComingSoon: true,
+    isComingSoon: false,
   },
   {
-    icon: conify,
-    name: "Coinify",
-    isComingSoon: true,
+    icon: stripeIcon,
+    name: "Stripe",
+    isComingSoon: false,
   },
   {
-    icon: moonpay,
+    icon: wertIcon,
+    name: "Wert",
+    isComingSoon: false,
+  },
+  {
+    icon: unlimitIcon,
+    name: "Unlimit",
+    isComingSoon: false,
+  },
+  {
+    icon: fonbnkIcon,
+    name: "Fonbnk",
+    isComingSoon: false,
+  },
+  {
+    icon: transfiIcon,
+    name: "Transfi",
+    isComingSoon: false,
+  },
+  {
+    icon: yellowCardIcon,
+    name: "Yellowcard",
+    isComingSoon: false,
+  },
+  {
+    icon: moonpayIcon,
     name: "MoonPay",
-    isComingSoon: true,
-  },
-  {
-    icon: utorg,
-    name: "Utorg",
-    isComingSoon: true,
-  },
-  {
-    icon: onrampMoney,
-    name: "Onramp.Money",
-    isComingSoon: true,
-  },
-  {
-    icon: guardian,
-    name: "Guardarian",
     isComingSoon: true,
   },
 ];
@@ -125,10 +83,16 @@ const Connectivity = () => {
             <div className={classes.listContainer}>
               {data.map(({ icon, isComingSoon, name }, idx) => (
                 <div className={classes.box} key={idx}>
-                  <Image src={icon} alt="" />
+                  <div className={classes.iconContainer}>
+                    <Image src={icon} alt="" />
+                  </div>
                   <div className={classes.name}>{name}</div>
-                  {isComingSoon && (
+                  {isComingSoon ? (
                     <div className={classes.comingSoon}>Coming Soon</div>
+                  ) : (
+                    <div className={classes.live}>
+                      <span className={classes.dot}></span> Live
+                    </div>
                   )}
                 </div>
               ))}
