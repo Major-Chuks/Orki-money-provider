@@ -28,7 +28,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   if (routes.miniWidget === pathname) {
     return (
       <QueryClientProvider client={queryClient}>
-        <MiniNavbar />
+        {/* <MiniNavbar /> */}
         <div className={classes.main}>{children}</div>
       </QueryClientProvider>
     );
