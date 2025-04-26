@@ -36,7 +36,7 @@ import {
   usePostChangeLocation,
 } from "@/services/tanStackApi";
 
-const Widget = ({}: { onLaunch: (queryString: string) => void }) => {
+const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [toggleProvider, setToggleProvider] = useState(false);
   const [fiatCurrencies, setFiatCurrencies] =

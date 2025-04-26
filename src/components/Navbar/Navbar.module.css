@@ -31,6 +31,13 @@
   display: none;
 }
 
+.miniView {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
 .logo_nav {
   width: max-content;
   display: flex;
@@ -149,7 +156,8 @@
 }
 
 @media screen and (max-width: 540px) {
-  .mobileView .logo {
+  .mobileView .logo,
+  .miniView .logo {
     width: 59px;
     height: 27px;
   }
