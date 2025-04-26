@@ -16,6 +16,10 @@ html * {
   scrollbar-width: thin; /* Options: auto | thin | none */
 }
 
+html {
+  color-scheme: light;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
