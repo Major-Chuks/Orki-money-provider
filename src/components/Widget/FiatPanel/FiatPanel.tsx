@@ -12,8 +12,6 @@ const FiatPanel = ({
   value,
   onAmountChange,
   onCurrencyChange,
-  provider,
-  paymentMethod,
   error,
 }: {
   title: string;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import classes from "./CodeInput.module.css";
 import { useEffect } from "react";
 

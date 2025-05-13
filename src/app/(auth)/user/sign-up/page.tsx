@@ -77,6 +77,7 @@ const SignUp = () => {
   };
 
   const handleCreateAccount = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, ...payload } = input;
     setLoading(true);
     const response = await backend().post_create_account(payload);

@@ -1,4 +1,4 @@
-import { validatePassword, validatePasswordV2 } from "@/services/utils";
+import { validatePasswordV2 } from "@/services/utils";
 import classes from "./CustomPasswordValidator.module.css";
 import React from "react";
 

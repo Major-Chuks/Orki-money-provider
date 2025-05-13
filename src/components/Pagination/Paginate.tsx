@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Control from "./Control";
@@ -31,7 +32,7 @@ function Paginate<T>({
 
   const scrollToTop = () => {
     if (scrollId) {
-      let container = document.getElementById(scrollId);
+      const container = document.getElementById(scrollId);
       if (container) {
         container.scrollTo({
           top: 0,

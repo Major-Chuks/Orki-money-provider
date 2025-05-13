@@ -1,4 +1,3 @@
-import Image from "next/image";
 import classes from "./CustomDateSelect.module.css";
 import { useState } from "react";
 // import chevronIcon from "@/assets/icon-chevron-light.svg";

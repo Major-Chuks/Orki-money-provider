@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useRef } from "react";
 
 const useClickOutside = (handler: any) => {
   // initialize domNode as a ref with correct typescript definitions
-  let domNode1 = useRef<HTMLDivElement>(null);
+  const domNode1 = useRef<HTMLDivElement>(null);
 
-  let domNode2 = useRef<HTMLDivElement>(null);
+  const domNode2 = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    let maybeHandler = (event: any) => {
+    const maybeHandler = (event: any) => {
       if (
         domNode1.current &&
         !domNode1.current.contains(event.target) &&

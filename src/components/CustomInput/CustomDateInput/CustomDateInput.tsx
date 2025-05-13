@@ -25,7 +25,7 @@ const CustomDateInput = ({
 
   const _onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHasValue(event.target.value);
-    onChange && onChange(event, id);
+    if (onChange) onChange(event, id);
   };
 
   return (

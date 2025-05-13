@@ -7,13 +7,12 @@ import { onramper } from "./onramper";
 import { COUNTRY_DATA } from "@/constants/country";
 import Image from "next/image";
 import TooltipComponentWrapper from "./TooltipComponentWrapper/TooltipComponentWrapper";
-import backend from "@/services/apis";
 import { COUNTRY, ICountry } from "@/services/country";
 import { OnramperCoverage } from "@/services/onramperCoverage";
-import { useGetCoverage, useGetFiatCurrencies } from "@/services/tanStackApi";
+import { useGetCoverage } from "@/services/tanStackApi";
 
-// GeoJSON URL for world map
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
+// // GeoJSON URL for world map
+// const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
 const unSupportedLocations = [
   "AFG",
@@ -30,11 +29,6 @@ const unSupportedLocations = [
 ];
 
 // Define the shape of onrampCoverageData's entries
-interface CountryData {
-  name: string;
-  paymentMethods: string[];
-  onramps: number;
-}
 
 type Coverage = {
   country: string;

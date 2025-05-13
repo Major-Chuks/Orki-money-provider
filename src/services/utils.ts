@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { COUNTRY_DATA } from "@/constants/country";
 
 export const formatFileSize = (size: number): string => {

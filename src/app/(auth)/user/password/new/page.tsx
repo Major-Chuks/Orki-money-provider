@@ -10,7 +10,7 @@ import {
   InputIdState,
   resetValidation,
 } from "@/components/CustomInput/CustomInput.script";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InputEmail from "../InputEmail";
 import VerifyEmail from "../VerifyEmail";
 import SetPassword from "../SetNewPassword";

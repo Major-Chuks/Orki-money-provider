@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import classes from "./PaymentMethod.module.css";
 import { useState } from "react";
-import InstitutionIcon from "@/assets/SvgComponents/InstitutionIcon";
 import ChevronDownIcon from "@/assets/SvgComponents/ChevronDownIcon";
 import PaymentMethodList from "../PaymentMethodList/PaymentMethodList";
 import { PaymentMethodResponse } from "@/interface/get_payment_methods";

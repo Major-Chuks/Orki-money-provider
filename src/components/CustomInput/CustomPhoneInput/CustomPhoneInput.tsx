@@ -26,7 +26,7 @@ const CustomPhoneInput = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (isNaN(Number(event.target.value)) || event.target.value.startsWith("0"))
       return;
-    onChange && onChange(event, id);
+    if (onChange) onChange(event, id);
   };
 
   useEffect(() => {

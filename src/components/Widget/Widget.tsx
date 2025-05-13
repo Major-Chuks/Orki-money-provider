@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./Widget.module.css";
 import menuIcon from "@/assets/widget/menu.svg";
 import Image from "next/image";
@@ -76,7 +76,6 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
     data: paymentMethodResponse,
     isPending: isPaymentMethodPending,
     isSuccess: isPaymentMethodSuccess,
-    refetch: refetchPaymentMethods,
   } = useGetPaymentMethods(fiatCurrency);
 
   const { mutateAsync } = usePostChangeLocation();

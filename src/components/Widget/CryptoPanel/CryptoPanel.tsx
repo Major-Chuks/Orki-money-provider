@@ -29,7 +29,7 @@ const CryptoPanel = ({
   const [inputValue, setInputValue] = useState(value);
 
   const validateInput = () => {
-    let minAmount = 0;
+    const minAmount = 0;
     setErrorMsg("");
     if (Number(inputValue) < Number(minAmount)) {
       setErrorMsg("Please provide a valid order amount");

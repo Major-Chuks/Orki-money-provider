@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image, { StaticImageData } from "next/image";
 import classes from "../CustomInput.module.css";
 import innerClasses from "./CustomSelect.module.css";
@@ -43,7 +44,7 @@ const CustomSelect = ({
     setSelected(option);
     setValue(option);
     setToggleDropdown(false);
-    onSelect && onSelect(option, id);
+    if (onSelect) onSelect(option, id);
   };
 
   const handleToggleDropdown = () => {
@@ -51,7 +52,7 @@ const CustomSelect = ({
   };
 
   useEffect(() => {
-    onSelect && onSelect(selected, id);
+    if (onSelect) onSelect(selected, id);
     outSideClickHandler({
       className: "id_select",
       setState: setToggleDropdown,
@@ -62,7 +63,9 @@ const CustomSelect = ({
   useEffect(() => {
     const sv = getValue({ value: selectedValue, id });
 
-    let match = options.find((c) => c.name.toLowerCase() === sv.toLowerCase());
+    const match = options.find(
+      (c) => c.name.toLowerCase() === sv.toLowerCase()
+    );
 
     if (match) {
       setValue(match);

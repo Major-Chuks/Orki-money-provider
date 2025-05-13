@@ -2,7 +2,6 @@ import Responsive from "@/components/Responsive/Responsive";
 import classes from "./Hero.module.css";
 import checkIcon from "@/assets/widget-checkicon.svg";
 import Image from "next/image";
-import offRamp from "@/assets/off-ramp.png";
 import Tag from "@/components/Tag/Tag";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import SlideUp from "@/components/SlideUp/SlideUp";

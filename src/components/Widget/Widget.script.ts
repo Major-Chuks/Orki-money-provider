@@ -33,7 +33,6 @@ export const InitStates = ({
   setNetwork,
   setFiatCurrencies,
   setCryptoCurrencies,
-  setPaymentOptions,
   setCountry,
 }: {
   isChangeLocation?: boolean;
@@ -146,7 +145,7 @@ export const fetchQuotes = async ({
       network,
       isBuyOrSell,
       paymentMethod,
-    }).filter(([_, value]) => value)
+    }).filter(([, value]) => value)
   );
 
   const queryParamKeys = [

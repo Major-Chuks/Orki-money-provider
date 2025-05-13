@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import classes from "./IntersectionObserver.module.css";
 import useIntersectionObserver from "../../hooks/useObserver";
 import useMediaQuery from "../../hooks/useMediaQuery";

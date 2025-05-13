@@ -35,7 +35,7 @@ const CustomCountrySelect = ({
     setSelected(option);
     setValue(option.name.toLowerCase());
     setToggleDropdown(false);
-    onSelect && onSelect(option, id);
+    if (onSelect) onSelect(option, id);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +53,7 @@ const CustomCountrySelect = ({
 
   useEffect(() => {
     if (value) {
-      let filteredResult = COUNTRY_DATA.filter((c) =>
+      const filteredResult = COUNTRY_DATA.filter((c) =>
         c.name.toLowerCase().startsWith(value)
       );
       setCountries(filteredResult);
@@ -63,7 +63,7 @@ const CustomCountrySelect = ({
   }, [value]);
 
   useEffect(() => {
-    onSelect && onSelect(selected, id);
+    if (onSelect) onSelect(selected, id);
     outSideClickHandler({
       className: "id_country",
       setState: setToggleDropdown,
@@ -74,7 +74,7 @@ const CustomCountrySelect = ({
   useEffect(() => {
     const sv = getValue({ value: selectedValue, id });
     if (selectedValue && sv) {
-      let match = COUNTRY_DATA.find(
+      const match = COUNTRY_DATA.find(
         (c) => c.name.toLowerCase() === sv.toLowerCase()
       );
       if (match) {
