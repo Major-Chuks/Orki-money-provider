@@ -1,0 +1,226 @@
+.container {
+  width: 100%;
+  height: 88px;
+  border-bottom: 1px solid #dfdde9;
+  background: #fff;
+  padding: 19px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.withIcon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.toggleSidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.pageTitle {
+  color: var(--neutral-3);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.24px;
+}
+
+.innerWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.line {
+  width: 0px;
+  height: 49.5px;
+  border: 1px solid var(--neutral-7);
+  margin: 0 20px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+
+.profile .pfp {
+  margin-right: 4px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--neutral-7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* text */
+  color: var(--primary-color);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 100% */
+  letter-spacing: -0.32px;
+}
+
+.profile .pfp img {
+  width: 100%;
+  height: auto;
+}
+
+.name {
+  color: var(--neutral-1);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 133.333% */
+  margin-bottom: 4px;
+}
+
+.role {
+  color: var(--neutral-3);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+  text-transform: capitalize;
+}
+
+.profile.open .dropdown {
+  visibility: visible;
+  transform: translateY(100%);
+  opacity: 1;
+}
+
+.dropdown {
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: 99;
+  border-radius: 8px;
+  background: #fdfdfd;
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+  transform: translateY(calc(100% - 8px));
+  visibility: hidden;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 300ms;
+}
+
+.dropdown .title {
+  color: #141416;
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px; /* 114.286% */
+}
+
+.dropdown .description {
+  color: var(--neutral-4);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 160% */
+}
+
+.dropdown hr {
+  width: 100%;
+  border: 1px solid var(--neutral-6);
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  /* text */
+  color: var(--neutral-3);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: relative;
+  overflow: hidden;
+}
+
+.item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-color);
+  background: #dee8ff;
+  pointer-events: none;
+  transition: all 300ms;
+  opacity: 0;
+}
+
+.item:hover::after {
+  opacity: 0.2;
+}
+
+.sidebarWrapper {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .pageTitle {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .toggleSidebar {
+    display: flex;
+  }
+
+  .sidebarWrapper {
+    width: 100%;
+    height: 100vh;
+    display: block;
+    position: fixed;
+    /* background: #14141635; */
+    left: 0;
+    top: 0;
+    z-index: 999;
+  }
+
+  .sidebarWrapper .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #14141635;
+    left: 0;
+    top: 0;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .container {
+    padding: 16px;
+  }
+}

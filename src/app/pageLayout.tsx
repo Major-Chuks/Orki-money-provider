@@ -1,27 +1,29 @@
 "use client";
 
-import classes from "./appLayout.module.css";
+import classes from "./PageLayout.module.css";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { usePathname } from "next/navigation";
-import AuthLayout from "./(auth)/AuthLayout/AuthLayout";
 import { routes } from "@/services/routes";
-import MiniNavbar from "@/components/Navbar/MiniNavbar";
 
 export const queryClient = new QueryClient();
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
+const PageLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
-  const authRoutes = [routes.signUp, routes.login, routes.newPassword];
-
-  if (authRoutes.includes(pathname)) {
+  // auth routes
+  if (pathname.includes("/user")) {
     return (
-      <QueryClientProvider client={queryClient}>
-        <AuthLayout>{children}</AuthLayout>
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+  }
+
+  // app routes
+  if (pathname.includes("/app")) {
+    return (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
   }
 
@@ -46,4 +48,4 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default AppLayout;
+export default PageLayout;

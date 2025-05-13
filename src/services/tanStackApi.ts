@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { BACKEND_API } from "./apis";
 import { post_buy_quote_type, post_sell_quote_type } from "./interface";
-import { queryClient } from "@/app/appLayout";
+import { queryClient } from "@/app/pageLayout";
 
 const get_user_location = async () => {
   const url = "/get-location";

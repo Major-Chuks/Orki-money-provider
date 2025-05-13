@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import classes from "./AuthLayout.module.css";
+import classes from "./layout.module.css";
 import TickIcon from "@/assets/SvgComponents/TickIcon";
 import authBg from "@/assets/auth/auth-bg.webp";
 import SlideUp from "@/components/SlideUp/SlideUp";
