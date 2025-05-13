@@ -6,7 +6,7 @@
     rgba(171, 171, 206, 0.06) 94.62%
   );
   padding-top: 112px;
-  margin-bottom: 154px;
+  padding-bottom: 126px;
 }
 
 .container {
@@ -91,10 +91,17 @@
   height: auto;
 }
 
+@media screen and (max-width: 1280px) {
+  .heading .title {
+    font-size: 42px;
+    line-height: 54px;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .wrapper {
     padding-top: 68px;
-    margin-bottom: 88px;
+    padding-bottom: 88px;
   }
 
   .container {
@@ -117,12 +124,16 @@
   .heading {
     gap: 24px;
   }
+
+  .image {
+    max-width: 540px;
+  }
 }
 
 @media screen and (max-width: 540px) {
   .wrapper {
     padding-top: 24px;
-    margin-bottom: 37px;
+    padding-bottom: 37px;
   }
 
   .container {

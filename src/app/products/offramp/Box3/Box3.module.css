@@ -63,8 +63,8 @@
   animation: pop-right 1.65s forwards cubic-bezier(0.19, 0.07, 0.05, 1);
 }
 
-.container:hover .bannerImageContainer img {
-  bottom: -68px;
+.container:hover .bannerImageContainer {
+  transform: scale(1.07);
 }
 
 @keyframes pop-left {

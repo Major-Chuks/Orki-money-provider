@@ -63,10 +63,6 @@ const NewPassword = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(input);
-  }, [input]);
-
   return (
     <div className={classes.container}>
       <div

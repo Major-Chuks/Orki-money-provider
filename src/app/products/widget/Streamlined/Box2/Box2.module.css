@@ -84,7 +84,7 @@
 }
 
 .container:hover .bannerImageContainer {
-  transform: translateY(-3%);
+  transform: scale(1.07);
 }
 
 @keyframes pop-up {

@@ -2,7 +2,7 @@ import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import { useEffect, useState } from "react";
 import { formatCounter } from "@/services/utils";
 import CustomOTPInput from "@/components/CustomInput/CustomOTPInput/CustomOTPInput";
-import classes from "@/app/(auth)/users/password/new/page.module.css";
+import classes from "@/app/(auth)/user/password/new/page.module.css";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { routes } from "@/services/routes";
