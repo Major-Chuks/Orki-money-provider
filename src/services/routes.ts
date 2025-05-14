@@ -4,6 +4,13 @@ export const routes = {
   signUp: "/user/sign-up",
   newPassword: "/user/password/new",
 
+  // app
+  dashboard: "/app",
+  transactions: "/app/transactions",
+  apiManagement: "/app/api-management",
+  billing: "/app/billing",
+  profileAndSettings: "/app/profile-and-settings",
+
   // main
   home: "/",
   aboutUs: "/about-us",

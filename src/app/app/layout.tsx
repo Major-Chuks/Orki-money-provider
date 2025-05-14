@@ -1,3 +1,5 @@
+"use client";
+
 import Sidebar from "@/components/app/Sidebar/Sidebar";
 import classes from "./layout.module.css";
 import Navbar from "@/components/app/Navbar/Navbar";
@@ -8,7 +10,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
       <div className={classes.sidebarWrapper}>
         <Sidebar />
       </div>
-      <div className={classes.innerWrapper}>
+      <div className={classes.main}>
         <Navbar />
         <div className={classes.container}>{children}</div>
       </div>

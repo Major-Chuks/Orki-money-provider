@@ -11,9 +11,9 @@ const LoadingIcon = () => {
         stroke="currentColor"
         stroke-dasharray="16"
         stroke-dashoffset="16"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         d="M12 3c4.97 0 9 4.03 9 9"
       >
         <animate
