@@ -79,7 +79,7 @@ export const mapRoutesToHeading: Record<
     title: "Transactions",
     description: "",
   },
-  apiManagement: {
+  "api-management": {
     title: "API Management",
     description: "",
   },
@@ -87,7 +87,7 @@ export const mapRoutesToHeading: Record<
     title: "Billing",
     description: "",
   },
-  profileAndSettings: {
+  "profile-and-settings": {
     title: "Profile and Settings",
     description: "",
   },

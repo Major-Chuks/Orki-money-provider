@@ -11,8 +11,10 @@ import TourPointer from "../TourGuide/TourPointer";
 const Navbar = () => {
   const pathname = usePathname();
 
-  const heading = mapRoutesToHeading[pathname.split("/")[1]];
+  const heading = mapRoutesToHeading[pathname.split("/")[2] || "app"];
   const pfp = null;
+
+  console.log({ heading, pathname: pathname, split: pathname.split("/") });
 
   return (
     <div className={classes.container}>

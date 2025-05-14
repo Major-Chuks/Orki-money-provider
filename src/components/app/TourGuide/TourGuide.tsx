@@ -3,6 +3,7 @@ import Overlay from "../Overlay/Overlay";
 import classes from "./TourGuide.module.css";
 import CloseIcon from "@/assets/app/CloseIcon";
 import Button from "@/components/CustomInput/Button/Button";
+import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 
 const tours: {
   id: number;
@@ -116,7 +117,9 @@ const TourGuide: React.FC<TourGuideProps> = ({ onClose }) => {
         <div ref={contentRef} className={classes.innerContainer}>
           <div className={classes.header}>
             <div className={classes.title}>{currentTour().title}</div>
-            <CloseIcon />
+            <ButtonWrapper onClick={onClose}>
+              <CloseIcon />
+            </ButtonWrapper>
           </div>
 
           <div className={classes.description}>{currentTour().description}</div>
