@@ -10,9 +10,9 @@ const ArrowIcon = () => {
       <path
         d="M3.33325 10H16.6666M16.6666 10L11.6666 5M16.6666 10L11.6666 15"
         stroke="black"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

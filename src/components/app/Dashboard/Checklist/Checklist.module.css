@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  padding: 24px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--gray-200, #e5e7eb);
+  background: var(--gray-50, #f9fafb);
+}
+
+.container.completed {
+  border: 1px solid var(--green-100, #dcfce7);
+  background: var(--green-50, #f0fdf4);
+}
+
+.container.failed {
+  border: 1px solid var(--red-500, #ef4444);
+  background: var(--red-50, #fef2f2);
+}
+
+.iconContainer {
+  background: #e6e9f4;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.container.completed .iconContainer {
+  background: #dcfce7;
+}
+
+.container.failed .iconContainer {
+  background: #fee2e2;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.name {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 120% */
+  margin-bottom: 8px;
+}
+
+.description {
+  color: var(--Foundation-Text-color-text-color-200, #8f8f8f);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+}
+
+.reason {
+  color: var(--red-500, #ef4444);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+  margin-top: 8px;
+}
+
+.linkBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--primary, #2f2fdd);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+}

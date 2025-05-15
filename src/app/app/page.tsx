@@ -1,11 +1,12 @@
-import classes from "./page.module.css";
+"use client";
+
+import Dashboard from "@/components/app/Dashboard/Dashboard";
+import Onboarding from "@/components/app/Dashboard/Onboarding/Onboarding";
 
 const Dashboardpage = () => {
-  return (
-    <div className={classes.container}>
-      <div>Dashboard</div>
-    </div>
-  );
+  const hasOnboarded = true;
+
+  return <>{hasOnboarded ? <Dashboard /> : <Onboarding />}</>;
 };
 
 export default Dashboardpage;
