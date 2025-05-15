@@ -2,8 +2,8 @@ import ChecklistCompletedIcon from "@/assets/app/ChecklistCompletedIcon";
 import classes from "./Checklist.module.css";
 import ChecklistPendingIcon from "@/assets/app/ChecklistPendingIcon";
 import ChecklistFailedIcon from "@/assets/app/ChecklistFailedIcon";
-import { IChecklist } from "@/app/app/page";
 import Button from "@/components/CustomInput/Button/Button";
+import { IChecklist } from "../Onboarding/Onboarding";
 
 const Checklist: React.FC<IChecklist> = ({
   name,

@@ -27,14 +27,16 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     setClick(true);
   };
 
+  const { className, ...rest } = props;
+
   return (
     <button
       onClick={handleClick}
       style={{ ...style }}
-      {...props}
-      className={`${classes.wrapper}  ${click && classes.click} ${
+      {...rest}
+      className={`${classes.wrapper} ${click && classes.click} ${
         disabled && classes.disabled
-      } ${props.className}`}
+      } ${className}`}
     >
       {loading ? "Please wait..." : children}
     </button>

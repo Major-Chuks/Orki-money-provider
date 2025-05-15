@@ -14,8 +14,6 @@ const Navbar = () => {
   const heading = mapRoutesToHeading[pathname.split("/")[2] || "app"];
   const pfp = null;
 
-  console.log({ heading, pathname: pathname, split: pathname.split("/") });
-
   return (
     <div className={classes.container}>
       <div className={classes.heading}>

@@ -1,11 +1,7 @@
-import classes from "./page.module.css";
+import Transactions from "@/components/app/Transactions/Transactions";
 
 const Transactionspage = () => {
-  return (
-    <div className={classes.container}>
-      <div>Transactions</div>
-    </div>
-  );
+  return <Transactions />;
 };
 
 export default Transactionspage;

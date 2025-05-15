@@ -4,6 +4,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  background: #f9fafb;
 }
 
 .main {
@@ -14,7 +15,8 @@
 
 .container {
   width: 100%;
-  background: #f9fafb;
+  max-width: 1440px;
+  margin: 0 auto;
   height: calc(100% - 88px); /* 88px is the height of the navbar */
   padding: 32px;
   overflow: auto;
