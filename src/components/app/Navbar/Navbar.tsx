@@ -12,7 +12,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   const heading = mapRoutesToHeading[pathname.split("/")[2] || "app"];
-  const pfp = null;
+  const pfp = avatar;
 
   return (
     <div className={classes.container}>
@@ -45,12 +45,6 @@ const Navbar = () => {
             <div className={classes.role}>{"Admin"}</div>
           </div>
           <ChevronDown />
-          <div className={classes.dropdown}>
-            <div className={classes.item}>
-              <Image src={avatar} alt="" />
-              <div>Profile</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

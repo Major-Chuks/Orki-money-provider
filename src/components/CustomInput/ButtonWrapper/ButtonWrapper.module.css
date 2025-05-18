@@ -10,6 +10,10 @@
   background: transparent;
 }
 
+.wrapper:hover {
+  transform: translateY(-1px);
+}
+
 .wrapper.click {
   transform: scale(0.98);
 }

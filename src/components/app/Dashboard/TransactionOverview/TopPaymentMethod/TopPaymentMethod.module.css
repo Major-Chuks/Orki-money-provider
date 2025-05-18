@@ -1,8 +1,97 @@
 .container {
   width: auto;
   flex: 30%;
-  height: 455px;
+  min-height: 455px;
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 0px 4px 0px rgba(170, 170, 170, 0.25);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  justify-content: center;
+  gap: 4px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  color: var(--Neutral-3, #353945);
+  font-family: "DM Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px; /* 140% */
+  letter-spacing: -0.2px;
+  margin-bottom: 12px;
+}
+
+.chartContainer {
+  width: 100%;
+  height: 180px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  padding-top: 6px;
+  border-bottom: 1px solid var(--Neutral-6, #e6e8ec);
+}
+
+.item:last-child {
+  border: none;
+  padding-bottom: 0;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.tag .indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.label {
+  color: var(--neutral-2, #23262f);
+  font-family: "Plus Jakarta Sans";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 140% */
+}
+
+.percent {
+  color: var(--neutral-2, #23262f);
+  text-align: right;
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 14px; /* 116.667% */
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
 }

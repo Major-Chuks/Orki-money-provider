@@ -1,3 +1,5 @@
+"use client";
+
 import Transactions from "@/components/app/Transactions/Transactions";
 
 const Transactionspage = () => {

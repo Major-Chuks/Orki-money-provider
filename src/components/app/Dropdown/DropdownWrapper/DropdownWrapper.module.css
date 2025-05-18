@@ -1,0 +1,23 @@
+.container {
+  position: absolute;
+  z-index: 9;
+  right: 0;
+  bottom: -5px;
+  transform: translateY(100%);
+  overflow: hidden;
+}
+
+.container.open .contentWrapper {
+  transition: transform 450ms;
+  transform: translateY(0);
+}
+
+.container.close .contentWrapper {
+  transition: transform 650ms;
+  transform: translateY(-100%);
+}
+
+.container.close {
+  transition: visibility 650ms;
+  visibility: hidden;
+}
