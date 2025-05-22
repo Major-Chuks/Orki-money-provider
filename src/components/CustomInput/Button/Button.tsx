@@ -35,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({
     if (onClick) onClick();
     setTimeout(() => {
       setClick(false);
-    }, 50);
+    }, 100);
     setClick(true);
   };
 

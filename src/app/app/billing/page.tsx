@@ -1,11 +1,9 @@
-import classes from "./page.module.css";
+"use client";
+
+import Billing from "@/components/app/Billing/Billing";
 
 const BillingPage = () => {
-  return (
-    <div className={classes.container}>
-      <div>Billing</div>
-    </div>
-  );
+  return <Billing />;
 };
 
 export default BillingPage;

@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px;
+  border-radius: 4px;
+  background: #edf1f9;
+}
+
+.tab,
+.activeTab {
+  flex-grow: 1;
+  height: 36px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  /* text */
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+}
+
+.tab.active {
+  color: #4b5563;
+  position: relative;
+  z-index: 1;
+}
+
+.activeTab {
+  position: absolute;
+  transition: transform 300ms cubic-bezier(0.29, 0.31, 0.05, 1.12);
+  background: #fff;
+  transform: translateX(var(--pos));
+}

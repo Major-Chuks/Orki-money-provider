@@ -21,3 +21,26 @@
   transition: visibility 650ms;
   visibility: hidden;
 }
+
+.container.static {
+  position: static;
+  transform: translateY(0);
+  transition: height 450ms;
+  height: var(--container-height);
+}
+
+.container.static.open .contentWrapper {
+  transition: unset;
+  transform: translateY(0);
+}
+
+.container.static.close .contentWrapper {
+  transition: unset;
+  transform: translateY(0);
+}
+
+.container.static.close {
+  height: 0;
+  transition: height 300ms;
+  visibility: visible;
+}

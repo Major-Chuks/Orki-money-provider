@@ -1,0 +1,28 @@
+.container {
+  width: 100%;
+  padding-bottom: 58px;
+}
+
+.header {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.title {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 160% */
+  margin-bottom: 8px;
+}
+
+.description {
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 114.286% */
+}

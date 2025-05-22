@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import classes from "./DropdownWrapper.module.css";
 
 interface DropdownWrapperProps {
@@ -5,6 +6,7 @@ interface DropdownWrapperProps {
   containerStyle?: React.CSSProperties;
   openDropdown: boolean;
   children: React.ReactNode;
+  position?: "static" | "absolute";
 }
 
 const DropdownWrapper: React.FC<DropdownWrapperProps> = ({
@@ -12,15 +14,35 @@ const DropdownWrapper: React.FC<DropdownWrapperProps> = ({
   children,
   containerStyle,
   contentStyle,
+  position = "absolute",
 }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerHeight, setContainerHeight] = useState("0px");
+
+  useLayoutEffect(() => {
+    if (containerRef.current) {
+      const height = containerRef.current.offsetHeight;
+      setContainerHeight(`${height}px`);
+    }
+  }, [children]); // re-measure when dropdown opens or content changes
+
   return (
     <div
       className={`${classes.container} ${
         openDropdown ? classes.open : classes.close
-      }`}
-      style={{ ...containerStyle }}
+      } ${classes[position]}`}
+      style={
+        {
+          "--container-height": containerHeight,
+          ...containerStyle,
+        } as React.CSSProperties
+      }
     >
-      <div style={{ ...contentStyle }} className={classes.contentWrapper}>
+      <div
+        ref={containerRef}
+        style={{ ...contentStyle }}
+        className={classes.contentWrapper}
+      >
         {children}
       </div>
     </div>
