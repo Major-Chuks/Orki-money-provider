@@ -86,6 +86,7 @@
 }
 
 .container.click {
+  transition: transform 10ms !important;
   transform: scale(0.98);
 }
 

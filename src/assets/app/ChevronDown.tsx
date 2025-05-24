@@ -1,6 +1,8 @@
 import React from "react";
 
-export default function ChevronDown() {
+type ChevronDownProps = React.SVGProps<SVGSVGElement>;
+
+export default function ChevronDown(props: ChevronDownProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,6 +10,7 @@ export default function ChevronDown() {
       height="21"
       viewBox="0 0 20 21"
       fill="none"
+      {...props}
     >
       <path
         d="M15.8333 8.25L9.99996 14.0833L4.16663 8.25"

@@ -1,28 +1,21 @@
 import EmptyTransactionIcon from "@/assets/app/EmptyTransactionIcon";
-import Search from "../Search/Search";
 import classes from "./EmptyState.module.css";
-import Filter from "../Filter/Filter";
 
 const EmptyState = () => {
   return (
     <div className={classes.container}>
       <div className={classes.header}>
-        <div className={classes.title}>Billing History</div>
-
-        <div className={classes.searchAndfilters}>
-          <Search />
-          <Filter onChange={() => {}} value="" />
-        </div>
+        <div className={classes.title}>API Logs</div>
       </div>
       <div className={classes.es_container}>
         <div className={classes.es_iconContainer}>
           <EmptyTransactionIcon />
         </div>
 
-        <div className={classes.es_title}>No transactions yet</div>
+        <div className={classes.es_title}>No logs yet</div>
         <div className={classes.es_description}>
-          You haven&apos;t processed any transactions yet.To get started,
-          complete your account setup and your transactions will appear here.
+          You haven&apos;t processed any logs yet.To get started, complete your
+          account setup and your logs will appear here.
         </div>
       </div>
     </div>

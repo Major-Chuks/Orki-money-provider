@@ -1,14 +1,15 @@
 import Button from "@/components/CustomInput/Button/Button";
-import TableStatus from "../TableStatus/TableStatus";
+import TableStatus from "@/components/app/TableStatus/TableStatus";
 import classes from "./TransactionDetails.module.css";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import CloseIcon from "@/assets/app/CloseIcon";
 import DownloadIcon from "@/assets/app/DownloadIcon";
+import ModalLayout from "@/components/app/Modals/ModalLayout";
 
 const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
   return (
-    <div className={classes.modalLayout}>
-      <div className={classes.modal}>
+    <ModalLayout onClose={onClose}>
+      {({ close }) => (
         <div className={classes.container}>
           <div className={classes.headerWrapper}>
             <div className={classes.header}>
@@ -21,7 +22,7 @@ const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
               </div>
             </div>
 
-            <ButtonWrapper onClick={onClose} className={classes.close}>
+            <ButtonWrapper onClick={close} className={classes.close}>
               <CloseIcon />
             </ButtonWrapper>
           </div>
@@ -110,8 +111,8 @@ const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
             </Button>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </ModalLayout>
   );
 };
 

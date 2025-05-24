@@ -1,0 +1,62 @@
+.container {
+  width: max-content;
+  max-width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-right: 20px;
+  cursor: copy;
+}
+
+.scrollArea {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.main {
+  max-width: 100%;
+  width: max-content;
+}
+
+.container::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(-100%);
+  content: "Copied";
+  border-radius: 8px;
+  background: #363a3a;
+  border-radius: 8px;
+  box-shadow: 0px 0px 4px 0px rgba(200, 200, 200, 0.25);
+  padding: 8px 12px;
+  opacity: 0;
+  /* text */
+  color: #f8f8f8;
+  font-family: var(--font-barlow);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19.522px; /* 139.44% */
+}
+
+.container.copied::after {
+  animation: fade-up 650ms forwards;
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  20%,
+  50% {
+    opacity: 1;
+    transform: translateY(-110%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-130%);
+  }
+}

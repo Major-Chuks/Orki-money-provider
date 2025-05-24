@@ -1,0 +1,122 @@
+.container {
+  width: 100%;
+}
+
+.container > .title {
+  margin-bottom: 8px;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 133.333% */
+}
+
+.container > .description {
+  margin-bottom: 35px;
+  /* text */
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+}
+
+.inputWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.line {
+  width: 100%;
+  border-bottom: 1px solid #d1d5db;
+  margin: 32px 0;
+}
+
+.generatedKeys {
+  width: 100%;
+}
+
+.generatedKeys .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.generatedKeys .header .title {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 160% */
+}
+
+.listItems {
+  width: 100%;
+  flex-direction: column;
+  border-radius: 12px;
+  border: 1px solid var(--gray-300, #d1d5db);
+  background: var(--white, #fff);
+}
+
+.listItems .item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.listItems .item:last-child {
+  border-bottom: none;
+}
+
+.keyName {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+}
+
+.createdAt {
+  margin-right: 16px;
+  /* text */
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+}
+
+.keyType {
+  width: max-content;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: #deecff;
+  /* text */
+  color: #3a48e1;
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 100% */
+}
+
+.revokeBtn {
+  color: #e03130;
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+}

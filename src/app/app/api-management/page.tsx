@@ -1,11 +1,9 @@
-import classes from "./page.module.css";
+"use client";
 
-const ApiManagement = () => {
-  return (
-    <div className={classes.container}>
-      <div>Api Management</div>
-    </div>
-  );
+import ApiManagement from "@/components/app/ApiManagement/ApiManagement";
+
+const ApiManagementPage = () => {
+  return <ApiManagement />;
 };
 
-export default ApiManagement;
+export default ApiManagementPage;

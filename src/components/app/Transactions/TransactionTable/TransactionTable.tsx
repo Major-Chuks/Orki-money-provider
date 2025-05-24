@@ -1,7 +1,6 @@
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
-import TableStatus from "../TableStatus/TableStatus";
+import TableStatus from "../../TableStatus/TableStatus";
 import classes from "./TransactionTable.module.css";
-import Overlay from "../../Overlay/Overlay";
 import TransactionDetails from "../TransactionDetails/TransactionDetails";
 import { useState } from "react";
 
@@ -25,9 +24,7 @@ const TransactionTable = ({
   return (
     <div className={classes.tableWrapper}>
       {openDetails && (
-        <Overlay>
-          <TransactionDetails onClose={() => setOpenDetails(false)} />
-        </Overlay>
+        <TransactionDetails onClose={() => setOpenDetails(false)} />
       )}
       <table>
         <thead>

@@ -1,13 +1,10 @@
-import classes from "./BillingHistory.module.css";
+import classes from "./Transactions.module.css";
 import EmptyState from "./EmptyState/EmptyState";
-import Search from "./Search/Search";
-import Filter from "./Filter/Filter";
 import { data, metadata } from "./mockData";
-import Status from "./Status/Status";
-import TransactionTable from "./TransactionTable/TransactionTable";
 import Pagination from "../../Pagination/Pagination";
+import TransactionTable from "./TransactionTable/TransactionTable";
 
-const BillingHistory = () => {
+const Transactions = () => {
   const handlePrev = (): void => {
     if (!metadata?.previousPageUrl) return;
     // refetch({ page: Number(metadata?.previousPageUrl.split("=")[1]) });
@@ -28,19 +25,10 @@ const BillingHistory = () => {
       {data ? (
         <div className={classes.container}>
           <div className={classes.header}>
-            <div className={classes.title}>Billing History</div>
+            <div className={classes.title}>Webhook Logs</div>
             <div className={classes.description}>
               View and download your past invoices. All invoices are available
               in PDF format.
-            </div>
-
-            <div className={classes.searchAndFilters}>
-              <Search placeholder="Search by Invoice ID" />
-
-              <div className={classes.filters}>
-                <Filter onChange={() => {}} value="" />
-                <Status onChange={() => {}} value="" />
-              </div>
             </div>
 
             <TransactionTable data={data} />
@@ -62,4 +50,4 @@ const BillingHistory = () => {
   );
 };
 
-export default BillingHistory;
+export default Transactions;

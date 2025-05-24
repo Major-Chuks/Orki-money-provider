@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useRef, useEffect, useState } from "react";
 import classes from "./TabNavigation.module.css";
 
 interface TabProps<TTab extends string>
@@ -16,31 +17,57 @@ const TabNavigation = <TTab extends string>({
   onTabChange,
   style,
 }: TabProps<TTab>) => {
-  const getTabPosition = () => {
-    const pos = tabList.indexOf(tab as TTab);
-    return pos != -1 ? `${pos * 100}%` : "0px";
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeStyle, setActiveStyle] = useState<{
+    width: number;
+    left: number;
+  }>({ width: 0, left: 0 });
+
+  useEffect(() => {
+    const updateIndicator = () => {
+      const index = tabList.indexOf(tab);
+      const activeTab = tabRefs.current[index];
+
+      if (activeTab) {
+        const { offsetLeft, offsetWidth } = activeTab;
+        setActiveStyle({ left: offsetLeft, width: offsetWidth });
+      }
+    };
+
+    updateIndicator();
+
+    // Update on window resize
+    window.addEventListener("resize", updateIndicator);
+
+    // Cleanup on unmount
+    return () => {
+      window.removeEventListener("resize", updateIndicator);
+    };
+  }, [tab, tabList]);
 
   return (
-    <div style={{ ...style }} className={classes.container}>
+    <div ref={containerRef} style={{ ...style }} className={classes.container}>
       {tabList.map((_tab, idx) => (
         <div
           key={idx}
+          ref={(el) => {
+            tabRefs.current[idx] = el;
+          }}
           onClick={() => onTabChange(_tab)}
-          className={`${classes.tab} ${tab === _tab && classes.active}`}
+          className={`${classes.tab} ${tab === _tab ? classes.active : ""}`}
         >
           {_tab}
         </div>
       ))}
+
       <div
-        style={
-          {
-            width: `calc(${100 / tabList.length}% - 8px)`,
-            "--pos": getTabPosition(),
-          } as unknown as React.CSSProperties
-        }
         className={classes.activeTab}
-      ></div>
+        style={{
+          width: `${activeStyle.width}px`,
+          transform: `translateX(${activeStyle.left - 8}px)`,
+        }}
+      />
     </div>
   );
 };
