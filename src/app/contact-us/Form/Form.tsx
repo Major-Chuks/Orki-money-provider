@@ -6,7 +6,6 @@ import CustomCheckbox from "@/components/CustomInput/CustomCheckbox/CustomCheckb
 import CustomTextInput from "@/components/CustomInput/CustomTextInput/CustomTextInput";
 import {
   ErrorState,
-  InputIdState,
   InputState,
   resetValidation,
   validateInput,
@@ -41,13 +40,12 @@ const Form = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    id?: InputIdState
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (id) {
-      resetValidation({ id, error, setError });
-      setInput((i) => ({ ...i, [id]: event.target.value }));
-    }
+    const { id, value } = event.target;
+    if (!id) return;
+    resetValidation({ id, error, setError });
+    setInput((i) => ({ ...i, [id]: value }));
   };
 
   const handleCheckbox = () => {

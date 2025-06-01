@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/services/routes";
 import {
   ErrorState,
-  InputIdState,
   resetValidation,
   validateInput,
 } from "@/components/CustomInput/CustomInput.script";
@@ -34,20 +33,19 @@ const Login = () => {
   });
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    id?: InputIdState
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (id) {
-      resetValidation({ id, error, setError });
-      setInput((i) => ({ ...i, [id]: event.target.value }));
-    }
+    const { id, value } = event.target;
+    if (!id) return;
+    resetValidation({ id, error, setError });
+    setInput((i) => ({ ...i, [id]: value }));
   };
 
   const handleLogin = async () => {
     setLoading(true);
     const response = await backend().post_login(input);
     if (response) {
-      router.push(routes.widget);
+      router.push(routes.dashboard);
     }
     setLoading(false);
   };

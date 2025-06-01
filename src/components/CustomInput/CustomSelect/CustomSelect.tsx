@@ -51,7 +51,9 @@ const CustomSelect = ({
     const sv = getValue({ value: selectedValue, id });
 
     const match = options.find(
-      (c) => c.name.toLowerCase() === sv.toLowerCase()
+      (c) =>
+        c.name.toLowerCase() === sv.toLowerCase() ||
+        c.id.toLowerCase() === sv.toLowerCase()
     );
 
     if (match) {

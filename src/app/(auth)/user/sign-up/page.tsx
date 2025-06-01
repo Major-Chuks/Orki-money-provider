@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { routes } from "@/services/routes";
 import userIcon from "@/assets/auth/user-icon.svg";
 import emailIcon from "@/assets/auth/email-icon.svg";
+import briefcaseIcon from "@/assets/auth/briefcase.svg";
 import lockIcon from "@/assets/auth/lock-icon.svg";
 import Image from "next/image";
 import logo from "@/assets/logo-3.svg";
@@ -35,45 +36,74 @@ const roles = [
   { id: "marketing", name: "Marketing" },
 ];
 
+const industries = [
+  { id: "centralizedExchange", name: "Centralized Exchange (CEX)" },
+  { id: "decentralizedExchange", name: "Decentralized Exchange (DEX)" },
+  { id: "p2pExchange", name: "P2P Exchange" },
+  { id: "nftMarketplace", name: "NFT Marketplace" },
+  { id: "nftGamingPlatform", name: "NFT Gaming Platform" },
+  { id: "defiAggregator", name: "DeFi Aggregator" },
+  { id: "cryptoPaymentGateway", name: "Crypto Payment Gateway" },
+  { id: "mediaContentPublisher", name: "Media / Content Publisher" },
+  { id: "digitalGaming", name: "Digital Gaming" },
+  { id: "gambling", name: "Gambling" },
+  { id: "other", name: "Other" },
+];
+
+const inputKeys = {
+  firstName: "firstName",
+  lastName: "lastName",
+  businessName: "businessName",
+  industry: "industry",
+  emailAddress: "emailAddress",
+  role: "role",
+  password: "password",
+  confirmPassword: "confirmPassword",
+};
+
+type InputType = { [key in keyof typeof inputKeys]: string };
+
 const SignUp = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [error, setError] = useState<ErrorState>({
-    firstname: false,
-    lastname: false,
-    email: false,
+    firstName: false,
+    lastName: false,
+    businessName: false,
+    industry: false,
+    emailAddress: false,
+    role: false,
     password: false,
     confirmPassword: false,
-    role: false,
   });
   const [verifyAccount, setVerifyAccount] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [input, setInput] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
+  const [input, setInput] = useState<InputType>({
+    firstName: "",
+    lastName: "",
+    businessName: "",
+    industry: "",
+    emailAddress: "",
+    role: "",
     password: "",
     confirmPassword: "",
-    role: "",
   });
 
   const router = useRouter();
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    id?: InputIdState
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (id) {
-      resetValidation({ id, error, setError });
-      setInput((i) => ({ ...i, [id]: event.target.value }));
-    }
+    const { id, value } = event.target;
+    if (!id) return;
+    resetValidation({ id, error, setError });
+    setInput((i) => ({ ...i, [id]: value }));
   };
 
   const handleSelect = (option: Option, id?: InputIdState) => {
-    if (id) {
-      resetValidation({ id, error, setError });
-      setInput((i) => ({ ...i, [id]: option.id }));
-    }
+    if (!id) return;
+    resetValidation({ id, error, setError });
+    setInput((i) => ({ ...i, [id]: option.id }));
   };
 
   const handleCreateAccount = async () => {
@@ -96,7 +126,7 @@ const SignUp = () => {
     }
   }, [input, isChecked]);
 
-  if (verifyAccount) return <VerifyAccount email={input.email} />;
+  if (verifyAccount) return <VerifyAccount email={input.emailAddress} />;
 
   return (
     <div className={classes.container}>
@@ -117,61 +147,81 @@ const SignUp = () => {
       <div className={classes.inputWrapper}>
         <div className={classes.group}>
           <CustomTextInput
-            id="firstname"
+            id={inputKeys.firstName}
             leftIcon={userIcon}
             label="First Name"
             placeholder="First Name"
-            value={input}
+            value={input.firstName}
             onChange={handleChange}
             error={error}
           />
           <CustomTextInput
-            id="lastname"
+            id={inputKeys.lastName}
             leftIcon={userIcon}
             label="Last Name"
             placeholder="Last Name"
-            value={input}
+            value={input.lastName}
             onChange={handleChange}
             error={error}
           />
         </div>
 
-        <CustomEmailInput
-          id="email"
-          leftIcon={emailIcon}
-          label="Email Address"
-          placeholder="name@example.com"
-          value={input}
+        <CustomTextInput
+          id={inputKeys.businessName}
+          leftIcon={briefcaseIcon}
+          label="Business Name"
+          placeholder="Business Name"
+          value={input.businessName}
           onChange={handleChange}
           error={error}
         />
 
         <CustomSelect
-          id="role"
+          id={inputKeys.industry}
+          label="Industry"
+          options={industries}
+          placeholder="Select Industry"
+          value={input.industry}
+          onSelect={handleSelect}
+          error={error}
+        />
+
+        <CustomEmailInput
+          id={inputKeys.emailAddress}
+          leftIcon={emailIcon}
+          label="Email Address"
+          placeholder="name@example.com"
+          value={input.emailAddress}
+          onChange={handleChange}
+          error={error}
+        />
+
+        <CustomSelect
+          id={inputKeys.role}
           label="Role"
           options={roles}
           placeholder="Select Role"
-          value={input}
+          value={input.role}
           onSelect={handleSelect}
           error={error}
         />
 
         <CustomPasswordInput
-          id="password"
+          id={inputKeys.password}
           leftIcon={lockIcon}
           label="Password"
           placeholder="Your password"
-          value={input}
+          value={input.password}
           onChange={handleChange}
           error={error}
         />
 
         <CustomPasswordInput
-          id="confirmPassword"
+          id={inputKeys.confirmPassword}
           leftIcon={lockIcon}
           label="Confirm Password"
           placeholder="Re enter password"
-          value={input}
+          value={input.confirmPassword}
           onChange={handleChange}
           error={error}
         />

@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/services/routes";
 import {
   ErrorState,
-  InputIdState,
   resetValidation,
 } from "@/components/CustomInput/CustomInput.script";
 import { useState } from "react";
@@ -54,13 +53,12 @@ const NewPassword = () => {
   };
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    id?: InputIdState
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (id) {
-      resetValidation({ id, error, setError });
-      setInput((i) => ({ ...i, [id]: event.target.value }));
-    }
+    const { id, value } = event.target;
+    if (!id) return;
+    resetValidation({ id, error, setError });
+    setInput((i) => ({ ...i, [id]: value }));
   };
 
   return (

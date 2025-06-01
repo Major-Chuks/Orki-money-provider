@@ -23,9 +23,11 @@ export enum Role {
 }
 
 export type post_create_account = {
-  email: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
+  businessName: string;
+  industry: string;
+  emailAddress: string;
   role: string;
   password: string;
 };
