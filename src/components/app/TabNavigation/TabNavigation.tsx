@@ -7,15 +7,19 @@ interface TabProps<TTab extends string>
   extends React.HTMLAttributes<HTMLDivElement> {
   tabList: readonly TTab[];
   tab: TTab;
-  onTabChange: (tab: TTab) => void;
   style?: React.CSSProperties;
+  tabWidth?: "container-width" | "content-width" | "auto";
+  onTabChange: (tab: TTab) => void;
+  renderItem?: (tab: TTab, isActive: boolean) => React.ReactNode;
 }
 
 const TabNavigation = <TTab extends string>({
   tabList,
   tab,
-  onTabChange,
   style,
+  tabWidth = "auto",
+  onTabChange,
+  renderItem,
 }: TabProps<TTab>) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -36,11 +40,8 @@ const TabNavigation = <TTab extends string>({
     };
 
     updateIndicator();
-
-    // Update on window resize
     window.addEventListener("resize", updateIndicator);
 
-    // Cleanup on unmount
     return () => {
       window.removeEventListener("resize", updateIndicator);
     };
@@ -48,18 +49,31 @@ const TabNavigation = <TTab extends string>({
 
   return (
     <div ref={containerRef} style={{ ...style }} className={classes.container}>
-      {tabList.map((_tab, idx) => (
-        <div
-          key={idx}
-          ref={(el) => {
-            tabRefs.current[idx] = el;
-          }}
-          onClick={() => onTabChange(_tab)}
-          className={`${classes.tab} ${tab === _tab ? classes.active : ""}`}
-        >
-          {_tab}
-        </div>
-      ))}
+      {tabList.map((_tab, idx) => {
+        const isActive = tab === _tab;
+
+        return (
+          <div
+            key={idx}
+            ref={(el) => {
+              tabRefs.current[idx] = el;
+            }}
+            onClick={() => onTabChange(_tab)}
+            className={`${classes.tab} ${isActive ? classes.active : ""}`}
+            style={{
+              width:
+                tabWidth === "container-width"
+                  ? "100%"
+                  : tabWidth === "content-width"
+                    ? "max-content"
+                    : "auto",
+              flexGrow: tabWidth === "auto" ? "1" : "unset",
+            }}
+          >
+            {renderItem ? renderItem(_tab, isActive) : _tab}
+          </div>
+        );
+      })}
 
       <div
         className={classes.activeTab}

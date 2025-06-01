@@ -36,10 +36,7 @@ const Status = ({
             </CustomButton>
           </div>
 
-          <DropdownWrapper
-            openDropdown={open}
-            containerStyle={{ padding: "1px" }}
-          >
+          <DropdownWrapper open={open} containerStyle={{ padding: "1px" }}>
             <div className={classes.dropdown}>
               {types.map((item) => (
                 <div

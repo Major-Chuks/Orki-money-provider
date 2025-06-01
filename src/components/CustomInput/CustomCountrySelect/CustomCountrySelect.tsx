@@ -10,25 +10,38 @@ import {
   InputIdState,
 } from "../CustomInput.script";
 import chevronIcon from "@/assets/icon-chevron-down.svg";
-import { outSideClickHandler } from "@/services/utils";
+import DropdownWrapper from "@/components/app/Dropdown/DropdownWrapper/DropdownWrapper";
+import DropdownLayout from "@/components/app/Dropdown/DropdownLayout/DropdownLayout";
 
-interface ExtendedInput extends ICustomInput {
-  onSelect?: (selected: ICountryData, id?: InputIdState) => void; // New onChange signature
+interface ExtendedInput extends Omit<ICustomInput, "onChange"> {
+  onSelect?: (selected: ICountryData, id?: InputIdState) => void;
+  defaultValue?: ICountryData;
 }
 
 const CustomCountrySelect = ({
   id,
-  placeholder,
+  placeholder = "-- Select country --",
+  defaultValue,
   onSelect,
   label,
   outline = true,
-  plain,
   value: selectedValue,
   error,
 }: ExtendedInput) => {
-  const [selected, setSelected] = useState<ICountryData>(COUNTRY_DATA[101]);
+  const [selected, setSelected] = useState<ICountryData>(
+    defaultValue ?? {
+      name: "",
+      code: "",
+      country_code: "",
+      dial_code: "",
+      flag: "",
+      currency: "",
+      currency_name: "",
+      currency_symbol: "",
+    }
+  );
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const [value, setValue] = useState(COUNTRY_DATA[101].name.toLowerCase());
+  const [value, setValue] = useState("");
   const [countries, setCountries] = useState(COUNTRY_DATA);
 
   const handleClick = (option: ICountryData) => {
@@ -46,11 +59,6 @@ const CustomCountrySelect = ({
     }
   };
 
-  const handleToggleDropdown = () => {
-    setCountries(COUNTRY_DATA);
-    setToggleDropdown(!toggleDropdown);
-  };
-
   useEffect(() => {
     if (value) {
       const filteredResult = COUNTRY_DATA.filter((c) =>
@@ -61,15 +69,6 @@ const CustomCountrySelect = ({
       setCountries(COUNTRY_DATA);
     }
   }, [value]);
-
-  useEffect(() => {
-    if (onSelect) onSelect(selected, id);
-    outSideClickHandler({
-      className: "id_country",
-      setState: setToggleDropdown,
-      document: window.document,
-    });
-  }, []);
 
   useEffect(() => {
     const sv = getValue({ value: selectedValue, id });
@@ -85,75 +84,74 @@ const CustomCountrySelect = ({
   }, [selectedValue]);
 
   return (
-    <div
-      id="id_country"
-      className={`${classes.container} ${
-        getError({ error, id }) && classes.error
-      } ${outline && classes.outline} ${innerClasses.container}`}
-    >
-      {label && <div className={classes.label}>{label}</div>}
-      <div onClick={handleToggleDropdown} className={classes.wrapper}>
+    <DropdownLayout>
+      {({ open, toggle, close }) => (
         <div
-          className={`${classes.section} ${innerClasses.section} ${
-            plain && innerClasses.plain
-          }`}
+          className={`${classes.container} ${
+            getError({ error, id }) && classes.error
+          } ${outline && classes.outline} ${innerClasses.container}`}
         >
-          <div className={classes.left}>
-            {selected.flag ? (
-              <Image width={24} height={24} src={selected.flag} alt="flag" />
-            ) : (
-              <div className={innerClasses.sudoFlag}>Flag</div>
-            )}
-          </div>
-        </div>
-        <input
-          className={`${classes.input} ${innerClasses.input} ${
-            plain && innerClasses.plain
-          }`}
-          type="text"
-          placeholder={placeholder}
-          value={value}
-          onChange={handleChange}
-        />
-        <div
-          className={`${classes.section} ${innerClasses.section} ${
-            plain && innerClasses.plain
-          }`}
-        >
-          <div className={classes.right}>
-            <Image
-              className={innerClasses.chevronIcon}
-              src={chevronIcon}
-              alt=""
+          {label && <div className={classes.label}>{label}</div>}
+          <div onClick={toggle} className={classes.wrapper}>
+            <div className={`${classes.section} ${innerClasses.section}`}>
+              <div className={classes.left}>
+                {selected.flag ? (
+                  <Image
+                    width={24}
+                    height={24}
+                    src={selected.flag}
+                    alt="flag"
+                  />
+                ) : null}
+              </div>
+            </div>
+            <input
+              key={String(open)}
+              id={id}
+              className={`${classes.input} ${innerClasses.input} `}
+              type="text"
+              placeholder={placeholder}
+              value={value}
+              autoFocus={open}
+              onChange={handleChange}
             />
-          </div>
-        </div>
-      </div>
-
-      {toggleDropdown && (
-        <div
-          className={`${innerClasses.dropdownWrapper} ${
-            plain && innerClasses.plain
-          }`}
-        >
-          <div className={innerClasses.dropdown}>
-            <div className={innerClasses.scrollArea}>
-              {countries.map((country, index) => (
-                <div
-                  onClick={() => handleClick(country)}
-                  key={index}
-                  className={`${innerClasses.item} ${
-                    selected.name === country.name && innerClasses.active
-                  }`}
-                >
-                  {country.name}
-                </div>
-              ))}
+            <div className={`${classes.section} ${innerClasses.section}`}>
+              <div className={classes.right}>
+                <Image
+                  className={innerClasses.chevronIcon}
+                  src={chevronIcon}
+                  alt=""
+                />
+              </div>
             </div>
           </div>
+
+          <DropdownWrapper
+            open={open}
+            containerStyle={{ width: "100%", padding: "1px" }}
+          >
+            <div className={innerClasses.dropdown}>
+              <div className={innerClasses.scrollArea}>
+                {countries.map((country, index) => (
+                  <div
+                    onClick={() => {
+                      handleClick(country);
+                      close();
+                    }}
+                    key={index}
+                    className={`${innerClasses.item} ${
+                      selected.name === country.name && innerClasses.active
+                    }`}
+                  >
+                    {country.name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </DropdownWrapper>
         </div>
       )}
-    </div>
+    </DropdownLayout>
   );
 };
 

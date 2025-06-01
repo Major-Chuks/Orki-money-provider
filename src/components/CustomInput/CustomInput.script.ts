@@ -21,7 +21,7 @@ export interface ICustomInput {
 
 export type ErrorState = { [key: number | string]: boolean };
 export type InputState = { [key: number | string]: string };
-export type InputIdState = string | number;
+export type InputIdState = string;
 
 export interface ResetValidationProps {
   id: InputIdState;

@@ -103,11 +103,11 @@
   background: #fff;
   resize: vertical;
   /* text */
-  color: #353945 !important;
-  font-family: "Plus Jakarta Sans";
+  color: #334155 !important;
+  font-family: "DM Sans";
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
 }
 
@@ -137,7 +137,7 @@
 }
 
 .container.outline .input:focus {
-  outline: 1px solid #6148c2;
+  outline: 1px solid #2f2fdd;
 }
 
 .input:disabled {

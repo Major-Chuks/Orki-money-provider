@@ -7,6 +7,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { pageRoutes } from "./Sidebar.script";
 import { routes } from "@/services/routes";
 import TourPointer from "../TourGuide/TourPointer";
+import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
+import { LogOut } from "lucide-react";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -53,6 +55,28 @@ const Sidebar = () => {
               <div className={classes.pathname}>{name}</div>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className={classes.footer}>
+        <ButtonWrapper>
+          <div className={classes.logoutBtn}>
+            <LogOut
+              width={16}
+              height={16}
+              color="#777E90"
+              style={{ transform: "rotate(180deg)" }}
+            />
+            Logout
+          </div>
+        </ButtonWrapper>
+
+        <div className={classes.user}>
+          <div className={classes.icon}>A</div>
+          <div>
+            <div className={classes.name}>Admin User</div>
+            <div className={classes.email}>admin@carbonIQ.com</div>
+          </div>
         </div>
       </div>
     </div>

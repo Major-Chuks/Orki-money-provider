@@ -10,26 +10,34 @@ const KeyViewer = ({
   value,
   label,
   note,
+  toggleVisibility = true,
 }: {
   value: string;
-  label: string;
+  label?: string;
   note?: string;
+  toggleVisibility?: boolean;
 }) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(!toggleVisibility);
 
   return (
     <div className={classes.wrapper}>
-      <div className={classes.label}>{label}</div>
+      {label && <div className={classes.label}>{label}</div>}
       <div className={classes.container}>
-        <div className={classes.inputContainer}>
+        <div
+          className={`${classes.inputContainer} ${
+            !toggleVisibility && classes.styleBg
+          }`}
+        >
           <input type={show ? "text" : "password"} readOnly value={value} />
-          <ButtonWrapper onClick={() => setShow((prevState) => !prevState)}>
-            {show ? (
-              <EyeOffIcon color="#6B7280" width={24} height={24} />
-            ) : (
-              <OpenEye />
-            )}
-          </ButtonWrapper>
+          {toggleVisibility ? (
+            <ButtonWrapper onClick={() => setShow((prevState) => !prevState)}>
+              {show ? (
+                <EyeOffIcon color="#6B7280" width={24} height={24} />
+              ) : (
+                <OpenEye />
+              )}
+            </ButtonWrapper>
+          ) : null}
         </div>
 
         <Copy value={value}>

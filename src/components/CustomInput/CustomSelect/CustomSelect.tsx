@@ -5,7 +5,9 @@ import innerClasses from "./CustomSelect.module.css";
 import { useEffect, useState } from "react";
 import { getValue, ICustomInput, InputIdState } from "../CustomInput.script";
 import chevronIcon from "@/assets/icon-chevron-down.svg";
-import { capitalize, outSideClickHandler } from "@/services/utils";
+import { capitalize } from "@/services/utils";
+import DropdownWrapper from "@/components/app/Dropdown/DropdownWrapper/DropdownWrapper";
+import DropdownLayout from "@/components/app/Dropdown/DropdownLayout/DropdownLayout";
 
 export type Option = {
   id: string;
@@ -35,7 +37,6 @@ const CustomSelect = ({
   const [selected, setSelected] = useState<Option>(
     defaultValue || { name: "", id: "", icon: "" }
   );
-  const [toggleDropdown, setToggleDropdown] = useState(false);
   const [value, setValue] = useState(
     defaultValue || { name: "", id: "", icon: "" }
   );
@@ -43,22 +44,8 @@ const CustomSelect = ({
   const handleClick = (option: Option) => {
     setSelected(option);
     setValue(option);
-    setToggleDropdown(false);
     if (onSelect) onSelect(option, id);
   };
-
-  const handleToggleDropdown = () => {
-    setToggleDropdown(!toggleDropdown);
-  };
-
-  useEffect(() => {
-    if (onSelect) onSelect(selected, id);
-    outSideClickHandler({
-      className: "id_select",
-      setState: setToggleDropdown,
-      document: window.document,
-    });
-  }, []);
 
   useEffect(() => {
     const sv = getValue({ value: selectedValue, id });
@@ -77,76 +64,79 @@ const CustomSelect = ({
   }, [selectedValue]);
 
   return (
-    <div
-      id="id_select"
-      className={`${classes.container} ${outline && classes.outline} ${
-        innerClasses.container
-      }`}
-    >
-      {label && <div className={classes.label}>{label}</div>}
-      <div onClick={handleToggleDropdown} className={classes.wrapper}>
+    <DropdownLayout>
+      {({ open, close, toggle }) => (
         <div
-          className={`${classes.section} ${innerClasses.section} ${
-            plain && classes.innerClasses
+          className={`${classes.container} ${outline && classes.outline} ${
+            innerClasses.container
           }`}
         >
-          <div className={classes.left}>
-            {value?.icon && (
-              <Image width={20} height={20} src={value.icon} alt="" />
-            )}
-          </div>
-        </div>
-        <input
-          className={`${classes.input} ${innerClasses.input} ${
-            value?.icon && innerClasses.maxPadding
-          } ${plain && innerClasses.plain}`}
-          type="text"
-          placeholder={placeholder}
-          value={format ? capitalize(value?.name) : value?.name}
-          onChange={() => {}}
-        />
-        <div
-          className={`${classes.section} ${innerClasses.section} ${
-            plain && innerClasses.plain
-          }`}
-        >
-          <div className={classes.right}>
-            <Image
-              className={innerClasses.chevronIcon}
-              src={chevronIcon}
-              alt=""
+          {label && <div className={classes.label}>{label}</div>}
+          <div onClick={toggle} className={classes.wrapper}>
+            <div
+              className={`${classes.section} ${innerClasses.section} ${
+                plain && classes.innerClasses
+              }`}
+            >
+              <div className={classes.left}>
+                {value?.icon && (
+                  <Image width={20} height={20} src={value.icon} alt="" />
+                )}
+              </div>
+            </div>
+            <input
+              className={`${classes.input} ${innerClasses.input} ${
+                value?.icon && innerClasses.maxPadding
+              } ${plain && innerClasses.plain}`}
+              type="text"
+              placeholder={placeholder}
+              value={format ? capitalize(value?.name) : value?.name}
+              onChange={() => {}}
             />
-          </div>
-        </div>
-      </div>
-
-      {toggleDropdown && (
-        <div
-          className={`${innerClasses.dropdownWrapper} ${
-            plain && innerClasses.plain
-          }`}
-        >
-          <div className={innerClasses.dropdown}>
-            <div className={innerClasses.scrollArea}>
-              {options.map((option, index) => (
-                <div
-                  onClick={() => handleClick(option)}
-                  key={index}
-                  className={`${innerClasses.item} ${
-                    selected.name === option.name && innerClasses.active
-                  }`}
-                >
-                  {option.icon && (
-                    <Image width={20} height={20} src={option.icon} alt="" />
-                  )}
-                  {format ? capitalize(option.name) : option.name}
-                </div>
-              ))}
+            <div
+              className={`${classes.section} ${innerClasses.section} ${
+                plain && innerClasses.plain
+              }`}
+            >
+              <div className={classes.right}>
+                <Image
+                  className={innerClasses.chevronIcon}
+                  src={chevronIcon}
+                  alt=""
+                />
+              </div>
             </div>
           </div>
+
+          <DropdownWrapper
+            open={open}
+            containerStyle={{ width: "100%", padding: "1px" }}
+          >
+            <div className={innerClasses.dropdown}>
+              <div className={innerClasses.scrollArea}>
+                {options.map((option, index) => (
+                  <div
+                    onClick={() => {
+                      handleClick(option);
+                      close();
+                    }}
+                    key={index}
+                    className={`${innerClasses.item} ${
+                      selected.name === option.name && innerClasses.active
+                    }`}
+                  >
+                    {option.icon && (
+                      <Image width={20} height={20} src={option.icon} alt="" />
+                    )}
+                    {format ? capitalize(option.name) : option.name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </DropdownWrapper>
         </div>
       )}
-    </div>
+    </DropdownLayout>
   );
 };
 

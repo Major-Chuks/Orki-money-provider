@@ -3,7 +3,8 @@ import { useState } from "react";
 import classes from "./Button.module.css";
 import LoadingIcon from "@/assets/app/LoadingIcon";
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+interface ButtonProps
+  extends Omit<React.HTMLAttributes<HTMLButtonElement>, "className"> {
   style?: React.CSSProperties;
   type?:
     | "secondary"

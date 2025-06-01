@@ -35,7 +35,7 @@ const Select = ({
             </div>
           </div>
           <DropdownWrapper
-            openDropdown={open}
+            open={open}
             containerStyle={{ width: "100%" }}
             position="static"
           >

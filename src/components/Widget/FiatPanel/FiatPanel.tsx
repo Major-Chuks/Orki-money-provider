@@ -3,7 +3,6 @@ import ErrorIcon from "@/assets/SvgComponents/ErrorIcon";
 import FiatCurrencySearch from "../FiatCurrencySearch/FiatCurrencySearch";
 import classes from "./FiatPanel.module.css";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
-import { get_defaults } from "@/interface/get_defaults";
 
 const FiatPanel = ({
   title,
@@ -20,8 +19,6 @@ const FiatPanel = ({
   value: string;
   onCurrencyChange: (symbol: string) => void;
   onAmountChange: (value: string) => void;
-  provider: get_defaults[number] | null;
-  paymentMethod: string;
   error: string;
 }) => {
   return (

@@ -44,11 +44,12 @@ const CustomEmailInput = ({
           )}
         </div>
         <input
+          id={id}
           className={classes.input}
           type="email"
           placeholder={placeholder}
           value={getValue({ value, id })}
-          onChange={(event) => (onChange ? onChange(event, id) : {})}
+          onChange={(event) => (onChange ? onChange(event) : {})}
           disabled={disabled}
           style={{ height: height, border: border }}
         />

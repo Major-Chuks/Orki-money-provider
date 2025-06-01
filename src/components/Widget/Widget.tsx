@@ -342,8 +342,6 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
                 fiatCurrency={fiatCurrency}
                 title="You Pay"
                 value={fiatAmount}
-                provider={provider}
-                paymentMethod={paymentMethod}
                 error={error}
               />
               <CryptoPanel
@@ -379,8 +377,6 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
                 fiatCurrency={fiatCurrency}
                 title="You Receive"
                 value={fiatAmount}
-                provider={provider}
-                paymentMethod={paymentMethod}
                 error={error}
               />
             </div>

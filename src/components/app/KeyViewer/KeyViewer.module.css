@@ -12,10 +12,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 16px;
+  padding: 12px 16px;
   border-radius: 8px;
   border: 1px solid var(--gray-300, #d1d5db);
   background: var(--white, #fff);
+}
+
+.inputContainer.styleBg {
+  background: var(--gray-100, #f3f4f6);
 }
 
 .inputContainer input {
@@ -25,6 +29,7 @@
   border: none;
   outline: none;
   font-size: 16px;
+  background: transparent;
   /* text */
   color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
   font-family: "DM Sans";
@@ -36,7 +41,7 @@
 
 .copyIcon {
   display: flex;
-  padding: 16px;
+  padding: 12px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;

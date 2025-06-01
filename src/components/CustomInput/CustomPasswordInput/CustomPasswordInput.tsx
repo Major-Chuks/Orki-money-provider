@@ -39,11 +39,12 @@ const CustomPasswordInput = ({
           </div>
         )}
         <input
+          id={id}
           className={classes.input}
           type={showPassword ? "text" : "password"}
           placeholder={placeholder}
           value={getValue({ value, id })}
-          onChange={(event) => (onChange ? onChange(event, id) : {})}
+          onChange={(event) => (onChange ? onChange(event) : {})}
         />
         <div className={classes.section}>
           <div

@@ -4,13 +4,13 @@ import classes from "./DropdownWrapper.module.css";
 interface DropdownWrapperProps {
   contentStyle?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
-  openDropdown: boolean;
+  open: boolean;
   children: React.ReactNode;
   position?: "static" | "absolute";
 }
 
 const DropdownWrapper: React.FC<DropdownWrapperProps> = ({
-  openDropdown,
+  open,
   children,
   containerStyle,
   contentStyle,
@@ -28,9 +28,9 @@ const DropdownWrapper: React.FC<DropdownWrapperProps> = ({
 
   return (
     <div
-      className={`${classes.container} ${
-        openDropdown ? classes.open : classes.close
-      } ${classes[position]}`}
+      className={`${classes.container} ${open ? classes.open : classes.close} ${
+        classes[position]
+      }`}
       style={
         {
           "--container-height": containerHeight,

@@ -10,7 +10,7 @@ const CustomColorInput = ({
   id: string;
   label: string;
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -24,15 +24,16 @@ const CustomColorInput = ({
     <div className={classes.container}>
       <div className={classes.label}>{label}</div>
       <div className={classes.inputWrapper}>
-        <div style={{ background: value }} className={classes.picked}></div>
-        <div onClick={handleClick} className={classes.selectBtn}>
-          Change color
+        <div className={classes.value}>{value || <span>-- Pick --</span>}</div>
+        <div onClick={handleClick} className={classes.picker}>
+          <div style={{ background: value }} className={classes.picked}></div>
         </div>
         <input
+          id={id}
           ref={inputRef}
           style={{ visibility: "hidden" }}
           type="color"
-          onChange={(event) => onChange(event, id)}
+          onChange={onChange}
         />
       </div>
     </div>

@@ -89,7 +89,7 @@ const PlanFeatures = () => {
               </ButtonWrapper>
             </div>
             <DropdownWrapper
-              openDropdown={open}
+              open={open}
               containerStyle={{ width: "100%" }}
               position="static"
             >

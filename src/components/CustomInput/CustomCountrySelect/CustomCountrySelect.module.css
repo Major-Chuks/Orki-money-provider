@@ -11,53 +11,20 @@
   padding: 0 48px !important;
 }
 
-.input.plain {
-  all: unset !important;
-  padding: 0 24px !important;
-  width: 100% !important;
-  color: var(--neutral-2, #23262f) !important;
-  font-family: "DM Sans" !important;
-  font-size: 12px !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  line-height: normal !important;
-}
-
-.input.plain::placeholder {
-  color: var(--faint);
-  font-family: "DM Sans" !important;
-  font-size: 12px !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  line-height: normal !important;
-}
-
-.dropdownWrapper {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  transform: translateY(100%);
-  z-index: 10;
-}
-
-.dropdownWrapper.plain .dropdown {
-  padding: 4px;
-  margin-top: 14px;
-}
-
 .dropdown {
   width: 100%;
-  padding: 16px 12px;
   border-radius: 8px;
-  background: var(--white);
-  box-shadow: 0px 3px 8px -1px rgba(50, 50, 71, 0.05),
-    0px 0px 1px 0px rgba(12, 26, 75, 0.24);
+  border: 1px solid var(--Gray-100, #f2f4f7);
+  background: var(--White, #fff);
+  box-shadow: 0px 0px 3px 0px rgba(41, 41, 41, 0.25);
+  margin-bottom: 16px;
+  padding: 16px 12px;
 }
 
 .scrollArea {
   display: flex;
   width: 100%;
-  max-height: 320px;
+  max-height: 220px;
   overflow: auto;
   flex-direction: column;
   align-items: flex-start;
@@ -79,11 +46,6 @@
   font-style: normal;
   font-weight: 500;
   line-height: 14px; /* 100% */
-}
-
-.dropdownWrapper.plain .item {
-  font-size: 12px !important;
-  font-weight: 400 !important;
 }
 
 .item:hover {

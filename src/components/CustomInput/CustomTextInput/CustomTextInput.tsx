@@ -49,6 +49,7 @@ const CustomTextInput = ({
         )}
         {type === "text" ? (
           <input
+            id={id}
             className={`${classes.input} ${innerClasses.input} ${
               plain && innerClasses.plain
             }`}
@@ -59,15 +60,16 @@ const CustomTextInput = ({
                 ? capitalizeText(getValue({ value, id }))
                 : getValue({ value, id })
             }
-            onChange={(event) => (onChange ? onChange(event, id) : {})}
+            onChange={(event) => (onChange ? onChange(event) : {})}
             disabled={disabled}
           />
         ) : (
           <textarea
+            id={id}
             className={`${classes.input} ${innerClasses.input} ${classes.textarea}`}
             placeholder={placeholder}
             value={getValue({ value, id })}
-            onChange={(event) => (onChange ? onChange(event, id) : {})}
+            onChange={(event) => (onChange ? onChange(event) : {})}
             disabled={disabled}
           ></textarea>
         )}

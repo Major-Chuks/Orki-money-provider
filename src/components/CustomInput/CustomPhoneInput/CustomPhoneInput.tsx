@@ -68,6 +68,7 @@ const CustomPhoneInput = ({
           </div>
         </div>
         <input
+          id={id}
           ref={inputRef}
           className={`${classes.input} ${innerClasses.input}`}
           type="phone"
