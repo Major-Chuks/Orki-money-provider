@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 8px;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 133.333% */
+}
+
+.description {
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+}
