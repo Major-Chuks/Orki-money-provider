@@ -22,4 +22,10 @@ export type get_defaults = {
   quote_amount?: number;
   percentage_diff: number;
   is_supported: boolean;
+  widget?: {
+    clientId: string;
+    ticker: string;
+    token: string;
+    currency: string;
+  } | null;
 }[];

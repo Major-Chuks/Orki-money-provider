@@ -50,3 +50,8 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+/* css for controlling Koywe widget's close button */
+.css-1bvc4cc {
+  display: none !important;
+}

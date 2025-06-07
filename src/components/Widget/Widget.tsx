@@ -35,6 +35,7 @@ import {
   useGetUserLocation,
   usePostChangeLocation,
 } from "@/services/tanStackApi";
+import Koywe from "./SDK/Koywe/Koywe";
 
 const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -63,6 +64,7 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
   const [toggleCountryModal, setToggleCountryModal] = useState(false);
   const [country, setCountry] = useState<ICountryData | null>(null);
   const isFirstQuoteRender = useRef(0);
+  const [openWidget, setOpenWidget] = useState(false);
 
   const { data: fiatResponse, isSuccess: isFiatSuccess } =
     useGetFiatCurrencies();
@@ -84,30 +86,44 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
     setFiatCurrency(c);
   };
 
-  const handleProceed = () => {
+  const handleProceed = async () => {
+    const sanitizeName = (str: string) => str.replace(/[^a-zA-Z0-9_]/g, "_");
+
     if (!provider) return;
     // before window will open, show the initial redirect screen.
     setToggleFirstRedirect(true);
 
-    setTimeout(() => {
-      setToggleFirstRedirect(false);
-      // window.open(purchaseLink, "_blank", "noopener,noreferrer");
-      const popupWindow = window.open(
-        provider.link,
-        `${provider.provider.identifier}_${network}_${fiatAmount}_${fiatCurrency}_${cryptoAmount}_${cryptoCurrency}`
-      );
-      if (!popupWindow) return;
-      setToggleSecondRedirect(true);
+    // delay for 1000ms
+    await new Promise((res) => {
+      setTimeout(() => {
+        res("");
+      }, 1000);
+    });
 
-      setPopupWindow(popupWindow);
-      const checkPopupClosed: NodeJS.Timeout = setInterval(() => {
-        if (popupWindow.closed) {
-          clearInterval(checkPopupClosed);
-          setToggleSecondRedirect(false);
-        }
-      }, 500);
-    }, 1000);
-    // onLaunch(purchaseLink);
+    setToggleFirstRedirect(false);
+
+    if (provider.widget) {
+      setOpenWidget(true);
+      return;
+    }
+
+    const popupWindow = window.open(
+      provider.link,
+      sanitizeName(
+        `${provider.provider.identifier}_${network}_${fiatAmount}_${fiatCurrency}_${cryptoAmount}_${cryptoCurrency}`
+      )
+    );
+    if (!popupWindow) return console.log("No popup window");
+
+    setToggleSecondRedirect(true);
+
+    setPopupWindow(popupWindow);
+    const checkPopupClosed: NodeJS.Timeout = setInterval(() => {
+      if (popupWindow.closed) {
+        clearInterval(checkPopupClosed);
+        setToggleSecondRedirect(false);
+      }
+    }, 500);
   };
 
   const handleContinueProcess = () => {
@@ -261,6 +277,19 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
 
   return (
     <React.Fragment>
+      {openWidget &&
+        provider?.widget &&
+        provider.provider.identifier === "koywe" && (
+          <Koywe
+            currency={provider.widget.currency}
+            token={provider.widget.token}
+            clientId="680a518c0ea44d25514e3a49" // const
+            callbackUrl="https://money.orki.io/koywe/callback"
+            onClose={() => setOpenWidget(false)}
+            testing={true}
+          />
+        )}
+
       {loading ? (
         <div className={`${classes.container} ${classes.loader}`}>
           <LargeLoadingIcon />

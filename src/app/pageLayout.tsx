@@ -27,6 +27,11 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
+  // Koywe sdk router
+  if (pathname.includes("/koywe")) {
+    return <>{children}</>;
+  }
+
   if (routes.miniWidget === pathname) {
     return (
       <QueryClientProvider client={queryClient}>
