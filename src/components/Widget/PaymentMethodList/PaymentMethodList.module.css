@@ -91,7 +91,7 @@
 }
 
 .paymentMethod:hover {
-  border: 1px solid var(--gray-300, #979797);
+  border: 1px solid var(--Foundation-Brand-brand-500, #5b29ec);
 }
 
 .iconContainer {
