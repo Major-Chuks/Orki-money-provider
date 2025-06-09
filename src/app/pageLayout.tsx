@@ -1,6 +1,6 @@
 "use client";
 
-import classes from "./PageLayout.module.css";
+import classes from "./pageLayoutV2.module.css";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar/Navbar";
