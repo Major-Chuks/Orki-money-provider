@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface get_apiLogs {
   logs: any[];
   meta: get_apiLogs_Sub1;
