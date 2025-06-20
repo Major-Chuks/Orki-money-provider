@@ -1,0 +1,77 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import axios from "axios";
+import { authApi } from "./auth";
+import { apiKeysApi } from "./apiKeys";
+import { transactionsApi } from "./transactions";
+import { webhookApi } from "./webhook";
+import { widgetApi } from "./widget";
+import { apiLogsApi } from "./apiLogs";
+import { store } from "@/redux/store";
+
+export const baseURL = "https://api.money.orki.io/api";
+
+export const BACKEND_API = axios.create({
+  baseURL: baseURL + "/v1",
+});
+
+export const BACKEND_API_NO_VERSION = axios.create({
+  baseURL: baseURL,
+});
+
+BACKEND_API.interceptors.request.use(async (config) => {
+  const { user } = store.getState();
+  const accessToken = user.accessToken;
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
+
+BACKEND_API_NO_VERSION.interceptors.request.use(async (config) => {
+  const { user } = store.getState();
+  const accessToken = user.accessToken;
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
+
+export const AUTH_API = axios.create({
+  baseURL: baseURL + "/auth",
+});
+
+export const handleApiCall = async <T>(
+  method: () => Promise<T>,
+  label: string
+): Promise<T | undefined> => {
+  try {
+    return await method();
+  } catch (error) {
+    handleError(error, label);
+  }
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+export const handleError = (error: any, label?: string) => {
+  const errMsg =
+    error?.response?.data?.msg ||
+    error?.response?.data?.message ||
+    error?.message;
+
+  if (error?.status === 401 || error?.response?.status === 401) {
+    // force logout
+  } else {
+    console.log(errMsg);
+  }
+};
+
+export default function backend() {
+  return {
+    ...authApi,
+    ...apiKeysApi,
+    ...transactionsApi,
+    ...webhookApi,
+    ...widgetApi,
+    ...apiLogsApi,
+  };
+}

@@ -3,28 +3,20 @@ import TableStatus from "../../TableStatus/TableStatus";
 import classes from "./TransactionTable.module.css";
 import TransactionDetails from "../TransactionDetails/TransactionDetails";
 import { useState } from "react";
+import { get_transactions } from "@/types/apis/transactions/get_transactions";
+import { formatText, formatTxDate } from "@/services/utils";
 
 const TransactionTable = ({
   data,
 }: {
-  data: {
-    clientId: string;
-    transactionId: string;
-    date: string;
-    type: "Buy" | "Sell";
-    fiatAmount: string;
-    cryptoAmount: string;
-    paymentMethod: string;
-    provider: string;
-    status: "Success" | "Pending" | "Failed";
-  }[];
+  data: get_transactions["transactions"];
 }) => {
-  const [openDetails, setOpenDetails] = useState(false);
+  const [txId, setTxId] = useState("");
 
   return (
     <div className={classes.tableWrapper}>
-      {openDetails && (
-        <TransactionDetails onClose={() => setOpenDetails(false)} />
+      {Boolean(txId) && (
+        <TransactionDetails id={txId} onClose={() => setTxId("")} />
       )}
       <table>
         <thead>
@@ -44,20 +36,24 @@ const TransactionTable = ({
         <tbody>
           {data.map((item, idx) => (
             <tr key={idx}>
-              <td>{item.clientId}</td>
-              <td>{item.transactionId}</td>
-              <td>{item.date}</td>
-              <td>{item.type}</td>
-              <td>{item.fiatAmount}</td>
-              <td>{item.cryptoAmount}</td>
-              <td>{item.paymentMethod}</td>
-              <td>{item.provider}</td>
+              <td>{"--"}</td>
+              <td>{formatText(item.id, "clip", [5, 4])}</td>
+              <td>{formatTxDate(item.created_at)}</td>
+              <td>{formatText(item.type)}</td>
+              <td>
+                {Number(item.fiat_amount)?.toFixed(2)} {item.fiat_currency}
+              </td>
+              <td>
+                {Number(item.crypto_amount)?.toFixed(2)} {item.crypto_currency}
+              </td>
+              <td>{formatText(item.payment_method)}</td>
+              <td>{formatText(item.provider)}</td>
               <td>
                 <TableStatus status={item.status}>{item.status}</TableStatus>
               </td>
               <td>
                 <ButtonWrapper
-                  onClick={() => setOpenDetails(true)}
+                  onClick={() => setTxId(item.id)}
                   className={classes.viewBtn}
                 >
                   View Details

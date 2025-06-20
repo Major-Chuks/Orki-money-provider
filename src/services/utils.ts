@@ -490,3 +490,71 @@ export const validatePasswordV2 = (password: string) => {
 
   return validation;
 };
+
+type FormatType =
+  | "titleCase"
+  | "sentenceCase"
+  | "lowerCase"
+  | "clipStart"
+  | "clipEnd"
+  | "clip";
+
+export function formatText(
+  input: string,
+  format: FormatType = "titleCase",
+  clipLength: number | [number, number] = 4
+): string {
+  if (!input) return "";
+
+  const toWords = (text: string) =>
+    text
+      .replace(/([a-z])([A-Z])/g, "$1 $2") // camelCase to space
+      .replace(/[_\-]+/g, " ") // underscores/dashes to space
+      .trim()
+      .split(/\s+/);
+
+  switch (format) {
+    case "titleCase":
+      return toWords(input)
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ");
+
+    case "sentenceCase":
+      const words = toWords(input).map((w) => w.toLowerCase());
+      if (words.length === 0) return "";
+      return (
+        words[0].charAt(0).toUpperCase() +
+        words[0].slice(1) +
+        " " +
+        words.slice(1).join(" ")
+      );
+
+    case "lowerCase":
+      return toWords(input)
+        .map((w) => w.toLowerCase())
+        .join(" ");
+
+    case "clipStart":
+      if (typeof clipLength !== "number") return input;
+      return input.length <= clipLength
+        ? input
+        : `…${input.slice(-clipLength)}`;
+
+    case "clipEnd":
+      if (typeof clipLength !== "number") return input;
+      return input.length <= clipLength
+        ? input
+        : `${input.slice(0, clipLength)}…`;
+
+    case "clip":
+      if (!Array.isArray(clipLength)) return input;
+      const [start, end] = clipLength;
+      if (input.length <= start + end + 3) return input;
+      return `${input.slice(0, start)}…${input.slice(-end)}`;
+
+    default:
+      return input;
+  }
+}

@@ -1,7 +1,12 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { BACKEND_API } from "./apis";
-import { post_buy_quote_type, post_sell_quote_type } from "./interface";
+import { post_buy_quote_type, post_sell_quote_type } from "../interface";
 import { queryClient } from "@/app/pageLayout";
+import axios from "axios";
+import { baseURL } from "../apis";
+
+const BACKEND_API = axios.create({
+  baseURL: baseURL + "/v1",
+});
 
 const get_user_location = async () => {
   const url = "/get-location";

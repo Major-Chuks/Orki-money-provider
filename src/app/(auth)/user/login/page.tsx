@@ -17,6 +17,8 @@ import {
 } from "@/components/CustomInput/CustomInput.script";
 import { useEffect, useState } from "react";
 import backend from "@/services/apis";
+import { useDispatch } from "react-redux";
+import { setAccessToken, setCurrentUser } from "@/redux/slices/user";
 
 const Login = () => {
   const router = useRouter();
@@ -32,6 +34,8 @@ const Login = () => {
     password: "",
   });
 
+  const dispatch = useDispatch();
+
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -45,7 +49,14 @@ const Login = () => {
     setLoading(true);
     const response = await backend().post_login(input);
     if (response) {
+      dispatch(setAccessToken(response.data.data.access_token));
+      const userResponse = await backend().get_authInfo();
+      if (userResponse) {
+        dispatch(setCurrentUser(userResponse.data.data));
+      }
       router.push(routes.dashboard);
+    } else {
+      dispatch(setAccessToken(null));
     }
     setLoading(false);
   };

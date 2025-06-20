@@ -6,11 +6,19 @@ import Pagination from "../Pagination/Pagination";
 import Filter from "./Filter/Filter";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import exportIcon from "@/assets/app/exportIcon.svg";
-import { data, metadata } from "./mockData";
 import Status from "./Status/Status";
 import TransactionTable from "./TransactionTable/TransactionTable";
+import { useTransactionsQuery } from "@/services/queryApis";
+import { get_transactions } from "@/types/apis/transactions/get_transactions";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
+import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const Transactions = () => {
+  const { data, isPending, isError } = useTransactionsQuery();
+  const transactions: get_transactions["transactions"] =
+    data?.data.data.transactions;
+  const metadata: get_transactions["meta"] = data?.data.data.meta;
+
   const handlePrev = (): void => {
     if (!metadata?.previousPageUrl) return;
     // refetch({ page: Number(metadata?.previousPageUrl.split("=")[1]) });
@@ -26,6 +34,10 @@ const Transactions = () => {
     // refetch({ page });
   };
 
+  if (isPending) return <LoadingScreen />;
+
+  if (isError) return <ErrorScreen />;
+
   return (
     <>
       {false && (
@@ -35,7 +47,7 @@ const Transactions = () => {
         </>
       )}
 
-      {data ? (
+      {transactions.length ? (
         <div className={classes.container}>
           <div className={classes.header}>
             <div className={classes.title}>Transaction History</div>
@@ -67,9 +79,9 @@ const Transactions = () => {
               </div>
             </div>
 
-            <TransactionTable data={data} />
+            <TransactionTable data={transactions} />
 
-            {metadata && (
+            {false && (
               <Pagination
                 metadata={metadata}
                 handleGoto={handleGoto}

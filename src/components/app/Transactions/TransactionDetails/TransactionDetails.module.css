@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  min-height: 100vh;
 }
 
 .header {
@@ -140,17 +141,4 @@
   font-style: normal;
   font-weight: 600;
   line-height: 20px; /* 125% */
-}
-
-.status {
-  padding: 0px 8px;
-  border-radius: 12px;
-  background: var(--green-200, #bbf7d0);
-  /* text */
-  color: var(--green-800, #166534);
-  font-family: "Plus Jakarta Sans";
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 16px; /* 160% */
 }

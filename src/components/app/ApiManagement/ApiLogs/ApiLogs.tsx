@@ -1,10 +1,18 @@
 import classes from "./ApiLogs.module.css";
 import EmptyState from "./EmptyState/EmptyState";
-import { data, metadata } from "./mockData";
 import TransactionTable from "./TransactionTable/TransactionTable";
 import Pagination from "../../Pagination/Pagination";
+import { useApiLogsQuery } from "@/services/queryApis";
+import { get_apiLogs } from "@/types/apis/apiLogs/get_apiLogs";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
+import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const ApiLogs = () => {
+  const { data, isPending, isError } = useApiLogsQuery();
+
+  const apiLogs: get_apiLogs["logs"] = data?.data.data.logs;
+  const metadata: get_apiLogs["meta"] = data?.data.data.meta;
+
   const handlePrev = (): void => {
     if (!metadata?.previousPageUrl) return;
     // refetch({ page: Number(metadata?.previousPageUrl.split("=")[1]) });
@@ -20,9 +28,13 @@ const ApiLogs = () => {
     // refetch({ page });
   };
 
+  if (isPending) return <LoadingScreen />;
+
+  if (isError) return <ErrorScreen />;
+
   return (
     <>
-      {data ? (
+      {apiLogs.length ? (
         <div className={classes.container}>
           <div className={classes.header}>
             <div className={classes.title}>API Logs</div>
@@ -30,7 +42,7 @@ const ApiLogs = () => {
               View recent API activity and debug integrations.
             </div>
 
-            <TransactionTable data={data} />
+            <TransactionTable data={apiLogs} />
 
             {metadata && (
               <Pagination

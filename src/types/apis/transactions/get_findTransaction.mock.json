@@ -1,0 +1,21 @@
+{
+  "id": "01jx0vfk6qpayjpajg1wv6jtgk",
+  "provider_tx_id": null,
+  "type": "BUY",
+  "sender_address": null,
+  "recipient_address": null,
+  "exchange_rate": "2045801.940000",
+  "transaction_hash": null,
+  "provider_fee": null,
+  "orki_fee": null,
+  "network_fee": null,
+  "fiat_amount": "20000.000000",
+  "crypto_amount": "0.009352660000000000",
+  "fiat_currency": "MXN",
+  "crypto_currency": "BTC",
+  "network": "MAINNET",
+  "payment_method": "credit_debit_card",
+  "status": "pending",
+  "provider": "alchemypay",
+  "created_at": "2025-06-05T20:10:54.000000Z"
+}

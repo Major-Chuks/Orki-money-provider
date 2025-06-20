@@ -3,7 +3,7 @@
   width: 100%;
   border: 1px solid #d6e0ee;
   background: #fff;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .tableWrapper table {

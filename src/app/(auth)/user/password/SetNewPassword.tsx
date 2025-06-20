@@ -4,8 +4,8 @@ import CustomPasswordInput from "@/components/CustomInput/CustomPasswordInput/Cu
 import lockIcon from "@/assets/auth/lock-icon.svg";
 import CustomPasswordValidator from "@/components/CustomInput/CustomPasswordValidator/CustomPasswordValidator";
 import { InputState } from "./new/page";
-import backend from "@/services/apis";
 import { useState } from "react";
+import backend from "@/services/apis";
 
 const SetPassword = ({
   error,

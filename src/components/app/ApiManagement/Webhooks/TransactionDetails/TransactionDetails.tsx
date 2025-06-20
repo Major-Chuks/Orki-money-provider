@@ -6,14 +6,21 @@ import ArrowDown from "@/assets/app/ArrowDown";
 import CopyIcon from "@/assets/app/CopyIcon";
 import Copy from "@/components/app/Copy/Copy";
 import ModalLayout from "@/components/app/Modals/ModalLayout";
+import { get_webhookLogs } from "@/types/apis/webhook/get_webhookLogs";
 
-const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
+const TransactionDetails = ({
+  data,
+  onClose,
+}: {
+  data: get_webhookLogs["webhook_logs"][number];
+  onClose: () => void;
+}) => {
   const code = {
-    transaction_id: "TXN-12345",
-    status: "success",
-    amount: 1250,
-    currency: "USD",
-    timestamp: "2023-04-28T15:30:22Z",
+    transaction_id: data.id,
+    status: data.status,
+    amount: "--",
+    currency: "--",
+    timestamp: data.last_attempted_at,
   };
 
   return (
@@ -26,9 +33,7 @@ const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
                 <div>Webhook Details</div>
                 <TableStatus status="success">Success</TableStatus>
               </div>
-              <div className={classes.description}>
-                Webhook ID: wh_1a2b3c4d5e6f
-              </div>
+              <div className={classes.description}>Webhook ID: {data.id}</div>
             </div>
 
             <ButtonWrapper onClick={close} className={classes.close}>
@@ -41,31 +46,29 @@ const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
           <div className={classes.gridBox}>
             <div className={classes.item}>
               <div className={classes.name}>Transaction Ref</div>
-              <div className={classes.value}>May 5, 2025</div>
+              <div className={classes.value}>{data.transaction_id}</div>
             </div>
 
             <div className={classes.item}>
               <div className={classes.name}>Retries</div>
-              <div className={classes.value}>0</div>
+              <div className={classes.value}>{"--"}</div>
             </div>
 
             <div className={classes.item}>
               <div className={classes.name}>Delivery Time</div>
-              <div className={classes.value}>May 08, 2025, 03:32:15 PM</div>
+              <div className={classes.value}>{data.last_attempted_at}</div>
             </div>
 
             <div className={classes.item}>
               <div className={classes.name}>Status</div>
               <div className={classes.value}>
-                <TableStatus status="success">Success</TableStatus>
+                <TableStatus status={data.status}>{data.status}</TableStatus>
               </div>
             </div>
 
             <div className={classes.item}>
               <div className={classes.name}>URL</div>
-              <div className={classes.value}>
-                https://api.example.com/webhooks/payments
-              </div>
+              <div className={classes.value}>{data.url}</div>
             </div>
           </div>
 

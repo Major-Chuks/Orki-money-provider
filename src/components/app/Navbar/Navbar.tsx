@@ -3,16 +3,19 @@ import { mapRoutesToHeading } from "../Sidebar/Sidebar.script";
 import classes from "./Navbar.module.css";
 import Image from "next/image";
 import { getInitial } from "@/services/app-utils";
-import ChevronDown from "@/assets/app/ChevronDown";
-import avatar from "@/assets/app/avatar.png";
+// import ChevronDown from "@/assets/app/ChevronDown";
 import BellIcon from "@/assets/app/BellIcon";
 import TourPointer from "../TourGuide/TourPointer";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { formatText } from "@/services/utils";
 
 const Navbar = () => {
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const pathname = usePathname();
 
   const heading = mapRoutesToHeading[pathname.split("/")[2] || "app"];
-  const pfp = avatar;
+  const pfp = null;
 
   return (
     <div className={classes.container}>
@@ -41,10 +44,12 @@ const Navbar = () => {
             )}
           </div>
           <div className={classes.info}>
-            <div className={classes.name}>{"Darshan Thakker"}</div>
-            <div className={classes.role}>{"Admin"}</div>
+            <div className={classes.name}>{currentUser?.business_name}</div>
+            <div className={classes.role}>
+              {formatText(currentUser?.role || "")}
+            </div>
           </div>
-          <ChevronDown />
+          {/* <ChevronDown /> */}
         </div>
       </div>
     </div>

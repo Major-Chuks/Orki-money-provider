@@ -37,25 +37,25 @@ const roles = [
 ];
 
 const industries = [
-  { id: "centralizedExchange", name: "Centralized Exchange (CEX)" },
-  { id: "decentralizedExchange", name: "Decentralized Exchange (DEX)" },
-  { id: "p2pExchange", name: "P2P Exchange" },
-  { id: "nftMarketplace", name: "NFT Marketplace" },
-  { id: "nftGamingPlatform", name: "NFT Gaming Platform" },
-  { id: "defiAggregator", name: "DeFi Aggregator" },
-  { id: "cryptoPaymentGateway", name: "Crypto Payment Gateway" },
-  { id: "mediaContentPublisher", name: "Media / Content Publisher" },
-  { id: "digitalGaming", name: "Digital Gaming" },
+  { id: "cex", name: "Centralized Exchange (CEX)" },
+  { id: "dex", name: "Decentralized Exchange (DEX)" },
+  { id: "p2p", name: "P2P Exchange" },
+  { id: "nft_marketplace", name: "NFT Marketplace" },
+  { id: "nft_gaming", name: "NFT Gaming Platform" },
+  { id: "defi_aggregator", name: "DeFi Aggregator" },
+  { id: "crypto_payment_gateway", name: "Crypto Payment Gateway" },
+  { id: "media_publisher", name: "Media / Content Publisher" },
+  { id: "digital_gaming", name: "Digital Gaming" },
   { id: "gambling", name: "Gambling" },
   { id: "other", name: "Other" },
 ];
 
 const inputKeys = {
-  firstName: "firstName",
-  lastName: "lastName",
-  businessName: "businessName",
+  firstname: "firstname",
+  lastname: "lastname",
+  business_name: "business_name",
   industry: "industry",
-  emailAddress: "emailAddress",
+  email: "email",
   role: "role",
   password: "password",
   confirmPassword: "confirmPassword",
@@ -63,15 +63,18 @@ const inputKeys = {
 
 type InputType = { [key in keyof typeof inputKeys]: string };
 
+// add a page to verfiy emails
+//
+
 const SignUp = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [error, setError] = useState<ErrorState>({
-    firstName: false,
-    lastName: false,
-    businessName: false,
+    firstname: false,
+    lastname: false,
+    business_name: false,
     industry: false,
-    emailAddress: false,
+    email: false,
     role: false,
     password: false,
     confirmPassword: false,
@@ -79,11 +82,11 @@ const SignUp = () => {
   const [verifyAccount, setVerifyAccount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState<InputType>({
-    firstName: "",
-    lastName: "",
-    businessName: "",
+    firstname: "",
+    lastname: "",
+    business_name: "",
     industry: "",
-    emailAddress: "",
+    email: "",
     role: "",
     password: "",
     confirmPassword: "",
@@ -126,7 +129,7 @@ const SignUp = () => {
     }
   }, [input, isChecked]);
 
-  if (verifyAccount) return <VerifyAccount email={input.emailAddress} />;
+  if (verifyAccount) return <VerifyAccount email={input.email} />;
 
   return (
     <div className={classes.container}>
@@ -147,31 +150,31 @@ const SignUp = () => {
       <div className={classes.inputWrapper}>
         <div className={classes.group}>
           <CustomTextInput
-            id={inputKeys.firstName}
+            id={inputKeys.firstname}
             leftIcon={userIcon}
             label="First Name"
             placeholder="First Name"
-            value={input.firstName}
+            value={input.firstname}
             onChange={handleChange}
             error={error}
           />
           <CustomTextInput
-            id={inputKeys.lastName}
+            id={inputKeys.lastname}
             leftIcon={userIcon}
             label="Last Name"
             placeholder="Last Name"
-            value={input.lastName}
+            value={input.lastname}
             onChange={handleChange}
             error={error}
           />
         </div>
 
         <CustomTextInput
-          id={inputKeys.businessName}
+          id={inputKeys.business_name}
           leftIcon={briefcaseIcon}
           label="Business Name"
           placeholder="Business Name"
-          value={input.businessName}
+          value={input.business_name}
           onChange={handleChange}
           error={error}
         />
@@ -187,11 +190,11 @@ const SignUp = () => {
         />
 
         <CustomEmailInput
-          id={inputKeys.emailAddress}
+          id={inputKeys.email}
           leftIcon={emailIcon}
           label="Email Address"
           placeholder="name@example.com"
-          value={input.emailAddress}
+          value={input.email}
           onChange={handleChange}
           error={error}
         />

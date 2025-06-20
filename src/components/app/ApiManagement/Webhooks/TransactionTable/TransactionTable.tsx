@@ -3,26 +3,20 @@ import classes from "./TransactionTable.module.css";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import { useState } from "react";
 import TransactionDetails from "../TransactionDetails/TransactionDetails";
+import { get_webhookLogs } from "@/types/apis/webhook/get_webhookLogs";
 
 const TransactionTable = ({
   data,
 }: {
-  data: {
-    id: string;
-    reference: string;
-    url: string;
-    retries: number;
-    status: string;
-    deliveryTime: string;
-  }[];
+  data: get_webhookLogs["webhook_logs"];
 }) => {
-  const [openDetails, setOpenDetails] = useState(false);
+  const [tx, setTx] = useState<get_webhookLogs["webhook_logs"][number] | null>(
+    null
+  );
 
   return (
     <div className={classes.tableWrapper}>
-      {openDetails && (
-        <TransactionDetails onClose={() => setOpenDetails(false)} />
-      )}
+      {tx && <TransactionDetails data={tx} onClose={() => setTx(null)} />}
       <table>
         <thead>
           <tr>
@@ -39,10 +33,10 @@ const TransactionTable = ({
           {data.map((item, idx) => (
             <tr key={idx}>
               <td>{item.id}</td>
-              <td>{item.reference}</td>
-              <td>{item.deliveryTime}</td>
+              <td>{item.event_type}</td>
+              <td>{item.last_attempted_at}</td>
               <td>{item.url}</td>
-              <td>{item.retries}</td>
+              <td>{item.attempts}</td>
               <td>
                 <TableStatus status={item.status.toLowerCase()}>
                   {item.status}
@@ -51,7 +45,7 @@ const TransactionTable = ({
               <td>
                 <ButtonWrapper
                   className={classes.viewBtn}
-                  onClick={() => setOpenDetails(true)}
+                  onClick={() => setTx(item)}
                 >
                   View Details
                 </ButtonWrapper>

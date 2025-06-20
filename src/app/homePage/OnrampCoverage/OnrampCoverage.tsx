@@ -9,7 +9,7 @@ import Image from "next/image";
 import TooltipComponentWrapper from "./TooltipComponentWrapper/TooltipComponentWrapper";
 import { COUNTRY, ICountry } from "@/services/country";
 import { OnramperCoverage } from "@/services/onramperCoverage";
-import { useGetCoverage } from "@/services/tanStackApi";
+import { useGetCoverage } from "@/services/apis_tanstack";
 
 // // GeoJSON URL for world map
 // const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";

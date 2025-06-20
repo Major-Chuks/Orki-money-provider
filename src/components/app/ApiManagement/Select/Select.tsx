@@ -1,17 +1,19 @@
 import ChevronDown from "@/assets/app/ChevronDown";
-import DropdownLayout from "../Dropdown/DropdownLayout/DropdownLayout";
-import DropdownWrapper from "../Dropdown/DropdownWrapper/DropdownWrapper";
+import DropdownLayout from "../../Dropdown/DropdownLayout/DropdownLayout";
+import DropdownWrapper from "../../Dropdown/DropdownWrapper/DropdownWrapper";
 import classes from "./Select.module.css";
 import InfoIcon from "@/assets/app/InfoIcon";
 
 const Select = ({
   label,
   additionalLabelInfo,
+  value,
   options,
   onChange,
 }: {
   label: string;
   additionalLabelInfo?: React.JSX.Element;
+  value: string;
   options: string[];
   onChange: (value: string) => void;
 }) => {
@@ -30,7 +32,7 @@ const Select = ({
               ) : null}
             </div>
             <div onClick={toggle} className={classes.inputWrapper}>
-              <div className={classes.selected}>Test Environment</div>
+              <div className={classes.selected}>{value} Environment</div>
               <ChevronDown cursor="pointer" />
             </div>
           </div>
@@ -49,7 +51,7 @@ const Select = ({
                   key={idx}
                   className={classes.item}
                 >
-                  <div>{item}</div>
+                  {item}
                 </div>
               ))}
             </div>

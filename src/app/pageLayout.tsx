@@ -7,6 +7,9 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { usePathname } from "next/navigation";
 import { routes } from "@/services/routes";
+import { Provider as ReduxProvider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "@/redux/store";
 
 export const queryClient = new QueryClient();
 
@@ -15,16 +18,12 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
 
   // auth routes
   if (pathname.includes("/user")) {
-    return (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    );
+    return <PageWrapper>{children}</PageWrapper>;
   }
 
   // app routes
   if (pathname.includes("/app")) {
-    return (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    );
+    return <PageWrapper>{children}</PageWrapper>;
   }
 
   // Koywe sdk router
@@ -34,23 +33,37 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
 
   if (routes.miniWidget === pathname) {
     return (
-      <QueryClientProvider client={queryClient}>
+      <PageWrapper>
         {/* <MiniNavbar /> */}
         <div className={classes.main}>{children}</div>
-      </QueryClientProvider>
+      </PageWrapper>
     );
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <PageWrapper>
       <Navbar />
       <div className={classes.main}>
-        <div className={classes.shade}></div>
+        {/* <div className={classes.shade}></div> */}
         {children}
       </div>
       <Footer />
-    </QueryClientProvider>
+    </PageWrapper>
   );
 };
 
 export default PageLayout;
+
+const PageWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <>
+      <ReduxProvider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </PersistGate>
+      </ReduxProvider>
+    </>
+  );
+};

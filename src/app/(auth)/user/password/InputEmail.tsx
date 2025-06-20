@@ -3,9 +3,9 @@ import CustomEmailInput from "@/components/CustomInput/CustomEmailInput/CustomEm
 import emailIcon from "@/assets/auth/email-icon.svg";
 import { ErrorState } from "@/components/CustomInput/CustomInput.script";
 import { isValidEmail } from "@/services/utils";
-import backend from "@/services/apis";
 import { InputState } from "./new/page";
 import { useState } from "react";
+import backend from "@/services/apis";
 
 const InputEmail = ({
   error,

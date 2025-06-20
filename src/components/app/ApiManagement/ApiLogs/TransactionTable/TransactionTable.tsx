@@ -1,18 +1,8 @@
 import TableStatus from "@/components/app/TableStatus/TableStatus";
 import classes from "./TransactionTable.module.css";
+import { get_apiLogs } from "@/types/apis/apiLogs/get_apiLogs";
 
-const TransactionTable = ({
-  data,
-}: {
-  data: {
-    timeStamp: string;
-    endpoint: string;
-    method: string;
-    statusCode: string;
-    status: string;
-    environment: "Test" | "Production";
-  }[];
-}) => {
+const TransactionTable = ({ data }: { data: get_apiLogs["logs"] }) => {
   return (
     <div className={classes.tableWrapper}>
       <table>

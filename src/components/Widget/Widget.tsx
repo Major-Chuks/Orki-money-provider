@@ -34,7 +34,7 @@ import {
   useGetPaymentMethods,
   useGetUserLocation,
   usePostChangeLocation,
-} from "@/services/tanStackApi";
+} from "@/services/apis_tanstack";
 import Koywe from "./SDK/Koywe/Koywe";
 
 const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
