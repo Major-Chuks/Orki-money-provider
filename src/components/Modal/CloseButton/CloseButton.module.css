@@ -1,0 +1,17 @@
+.container {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--neutral-7, #f4f5f6);
+  cursor: pointer;
+}
+
+.container img {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}

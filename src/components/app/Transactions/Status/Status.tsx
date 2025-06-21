@@ -6,14 +6,11 @@ import chevronDown from "@/assets/app/cheveron-down.svg";
 
 const Status = ({
   onChange,
-  value,
 }: {
   onChange: (type: string) => void;
   value: string;
 }) => {
-  console.log(value);
-
-  const types = ["Status 1", "Status 2", "Status 3", "Status 4", "Status 5"];
+  const types = [""];
   return (
     <DropdownLayout>
       {({ open, close, toggle }) => (

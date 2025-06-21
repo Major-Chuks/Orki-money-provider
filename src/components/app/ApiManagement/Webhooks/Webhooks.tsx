@@ -16,7 +16,7 @@ import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const Webhooks = () => {
-  const { data, isPending, isError } = useWebhooksQuery();
+  const { data, isPending } = useWebhooksQuery();
   const webhook: get_webhooks = data?.data.data;
 
   const { mutate: subscribeWebhook, isPending: isWebhookPending } =
@@ -33,8 +33,6 @@ const Webhooks = () => {
   const handleTextChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    console.log("chaning...");
-
     const value = event.target.value;
     setUrl(value);
   };
@@ -43,14 +41,11 @@ const Webhooks = () => {
     const subEvents = Object.entries(events)
       .filter(([, value]) => value)
       .map(([key]) => key);
-    console.log(subEvents);
 
     subscribeWebhook(
       { events: subEvents, url },
       {
-        onSuccess: (response) => {
-          console.log(response);
-        },
+        onSuccess: () => {},
       }
     );
   };
@@ -65,9 +60,9 @@ const Webhooks = () => {
     <div className={classes.container}>
       {isPending ? (
         <LoadingScreen />
-      ) : isError ? (
+      ) : false ? (
         <ErrorScreen />
-      ) : webhook ? (
+      ) : true ? (
         <div className={classes.configSection}>
           <div className={classes.header}>
             <div className={classes.title}>Webhooks</div>
@@ -82,7 +77,7 @@ const Webhooks = () => {
               value={url}
               onChange={handleTextChange}
             />
-            <div>
+            <div className={classes.note}>
               <span>note</span>
               The URL where Orki Terminal will send real-time event
               notifications.
@@ -96,7 +91,7 @@ const Webhooks = () => {
                 <ToggleButton
                   id="PAYMENT_SUCCESS"
                   onChange={handleEventChange}
-                  value={webhook.subscribed_events.includes("PAYMENT_SUCCESS")}
+                  value={webhook?.subscribed_events.includes("PAYMENT_SUCCESS")}
                 />
                 Payment Success
               </div>
@@ -104,7 +99,7 @@ const Webhooks = () => {
                 <ToggleButton
                   id="PAYMENT_FAIL"
                   onChange={handleEventChange}
-                  value={webhook.subscribed_events.includes("PAYMENT_FAIL")}
+                  value={webhook?.subscribed_events.includes("PAYMENT_FAIL")}
                 />
                 Payment Failed
               </div>

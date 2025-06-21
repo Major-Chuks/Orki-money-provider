@@ -7,14 +7,11 @@ import chevronDown from "@/assets/app/cheveron-down.svg";
 
 const Filter = ({
   onChange,
-  value,
 }: {
   onChange: (type: string) => void;
   value: string;
 }) => {
-  console.log(value);
-
-  const types = ["Filter 1", "Filter 2", "Filter 3", "Filter 4", "Filter 5"];
+  const types = [""];
   return (
     <DropdownLayout>
       {({ open, close, toggle }) => (
