@@ -17,7 +17,11 @@ import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import Redirect1 from "./Redirect/Redirect1";
 import Redirect2 from "./Redirect/Redirect2";
-import { get_defaults } from "@/interface/get_defaults";
+import {
+  get_defaults,
+  KoyweWidgetType,
+  OnmetaWidgetType,
+} from "@/interface/get_defaults";
 import {
   fetchQuotes,
   getQuoteLimit,
@@ -36,6 +40,7 @@ import {
   usePostChangeLocation,
 } from "@/services/apis_tanstack";
 import Koywe from "./SDK/Koywe/Koywe";
+import PopupOnmeta from "./SDK/Onmeta/Onmeta";
 
 const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -279,16 +284,47 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
     <React.Fragment>
       {openWidget &&
         provider?.widget &&
-        provider.provider.identifier === "koywe" && (
-          <Koywe
-            currency={provider.widget.currency}
-            token={provider.widget.token}
-            clientId="680a518c0ea44d25514e3a49" // const
-            callbackUrl="https://money.orki.io/koywe/callback"
-            onClose={() => setOpenWidget(false)}
-            testing={true}
-          />
-        )}
+        provider.provider.identifier === "koywe" &&
+        (() => {
+          const widget = provider.widget as KoyweWidgetType;
+          return (
+            <Koywe
+              currency={widget.currency}
+              token={widget.token}
+              clientId="680a518c0ea44d25514e3a49" // const
+              callbackUrl="https://money.orki.io/sdk/koywe/callback"
+              onClose={() => setOpenWidget(false)}
+              testing={true}
+            />
+          );
+        })()}
+
+      {openWidget &&
+        provider?.widget &&
+        provider.provider.identifier === "onmeta" &&
+        (() => {
+          const widget = provider.widget as OnmetaWidgetType;
+          const asset = provider.asset;
+          return (
+            <PopupOnmeta
+              onClose={() => setOpenWidget(false)}
+              payload={{
+                fiatType: widget.fiat.toLowerCase(),
+                apiKey: "2456091c-ca47-4766-9418-be465a19717d", // const
+                tokenSymbol: widget.crypto,
+                environment: "production",
+                metadata: { orderID: widget.metadata.orderID },
+                fiatAmount:
+                  isBuyOrSell === "BUY"
+                    ? Number(asset?.fiat_amount)
+                    : Number(asset?.crypto_amount),
+                chainId: String(widget.ticker),
+                onRamp: isBuyOrSell === "BUY" ? "enabled" : "disabled", // when buying crypto enable this and disable below
+                offRamp: isBuyOrSell === "SELL" ? "enabled" : "disabled", // when selling crypto enable this and disable above
+              }}
+            />
+          );
+        })()}
 
       {loading ? (
         <div className={`${classes.container} ${classes.loader}`}>

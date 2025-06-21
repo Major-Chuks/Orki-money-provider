@@ -51,7 +51,7 @@ const RatePanel = ({
                   width={80}
                   height={16}
                   src={provider?.provider.icon}
-                  alt="provider logo"
+                  alt=""
                   className={classes.logo}
                 />
               )}

@@ -27,7 +27,7 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   // Koywe sdk router
-  if (pathname.includes("/koywe")) {
+  if (pathname.includes("/sdk")) {
     return <>{children}</>;
   }
 

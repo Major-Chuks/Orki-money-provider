@@ -40,8 +40,8 @@ const CryptoCurrencySearch = ({
       const results =
         cryptoCurrencies?.filter(
           (c) =>
-            c.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            c.code.toLowerCase().includes(searchValue.toLowerCase())
+            c.name?.toLowerCase().includes(searchValue.toLowerCase()) ||
+            c.code?.toLowerCase().includes(searchValue.toLowerCase())
         ) || null;
       setFilteredCryptoCurrencies(results);
     }
