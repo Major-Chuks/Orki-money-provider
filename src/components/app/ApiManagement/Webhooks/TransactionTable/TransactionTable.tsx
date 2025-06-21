@@ -4,6 +4,8 @@ import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper"
 import { useState } from "react";
 import TransactionDetails from "../TransactionDetails/TransactionDetails";
 import { get_webhookLogs } from "@/types/apis/webhook/get_webhookLogs";
+import { formatText, formatTxDate } from "@/services/utils";
+import { ExternalLink } from "lucide-react";
 
 const TransactionTable = ({
   data,
@@ -32,10 +34,19 @@ const TransactionTable = ({
         <tbody>
           {data.map((item, idx) => (
             <tr key={idx}>
-              <td>{item.id}</td>
-              <td>{item.event_type}</td>
-              <td>{item.last_attempted_at}</td>
-              <td>{item.url}</td>
+              <td>{formatText(item.id, "clip", [5, 4])}</td>
+              <td>{formatText(item.event_type)}</td>
+              <td>{formatTxDate(item.last_attempted_at)}</td>
+              <td>
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  {formatText(item.url, "clipEnd", 18)}{" "}
+                  <ExternalLink
+                    style={{ marginBottom: "-2px" }}
+                    width={16}
+                    height={16}
+                  />
+                </a>
+              </td>
               <td>{item.attempts}</td>
               <td>
                 <TableStatus status={item.status.toLowerCase()}>

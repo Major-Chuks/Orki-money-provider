@@ -9,10 +9,13 @@ import { routes } from "@/services/routes";
 import TourPointer from "../TourGuide/TourPointer";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import { LogOut } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "@/redux/slices/user";
 
 const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const dispatch = useDispatch();
 
   const handleRoute = (url: string) => {
     router.push(url);
@@ -24,6 +27,10 @@ const Sidebar = () => {
 
   const handleHome = () => {
     router.push(routes.home);
+  };
+
+  const handleLogout = () => {
+    dispatch(setCurrentUser(null));
   };
 
   return (
@@ -59,7 +66,7 @@ const Sidebar = () => {
       </div>
 
       <div className={classes.footer}>
-        <ButtonWrapper>
+        <ButtonWrapper onClick={handleLogout}>
           <div className={classes.logoutBtn}>
             <LogOut
               width={16}

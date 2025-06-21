@@ -4,7 +4,7 @@ import classes from "./TransactionsOverTime.module.css";
 
 const TransactionsOverTime = () => {
   const data = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const series = [820, 932, 901, 934, 1290, 1330, 1320];
+  const series = [0, 0, 0, 0, 0, 0, 0];
 
   return (
     <div className={classes.container}>

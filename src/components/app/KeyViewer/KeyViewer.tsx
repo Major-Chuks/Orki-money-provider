@@ -31,7 +31,7 @@ const KeyViewer = ({
           <input type={show ? "text" : "password"} readOnly value={value} />
           {toggleVisibility ? (
             <ButtonWrapper onClick={() => setShow((prevState) => !prevState)}>
-              {show ? (
+              {!show ? (
                 <EyeOffIcon color="#6B7280" width={24} height={24} />
               ) : (
                 <OpenEye />

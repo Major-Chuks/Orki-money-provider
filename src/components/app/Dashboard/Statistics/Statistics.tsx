@@ -7,25 +7,20 @@ const Statistics = () => {
     <div className={classes.container}>
       <ChartDateFilter />
       <div className={classes.statsContainer}>
-        <Stat
-          name="Total Transactions"
-          value="320"
-          percentage="+6.2%"
-          info=""
-        />
+        <Stat name="Total Transactions" value="$0" percentage="0.00%" info="" />
         <Stat
           name="Total Volume (Fiat)"
-          value="$520"
-          percentage="+6.2%"
+          value="$0"
+          percentage="0.00%"
           info=""
         />
         <Stat
           name="Completed Transactions"
-          value="312"
-          percentage="+6.2%"
+          value="$0"
+          percentage="0.00%"
           info=""
         />
-        <Stat name="Failed Transactions" value="8" percentage="+6.2%" info="" />
+        <Stat name="Failed Transactions" value="0" percentage="0.00%" info="" />
       </div>
     </div>
   );

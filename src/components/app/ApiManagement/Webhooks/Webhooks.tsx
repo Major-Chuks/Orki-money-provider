@@ -78,7 +78,6 @@ const Webhooks = () => {
               onChange={handleTextChange}
             />
             <div className={classes.note}>
-              <span>note</span>
               The URL where Orki Terminal will send real-time event
               notifications.
             </div>
@@ -86,8 +85,8 @@ const Webhooks = () => {
 
           <div className={classes.eventsWrapper}>
             <div className={classes.title}>Subscribed Events</div>
-            <div className={classes.eventStatus}>
-              <div className={classes.status}>
+            <div className={classes.eventList}>
+              <div className={classes.event}>
                 <ToggleButton
                   id="PAYMENT_SUCCESS"
                   onChange={handleEventChange}
@@ -95,7 +94,7 @@ const Webhooks = () => {
                 />
                 Payment Success
               </div>
-              <div className={classes.status}>
+              <div className={classes.event}>
                 <ToggleButton
                   id="PAYMENT_FAIL"
                   onChange={handleEventChange}

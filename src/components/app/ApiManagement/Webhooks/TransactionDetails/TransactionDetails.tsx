@@ -7,6 +7,7 @@ import CopyIcon from "@/assets/app/CopyIcon";
 import Copy from "@/components/app/Copy/Copy";
 import ModalLayout from "@/components/app/Modals/ModalLayout";
 import { get_webhookLogs } from "@/types/apis/webhook/get_webhookLogs";
+import { formatTxDate } from "@/services/utils";
 
 const TransactionDetails = ({
   data,
@@ -56,7 +57,9 @@ const TransactionDetails = ({
 
             <div className={classes.item}>
               <div className={classes.name}>Delivery Time</div>
-              <div className={classes.value}>{data.last_attempted_at}</div>
+              <div className={classes.value}>
+                {formatTxDate(data.last_attempted_at)}
+              </div>
             </div>
 
             <div className={classes.item}>
