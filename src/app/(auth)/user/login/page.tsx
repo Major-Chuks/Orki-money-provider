@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import Image from "next/image";
@@ -17,8 +18,11 @@ import {
 } from "@/components/CustomInput/CustomInput.script";
 import { useEffect, useState } from "react";
 import backend from "@/services/apis";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAccessToken, setCurrentUser } from "@/redux/slices/user";
+import { RootState } from "@/redux/store";
+import { clearError } from "@/redux/slices/error";
+import VerifyAccount from "../Components/VerifyAccount";
 
 const Login = () => {
   const router = useRouter();
@@ -28,6 +32,11 @@ const Login = () => {
     email: false,
     password: false,
   });
+  const [verifyEmail, setVerifyEmail] = useState(false);
+
+  const { label, message, code } = useSelector(
+    (state: RootState) => state.error
+  );
 
   const [input, setInput] = useState({
     email: "",
@@ -46,6 +55,8 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
+    clearError();
+
     setLoading(true);
     const response = await backend().post_login(input);
     if (response) {
@@ -77,6 +88,28 @@ const Login = () => {
       setInput((i) => ({ ...i, email }));
     }
   }, []);
+
+  useEffect(() => {
+    if (label === "post_login" && code === 403 && message.includes("verify")) {
+      (async () => {
+        const response = await backend().post_resend_verification_otp({
+          email: input.email,
+        });
+        if (response) {
+          setVerifyEmail(true);
+        }
+      })();
+    }
+  }, [label, code, message]);
+
+  if (verifyEmail) {
+    return (
+      <VerifyAccount
+        email={input.email}
+        onSubmit={() => setVerifyEmail(false)}
+      />
+    );
+  }
 
   return (
     <div className={classes.container}>

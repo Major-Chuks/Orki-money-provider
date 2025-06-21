@@ -2,18 +2,16 @@ import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import { useEffect, useState } from "react";
 import { formatCounter } from "@/services/utils";
 import CustomOTPInput from "@/components/CustomInput/CustomOTPInput/CustomOTPInput";
-import { InputState } from "./new/page";
 import backend from "@/services/apis";
+import classes from "./VerifyEmail.module.css";
 
 const initialCounter = 59;
 
 const VerifyEmail = ({
-  classes,
-  input: { email },
+  email,
   onSubmit,
 }: {
-  input: InputState;
-  classes: Record<string, string>;
+  email: string;
   onSubmit: (otp: string) => void;
 }) => {
   const [otp, setOtp] = useState("");

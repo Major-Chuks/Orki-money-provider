@@ -25,7 +25,7 @@ import {
   resetValidation,
   validateInput,
 } from "@/components/CustomInput/CustomInput.script";
-import VerifyAccount from "./VerifyAccount";
+import VerifyAccount from "../Components/VerifyAccount";
 import backend from "@/services/apis";
 
 const roles = [

@@ -11,7 +11,7 @@ import {
 } from "@/components/CustomInput/CustomInput.script";
 import { useState } from "react";
 import InputEmail from "../InputEmail";
-import VerifyEmail from "../VerifyEmail";
+import VerifyEmail from "../../Components/VerifyEmail/VerifyEmail";
 import SetPassword from "../SetNewPassword";
 import PasswordResetConfirmation from "../PasswordResetConfirmation";
 
@@ -84,8 +84,7 @@ const NewPassword = () => {
 
       {step === Steps.VERIFY_EMAIL && (
         <VerifyEmail
-          classes={classes}
-          input={input}
+          email={input.email}
           onSubmit={(otp) => {
             setStep(Steps.SET_NEW_PASSWORD);
             setInput((i) => ({ ...i, otp }));

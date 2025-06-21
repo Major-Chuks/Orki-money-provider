@@ -11,7 +11,13 @@ import backend from "@/services/apis";
 
 const initialCounter = 59;
 
-const VerifyAccount = ({ email }: { email: string }) => {
+const VerifyAccount = ({
+  email,
+  onSubmit,
+}: {
+  email: string;
+  onSubmit?: () => void;
+}) => {
   const [otp, setCode] = useState("");
   const [counter, setCounter] = useState(initialCounter);
   const [resendLoading, setResendLoading] = useState(false);
@@ -39,6 +45,7 @@ const VerifyAccount = ({ email }: { email: string }) => {
     if (response) {
       window.localStorage.setItem("email", email);
       router.push(routes.login);
+      if (onSubmit) onSubmit();
     }
     setValidateLoading(false);
   };

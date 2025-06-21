@@ -3,7 +3,7 @@ import { AUTH_API, BACKEND_API_NO_VERSION, handleApiCall } from ".";
 export const authApi = {
   post_login: async (payload: { email: string; password: string }) => {
     const url = `/login`;
-    return handleApiCall(() => AUTH_API.post(url, payload), "get_apiKeys");
+    return handleApiCall(() => AUTH_API.post(url, payload), "post_login");
   },
 
   post_create_account: async (payload: {

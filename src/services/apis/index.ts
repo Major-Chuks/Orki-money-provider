@@ -7,6 +7,8 @@ import { webhookApi } from "./webhook";
 import { widgetApi } from "./widget";
 import { apiLogsApi } from "./apiLogs";
 import { store } from "@/redux/store";
+import { setError } from "@/redux/slices/error";
+import { setCurrentUser } from "@/redux/slices/user";
 
 export const baseURL = "https://api.money.orki.io/api";
 
@@ -53,15 +55,26 @@ export const handleApiCall = async <T>(
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 export const handleError = (error: any, label?: string) => {
+  const dispatch = store.dispatch;
+
   const errMsg =
     error?.response?.data?.msg ||
     error?.response?.data?.message ||
     error?.message;
 
+  console.log(error);
+
   if (error?.status === 401 || error?.response?.status === 401) {
+    dispatch(setCurrentUser(null));
     // force logout
   } else {
-    console.log(errMsg);
+    dispatch(
+      setError({
+        code: error?.status || error?.response?.status,
+        message: errMsg,
+        label: label || "",
+      })
+    );
   }
 };
 
