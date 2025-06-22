@@ -16,12 +16,15 @@ const TransactionDetails = ({
   data: get_webhookLogs["webhook_logs"][number];
   onClose: () => void;
 }) => {
+  const payload: get_webhookLogs["webhook_logs"][number]["payload"]["data"] =
+    data.payload.data;
+
   const code = {
-    transaction_id: data.id,
-    status: data.status,
-    amount: "--",
-    currency: "--",
-    timestamp: data.last_attempted_at,
+    "Transaction ID": payload.id,
+    Status: payload.status,
+    "Crypto Amount": `${payload.crypto_currency} ${payload.crypto_amount}`,
+    "Fiat Amount": `${payload.fiat_currency} ${payload.fiat_amount}`,
+    Timestamp: payload.created_at,
   };
 
   return (
@@ -47,12 +50,12 @@ const TransactionDetails = ({
           <div className={classes.gridBox}>
             <div className={classes.item}>
               <div className={classes.name}>Transaction Ref</div>
-              <div className={classes.value}>{data.transaction_id}</div>
+              <div className={classes.value}>{payload.id}</div>
             </div>
 
             <div className={classes.item}>
-              <div className={classes.name}>Retries</div>
-              <div className={classes.value}>{"--"}</div>
+              <div className={classes.name}>Attempts</div>
+              <div className={classes.value}>{data.attempts}</div>
             </div>
 
             <div className={classes.item}>

@@ -2,8 +2,6 @@ import React from "react";
 import classes from "./TableStatus.module.css";
 import { capitalize } from "@/services/utils";
 
-// css is king
-
 const TableStatus = ({
   status,
   children,
@@ -20,7 +18,7 @@ const TableStatus = ({
         classes[status?.toLowerCase().replace(/ /g, "-")]
       }`}
     >
-      {capitalize(children as string)}
+      {capitalize(String(children))}
     </div>
   );
 };

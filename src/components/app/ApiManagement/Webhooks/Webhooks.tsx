@@ -90,7 +90,9 @@ const Webhooks = () => {
                 <ToggleButton
                   id="PAYMENT_SUCCESS"
                   onChange={handleEventChange}
-                  value={webhook?.subscribed_events.includes("PAYMENT_SUCCESS")}
+                  value={webhook?.subscribed_events?.includes(
+                    "PAYMENT_SUCCESS"
+                  )}
                 />
                 Payment Success
               </div>
@@ -98,7 +100,7 @@ const Webhooks = () => {
                 <ToggleButton
                   id="PAYMENT_FAIL"
                   onChange={handleEventChange}
-                  value={webhook?.subscribed_events.includes("PAYMENT_FAIL")}
+                  value={webhook?.subscribed_events?.includes("PAYMENT_FAIL")}
                 />
                 Payment Failed
               </div>

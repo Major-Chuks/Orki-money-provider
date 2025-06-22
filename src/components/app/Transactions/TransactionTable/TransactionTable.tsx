@@ -36,7 +36,7 @@ const TransactionTable = ({
         <tbody>
           {data.map((item, idx) => (
             <tr key={idx}>
-              <td>{"--"}</td>
+              <td>{formatText(item.provider_tx_id || "--", "clip", [5, 4])}</td>
               <td>{formatText(item.id, "clip", [5, 4])}</td>
               <td>{formatTxDate(item.created_at)}</td>
               <td>{formatText(item.type)}</td>

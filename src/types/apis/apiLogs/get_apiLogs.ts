@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface get_apiLogs {
-  logs: any[];
+  logs: get_apiLogs_Sub2[];
   meta: get_apiLogs_Sub1;
 }
 
@@ -14,4 +13,13 @@ interface get_apiLogs_Sub1 {
   lastPageUrl: string;
   nextPageUrl: null;
   previousPageUrl: null;
+}
+
+interface get_apiLogs_Sub2 {
+  id: string;
+  path: string;
+  method: string;
+  status_code: number;
+  status: string;
+  created_at: string;
 }

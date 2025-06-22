@@ -38,7 +38,7 @@ const TransactionDetails = ({
           ) : (
             <>
               <div className={classes.header}>
-                <div className={classes.headerTitle}>Transaction {tx.id}</div>
+                <div className={classes.headerTitle}>Transaction</div>
                 <ButtonWrapper onClick={close} className={classes.close}>
                   <CloseIcon />
                 </ButtonWrapper>
@@ -48,11 +48,13 @@ const TransactionDetails = ({
                 <div className={classes.detailsGrid}>
                   <div className={classes.item}>
                     <div className={classes.name}>Onramp Transaction ID</div>
-                    <div className={classes.value}>{tx.provider_tx_id}</div>
+                    <div className={classes.value}>
+                      {tx.provider_tx_id || "--"}
+                    </div>
                   </div>
                   <div className={classes.item}>
-                    <div className={classes.name}>Partner ID</div>
-                    <div className={classes.value}>{""}</div>
+                    <div className={classes.name}>Transaction ID</div>
+                    <div className={classes.value}>{tx.id}</div>
                   </div>
                   <div className={classes.item}>
                     <div className={classes.name}>Status</div>
@@ -94,7 +96,14 @@ const TransactionDetails = ({
 
                 <div className={classes.detailsColumn}>
                   <div className={classes.item}>
-                    <div className={classes.name}>Wallet Address</div>
+                    <div className={classes.name}>Sender Address</div>
+                    <div className={classes.address}>
+                      {tx.sender_address || "--"}{" "}
+                    </div>
+                  </div>
+
+                  <div className={classes.item}>
+                    <div className={classes.name}>Recipient Address</div>
                     <div className={classes.address}>
                       {tx.recipient_address || "--"}{" "}
                     </div>
@@ -163,7 +172,11 @@ const TransactionDetails = ({
                   <div className={classes.line}></div>
                   <div className={classes.item}>
                     <div className={classes.total}>Total Fee</div>
-                    <div className={classes.total}></div>
+                    <div className={classes.total}>
+                      {Number(tx.network_fee || 0) +
+                        Number(tx.provider_fee || 0) +
+                        Number(tx.orki_fee || 0) || ""}
+                    </div>
                   </div>
                 </div>
               </div>

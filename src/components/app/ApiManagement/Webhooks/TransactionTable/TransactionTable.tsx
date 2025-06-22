@@ -26,7 +26,7 @@ const TransactionTable = ({
             <th>Transaction Ref</th>
             <th>Delivery Time</th>
             <th>URL</th>
-            <th>Retries</th>
+            <th>Attempts</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
