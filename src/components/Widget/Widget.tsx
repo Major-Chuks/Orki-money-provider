@@ -19,7 +19,7 @@ import Redirect1 from "./Redirect/Redirect1";
 import Redirect2 from "./Redirect/Redirect2";
 import {
   get_defaults,
-  KoyweWidgetType,
+  // KoyweWidgetType,
   OnmetaWidgetType,
 } from "@/interface/get_defaults";
 import {
@@ -40,7 +40,7 @@ import {
   usePostChangeLocation,
 } from "@/services/apis_tanstack";
 import Koywe from "./SDK/Koywe/Koywe";
-import PopupOnmeta from "./SDK/Onmeta/Onmeta";
+import Onmeta from "./SDK/Onmeta/Onmeta";
 
 const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -286,11 +286,11 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
         provider?.widget &&
         provider.provider.identifier === "koywe" &&
         (() => {
-          const widget = provider.widget as KoyweWidgetType;
+          // const widget = provider.widget as KoyweWidgetType;
           return (
             <Koywe
-              currency={widget.currency}
-              token={widget.token}
+              currencies={[]}
+              tokens={[]}
               clientId="680a518c0ea44d25514e3a49" // const
               callbackUrl="https://money.orki.io/sdk/koywe/callback"
               onClose={() => setOpenWidget(false)}
@@ -306,7 +306,7 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
           const widget = provider.widget as OnmetaWidgetType;
           const asset = provider.asset;
           return (
-            <PopupOnmeta
+            <Onmeta
               onClose={() => setOpenWidget(false)}
               payload={{
                 fiatType: widget.fiat.toLowerCase(),

@@ -7,15 +7,15 @@ import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper"
 
 export default function Koywe({
   onClose,
-  currency,
-  token,
+  currencies,
+  tokens,
   clientId,
   callbackUrl,
   testing,
 }: {
   onClose: () => void;
-  currency: string;
-  token: string;
+  currencies: string[];
+  tokens: string[];
   clientId: string;
   callbackUrl: string;
   testing?: boolean;
@@ -38,8 +38,8 @@ export default function Koywe({
         {
           type: "INIT_KOYWE",
           payload: {
-            currencies: [currency],
-            tokens: [token],
+            currencies,
+            tokens,
             clientId,
             callbackUrl,
             testing,

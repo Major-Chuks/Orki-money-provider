@@ -28,8 +28,8 @@ export type get_defaults = {
 export type KoyweWidgetType = {
   clientId: string;
   ticker: string;
-  token: string;
-  currency: string;
+  crypto: string;
+  fiat: string;
 };
 
 export type OnmetaWidgetType = {
