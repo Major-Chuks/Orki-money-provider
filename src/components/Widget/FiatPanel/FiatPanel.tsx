@@ -12,6 +12,7 @@ const FiatPanel = ({
   onAmountChange,
   onCurrencyChange,
   error,
+  disabled,
 }: {
   title: string;
   fiatCurrencies: get_fiat_currencies | null;
@@ -20,6 +21,7 @@ const FiatPanel = ({
   onCurrencyChange: (symbol: string) => void;
   onAmountChange: (value: string) => void;
   error: string;
+  disabled: boolean;
 }) => {
   return (
     <div className={`${classes.container} ${error && classes.error}`}>
@@ -32,6 +34,7 @@ const FiatPanel = ({
             onChange={(e) => onAmountChange(e.target.value)}
             type="number"
             placeholder="0.00"
+            disabled={disabled}
           />
         </div>
         <FiatCurrencySearch

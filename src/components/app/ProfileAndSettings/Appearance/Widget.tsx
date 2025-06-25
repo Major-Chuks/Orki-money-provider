@@ -43,6 +43,7 @@ const Widget = () => {
           title={defaultFiatPanel.title}
           value={defaultFiatPanel.value}
           error={defaultFiatPanel.error}
+          disabled={false}
         />
         <CryptoPanel
           cryptoCurrencies={
@@ -54,6 +55,7 @@ const Widget = () => {
           value={defaultCryptoPanel.value}
           cryptoCurrency={defaultCryptoPanel.cryptoCurrency}
           defaultNetwork={defaultCryptoPanel.defaultNetwork}
+          disabled={false}
         />
       </div>
 

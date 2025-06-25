@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -40,7 +41,6 @@ import {
   usePostChangeLocation,
 } from "@/services/apis_tanstack";
 import Koywe from "./SDK/Koywe/Koywe";
-import Onmeta from "./SDK/Onmeta/Onmeta";
 
 const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -107,13 +107,37 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
 
     setToggleFirstRedirect(false);
 
-    if (provider.widget) {
+    if (provider.widget && provider.provider.identifier === "koywe") {
       setOpenWidget(true);
       return;
     }
 
+    let onmetaUrl = "";
+
+    if (provider.widget && provider.provider.identifier === "onmeta") {
+      const widget = provider.widget as OnmetaWidgetType;
+      const asset = provider.asset;
+
+      const payload = {
+        fiatType: widget.fiat.toLowerCase(),
+        tokenSymbol: widget.crypto,
+        environment: "production",
+        metadata: JSON.stringify({ orderID: widget.metadata.orderID }),
+        fiatAmount:
+          isBuyOrSell === "BUY"
+            ? Number(asset?.fiat_amount)
+            : Number(asset?.crypto_amount),
+        chainId: String(widget.ticker),
+        onRamp: isBuyOrSell === "BUY" ? "enabled" : "disabled",
+        offRamp: isBuyOrSell === "SELL" ? "enabled" : "disabled",
+      };
+
+      const queryString = new URLSearchParams(payload as any).toString();
+      onmetaUrl = `https://onmeta-widget-orki.vercel.app?${queryString}`;
+    }
+
     const popupWindow = window.open(
-      provider.link,
+      onmetaUrl ? onmetaUrl : provider.link,
       sanitizeName(
         `${provider.provider.identifier}_${network}_${fiatAmount}_${fiatCurrency}_${cryptoAmount}_${cryptoCurrency}`
       )
@@ -267,7 +291,7 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
       isBuyOrSell,
       paymentMethod,
     ],
-    500
+    2000
   ); // Adjust the debounce delay as needed
 
   useEffect(() => {
@@ -295,33 +319,6 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
               callbackUrl="https://money.orki.io/sdk/koywe/callback"
               onClose={() => setOpenWidget(false)}
               testing={true}
-            />
-          );
-        })()}
-
-      {openWidget &&
-        provider?.widget &&
-        provider.provider.identifier === "onmeta" &&
-        (() => {
-          const widget = provider.widget as OnmetaWidgetType;
-          const asset = provider.asset;
-          return (
-            <Onmeta
-              onClose={() => setOpenWidget(false)}
-              payload={{
-                fiatType: widget.fiat.toLowerCase(),
-                apiKey: "2456091c-ca47-4766-9418-be465a19717d", // const
-                tokenSymbol: widget.crypto,
-                environment: "production",
-                metadata: { orderID: widget.metadata.orderID },
-                fiatAmount:
-                  isBuyOrSell === "BUY"
-                    ? Number(asset?.fiat_amount)
-                    : Number(asset?.crypto_amount),
-                chainId: String(widget.ticker),
-                onRamp: isBuyOrSell === "BUY" ? "enabled" : "disabled", // when buying crypto enable this and disable below
-                offRamp: isBuyOrSell === "SELL" ? "enabled" : "disabled", // when selling crypto enable this and disable above
-              }}
             />
           );
         })()}
@@ -408,6 +405,7 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
                 title="You Pay"
                 value={fiatAmount}
                 error={error}
+                disabled={loadingQuotes}
               />
               <CryptoPanel
                 cryptoCurrencies={cryptoCurrencies}
@@ -417,6 +415,7 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
                   setCryptoCurrency(symbol);
                   setNetwork(network);
                 }}
+                disabled={loadingQuotes}
                 value={cryptoAmount}
                 cryptoCurrency={cryptoCurrency}
                 defaultNetwork={provider?.asset?.network}
@@ -432,6 +431,7 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
                   setCryptoCurrency(symbol);
                   setNetwork(network);
                 }}
+                disabled={loadingQuotes}
                 value={cryptoAmount}
                 cryptoCurrency={cryptoCurrency}
               />
@@ -443,6 +443,7 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
                 title="You Receive"
                 value={fiatAmount}
                 error={error}
+                disabled={loadingQuotes}
               />
             </div>
           )}

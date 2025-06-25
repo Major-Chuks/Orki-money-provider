@@ -11,6 +11,7 @@ const CryptoPanel = ({
   cryptoCurrency,
   value,
   defaultNetwork,
+  disabled,
   onCurrencyChange,
   onAmountChange,
 }: {
@@ -19,6 +20,7 @@ const CryptoPanel = ({
   cryptoCurrency: string;
   value: string;
   defaultNetwork?: string;
+  disabled: boolean;
   onCurrencyChange: (symbol: string, network: string) => void;
   onAmountChange: (value: string) => void;
 }) => {
@@ -62,6 +64,7 @@ const CryptoPanel = ({
             onChange={(e) => setInputValue(e.target.value)}
             type="number"
             placeholder="0.00"
+            disabled={disabled}
           />
         </div>
         <div className={classes.crypto_network}>
