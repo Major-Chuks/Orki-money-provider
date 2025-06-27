@@ -1,0 +1,128 @@
+.toastContainer {
+  position: fixed;
+  top: 24px;
+  right: 12px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toast {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  width: 410px;
+  min-height: 86px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  padding-bottom: 27px;
+  padding-right: 12px;
+  padding-top: 15px;
+  padding-left: 17px;
+  background: #f9fafb;
+  overflow: hidden;
+  animation: fadeIn 0.3s cubic-bezier(0.36, 0.34, 0.02, 0.99) forwards;
+  transition: all 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(105%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+}
+
+.thumb {
+  height: 100%;
+  width: 100%;
+  animation: fill-up 3000ms forwards;
+}
+
+.bar.success {
+  background: rgba(0, 188, 116, 0.2);
+}
+
+.bar.error {
+  background: rgba(227, 72, 7, 0.2);
+}
+
+.bar.info {
+  background: rgb(59, 130, 246, 0.2);
+}
+
+.thumb.success {
+  background: #00bc74;
+}
+
+.thumb.error {
+  background: #ef4444;
+}
+
+.thumb.info {
+  background: #3b82f6;
+}
+
+@keyframes fill-up {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.content {
+  max-width: 300px;
+  word-break: break-word;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  margin-bottom: 4px;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.message {
+  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
+  font-family: "DM Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.iconContainer {
+  display: flex;
+  width: 34px;
+  height: 34px;
+  padding: 4px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5.357px;
+  flex-shrink: 0;
+  border-radius: 160.714px;
+  background: #303031;
+  box-shadow: 0px 3px 6px -6.403px rgba(29, 32, 33, 0.22);
+}

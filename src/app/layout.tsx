@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import classes from "./layout.module.css";
 import AppLayout from "./pageLayout";
+import { ToastProvider } from "@/context/Toast/ToastContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +31,9 @@ export default function RootLayout({
       <body
         className={`${classes.container} ${geistSans.variable} ${geistMono.variable}`}
       >
-        <AppLayout>{children}</AppLayout>
+        <ToastProvider>
+          <AppLayout>{children}</AppLayout>
+        </ToastProvider>
       </body>
     </html>
   );
