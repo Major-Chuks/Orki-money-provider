@@ -10,6 +10,7 @@ export const routes = {
   apiManagement: "/app/api-management",
   billing: "/app/billing",
   profileAndSettings: "/app/profile-and-settings",
+  notifications: "/app/notifications",
 
   // main
   home: "/",

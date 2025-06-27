@@ -1,21 +1,29 @@
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { mapRoutesToHeading } from "../Sidebar/Sidebar.script";
 import classes from "./Navbar.module.css";
 import Image from "next/image";
 import { getInitial } from "@/services/app-utils";
-// import ChevronDown from "@/assets/app/ChevronDown";
-import BellIcon from "@/assets/app/BellIcon";
+import ChevronDown from "@/assets/app/ChevronDown";
 import TourPointer from "../TourGuide/TourPointer";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { formatText } from "@/services/utils";
+import DropdownLayout from "../Dropdown/DropdownLayout/DropdownLayout";
+import DropdownWrapper from "../Dropdown/DropdownWrapper/DropdownWrapper";
+import IconSettingsRounded from "@/assets/app/IconSettingsRounded";
+import { routes } from "@/services/routes";
+import NotificationPreview from "../Notifications/NotificationPreview/NotificationPreview";
+import Logout from "@/assets/app/Logout";
 
 const Navbar = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const pathname = usePathname();
+  const router = useRouter();
 
   const heading = mapRoutesToHeading[pathname.split("/")[2] || "app"];
   const pfp = null;
+
+  const handleLogout = () => {};
 
   return (
     <div className={classes.container}>
@@ -26,31 +34,85 @@ const Navbar = () => {
 
       <div className={classes.rhs}>
         <div className={classes.notificationIcon}>
-          <BellIcon />
+          <NotificationPreview />
           <TourPointer id="tour_3" style={{ top: "62px" }} />
         </div>
         <div className={classes.line}></div>
-        <div className={classes.profile}>
-          <div className={classes.imageContainer}>
-            {pfp ? (
-              <Image width={40} height={40} src={pfp} alt="" />
-            ) : (
-              <div className={classes.initial}>
-                {getInitial({
-                  firstName: "",
-                  lastName: "",
-                })}
+
+        <DropdownLayout>
+          {({ open, toggle, close }) => (
+            <>
+              <div onClick={toggle} className={classes.profile}>
+                <div className={classes.imageContainer}>
+                  {pfp ? (
+                    <Image width={40} height={40} src={pfp} alt="" />
+                  ) : (
+                    <div className={classes.initial}>
+                      {getInitial({
+                        firstName: "",
+                        lastName: "",
+                      })}
+                    </div>
+                  )}
+                </div>
+                <div className={classes.info}>
+                  <div className={classes.name}>
+                    {currentUser?.business_name}
+                  </div>
+                  <div className={classes.role}>
+                    {formatText(currentUser?.role || "")}
+                  </div>
+                </div>
+                <ChevronDown style={{ cursor: "pointer" }} />
               </div>
-            )}
-          </div>
-          <div className={classes.info}>
-            <div className={classes.name}>{currentUser?.business_name}</div>
-            <div className={classes.role}>
-              {formatText(currentUser?.role || "")}
-            </div>
-          </div>
-          {/* <ChevronDown /> */}
-        </div>
+
+              <DropdownWrapper
+                open={open}
+                containerStyle={{ bottom: "-12px", padding: "1px" }}
+              >
+                <div className={classes.dropdown}>
+                  <div className={classes.item}>
+                    <div className={classes.imageContainer}>
+                      {pfp ? (
+                        <Image width={40} height={40} src={pfp} alt="" />
+                      ) : (
+                        <div className={classes.initial}>
+                          {getInitial({
+                            firstName: "",
+                            lastName: "",
+                          })}
+                        </div>
+                      )}
+                    </div>
+                    <div className={classes.info}>
+                      <div className={classes.name}>
+                        {currentUser?.business_name}
+                      </div>
+                      <div className={classes.role}>
+                        {formatText(currentUser?.email || "")}
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    onClick={() => {
+                      router.push(routes.profileAndSettings);
+                      close();
+                    }}
+                    className={classes.item}
+                  >
+                    <IconSettingsRounded />
+                    Profile & Settings
+                  </div>
+                  <hr />
+                  <div onClick={handleLogout} className={classes.item}>
+                    <Logout />
+                    Sign Out
+                  </div>
+                </div>
+              </DropdownWrapper>
+            </>
+          )}
+        </DropdownLayout>
       </div>
     </div>
   );
