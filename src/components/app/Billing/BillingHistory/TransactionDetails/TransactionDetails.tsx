@@ -5,8 +5,19 @@ import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper"
 import CloseIcon from "@/assets/app/CloseIcon";
 import DownloadIcon from "@/assets/app/DownloadIcon";
 import ModalLayout from "@/components/app/Modals/ModalLayout";
+import { get_listBillingHistory } from "@/types/apis/billing/get_listBillingHistory";
+import { formatText, formatTxDate, getCurrencySymbol } from "@/services/utils";
 
-const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
+const TransactionDetails = ({
+  onClose,
+  data,
+}: {
+  onClose: () => void;
+  data: get_listBillingHistory["data"][number];
+}) => {
+  const handleDownloadPdf = () => {
+    window.open(data.download_url, "_blank");
+  };
   return (
     <ModalLayout onClose={onClose}>
       {({ close }) => (
@@ -14,11 +25,13 @@ const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
           <div className={classes.headerWrapper}>
             <div className={classes.header}>
               <div className={classes.title}>
-                <div>Invoice INV-2023-001</div>{" "}
-                <TableStatus status="success">Paid</TableStatus>
+                <div>Invoice {formatText(data.id, "clip", [5, 4])} </div>{" "}
+                <TableStatus status={data.status}>{data.status}</TableStatus>
               </div>
               <div className={classes.description}>
-                Invoice details for billing period May 5, 2025 - Jun 4, 2025
+                Invoice details for billing period{" "}
+                {formatTxDate(data.billing_period_start, false)} -{" "}
+                {formatTxDate(data.billing_period_end, false)}
               </div>
             </div>
 
@@ -32,22 +45,32 @@ const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
           <div className={classes.gridBox}>
             <div className={classes.item}>
               <div className={classes.name}>Invoice Date</div>
-              <div className={classes.value}>May 5, 2025</div>
+              <div className={classes.value}>
+                {formatTxDate(data.invoice_date, false)}
+              </div>
             </div>
 
             <div className={classes.item}>
               <div className={classes.name}>Due Date</div>
-              <div className={classes.value}>May 12, 2025</div>
+              <div className={classes.value}>
+                {formatTxDate(data.due_date, false)}
+              </div>
             </div>
 
             <div className={classes.item}>
               <div className={classes.name}>Billing Period</div>
-              <div className={classes.value}>May 5, 2025 - Jun 4, 2025</div>
+              <div className={classes.value}>
+                {formatTxDate(data.billing_period_start, false)} -{" "}
+                {formatTxDate(data.billing_period_end, false)}
+              </div>
             </div>
 
             <div className={classes.item}>
               <div className={classes.name}>Payment Method</div>
-              <div className={classes.value}>Visa **** 4242</div>
+              <div className={classes.value}>
+                {data.payment_method?.brand} ****{" "}
+                {data.payment_method?.last_four}
+              </div>
             </div>
           </div>
 
@@ -64,20 +87,30 @@ const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div>
-                      <div className={classes.subscriptionType}>Premium</div>
-                      <div className={classes.subscriptionDuration}>
-                        Monthly subscription
+                {data.items.map((item, idx) => (
+                  <tr key={idx}>
+                    <td>
+                      <div>
+                        <div className={classes.subscriptionType}>
+                          {item.description}
+                        </div>
+                        {/* <div className={classes.subscriptionDuration}>
+                          Monthly subscription
+                        </div> */}
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
-                  <td>1</td>
-                  <td>$99.00</td>
-                  <td>$99.00</td>
-                </tr>
+                    <td>{item.quantity}</td>
+                    <td>
+                      {getCurrencySymbol(data.currency)}
+                      {item.unit_price}
+                    </td>
+                    <td>
+                      {getCurrencySymbol(data.currency)}
+                      {item.amount}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -85,16 +118,25 @@ const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
           <div className={classes.summary}>
             <div className={classes.flexBox}>
               <div className={classes.name}>Subtotal</div>
-              <div className={classes.value}>$99.00</div>
+              <div className={classes.value}>
+                {getCurrencySymbol(data.currency)}
+                {data.subtotal}
+              </div>
             </div>
             <div className={classes.flexBox}>
               <div className={classes.name}>Taxes</div>
-              <div className={classes.value}>$0.00</div>
+              <div className={classes.value}>
+                {getCurrencySymbol(data.currency)}
+                {data.tax}
+              </div>
             </div>
             <div className={classes.inline}></div>
             <div className={classes.flexBox}>
               <div className={classes.name}>Total</div>
-              <div className={classes.value}>$99.00</div>
+              <div className={classes.value}>
+                {getCurrencySymbol(data.currency)}
+                {data.total}
+              </div>
             </div>
           </div>
 
@@ -106,7 +148,7 @@ const TransactionDetails = ({ onClose }: { onClose: () => void }) => {
             >
               Close
             </Button>
-            <Button>
+            <Button onClick={handleDownloadPdf}>
               <DownloadIcon /> Download PDF
             </Button>
           </div>

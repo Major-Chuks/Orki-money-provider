@@ -19,12 +19,14 @@
 
 .completed,
 .accepted,
-.success {
+.success,
+.paid {
   background: #bbf7d0;
   color: #166534;
 }
 
-.in-progress {
+.in-progress,
+.trialing {
   background: rgba(85, 112, 241, 0.16);
   color: #5570f1;
 }
@@ -36,12 +38,14 @@
 
 .awaiting-confirmation,
 .pending-confirmation,
-.pending {
+.pending,
+.cancelling {
   background: #fff2e2;
   color: #f29339;
 }
 
-.failed {
+.failed,
+.cancelled {
   background: #f7e3e1;
   color: #ee3f33;
 }

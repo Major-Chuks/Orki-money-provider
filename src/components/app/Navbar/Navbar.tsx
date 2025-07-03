@@ -5,7 +5,7 @@ import Image from "next/image";
 import { getInitial } from "@/services/app-utils";
 import ChevronDown from "@/assets/app/ChevronDown";
 import TourPointer from "../TourGuide/TourPointer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { formatText } from "@/services/utils";
 import DropdownLayout from "../Dropdown/DropdownLayout/DropdownLayout";
@@ -14,16 +14,20 @@ import IconSettingsRounded from "@/assets/app/IconSettingsRounded";
 import { routes } from "@/services/routes";
 import NotificationPreview from "../Notifications/NotificationPreview/NotificationPreview";
 import Logout from "@/assets/app/Logout";
+import { setCurrentUser } from "@/redux/slices/user";
 
 const Navbar = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const pathname = usePathname();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const heading = mapRoutesToHeading[pathname.split("/")[2] || "app"];
   const pfp = null;
 
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    dispatch(setCurrentUser(null));
+  };
 
   return (
     <div className={classes.container}>

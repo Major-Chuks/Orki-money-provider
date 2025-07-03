@@ -118,7 +118,7 @@ export const apiManifest: ApiManifest = {
               "type": "string"
             },
             {
-              "name": "businessname",
+              "name": "business_name",
               "isOptional": false,
               "type": "string"
             },
@@ -227,6 +227,127 @@ export const apiManifest: ApiManifest = {
     },
     "get_authInfo": {
       "args": []
+    }
+  },
+  "billing": {
+    "get_listBillingPlans": {
+      "args": []
+    },
+    "post_subscribeBilling": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "payment_method_id",
+              "isOptional": false,
+              "type": "string"
+            },
+            {
+              "name": "price_id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "get_findActiveSubscription": {
+      "args": []
+    },
+    "post_cancelSubscription": {
+      "args": []
+    },
+    "post_resumeSubscription": {
+      "args": []
+    },
+    "post_swapSubscription": {
+      "args": [
+        {
+          "name": "price_id",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "price_id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "get_listBillingHistory": {
+      "args": []
+    },
+    "get_downloadInvoice": {
+      "args": [
+        {
+          "name": "{ invoiceId }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "invoiceId",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "post_addPaymentMethod": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "payment_method_id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "get_listPaymentMethods": {
+      "args": []
+    },
+    "patch_updatePaymentMethod": {
+      "args": [
+        {
+          "name": "{ id }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "delete_deletePaymentMethod": {
+      "args": [
+        {
+          "name": "{ id }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
     }
   },
   "transactions": {

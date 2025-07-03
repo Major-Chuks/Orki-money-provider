@@ -1,34 +1,27 @@
 import CheckCircle from "@/assets/app/CheckCircle";
 import classes from "./AllPlans.module.css";
 import Button from "@/components/CustomInput/Button/Button";
+import { get_listBillingPlans } from "@/types/apis/billing/get_listBillingPlans";
 
-const Premium = () => {
+const Premium = ({ plan }: { plan: get_listBillingPlans["data"][number] }) => {
+  const handleCustomPlan = () => {
+    if (plan.contact_us) window.open(plan.contact_us as string, "_blank");
+  };
+
   return (
     <div className={`${classes.plan} ${classes.dark}`}>
       <div className={`${classes.title} ${classes.gradient}`}>Premium</div>
 
       <div className={`${classes.description} ${classes.light}`}>
-        The world&apos;s best onramp aggregation and insights platform. A must
-        for players serious about increasing their volumes
+        {plan.description}
       </div>
 
       <div className={`${classes.features} ${classes.light}`}>
-        <div className={classes.feature}>
-          <CheckCircle /> All 23+ onramps
-        </div>
-        <div className={classes.feature}>
-          <CheckCircle /> Terminal (Pro)
-        </div>
-        <div className={classes.feature}>
-          <CheckCircle />
-          Support for off-ramps, DCA, P2P and crypto-to-crypto swaps
-        </div>
-        <div className={classes.feature}>
-          <CheckCircle /> Dedicated support agent
-        </div>
-        <div className={classes.feature}>
-          <CheckCircle /> Add your own fees
-        </div>
+        {plan.features.map((feature, idx) => (
+          <div key={idx} className={classes.feature}>
+            <CheckCircle /> {feature}
+          </div>
+        ))}
       </div>
 
       <div style={{ flex: 1 }} />
@@ -41,6 +34,7 @@ const Premium = () => {
           background: "#fff",
           color: "#2F2FDD",
         }}
+        onClick={handleCustomPlan}
       >
         Schedule a call
       </Button>

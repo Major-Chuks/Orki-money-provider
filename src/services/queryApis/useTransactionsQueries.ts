@@ -11,6 +11,7 @@ export const useTransactionsQuery = () =>
   useApiQuery(["get_transactions"], transactionsApi.get_transactions);
 
 export const useFindTransactionQuery = (params: { transactionId: string }) =>
-  useApiQuery(["get_findTransaction"], () =>
+    // Add JSON.stringify(params) to queryKey for cache uniqueness
+  useApiQuery(["get_findTransaction", JSON.stringify(params)], () =>
     transactionsApi.get_findTransaction(params)
   );

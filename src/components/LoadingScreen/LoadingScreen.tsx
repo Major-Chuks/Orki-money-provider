@@ -1,7 +1,11 @@
 import classes from "./LoadingScreen.module.css";
 
-const LoadingScreen = () => {
-  return <div className={classes.container}>Please wait...</div>;
+const LoadingScreen = ({ style }: { style?: React.CSSProperties }) => {
+  return (
+    <div style={style} className={classes.container}>
+      Please wait...
+    </div>
+  );
 };
 
 export default LoadingScreen;

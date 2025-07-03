@@ -134,7 +134,6 @@ const TestEndpointsPage = () => {
 
       const res = await fn(...args);
       const payload = res?.data?.data ?? res?.data ?? res;
-      console.log({ payload, res });
 
       await fetch("/api/save-mock", {
         method: "POST",
@@ -142,7 +141,7 @@ const TestEndpointsPage = () => {
         body: JSON.stringify({ apiKey, fnName, data: payload }),
       });
 
-      setResult(res);
+      setResult(payload);
     } catch (err: any) {
       console.error(err);
       setError(err.message || "Unknown error");

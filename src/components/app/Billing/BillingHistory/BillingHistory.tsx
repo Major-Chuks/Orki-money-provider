@@ -1,13 +1,19 @@
 import classes from "./BillingHistory.module.css";
 import EmptyState from "./EmptyState/EmptyState";
 import Search from "./Search/Search";
-import Filter from "./Filter/Filter";
-import { data, metadata } from "./mockData";
 import Status from "./Status/Status";
 import TransactionTable from "./TransactionTable/TransactionTable";
 import Pagination from "../../Pagination/Pagination";
+import { useListBillingHistoryQuery } from "@/services/queryApis";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
+import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
+import { get_listBillingHistory } from "@/types/apis/billing/get_listBillingHistory";
 
 const BillingHistory = () => {
+  const { data, isPending, isError } = useListBillingHistoryQuery();
+  const billingHistory: get_listBillingHistory["data"] = data?.data.data.data;
+  const metadata: get_listBillingHistory["meta"] = data?.data.data.meta;
+
   const handlePrev = (): void => {
     if (!metadata?.previousPageUrl) return;
     // refetch({ page: Number(metadata?.previousPageUrl.split("=")[1]) });
@@ -23,9 +29,13 @@ const BillingHistory = () => {
     // refetch({ page });
   };
 
+  if (isPending) return <LoadingScreen />;
+
+  if (isError) return <ErrorScreen />;
+
   return (
     <>
-      {data ? (
+      {billingHistory && billingHistory.length ? (
         <div className={classes.container}>
           <div className={classes.header}>
             <div className={classes.title}>Billing History</div>
@@ -38,12 +48,11 @@ const BillingHistory = () => {
               <Search placeholder="Search by Invoice ID" />
 
               <div className={classes.filters}>
-                <Filter onChange={() => {}} value="" />
                 <Status onChange={() => {}} value="" />
               </div>
             </div>
 
-            <TransactionTable data={data} />
+            <TransactionTable data={billingHistory} />
 
             {metadata && (
               <Pagination

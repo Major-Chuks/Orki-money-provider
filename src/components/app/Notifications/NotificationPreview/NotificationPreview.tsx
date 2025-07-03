@@ -4,7 +4,7 @@ import { routes } from "@/services/routes";
 import {
   groupNotificationsByDate,
   Notifications,
-} from "@/types/apis/notifications/get_notifications";
+} from "@/scripts/notifications/get_notifications";
 import DropdownLayout from "../../Dropdown/DropdownLayout/DropdownLayout";
 import DropdownWrapper from "../../Dropdown/DropdownWrapper/DropdownWrapper";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";

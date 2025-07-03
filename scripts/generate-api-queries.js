@@ -5,7 +5,10 @@ const path = require("path");
 const fs = require("fs");
 
 // Load the API manifest
-const tsFilePath = path.resolve(__dirname, "../src/services/apiConfig/apiManifest.ts");
+const tsFilePath = path.resolve(
+  __dirname,
+  "../src/services/apiConfig/apiManifest.ts"
+);
 const tsContent = fs.readFileSync(tsFilePath, "utf8");
 const transpiled = ts.transpileModule(tsContent, {
   compilerOptions: { module: ts.ModuleKind.CommonJS },
@@ -42,7 +45,12 @@ if (!fs.existsSync(apiDir)) {
 // Helper to get exported function names from API files
 function getExportedFunctionNames(filePath) {
   const fileContent = fs.readFileSync(filePath, "utf8");
-  const sourceFile = ts.createSourceFile(filePath, fileContent, ts.ScriptTarget.Latest, true);
+  const sourceFile = ts.createSourceFile(
+    filePath,
+    fileContent,
+    ts.ScriptTarget.Latest,
+    true
+  );
   const functionNames = new Set();
 
   function visit(node) {
@@ -73,7 +81,8 @@ function toHookContent(methodName, args, moduleName) {
     if (args.length > 0) {
       const paramsType = toTypeString(args[0]);
       return `export const ${hookName} = (params: ${paramsType}) =>
-  useApiQuery(["${methodName}"], () =>
+    // Add JSON.stringify(params) to queryKey for cache uniqueness
+  useApiQuery(["${methodName}", JSON.stringify(params)], () =>
     ${moduleName}Api.${methodName}(params)
   );`;
     } else {
@@ -96,8 +105,8 @@ function toTypeString(param) {
           prop.type === "number | undefined"
             ? "number"
             : prop.type === "string | undefined"
-              ? "string"
-              : prop.type || "any";
+            ? "string"
+            : prop.type || "any";
         return `${prop.name}${prop.isOptional ? "?" : ""}: ${propType}`;
       })
       .join("; ");
@@ -137,7 +146,9 @@ export const useApiQuery = <TData>(
 ${allApiFiles
   .map((file) => {
     const moduleName = path.basename(file, ".ts");
-    return `export * from "./use${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}Queries";`;
+    return `export * from "./use${
+      moduleName.charAt(0).toUpperCase() + moduleName.slice(1)
+    }Queries";`;
   })
   .join("\n")}
 `;
@@ -174,7 +185,9 @@ ${allApiFiles
         usedHooks.mutation = true;
       }
 
-      hookContents.push(toHookContent(methodName, methodManifest.args, moduleName));
+      hookContents.push(
+        toHookContent(methodName, methodManifest.args, moduleName)
+      );
     });
 
     // Add imports based on what's actually used
@@ -200,7 +213,9 @@ ${hooks.join("\n\n")}
 
     fs.writeFileSync(queryFilePath, fileContent, "utf8");
     console.log(
-      `✅ Generated: use${moduleName.charAt(0).toUpperCase() + moduleName.slice(1)}Queries.ts`
+      `✅ Generated: use${
+        moduleName.charAt(0).toUpperCase() + moduleName.slice(1)
+      }Queries.ts`
     );
   });
 }

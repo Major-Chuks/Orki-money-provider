@@ -1,18 +1,11 @@
 import EmptyTransactionIcon from "@/assets/app/EmptyTransactionIcon";
-import Search from "../Search/Search";
 import classes from "./EmptyState.module.css";
-import Filter from "../Filter/Filter";
 
 const EmptyState = () => {
   return (
     <div className={classes.container}>
       <div className={classes.header}>
         <div className={classes.title}>Billing History</div>
-
-        <div className={classes.searchAndfilters}>
-          <Search />
-          <Filter onChange={() => {}} value="" />
-        </div>
       </div>
       <div className={classes.es_container}>
         <div className={classes.es_iconContainer}>

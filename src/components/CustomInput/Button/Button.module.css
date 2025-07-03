@@ -83,7 +83,7 @@
 }
 
 .container:hover {
-  /* transform: scale(1.01); */
+  transform: scale(0.995);
 }
 
 .container.click {

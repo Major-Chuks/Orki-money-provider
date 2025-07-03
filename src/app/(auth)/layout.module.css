@@ -159,7 +159,7 @@
 }
 
 .coreItem:hover {
-  animation-play-state: running;
+  /* animation-play-state: running; */
 }
 
 @keyframes wamble {

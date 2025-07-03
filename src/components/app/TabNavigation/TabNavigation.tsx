@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import classes from "./TabNavigation.module.css";
+import { formatText } from "@/services/utils";
 
 interface TabProps<TTab extends string>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -65,12 +66,12 @@ const TabNavigation = <TTab extends string>({
                 tabWidth === "container-width"
                   ? "100%"
                   : tabWidth === "content-width"
-                    ? "max-content"
-                    : "auto",
+                  ? "max-content"
+                  : "auto",
               flexGrow: tabWidth === "auto" ? "1" : "unset",
             }}
           >
-            {renderItem ? renderItem(_tab, isActive) : _tab}
+            {renderItem ? renderItem(_tab, isActive) : formatText(_tab)}
           </div>
         );
       })}

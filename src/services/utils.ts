@@ -384,7 +384,10 @@ export const formatDate = (isoDateString: string): string => {
   return `${month} ${year}`;
 };
 
-export const formatTxDate = (dateString: string | null): string => {
+export const formatTxDate = (
+  dateString: string | null,
+  withTime: boolean = true
+): string => {
   if (!dateString) return "--";
   const date = new Date(dateString);
 
@@ -392,8 +395,10 @@ export const formatTxDate = (dateString: string | null): string => {
     month: "short",
     day: "numeric",
     year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
+    ...(withTime && {
+      hour: "numeric",
+      minute: "numeric",
+    }),
   };
 
   return date.toLocaleString("en-US", options);
@@ -558,3 +563,38 @@ export function formatText(
       return input;
   }
 }
+
+export const constructQueryParams = (payload: Record<string, any>): string => {
+  const query = Object.entries(payload)
+    .filter(
+      ([, value]) => value !== undefined && value !== null && value !== ""
+    )
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    )
+    .join("&");
+
+  return query ? `?${query}` : "";
+};
+
+export const getCurrencySymbol = (currencyCode: string): string => {
+  const code = currencyCode.toUpperCase();
+
+  const currencyMap: Record<string, string> = {
+    USD: "$",
+    EUR: "€",
+    GBP: "£",
+    NGN: "₦",
+    JPY: "¥",
+    CNY: "¥",
+    INR: "₹",
+    CAD: "CA$",
+    AUD: "A$",
+    ZAR: "R",
+    KES: "KSh",
+    GHS: "₵",
+  };
+
+  return currencyMap[code] || code;
+};

@@ -3,23 +3,25 @@ import TableStatus from "@/components/app/TableStatus/TableStatus";
 import classes from "./TransactionTable.module.css";
 import TransactionDetails from "../TransactionDetails/TransactionDetails";
 import { useState } from "react";
+import { get_listBillingHistory } from "@/types/apis/billing/get_listBillingHistory";
+import { formatText, formatTxDate } from "@/services/utils";
 
 const TransactionTable = ({
   data,
 }: {
-  data: {
-    invoiceId: string;
-    date: string;
-    amount: string;
-    status: "Paid" | "Refunded" | "Failed";
-  }[];
+  data: get_listBillingHistory["data"];
 }) => {
-  const [openDetails, setOpenDetails] = useState(false);
+  const [txnDetails, setTxnDetails] = useState<
+    get_listBillingHistory["data"][number] | null
+  >(null);
 
   return (
     <div className={classes.tableWrapper}>
-      {openDetails && (
-        <TransactionDetails onClose={() => setOpenDetails(false)} />
+      {txnDetails && (
+        <TransactionDetails
+          data={txnDetails}
+          onClose={() => setTxnDetails(null)}
+        />
       )}
       <table>
         <thead>
@@ -35,15 +37,15 @@ const TransactionTable = ({
         <tbody>
           {data.map((item, idx) => (
             <tr key={idx}>
-              <td>{item.invoiceId}</td>
-              <td>{item.date}</td>
-              <td>{item.amount}</td>
+              <td>{formatText(item.id, "clip", [5, 4])}</td>
+              <td>{formatTxDate(item.due_date)}</td>
+              <td>{item.total}</td>
               <td>
                 <TableStatus status={item.status}>{item.status}</TableStatus>
               </td>
               <td>
                 <ButtonWrapper
-                  onClick={() => setOpenDetails(true)}
+                  onClick={() => setTxnDetails(item)}
                   className={classes.viewBtn}
                 >
                   View Details

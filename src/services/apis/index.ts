@@ -9,6 +9,8 @@ import { apiLogsApi } from "./apiLogs";
 import { store } from "@/redux/store";
 import { setError } from "@/redux/slices/error";
 import { setCurrentUser } from "@/redux/slices/user";
+import { billingApi } from "./billing";
+import { toast } from "@/context/Toast/ToastService";
 
 export const baseURL = "https://api.money.orki.io/api";
 
@@ -75,6 +77,7 @@ export const handleError = (error: any, label?: string) => {
         label: label || "",
       })
     );
+    toast.show(errMsg, "error");
   }
 };
 
@@ -86,5 +89,6 @@ export default function backend() {
     ...webhookApi,
     ...widgetApi,
     ...apiLogsApi,
+    ...billingApi,
   };
 }

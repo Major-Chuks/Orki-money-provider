@@ -16,6 +16,8 @@
 
 .tab {
   padding: 4px 8px;
+  cursor: pointer;
+  transition: all 300ms;
   /* text */
   color: var(--gray-600, #4b5563);
   font-family: "DM Sans";
@@ -25,7 +27,11 @@
   line-height: 20px; /* 142.857% */
 }
 
-.tab:first-child {
+.tab:not(.active):hover {
+  color: var(--gray-600, rgba(75, 85, 99, 0.392));
+}
+
+.tab.active {
   border-radius: 4px;
   background: #fff;
 }
@@ -53,6 +59,7 @@
 /* plan */
 
 .plan {
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   height: 652px;

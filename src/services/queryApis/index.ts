@@ -22,6 +22,7 @@ export const useApiQuery = <TData>(
 export * from "./useApiKeysQueries";
 export * from "./useApiLogsQueries";
 export * from "./useAuthQueries";
+export * from "./useBillingQueries";
 export * from "./useTransactionsQueries";
 export * from "./useWebhookQueries";
 export * from "./useWidgetQueries";
