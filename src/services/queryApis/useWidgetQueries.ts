@@ -3,7 +3,7 @@
 
 import { widgetApi } from "../apis/widget";
 
-import { useApiMutation } from ".";
+import { useApiQuery, useApiMutation } from ".";
 
 
 
@@ -12,3 +12,6 @@ export const useSellQuoteMutation = () =>
 
 export const useBuyQuoteMutation = () =>
   useApiMutation(widgetApi.post_buy_quote);
+
+export const useGenerateSignatureTokenQuery = () =>
+  useApiQuery(["get_generateSignatureToken"], widgetApi.get_generateSignatureToken);

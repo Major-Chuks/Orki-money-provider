@@ -162,6 +162,11 @@ export const fetchQuotes = async ({
   if (!allKeysPresent) return;
 
   // const queryString = new URLSearchParams(queryParams as any).toString();
+  const tokenResponse = await backend().get_generateSignatureToken();
+  if (!tokenResponse) return;
+
+  const token = tokenResponse.data.data.token;
+
   const response =
     isBuyOrSell === "BUY"
       ? await backend().post_buy_quote({
@@ -170,6 +175,7 @@ export const fetchQuotes = async ({
           network: network,
           payment_method: paymentMethod,
           amount: formatMoneyToNumber(fiatAmount).toString(),
+          token,
         })
       : await backend().post_sell_quote({
           fiat_currency: fiatCurrency,
@@ -177,6 +183,7 @@ export const fetchQuotes = async ({
           crypto_currency: cryptoCurrency,
           network: network,
           payment_method: paymentMethod,
+          token,
         });
 
   return response;

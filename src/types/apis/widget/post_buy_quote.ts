@@ -4,4 +4,5 @@ export interface post_buy_quote {
   network: string;
   payment_method: string;
   amount: string;
+  token: string;
 }

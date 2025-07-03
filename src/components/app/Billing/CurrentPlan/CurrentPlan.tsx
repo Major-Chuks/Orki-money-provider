@@ -28,9 +28,9 @@ const CurrentPlan = () => {
     useFindActiveSubscriptionQuery();
   const currentPlan: get_findActiveSubscription = data?.data.data;
 
-  if (isPending) return <LoadingScreen />;
+  if (isPending) return <LoadingScreen style={{ height: "40vh" }} />;
 
-  if (isError) return <ErrorScreen />;
+  if (isError) return <ErrorScreen style={{ height: "40vh" }} />;
 
   if (!data)
     return (

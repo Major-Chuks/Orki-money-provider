@@ -420,7 +420,7 @@ export const apiManifest: ApiManifest = {
     "post_sell_quote": {
       "args": [
         {
-          "name": "payload",
+          "name": "{\r\n    token,\r\n    ...payload\r\n  }",
           "isOptional": false,
           "isObject": true,
           "properties": [
@@ -448,6 +448,11 @@ export const apiManifest: ApiManifest = {
               "name": "crypto_amount",
               "isOptional": false,
               "type": "string"
+            },
+            {
+              "name": "token",
+              "isOptional": false,
+              "type": "string"
             }
           ]
         }
@@ -456,7 +461,7 @@ export const apiManifest: ApiManifest = {
     "post_buy_quote": {
       "args": [
         {
-          "name": "payload",
+          "name": "{\r\n    token,\r\n    ...payload\r\n  }",
           "isOptional": false,
           "isObject": true,
           "properties": [
@@ -484,10 +489,18 @@ export const apiManifest: ApiManifest = {
               "name": "amount",
               "isOptional": false,
               "type": "string"
+            },
+            {
+              "name": "token",
+              "isOptional": false,
+              "type": "string"
             }
           ]
         }
       ]
+    },
+    "get_generateSignatureToken": {
+      "args": []
     }
   }
 };
