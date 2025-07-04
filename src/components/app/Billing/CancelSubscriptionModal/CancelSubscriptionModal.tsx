@@ -8,7 +8,6 @@ import Button from "@/components/CustomInput/Button/Button";
 import classes from "./CancelSubscriptionModal.module.css";
 import { formatTxDate } from "@/services/utils";
 
-// TODO: Need a design for resume subscription
 const CancelSubscriptionModal = ({
   onClose,
   plan,
@@ -52,14 +51,13 @@ const CancelSubscriptionModal = ({
           {plan.status === "cancelling" ? (
             <div className={classes.textWrapper}>
               <div>
-                Are you sure you want to resume your subscription? You&apos;ll
-                regain access to all {plan.plan.name} features at the end of
-                your billing period.
+                You&apos;re about to resume your subscription. Once resumed,
+                you&apos;ll regain access to all {plan.plan.name} features and
+                be billed at your next renewal date.
               </div>
               <div className={classes.box}>
-                Your subscription will remain active until{" "}
-                <span>{formatTxDate(plan.next_billing_date, false)}</span>.
-                After that, you&apos;ll be moved to the free plan.
+                Your current plan and settings will remain unchanged, and your
+                next billing cycle will continue as scheduled.
               </div>
             </div>
           ) : (
@@ -85,15 +83,15 @@ const CancelSubscriptionModal = ({
           )}
 
           <div className={classes.btnWrapper}>
-            <Button variant="outlined" type="neutral">
+            <Button onClick={onClose} variant="outlined" type="neutral">
               {plan.status === "cancelling" ? "Cancel" : "Keep Subscription"}
             </Button>
             <Button
-              type="danger"
+              type={plan.status === "cancelling" ? "primary" : "danger"}
               loading={loading}
               onClick={handleToggleSubscription}
             >
-              Yes, {plan.status === "cancelling" ? "Resume" : "Cancel"}
+              {plan.status === "cancelling" ? "Yes, Resume" : "Yes, Cancel"}
             </Button>
           </div>
         </div>

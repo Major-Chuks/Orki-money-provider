@@ -2,7 +2,7 @@ import ModalLayout from "@/components/Modal/ModalLayout";
 import classes from "./UpdatePlanModal.module.css";
 import ModalContent from "@/components/Modal/ModalContent";
 import CardIcon from "@/assets/app/CardIcon";
-import { PlusCircleIcon } from "lucide-react";
+import { PlusCircleIcon, Trash2 } from "lucide-react";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import Button from "@/components/CustomInput/Button/Button";
 import { useState } from "react";
@@ -19,6 +19,8 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import DeletePaymentCardModal from "../DeletePaymentCardModal/DeletePaymentCardModal";
+import SetDefaultCardModal from "../SetDefaultCardModal/SetDefaultCardModal";
 
 const UpdatePlanModal = ({ onClose }: { onClose: () => void }) => {
   const [openForm, setOpenForm] = useState(false);
@@ -27,33 +29,13 @@ const UpdatePlanModal = ({ onClose }: { onClose: () => void }) => {
   const elements = useElements();
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [defaultLoading, setDefaultLoading] = useState("");
-  const [deleting, setDeleting] = useState("");
+  const [action, setAction] = useState<{
+    type: "delete" | "set_default" | "";
+    id: string;
+  }>({ type: "", id: "" });
 
   const { data, isPending, isError, refetch } = useListPaymentMethodsQuery();
   const paymentMethods: get_listPaymentMethods = data?.data.data;
-
-  const setDefaultCard = async (cardId: string) => {
-    setDefaultLoading(cardId);
-    const response = await backend().patch_updatePaymentMethod({ id: cardId });
-
-    if (response) {
-      showToast("Default card updated successfully", "success");
-      refetch();
-    }
-    setDefaultLoading("");
-  };
-
-  const deleteCard = async (cardId: string) => {
-    setDeleting(cardId);
-    const response = await backend().delete_deletePaymentMethod({ id: cardId });
-
-    if (response) {
-      showToast("Card deleted successfully", "success");
-      refetch();
-    }
-    setDeleting("");
-  };
 
   const addPaymentMethod = async () => {
     if (!stripe || !elements) return;
@@ -81,129 +63,153 @@ const UpdatePlanModal = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <ModalLayout
-      style={{ justifyContent: "flex-end", alignItems: "flex-start" }}
-    >
-      <ModalContent
-        headerSticky
-        title={"Payment Methods"}
-        subtitle="Manage your payment methods and billing information"
-        onClose={onClose}
+    <>
+      <ModalLayout
+        style={{ justifyContent: "flex-end", alignItems: "flex-start" }}
       >
-        {isPending ? (
-          <LoadingScreen style={{ height: "40vh" }} />
-        ) : isError ? (
-          <ErrorScreen style={{ height: "40vh" }} />
-        ) : data ? (
-          <>
-            <div className={classes.cardWrapper}>
-              <div className={classes.title}>Your Payment Methods</div>
-              {paymentMethods.data.map((pm, idx) => (
-                <div key={idx}>
-                  <div className={classes.card}>
-                    <CardIcon />
-                    <div>
-                      <div className={classes.details}>
-                        <div className={classes.cardNo}>
-                          {pm.brand} •••• {pm.last4}
+        <ModalContent
+          headerSticky
+          title={"Payment Methods"}
+          subtitle="Manage your payment methods and billing information"
+          onClose={onClose}
+        >
+          {isPending ? (
+            <LoadingScreen style={{ height: "40vh" }} />
+          ) : isError ? (
+            <ErrorScreen style={{ height: "40vh" }} />
+          ) : data ? (
+            <>
+              <div className={classes.cardWrapper}>
+                <div className={classes.title}>Your Payment Methods</div>
+                {paymentMethods.data.map((pm, idx) => (
+                  <div key={idx}>
+                    <div className={classes.card}>
+                      <CardIcon />
+                      <div>
+                        <div className={classes.details}>
+                          <div className={classes.cardNo}>
+                            {pm.brand} •••• {pm.last4}
+                          </div>
+                          <div className={classes.date}>
+                            Expires {pm.exp_month}/{pm.exp_year}
+                          </div>
                         </div>
-                        <div className={classes.date}>
-                          Expires {pm.exp_month}/{pm.exp_year}
-                        </div>
-                      </div>
 
-                      <div className={classes.btnWrapper}>
-                        {pm.is_default ? (
-                          <div className={classes.status}>Default</div>
-                        ) : (
+                        <div className={classes.btnWrapper}>
+                          {pm.is_default ? (
+                            <div className={classes.status}>Default</div>
+                          ) : (
+                            <ButtonWrapper
+                              className={classes.setDefaultBtn}
+                              onClick={() =>
+                                setAction({ id: pm.id, type: "set_default" })
+                              }
+                            >
+                              Set Default
+                            </ButtonWrapper>
+                          )}
+
                           <ButtonWrapper
-                            className={classes.setDefaultBtn}
-                            onClick={() => setDefaultCard(pm.id)}
-                            loading={defaultLoading === pm.id}
+                            className={classes.deleteBtn}
+                            onClick={() =>
+                              setAction({ id: pm.id, type: "delete" })
+                            }
                           >
-                            Set as default
+                            <Trash2 />
                           </ButtonWrapper>
-                        )}
-
-                        <ButtonWrapper
-                          className={classes.deleteBtn}
-                          onClick={() => deleteCard(pm.id)}
-                          loading={deleting === pm.id}
-                        >
-                          Delete
-                        </ButtonWrapper>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            <div className={classes.line}></div>
-            {!openForm && (
-              <ButtonWrapper
-                onClick={() => setOpenForm(true)}
-                className={classes.toggleBtn}
-              >
-                <PlusCircleIcon /> Add New Payment Method
-              </ButtonWrapper>
-            )}
-
-            {openForm ? (
-              <div className={classes.formWrapper}>
-                <div className={classes.formTitle}>Add New Card</div>
-
-                <div className={classes.form}>
-                  <div className={classes.inputWrapper}>
-                    <label>Card Number</label>
-                    <div className={classes.input}>
-                      <CardNumberElement options={elementStyle} />
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", gap: "16px" }}>
-                    <div className={classes.inputWrapper}>
-                      <label>Expiry</label>
-                      <div className={classes.input}>
-                        <CardExpiryElement options={elementStyle} />
-                      </div>
-                    </div>
-                    <div className={classes.inputWrapper}>
-                      <label>CVC</label>
-                      <div className={classes.input}>
-                        <CardCvcElement options={elementStyle} />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={classes.inputWrapper}>
-                    <label>Cardholder Name</label>
-                    <input
-                      className={classes.input}
-                      placeholder="John Doe"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className={classes.formControl}>
-                  <Button
-                    onClick={() => setOpenForm(false)}
-                    variant="outlined"
-                    type="neutral"
-                  >
-                    Cancel
-                  </Button>
-                  <Button loading={loading} onClick={addPaymentMethod}>
-                    Add Payment Method
-                  </Button>
-                </div>
+                ))}
               </div>
-            ) : null}
-          </>
-        ) : (
-          <div>No Payment methods</div>
-        )}
-      </ModalContent>
-    </ModalLayout>
+              <div className={classes.line}></div>
+              {!openForm && (
+                <ButtonWrapper
+                  onClick={() => setOpenForm(true)}
+                  className={classes.toggleBtn}
+                >
+                  <PlusCircleIcon /> Add New Payment Method
+                </ButtonWrapper>
+              )}
+
+              {openForm ? (
+                <div className={classes.formWrapper}>
+                  <div className={classes.formTitle}>Add New Card</div>
+
+                  <div className={classes.form}>
+                    <div className={classes.inputWrapper}>
+                      <label>Card Number</label>
+                      <div className={classes.input}>
+                        <CardNumberElement options={elementStyle} />
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", gap: "16px" }}>
+                      <div className={classes.inputWrapper}>
+                        <label>Expiry</label>
+                        <div className={classes.input}>
+                          <CardExpiryElement options={elementStyle} />
+                        </div>
+                      </div>
+                      <div className={classes.inputWrapper}>
+                        <label>CVC</label>
+                        <div className={classes.input}>
+                          <CardCvcElement options={elementStyle} />
+                        </div>
+                      </div>
+                    </div>
+                    <div className={classes.inputWrapper}>
+                      <label>Cardholder Name</label>
+                      <input
+                        className={classes.input}
+                        placeholder="John Doe"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={classes.formControl}>
+                    <Button
+                      onClick={() => setOpenForm(false)}
+                      variant="outlined"
+                      type="neutral"
+                    >
+                      Cancel
+                    </Button>
+                    <Button loading={loading} onClick={addPaymentMethod}>
+                      Add Payment Method
+                    </Button>
+                  </div>
+                </div>
+              ) : null}
+            </>
+          ) : (
+            <div>No Payment methods</div>
+          )}
+        </ModalContent>
+      </ModalLayout>
+
+      {action.type === "delete" && (
+        <DeletePaymentCardModal
+          cardId={action.id}
+          onClose={() => {
+            setAction({ type: "", id: "" });
+            refetch();
+          }}
+        />
+      )}
+
+      {action.type === "set_default" && (
+        <SetDefaultCardModal
+          cardId={action.id}
+          onClose={() => {
+            setAction({ type: "", id: "" });
+            refetch();
+          }}
+        />
+      )}
+    </>
   );
 };
 

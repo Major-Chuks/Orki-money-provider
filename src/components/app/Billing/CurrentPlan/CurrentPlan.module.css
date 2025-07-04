@@ -18,9 +18,52 @@
   border-left-color: #5570f1;
 } */
 
+.headerWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
 .header {
   width: 100%;
-  margin-bottom: 24px;
+}
+
+.status {
+  display: flex;
+  padding: 4px 8px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--green-200, #bbf7d0);
+  background: var(--green-50, #f0fdf4);
+  /* text */
+  color: var(--green-600, #16a34a);
+  font-family: "Plus Jakarta Sans";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 12px; /* 120% */
+}
+
+.status.cancelled {
+  color: #dc2626;
+  border: 1px solid var(--red-200, #fecaca);
+  background: var(--red-50, #fef2f2);
+}
+
+.status.cancelling {
+  color: #f97316;
+  border: 1px solid var(--orange-100, #ffedd5);
+  background: var(--orange-50, #fff7ed);
+}
+
+.status.trialing {
+  color: #2563eb;
+  border: 1px solid var(--blue-100, #dbeafe);
+  background: var(--blue-50, #eff6ff);
 }
 
 .title {

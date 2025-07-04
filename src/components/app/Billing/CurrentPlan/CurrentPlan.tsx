@@ -1,7 +1,6 @@
 import ChevronDown from "@/assets/app/ChevronDown";
 import classes from "./CurrentPlan.module.css";
 import Button from "@/components/CustomInput/Button/Button";
-import CheckCircle from "@/assets/app/CheckCircle";
 import DropdownLayout from "../../Dropdown/DropdownLayout/DropdownLayout";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import DropdownWrapper from "../../Dropdown/DropdownWrapper/DropdownWrapper";
@@ -11,12 +10,13 @@ import { useFindActiveSubscriptionQuery } from "@/services/queryApis";
 import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 import { get_findActiveSubscription } from "@/types/apis/billing/get_findActiveSubscription";
-import { formatTxDate } from "@/services/utils";
+import { formatText, formatTxDate } from "@/services/utils";
 import { useState } from "react";
 import ManageSubscriptionModal from "../ManageSubscriptionModal/ManageSubscriptionModal";
 import UpdatePlanModal from "../UpdatePlanModal/UpdatePlanModal";
-import TableStatus from "../../TableStatus/TableStatus";
 import CancelSubscriptionModal from "../CancelSubscriptionModal/CancelSubscriptionModal";
+import EmptyState from "../EmptyState/EmptyState";
+import { Ban, CheckCircle, Clock } from "lucide-react";
 
 const CurrentPlan = () => {
   const [openManageSubscriptionModal, setOpenManageSubscriptionModal] =
@@ -32,28 +32,27 @@ const CurrentPlan = () => {
 
   if (isError) return <ErrorScreen style={{ height: "40vh" }} />;
 
-  if (!data)
-    return (
-      <div
-        style={{
-          border: "unset",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "40vh",
-        }}
-        className={classes.container}
-      >
-        <div className={classes.description}>No active subscription</div>
-      </div>
-    );
+  if (!data) return <EmptyState />;
 
   return (
     <div className={`${classes.container} ${classes[currentPlan.status]}`}>
-      <div className={classes.header}>
-        <div className={classes.title}>Current Plan: {currentPlan.name}</div>
-        <div className={classes.description}>
-          Manage your active subscription details
+      <div className={classes.headerWrapper}>
+        <div className={classes.header}>
+          <div className={classes.title}>Current Plan: {currentPlan.name}</div>
+          <div className={classes.description}>
+            Manage your active subscription details
+          </div>
+        </div>
+        <div className={`${classes.status} ${classes[currentPlan.status]}`}>
+          {currentPlan.status === "active" ||
+          currentPlan.status === "trialing" ? (
+            <CheckCircle width={12} height={12} />
+          ) : currentPlan.status === "cancelling" ? (
+            <Clock width={12} height={12} />
+          ) : currentPlan.status === "cancelled" ? (
+            <Ban width={12} height={12} />
+          ) : null}
+          {formatText(currentPlan.status)}
         </div>
       </div>
 
@@ -81,14 +80,6 @@ const CurrentPlan = () => {
           ) : (
             <div className={classes.value}>No payment method</div>
           )}
-        </div>
-        <div className={classes.item}>
-          <div className={classes.name}>Status</div>
-          <div className={classes.value}>
-            <TableStatus status={currentPlan.status}>
-              {currentPlan.status}
-            </TableStatus>
-          </div>
         </div>
       </div>
 
@@ -119,7 +110,8 @@ const CurrentPlan = () => {
                 borderRadius: "8px",
                 border: "2px solid #E5E7EB",
                 background: "#fff",
-                color: "#EF4444",
+                color:
+                  currentPlan.status === "cancelling" ? "#4B5563" : "#EF4444",
               }}
               onClick={() => setOpenCancelPlanModal(true)}
             >

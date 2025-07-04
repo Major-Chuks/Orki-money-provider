@@ -1,7 +1,7 @@
 export interface get_findActiveSubscription {
   id: number;
   name: string;
-  status: "cancelled" | "cancelling" | "active";
+  status: "cancelled" | "cancelling" | "active" | "trialing";
   next_billing_date: string;
   interval: string;
   quantity: number;

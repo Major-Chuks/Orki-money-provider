@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import classes from "./Button.module.css";
 import LoadingIcon from "@/assets/app/LoadingIcon";
 
@@ -30,21 +30,28 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
 }) => {
   const [click, setClick] = useState(false);
+  const [width, setWidth] = useState<number | undefined>(undefined);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!loading && buttonRef.current) {
+      setWidth(buttonRef.current.offsetWidth);
+    }
+  }, [loading, children]);
 
   const handleClick = () => {
     if (loading || disabled) return;
     if (onClick) onClick();
-    setTimeout(() => {
-      setClick(false);
-    }, 100);
     setClick(true);
+    setTimeout(() => setClick(false), 100);
   };
 
   return (
     <button
+      ref={buttonRef}
       onClick={handleClick}
-      style={{ ...style }}
-      className={`${classes.container}  ${click && classes.click} ${
+      style={{ width: loading && width ? `${width}px` : undefined, ...style }}
+      className={`${classes.container} ${click && classes.click} ${
         classes[type]
       } ${classes[variant]} ${disabled && classes.disabled}`}
     >

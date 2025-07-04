@@ -9,8 +9,10 @@ import { getCurrencySymbol } from "@/services/utils";
 
 const Essential = ({
   plan,
+  cycle,
 }: {
   plan: get_listBillingPlans["data"][number];
+  cycle: "month" | "year";
 }) => {
   const [openForm, setOpenForm] = useState(false);
 
@@ -20,10 +22,12 @@ const Essential = ({
 
       <div className={classes.description}>{plan.description}</div>
 
-      <div className={classes.perMonth}>
-        {getCurrencySymbol(plan.currency)}
-        {plan.monthly_amount} <span>/month</span>
-      </div>
+      {cycle === "month" ? (
+        <div className={`${classes.perMonth} ${classes.grow}`}>
+          {getCurrencySymbol(plan.currency)}
+          {plan.monthly_amount} <span>/month</span>
+        </div>
+      ) : null}
 
       <div className={classes.withTag}>
         <div className={classes.perYear}>
@@ -35,6 +39,16 @@ const Essential = ({
           Save {plan.yearly_discount_percentage}% on yearly
         </div>
       </div>
+
+      {cycle === "year" ? (
+        <div
+          style={{ fontWeight: "normal", fontSize: "28px" }}
+          className={`${classes.perMonth} ${classes.shrink}`}
+        >
+          {getCurrencySymbol(plan.currency)}
+          {plan.monthly_amount} <span style={{ fontSize: "16px" }}>/month</span>
+        </div>
+      ) : null}
 
       <div className={classes.features}>
         {plan.features.map((feature, idx) => (

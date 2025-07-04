@@ -41,12 +41,13 @@ const AllPlans = () => {
           className={`${classes.tab} ${cycle === "year" && classes.active}`}
           onClick={() => setCycle("year")}
         >
-          Bill Yearly <span>Save 20%</span>
+          Bill Yearly{" "}
+          <span>Save {essentialPlan?.yearly_discount_percentage}%</span>
         </div>
       </div>
 
       <div className={classes.plans}>
-        {essentialPlan && <Essential plan={essentialPlan} />}
+        {essentialPlan && <Essential plan={essentialPlan} cycle={cycle} />}
         {premiumPlan && <Premium plan={premiumPlan} />}
         {whiteLabel && <WhiteLabel plan={whiteLabel} />}
       </div>
