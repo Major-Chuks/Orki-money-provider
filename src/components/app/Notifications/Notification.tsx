@@ -1,4 +1,4 @@
-import EmptyState from "../Transactions/EmptyState/EmptyState";
+import EmptyState from "./EmptyState/EmptyState";
 import classes from "./Notifications.module.css";
 
 const Notifications = () => {

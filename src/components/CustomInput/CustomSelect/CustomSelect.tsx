@@ -31,7 +31,7 @@ const CustomSelect = ({
   defaultValue,
   outline = true,
   plain,
-  format = true,
+  format = false,
   value: selectedValue,
 }: ExtendedInput) => {
   const [selected, setSelected] = useState<Option>(

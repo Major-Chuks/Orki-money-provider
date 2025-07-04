@@ -352,7 +352,20 @@ export const apiManifest: ApiManifest = {
   },
   "transactions": {
     "get_transactions": {
-      "args": []
+      "args": [
+        {
+          "name": "{ params }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "params",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
     },
     "get_findTransaction": {
       "args": [

@@ -7,8 +7,11 @@ import { useApiQuery } from ".";
 
 
 
-export const useTransactionsQuery = () =>
-  useApiQuery(["get_transactions"], transactionsApi.get_transactions);
+export const useTransactionsQuery = (params: { params: string }) =>
+    // Add JSON.stringify(params) to queryKey for cache uniqueness
+  useApiQuery(["get_transactions", JSON.stringify(params)], () =>
+    transactionsApi.get_transactions(params)
+  );
 
 export const useFindTransactionQuery = (params: { transactionId: string }) =>
     // Add JSON.stringify(params) to queryKey for cache uniqueness

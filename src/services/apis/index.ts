@@ -64,20 +64,18 @@ export const handleError = (error: any, label?: string) => {
     error?.response?.data?.message ||
     error?.message;
 
-  console.log(error);
+  dispatch(
+    setError({
+      code: error?.status || error?.response?.status,
+      message: errMsg,
+      label: label || "",
+    })
+  );
+  toast.show(errMsg, "error");
 
   if (error?.status === 401 || error?.response?.status === 401) {
     dispatch(setCurrentUser(null));
     // force logout
-  } else {
-    dispatch(
-      setError({
-        code: error?.status || error?.response?.status,
-        message: errMsg,
-        label: label || "",
-      })
-    );
-    toast.show(errMsg, "error");
   }
 };
 

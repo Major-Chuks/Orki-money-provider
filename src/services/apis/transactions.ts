@@ -2,8 +2,8 @@ import { BACKEND_API, handleApiCall } from ".";
 
 export const transactionsApi = {
   // TRANSACTIONS
-  get_transactions: async () => {
-    const url = "/transactions";
+  get_transactions: async ({ params }: { params: string }) => {
+    const url = `/transactions${params}`;
     return handleApiCall(() => BACKEND_API.get(url), "get_transactions");
   },
 

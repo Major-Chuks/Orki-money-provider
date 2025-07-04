@@ -6,7 +6,7 @@ import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const RecentTransactions = () => {
-  const { data, isPending, isError } = useTransactionsQuery();
+  const { data, isPending, isError } = useTransactionsQuery({ params: "" });
   const transactions: get_transactions["transactions"] =
     data?.data.data.transactions;
 
