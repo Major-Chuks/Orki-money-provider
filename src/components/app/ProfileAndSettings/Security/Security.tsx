@@ -2,8 +2,13 @@ import CustomPasswordInput from "@/components/CustomInput/CustomPasswordInput/Cu
 import SettingsHeader from "../SettingsHeader/SettingsHeader";
 import classes from "./Security.module.css";
 import Button from "@/components/CustomInput/Button/Button";
-import { useEffect, useState } from "react";
-import ToggleButton from "../../ToggleButton/ToggleButton";
+import { useState } from "react";
+import backend from "@/services/apis";
+import { useToast } from "@/context/Toast/ToastContext";
+import AuthenticatorModal from "../AuthenticatorModal/AuthenticatorModal";
+import Verify2faModal from "../AuthenticatorModal/Verify2faModal/Verify2faModal";
+import { useFetch2faQuery } from "@/services/queryApis";
+import { get_fetch2fa } from "@/types/apis/userProfile/get_fetch2fa";
 
 const inputKeys = {
   currentPassword: "currentPassword",
@@ -21,8 +26,24 @@ const Security = () => {
     newPassword: "",
     confirmPassword: "",
   });
-  const [enable2fa, setEnable2fa] = useState(false);
-  const [enableSms, setEnableSms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [authenticatorInfo, setAuthenticatorInfo] = useState<{
+    enable_2fa: boolean;
+    google2fa_secret: string;
+    qr_code_url: string;
+  } | null>(null);
+  const [verify2faModal, setVerify2faModal] = useState(false);
+  const [enable2faLoading, setEnable2faLoading] = useState(false);
+
+  const {
+    data: enable_2fa_Data,
+    isPending: enable_2fa_pending,
+    refetch,
+  } = useFetch2faQuery();
+  const isenabled_2fa: get_fetch2fa["enable_2fa"] =
+    enable_2fa_Data?.data.data.enable_2fa;
+
+  const { showToast } = useToast();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -32,13 +53,27 @@ const Security = () => {
     setInput((i) => ({ ...i, [id]: value }));
   };
 
-  useEffect(() => {
-    console.log(input);
-  }, [input]);
+  const handleUpdatePassword = async () => {
+    setLoading(true);
+    const response = await backend().patch_updatePassword({
+      current_password: input.currentPassword,
+      password: input.newPassword,
+    });
+    if (response) {
+      showToast("Password updated successfully", "success");
+      setInput({ currentPassword: "", newPassword: "", confirmPassword: "" });
+    }
+    setLoading(false);
+  };
 
-  useEffect(() => {
-    console.log({ enable2fa, enableSms });
-  }, [enable2fa, enableSms]);
+  const handleEnable2fa = async () => {
+    setEnable2faLoading(true);
+    const response = await backend().patch_enable2fa();
+    if (response) {
+      setAuthenticatorInfo(response.data.data);
+    }
+    setEnable2faLoading(false);
+  };
 
   return (
     <div className={classes.container}>
@@ -69,11 +104,17 @@ const Security = () => {
             placeholder="Confirm password"
             label="Confirm New Password"
             onChange={handleChange}
+            error={
+              Boolean(input.confirmPassword) &&
+              input.newPassword !== input.confirmPassword
+            }
           />
         </div>
 
         <div className={classes.btnWrapper}>
-          <Button>Update Password</Button>
+          <Button loading={loading} onClick={handleUpdatePassword}>
+            Update Password
+          </Button>
         </div>
       </div>
 
@@ -89,39 +130,50 @@ const Security = () => {
                 Enable Two-Factor Authentication
               </div>
               <div className={classes.description}>
-                Secure your account with an authenticator app or SMS
+                Secure your account with an authenticator app
               </div>
             </div>
-            <ToggleButton
-              id="2fa"
-              onChange={(state) => setEnable2fa(state)}
-              value={false}
-            />
+            {isenabled_2fa ? (
+              <Button
+                style={{ color: "#374151", borderColor: "#E5E7EB" }}
+                variant="outlined"
+                onClick={() => setVerify2faModal(true)}
+                type="danger"
+              >
+                Disable 2FA
+              </Button>
+            ) : (
+              <Button
+                style={{ color: "#374151", borderColor: "#E5E7EB" }}
+                variant="outlined"
+                onClick={handleEnable2fa}
+                loading={enable2faLoading || enable_2fa_pending}
+              >
+                Setup 2FA
+              </Button>
+            )}
           </div>
-          <div className={classes.toggleWrapper}>
-            <div>
-              <div className={classes.title}>SMS Recovery</div>
-              <div className={classes.description}>
-                Receive a recovery code via SMS
-              </div>
-            </div>
-            <ToggleButton
-              id="sms"
-              onChange={(state) => setEnableSms(state)}
-              value={false}
-            />
-          </div>
-        </div>
-
-        <div className={classes.btnWrapper}>
-          <Button
-            style={{ color: "#374151", borderColor: "#E5E7EB" }}
-            variant="outlined"
-          >
-            Setup 2FA
-          </Button>
         </div>
       </div>
+      {authenticatorInfo ? (
+        <AuthenticatorModal
+          onClose={() => setAuthenticatorInfo(null)}
+          onContinue={() => {
+            setAuthenticatorInfo(null);
+            setVerify2faModal(true);
+          }}
+          data={authenticatorInfo}
+        />
+      ) : null}
+      {verify2faModal ? (
+        <Verify2faModal
+          onClose={() => {
+            setVerify2faModal(false);
+            refetch();
+          }}
+          disable2fa={isenabled_2fa}
+        />
+      ) : null}
     </div>
   );
 };

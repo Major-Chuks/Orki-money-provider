@@ -4,12 +4,14 @@ const CustomFileUpload = ({
   id,
   label,
   style,
+  accept,
   className,
   onChange,
 }: {
   id?: string;
   label?: string;
   style?: React.CSSProperties;
+  accept?: string;
   className?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) => {
@@ -31,6 +33,7 @@ const CustomFileUpload = ({
 
       <input
         id={id}
+        accept={accept}
         ref={inputRef}
         style={{
           visibility: "hidden",

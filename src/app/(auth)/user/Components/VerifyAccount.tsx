@@ -8,6 +8,7 @@ import Image from "next/image";
 import { routes } from "@/services/routes";
 import logo from "@/assets/logo-3.svg";
 import backend from "@/services/apis";
+import { useToast } from "@/context/Toast/ToastContext";
 
 const initialCounter = 59;
 
@@ -22,6 +23,7 @@ const VerifyAccount = ({
   const [counter, setCounter] = useState(initialCounter);
   const [resendLoading, setResendLoading] = useState(false);
   const [validateLoading, setValidateLoading] = useState(false);
+  const { showToast } = useToast();
 
   const router = useRouter();
 
@@ -43,8 +45,10 @@ const VerifyAccount = ({
       otp,
     });
     if (response) {
-      window.localStorage.setItem("email", email);
-      router.push(routes.login);
+      showToast(
+        "Your account has been successfully verified. You can now log in!",
+        "success"
+      );
       if (onSubmit) onSubmit();
     }
     setValidateLoading(false);

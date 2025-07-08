@@ -20,7 +20,7 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: #d1d5db;
+  background: rgba(209, 213, 219, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;

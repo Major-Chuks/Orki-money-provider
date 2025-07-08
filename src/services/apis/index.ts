@@ -11,6 +11,7 @@ import { setError } from "@/redux/slices/error";
 import { setCurrentUser } from "@/redux/slices/user";
 import { billingApi } from "./billing";
 import { toast } from "@/context/Toast/ToastService";
+import { userProfileApi } from "./userProfile";
 
 export const baseURL = "https://api.money.orki.io/api";
 
@@ -88,5 +89,6 @@ export default function backend() {
     ...widgetApi,
     ...apiLogsApi,
     ...billingApi,
+    ...userProfileApi,
   };
 }

@@ -3,7 +3,7 @@
 
 import { authApi } from "../apis/auth";
 
-import { useApiQuery, useApiMutation } from ".";
+import { useApiMutation } from ".";
 
 
 
@@ -24,6 +24,3 @@ export const useResetPasswordOtpMutation = () =>
 
 export const useChangePasswordMutation = () =>
   useApiMutation(authApi.post_change_password);
-
-export const useAuthInfoQuery = () =>
-  useApiQuery(["get_authInfo"], authApi.get_authInfo);

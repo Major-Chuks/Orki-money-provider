@@ -55,7 +55,7 @@ const RequestSubscriptionModal = ({
 
   return (
     <ModalLayout>
-      <ModalContent headerSticky title={"Add Payment Method"} onClose={onClose}>
+      <ModalContent stickyHeader title={"Add Payment Method"} onClose={onClose}>
         {!stripe || !elements ? (
           <LoadingScreen style={{ height: "40vh" }} />
         ) : (

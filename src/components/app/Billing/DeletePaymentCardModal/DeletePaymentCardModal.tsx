@@ -31,7 +31,7 @@ const DeletePaymentCardModal = ({
   return (
     <ModalLayout>
       <ModalContent
-        headerSticky
+        stickyHeader
         title="Delete Payment Method"
         onClose={onClose}
       >

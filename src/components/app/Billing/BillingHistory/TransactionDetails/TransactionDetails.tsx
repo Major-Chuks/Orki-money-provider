@@ -4,9 +4,9 @@ import classes from "./TransactionDetails.module.css";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import CloseIcon from "@/assets/app/CloseIcon";
 import DownloadIcon from "@/assets/app/DownloadIcon";
-import ModalLayout from "@/components/app/Modals/ModalLayout";
 import { get_listBillingHistory } from "@/types/apis/billing/get_listBillingHistory";
 import { formatText, formatTxDate, getCurrencySymbol } from "@/services/utils";
+import Drawer from "@/components/app/Drawer/Drawer";
 
 const TransactionDetails = ({
   onClose,
@@ -19,7 +19,7 @@ const TransactionDetails = ({
     window.open(data.download_url, "_blank");
   };
   return (
-    <ModalLayout onClose={onClose}>
+    <Drawer onClose={onClose}>
       {({ close }) => (
         <div className={classes.container}>
           <div className={classes.headerWrapper}>
@@ -154,7 +154,7 @@ const TransactionDetails = ({
           </div>
         </div>
       )}
-    </ModalLayout>
+    </Drawer>
   );
 };
 

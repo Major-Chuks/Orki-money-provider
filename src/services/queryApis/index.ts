@@ -24,5 +24,6 @@ export * from "./useApiLogsQueries";
 export * from "./useAuthQueries";
 export * from "./useBillingQueries";
 export * from "./useTransactionsQueries";
+export * from "./useUserProfileQueries";
 export * from "./useWebhookQueries";
 export * from "./useWidgetQueries";

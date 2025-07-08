@@ -1,7 +1,11 @@
-import { AUTH_API, BACKEND_API_NO_VERSION, handleApiCall } from ".";
+import { AUTH_API, handleApiCall } from ".";
 
 export const authApi = {
-  post_login: async (payload: { email: string; password: string }) => {
+  post_login: async (payload: {
+    email: string;
+    password: string;
+    otp?: string;
+  }) => {
     const url = `/login`;
     return handleApiCall(() => AUTH_API.post(url, payload), "post_login");
   },
@@ -56,10 +60,5 @@ export const authApi = {
       () => AUTH_API.post(url, payload),
       "post_change_password"
     );
-  },
-
-  get_authInfo: async () => {
-    const url = "/user/profile";
-    return handleApiCall(() => BACKEND_API_NO_VERSION.get(url), "get_authInfo");
   },
 };

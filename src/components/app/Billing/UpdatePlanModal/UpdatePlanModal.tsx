@@ -68,7 +68,7 @@ const UpdatePlanModal = ({ onClose }: { onClose: () => void }) => {
         style={{ justifyContent: "flex-end", alignItems: "flex-start" }}
       >
         <ModalContent
-          headerSticky
+          stickyHeader
           title={"Payment Methods"}
           subtitle="Manage your payment methods and billing information"
           onClose={onClose}

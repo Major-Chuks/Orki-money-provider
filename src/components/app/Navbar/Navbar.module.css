@@ -186,7 +186,7 @@
 }
 
 .item:not(:first-child):hover {
-  transform: scale(1.01);
+  /* transform: scale(1.01); */
   background: #f4f5f6;
 }
 

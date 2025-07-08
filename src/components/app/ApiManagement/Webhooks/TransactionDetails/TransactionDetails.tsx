@@ -5,9 +5,9 @@ import CloseIcon from "@/assets/app/CloseIcon";
 import ArrowDown from "@/assets/app/ArrowDown";
 import CopyIcon from "@/assets/app/CopyIcon";
 import Copy from "@/components/app/Copy/Copy";
-import ModalLayout from "@/components/app/Modals/ModalLayout";
 import { get_webhookLogs } from "@/types/apis/webhook/get_webhookLogs";
 import { formatTxDate } from "@/services/utils";
+import Drawer from "@/components/app/Drawer/Drawer";
 
 const TransactionDetails = ({
   data,
@@ -28,7 +28,7 @@ const TransactionDetails = ({
   };
 
   return (
-    <ModalLayout onClose={onClose}>
+    <Drawer onClose={onClose}>
       {({ close }) => (
         <div className={classes.container}>
           <div className={classes.headerWrapper}>
@@ -101,7 +101,7 @@ const TransactionDetails = ({
           </div>
         </div>
       )}
-    </ModalLayout>
+    </Drawer>
   );
 };
 

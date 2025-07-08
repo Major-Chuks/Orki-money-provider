@@ -1,23 +1,32 @@
-import CustomSelect from "@/components/CustomInput/CustomSelect/CustomSelect";
+import CustomSelect, {
+  Option,
+} from "@/components/CustomInput/CustomSelect/CustomSelect";
 import SettingsHeader from "../SettingsHeader/SettingsHeader";
 import classes from "./Appearance.module.css";
 import CustomColorInput from "@/components/CustomInput/CustomColorInput/CustomColorInput";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Widget from "./Widget";
+import backend from "@/services/apis";
+import { debounce } from "lodash";
+import { useToast } from "@/context/Toast/ToastContext";
+import { useFetchWidgetThemeQuery } from "@/services/queryApis";
+import { get_fetchWidgetTheme } from "@/types/apis/userProfile/get_fetchWidgetTheme";
+import { InputIdState } from "@/components/CustomInput/CustomInput.script";
+import Button from "@/components/CustomInput/Button/Button";
 
 const inputKeys = {
-  primaryColor: "primaryColor",
-  secondaryColor: "secondaryColor",
-  primaryTextColor: "primaryTextColor",
-  secondaryTextColor: "secondaryTextColor",
-  primaryButtonTextColor: "primaryButtonTextColor",
-  containerBackground: "containerBackground",
-  cardBackground: "cardBackground",
-  elementBorder: "elementBorder",
-  containerBorder: "containerBorder",
-  fontFamily: "fontFamilty",
-  borderRadius: "borderRadius",
-  shadowStyle: "shadowStyle",
+  brand_primary_color: "brand_primary_color",
+  brand_secondary_color: "brand_secondary_color",
+  text_primary_color: "text_primary_color",
+  text_secondary_color: "text_secondary_color",
+  button_primary_text_color: "button_primary_text_color",
+  layout_container_background: "layout_container_background",
+  layout_card_background: "layout_card_background",
+  layout_element_border: "layout_element_border",
+  layout_container_border: "layout_container_border",
+  advanced_font_family: "advanced_font_family",
+  advanced_border_radius: "advanced_border_radius",
+  advanced_shadow_style: "advanced_shadow_style",
 } as const;
 
 type InputTypes = {
@@ -49,32 +58,95 @@ const shadowStyleOptions = [
 ];
 
 const Appearance = () => {
+  const { data, isPending, refetch } = useFetchWidgetThemeQuery();
+  const inpuData: get_fetchWidgetTheme = data?.data.data;
+  const isUserChange = useRef(false);
+
   const [input, setInput] = useState<InputTypes>({
-    primaryColor: "",
-    secondaryColor: "",
-    primaryTextColor: "",
-    secondaryTextColor: "",
-    primaryButtonTextColor: "",
-    containerBackground: "",
-    cardBackground: "",
-    elementBorder: "",
-    containerBorder: "",
-    fontFamily: "",
-    borderRadius: "",
-    shadowStyle: "",
+    brand_primary_color: "",
+    brand_secondary_color: "",
+    text_primary_color: "",
+    text_secondary_color: "",
+    button_primary_text_color: "",
+    layout_container_background: "",
+    layout_card_background: "",
+    layout_element_border: "",
+    layout_container_border: "",
+    advanced_font_family: "",
+    advanced_border_radius: "",
+    advanced_shadow_style: "",
   });
+  const [loadingReset, setLoadingReset] = useState(false);
+
+  const { showToast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     if (!id) return;
     setInput((i) => ({ ...i, [id]: value }));
+    isUserChange.current = true;
   };
 
-  const handleSelect = () => {};
+  const handleSelect = (option: Option, id?: InputIdState) => {
+    if (!id) return;
+    setInput((i) => ({ ...i, [id]: option.id }));
+    isUserChange.current = true;
+  };
+
+  const handleReset = async () => {
+    setLoadingReset(true);
+    const response = await backend().patch_updateWidgetTheme({
+      brand_primary_color: "",
+      brand_secondary_color: "",
+      text_primary_color: "",
+      text_secondary_color: "",
+      button_primary_text_color: "",
+      layout_container_background: "",
+      layout_card_background: "",
+      layout_element_border: "",
+      layout_container_border: "",
+      advanced_font_family: "",
+      advanced_border_radius: "",
+      advanced_shadow_style: "",
+    });
+    if (response) {
+      showToast("Widget theme updated successfully.", "success");
+      refetch();
+    }
+    setLoadingReset(false);
+  };
+
+  const debouncedUpdateRef = useRef(
+    debounce(async (input: InputTypes) => {
+      const response = await backend().patch_updateWidgetTheme(input);
+      if (response) {
+        showToast("Widget theme updated successfully.", "success");
+      }
+    }, 1000)
+  );
 
   useEffect(() => {
-    console.log(input);
+    if (!isUserChange.current) return;
+    debouncedUpdateRef.current(input);
   }, [input]);
+
+  useEffect(() => {
+    if (!isPending && inpuData)
+      setInput({
+        brand_primary_color: inpuData.brand_primary_color || "",
+        brand_secondary_color: inpuData.brand_secondary_color || "",
+        text_primary_color: inpuData.text_primary_color || "",
+        text_secondary_color: inpuData.text_secondary_color || "",
+        button_primary_text_color: inpuData.button_primary_text_color || "",
+        layout_container_background: inpuData.layout_container_background || "",
+        layout_card_background: inpuData.layout_card_background || "",
+        layout_element_border: inpuData.layout_element_border || "",
+        layout_container_border: inpuData.layout_container_border || "",
+        advanced_font_family: inpuData.advanced_font_family || "",
+        advanced_border_radius: inpuData.advanced_border_radius || "",
+        advanced_shadow_style: inpuData.advanced_shadow_style || "",
+      });
+  }, [isPending, inpuData]);
 
   return (
     <div className={classes.container}>
@@ -89,26 +161,26 @@ const Appearance = () => {
         <div className={classes.title}>Brand Colors</div>
         <div className={classes.inputWrapper}>
           <CustomColorInput
-            id={inputKeys.primaryColor}
-            value={input.primaryColor}
+            id={inputKeys.brand_primary_color}
+            value={input.brand_primary_color}
             label="Primary Color"
             onChange={handleChange}
           />
           <CustomColorInput
-            id={inputKeys.secondaryColor}
-            value={input.secondaryColor}
+            id={inputKeys.brand_secondary_color}
+            value={input.brand_secondary_color}
             label="Secondary Color"
             onChange={handleChange}
           />
           <CustomColorInput
-            id={inputKeys.primaryTextColor}
-            value={input.primaryTextColor}
+            id={inputKeys.text_primary_color}
+            value={input.text_primary_color}
             label="Primary Text Color"
             onChange={handleChange}
           />
           <CustomColorInput
-            id={inputKeys.secondaryTextColor}
-            value={input.secondaryTextColor}
+            id={inputKeys.text_secondary_color}
+            value={input.text_secondary_color}
             label="Secondary Text Color"
             onChange={handleChange}
           />
@@ -119,8 +191,8 @@ const Appearance = () => {
         <div className={classes.title}>Buttons</div>
         <div className={classes.inputWrapper}>
           <CustomColorInput
-            id={inputKeys.primaryButtonTextColor}
-            value={input.primaryButtonTextColor}
+            id={inputKeys.button_primary_text_color}
+            value={input.button_primary_text_color}
             label="Primary Button Text Color"
             onChange={handleChange}
           />
@@ -131,26 +203,26 @@ const Appearance = () => {
         <div className={classes.title}>Layout & Containers</div>
         <div className={classes.inputWrapper}>
           <CustomColorInput
-            id={inputKeys.containerBackground}
-            value={input.containerBackground}
+            id={inputKeys.layout_container_background}
+            value={input.layout_container_background}
             label="Container Background"
             onChange={handleChange}
           />
           <CustomColorInput
-            id={inputKeys.cardBackground}
-            value={input.cardBackground}
+            id={inputKeys.layout_card_background}
+            value={input.layout_card_background}
             label="Card Background"
             onChange={handleChange}
           />
           <CustomColorInput
-            id={inputKeys.elementBorder}
-            value={input.elementBorder}
+            id={inputKeys.layout_element_border}
+            value={input.layout_element_border}
             label="Element Border"
             onChange={handleChange}
           />
           <CustomColorInput
-            id={inputKeys.containerBorder}
-            value={input.containerBorder}
+            id={inputKeys.layout_container_border}
+            value={input.layout_container_border}
             label="Container Border"
             onChange={handleChange}
           />
@@ -161,26 +233,37 @@ const Appearance = () => {
         <div className={classes.title}>Advanced Options</div>
         <div className={classes.inputWrapper}>
           <CustomSelect
-            id={inputKeys.fontFamily}
+            id={inputKeys.advanced_font_family}
+            value={input.advanced_font_family}
             label="Font Family"
             placeholder="-- Select --"
             options={fontOptions}
             onSelect={handleSelect}
           />
           <CustomSelect
-            id={inputKeys.borderRadius}
+            id={inputKeys.advanced_border_radius}
+            value={input.advanced_border_radius}
             label="Border Radius"
             placeholder="-- Select --"
             options={borderRadiusOptions}
             onSelect={handleSelect}
           />
           <CustomSelect
-            id={inputKeys.shadowStyle}
+            id={inputKeys.advanced_shadow_style}
+            value={input.advanced_shadow_style}
             label="Shadow Style"
             placeholder="-- Select --"
             options={shadowStyleOptions}
             onSelect={handleSelect}
           />
+        </div>
+      </section>
+
+      <section>
+        <div className={classes.btnWrapper}>
+          <Button loading={loadingReset} onClick={handleReset}>
+            Reset Appearance
+          </Button>
         </div>
       </section>
 

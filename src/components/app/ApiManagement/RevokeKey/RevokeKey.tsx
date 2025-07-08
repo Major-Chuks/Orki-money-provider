@@ -30,7 +30,7 @@ const RevokeKey = ({
 
   return (
     <ModalLayout>
-      <ModalContent headerSticky title={"Revoke API Key"} onClose={onClose}>
+      <ModalContent stickyHeader title={"Revoke API Key"} onClose={onClose}>
         <div className={classes.info}>
           Are you sure you want to revoke &quot;{formatText(type)} API
           Key&quot;? This action cannot be undone and will immediately stop all

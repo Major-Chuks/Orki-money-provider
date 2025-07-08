@@ -176,7 +176,8 @@ const PlanFeatures = ({ features }: { features: string[] }) => {
               <div className={classes.gridBox2}>
                 {features.map((item, idx) => (
                   <div key={idx} className={classes.item}>
-                    <CheckCircle /> {item}
+                    <CheckCircle width={16} height={16} color="#16A34A" />{" "}
+                    {item}
                   </div>
                 ))}
               </div>

@@ -46,6 +46,13 @@
   margin-top: 52px;
 }
 
+.btnWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 @media (min-width: 1024px) {
   .inputWrapper {
     grid-template-columns: repeat(2, 1fr);

@@ -39,7 +39,7 @@ const CancelSubscriptionModal = ({
   return (
     <ModalLayout>
       <ModalContent
-        headerSticky
+        stickyHeader
         title={
           plan.status === "cancelling"
             ? "Resume Subscription"

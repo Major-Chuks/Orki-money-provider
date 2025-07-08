@@ -61,7 +61,7 @@ const Navbar = () => {
                 </div>
                 <div className={classes.info}>
                   <div className={classes.name}>
-                    {currentUser?.business_name}
+                    {currentUser?.firstname} {currentUser?.lastname}
                   </div>
                   <div className={classes.role}>
                     {formatText(currentUser?.role || "")}
@@ -90,7 +90,7 @@ const Navbar = () => {
                     </div>
                     <div className={classes.info}>
                       <div className={classes.name}>
-                        {currentUser?.business_name}
+                        {currentUser?.firstname} {currentUser?.lastname}
                       </div>
                       <div className={classes.role}>
                         {formatText(currentUser?.email || "")}

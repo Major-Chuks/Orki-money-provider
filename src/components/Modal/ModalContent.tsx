@@ -9,7 +9,7 @@ interface ModalContentProps {
   onClose: () => void;
   children: React.ReactNode;
   titleStyle?: React.CSSProperties;
-  headerSticky?: boolean;
+  stickyHeader?: boolean;
 }
 
 const ModalContent: React.FC<ModalContentProps> = ({
@@ -19,12 +19,12 @@ const ModalContent: React.FC<ModalContentProps> = ({
   onClose,
   children,
   titleStyle,
-  headerSticky,
+  stickyHeader,
 }) => {
   return (
     <ModalWrapper size={size}>
       <div className={classes.container}>
-        <div className={`${classes.header} ${headerSticky && classes.sticky} `}>
+        <div className={`${classes.header} ${stickyHeader && classes.sticky} `}>
           <div>
             {title && (
               <div style={{ ...titleStyle }} className={classes.title}>

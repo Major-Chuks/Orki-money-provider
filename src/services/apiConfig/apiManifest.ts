@@ -95,6 +95,11 @@ export const apiManifest: ApiManifest = {
               "name": "password",
               "isOptional": false,
               "type": "string"
+            },
+            {
+              "name": "otp",
+              "isOptional": true,
+              "type": "string | undefined"
             }
           ]
         }
@@ -224,9 +229,6 @@ export const apiManifest: ApiManifest = {
           ]
         }
       ]
-    },
-    "get_authInfo": {
-      "args": []
     }
   },
   "billing": {
@@ -378,6 +380,295 @@ export const apiManifest: ApiManifest = {
               "name": "transactionId",
               "isOptional": false,
               "type": "string"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "userProfile": {
+    "get_fetchUserProfile": {
+      "args": []
+    },
+    "post_createUserProfile": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "firstname",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "lastname",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "country",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "phone",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "avatar",
+              "isOptional": false,
+              "type": "File | null"
+            }
+          ]
+        }
+      ]
+    },
+    "patch_updateBusinessProfile": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "business_name",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "business_registered_name",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "business_website",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "business_email",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "business_country",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "business_phone",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "business_address",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "industry",
+              "isOptional": false,
+              "type": "\"cex\" | \"dex\" | \"p2p\" | \"nft_marketplace\" | \"nft_gaming\" | \"defi_aggregator\" | \"crypto_payment_gateway\" | \"media_publisher\" | \"digital_gaming\" | \"gambling\" | \"other\""
+            }
+          ]
+        }
+      ]
+    },
+    "get_fetchBusinessProfile": {
+      "args": []
+    },
+    "patch_updateBillingInfo": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "name",
+              "isOptional": false,
+              "type": "string | null"
+            },
+            {
+              "name": "address",
+              "isOptional": false,
+              "type": "{ line1: string | null; city: string | null; state: string | null; country: string | null; postal_code: string | null; }"
+            }
+          ]
+        }
+      ]
+    },
+    "get_fetchBillingInfo": {
+      "args": []
+    },
+    "patch_updatePassword": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "current_password",
+              "isOptional": false,
+              "type": "string"
+            },
+            {
+              "name": "password",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "patch_enable2fa": {
+      "args": []
+    },
+    "patch_disable2fa": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "otp",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "get_fetch2fa": {
+      "args": []
+    },
+    "patch_confirm2fa": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "otp",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "patch_updateWidgetTheme": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "brand_primary_color",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "brand_secondary_color",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "text_primary_color",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "text_secondary_color",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "button_primary_text_color",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "layout_container_background",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "layout_card_background",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "layout_element_border",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "layout_container_border",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "advanced_font_family",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "advanced_border_radius",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "advanced_shadow_style",
+              "isOptional": true,
+              "type": "string | undefined"
+            }
+          ]
+        }
+      ]
+    },
+    "get_fetchWidgetTheme": {
+      "args": []
+    },
+    "post_logout": {
+      "args": []
+    },
+    "get_fetchNotificationEvents": {
+      "args": []
+    },
+    "patch_updateNotificationEvents": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "product",
+              "isOptional": false,
+              "type": "boolean"
+            },
+            {
+              "name": "marketing",
+              "isOptional": false,
+              "type": "boolean"
+            },
+            {
+              "name": "transactions",
+              "isOptional": false,
+              "type": "boolean"
+            },
+            {
+              "name": "security",
+              "isOptional": false,
+              "type": "boolean"
             }
           ]
         }

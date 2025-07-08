@@ -1,0 +1,141 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.section {
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--gray-100, #f3f4f6);
+  background: var(--white, #fff);
+  box-shadow: 0px 0px 2px 0px rgba(99, 97, 97, 0.25);
+}
+
+.cardWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  color: var(--gray-800, #1f2937);
+  font-family: "DM Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px; /* 140% */
+  letter-spacing: -0.2px;
+}
+
+.card {
+  border-radius: 16px;
+  border: 1px solid var(--green-300, #86efac);
+  background: #f9fffb;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 24px;
+}
+
+.card > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardBtnWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.deleteBtn {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+  border: 1px solid var(--Grays-Gray-5, #e5e5ea);
+  background: #fff;
+  color: #ef4444;
+}
+
+.setDefaultBtn {
+  display: flex;
+  padding: 9px 12px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 4px;
+  border: 1px solid var(--Grays-Gray-5, #e5e5ea);
+  background: var(--white, #fff);
+  /* text */
+  color: var(--Grays-Black, var(--Grays-Black, #000));
+  font-family: "Plus Jakarta Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 14px; /* 116.667% */
+}
+
+.cardNo {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 120% */
+  margin-bottom: 8px;
+}
+
+.date {
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 100% */
+}
+
+.status {
+  display: flex;
+  padding: 4px 8px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--green-200, #bbf7d0);
+  background: var(--green-50, #f0fdf4);
+  /* text */
+  color: var(--green-600, #16a34a);
+  font-family: "Plus Jakarta Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 14px; /* 116.667% */
+}
+
+.inputWrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.btnWrapper {
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

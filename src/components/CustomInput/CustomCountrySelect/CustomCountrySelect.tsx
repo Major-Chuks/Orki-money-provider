@@ -62,7 +62,7 @@ const CustomCountrySelect = ({
   useEffect(() => {
     if (value) {
       const filteredResult = COUNTRY_DATA.filter((c) =>
-        c.name.toLowerCase().startsWith(value)
+        c.name.toLowerCase().startsWith(value.toLowerCase())
       );
       setCountries(filteredResult);
     } else {
@@ -74,7 +74,9 @@ const CustomCountrySelect = ({
     const sv = getValue({ value: selectedValue, id });
     if (selectedValue && sv) {
       const match = COUNTRY_DATA.find(
-        (c) => c.name.toLowerCase() === sv.toLowerCase()
+        (c) =>
+          c.name.toLowerCase() === sv.toLowerCase() ||
+          c.code.toLowerCase() === sv.toLowerCase()
       );
       if (match) {
         setValue(match.name);

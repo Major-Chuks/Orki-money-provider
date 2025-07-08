@@ -213,7 +213,7 @@
 }
 
 .shrink {
-  animation: shrink 650ms forwards;
+  animation: shrink 300ms forwards;
 }
 
 @keyframes shrink {

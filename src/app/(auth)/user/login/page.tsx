@@ -23,6 +23,8 @@ import { setAccessToken, setCurrentUser } from "@/redux/slices/user";
 import { RootState } from "@/redux/store";
 import { clearError } from "@/redux/slices/error";
 import VerifyAccount from "../Components/VerifyAccount";
+import Verify2fa from "../Components/Verify2fa";
+import { useToast } from "@/context/Toast/ToastContext";
 
 const Login = () => {
   const router = useRouter();
@@ -33,10 +35,9 @@ const Login = () => {
     password: false,
   });
   const [verifyEmail, setVerifyEmail] = useState(false);
+  const [verify2fa, setVerify2fa] = useState(false);
 
-  const { label, message, code } = useSelector(
-    (state: RootState) => state.error
-  );
+  const { label, message } = useSelector((state: RootState) => state.error);
 
   const [input, setInput] = useState({
     email: "",
@@ -44,6 +45,7 @@ const Login = () => {
   });
 
   const dispatch = useDispatch();
+  const { showToast } = useToast();
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -55,16 +57,17 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    clearError();
+    dispatch(clearError());
 
     setLoading(true);
     const response = await backend().post_login(input);
     if (response) {
       dispatch(setAccessToken(response.data.data.access_token));
-      const userResponse = await backend().get_authInfo();
+      const userResponse = await backend().get_fetchUserProfile();
       if (userResponse) {
         dispatch(setCurrentUser(userResponse.data.data));
       }
+      showToast("You're in! Redirecting to your dashboard...", "success");
       router.push(routes.dashboard);
     } else {
       dispatch(setAccessToken(null));
@@ -90,7 +93,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    if (label === "post_login" && code === 403 && message.includes("verify")) {
+    if (label === "post_login" && message.includes("verify")) {
       (async () => {
         const response = await backend().post_resend_verification_otp({
           email: input.email,
@@ -100,7 +103,14 @@ const Login = () => {
         }
       })();
     }
-  }, [label, code, message]);
+
+    if (
+      label === "post_login" &&
+      message.toLowerCase().includes("2fa enabled")
+    ) {
+      setVerify2fa(true);
+    }
+  }, [label, message]);
 
   if (verifyEmail) {
     return (
@@ -109,6 +119,10 @@ const Login = () => {
         onSubmit={() => setVerifyEmail(false)}
       />
     );
+  }
+
+  if (verify2fa) {
+    return <Verify2fa email={input.email} password={input.password} />;
   }
 
   return (

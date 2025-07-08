@@ -31,7 +31,7 @@ const CreateKey = ({
   return (
     <ModalLayout>
       <ModalContent
-        headerSticky
+        stickyHeader
         title={"Create API Key"}
         subtitle="Create API Key"
         onClose={onClose}

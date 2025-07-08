@@ -1,9 +1,9 @@
-import { get_authInfo } from "@/types/apis/auth/get_authInfo";
+import { get_fetchUserProfile } from "@/types/apis/userProfile/get_fetchUserProfile";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: {
   accessToken: string | null;
-  currentUser: get_authInfo | null;
+  currentUser: get_fetchUserProfile | null;
 } = {
   accessToken: null,
   currentUser: null,
@@ -16,7 +16,10 @@ const userSlice = createSlice({
     setAccessToken: (state, action: PayloadAction<string | null>) => {
       state.accessToken = action.payload;
     },
-    setCurrentUser: (state, action: PayloadAction<get_authInfo | null>) => {
+    setCurrentUser: (
+      state,
+      action: PayloadAction<get_fetchUserProfile | null>
+    ) => {
       state.currentUser = action.payload;
     },
     resetUser: (state) => {

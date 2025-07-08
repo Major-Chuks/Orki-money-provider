@@ -1,0 +1,92 @@
+.container {
+  width: 100%;
+}
+
+.box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-200, #e5e7eb);
+  background: #fdfdff;
+  box-shadow: 0px 0px 4px 0px rgba(200, 200, 200, 0.25);
+}
+
+.label {
+  margin-bottom: 24px;
+  /* text */
+  color: var(--gray-500, #6b7280);
+  text-align: center;
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+}
+
+.qrcode {
+  width: 284px;
+  height: 284px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border-radius: 4px;
+  border: 1px solid #e1e1e1;
+  background: #fff;
+  margin-bottom: 40px;
+}
+
+.qrcode img {
+  width: 100%;
+  height: auto;
+}
+
+.note {
+  margin-top: 32px;
+  /* text */
+  color: var(--gray-500, #6b7280);
+  text-align: center;
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+}
+
+.instructions {
+  margin-top: 32px;
+  margin-bottom: 40px;
+}
+
+.btnWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.instructions .title {
+  margin-bottom: 16px;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 120% */
+}
+
+.instructions ol {
+  padding-left: 32px;
+  /* text */
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 200% */
+}

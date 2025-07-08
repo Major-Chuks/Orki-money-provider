@@ -44,6 +44,12 @@
   background: #ef4444;
 }
 
+.container.danger.outlined {
+  background: transparent;
+  border: 2px solid #ef4444 !important;
+  color: #ef4444 !important;
+}
+
 .container.neutral {
 }
 

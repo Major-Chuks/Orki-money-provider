@@ -5,6 +5,7 @@ import { apiLogsApi } from '../apis/apiLogs';
 import { authApi } from '../apis/auth';
 import { billingApi } from '../apis/billing';
 import { transactionsApi } from '../apis/transactions';
+import { userProfileApi } from '../apis/userProfile';
 import { webhookApi } from '../apis/webhook';
 import { widgetApi } from '../apis/widget';
 
@@ -14,6 +15,7 @@ export const apiModules = {
   'auth': authApi,
   'billing': billingApi,
   'transactions': transactionsApi,
+  'userProfile': userProfileApi,
   'webhook': webhookApi,
   'widget': widgetApi,
 };

@@ -31,7 +31,7 @@ const SetDefaultCardModal = ({
   return (
     <ModalLayout>
       <ModalContent
-        headerSticky
+        stickyHeader
         title="Set Default Payment Method"
         onClose={onClose}
       >

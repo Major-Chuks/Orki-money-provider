@@ -10,29 +10,42 @@ import { useEffect, useState } from "react";
 import { ICountryData } from "@/constants/country";
 import CustomFileUpload from "@/components/CustomInput/CustomFileUpload/CustomFileUpload";
 import Image from "next/image";
+import backend from "@/services/apis";
+import { useToast } from "@/context/Toast/ToastContext";
+import { useFetchUserProfileQuery } from "@/services/queryApis";
+import { get_fetchUserProfile } from "@/types/apis/userProfile/get_fetchUserProfile";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 
 const inputKeys = {
-  fullName: "fullName",
-  emailAddress: "emailAddress",
-  phoneNumber: "phoneNumber",
+  firstname: "firstname",
+  lastname: "lastname",
+  email: "email",
+  phone: "phone",
   country: "country",
-  pfp: "pfp",
+  avatar: "avatar",
 } as const;
 
 type InputTypes = {
-  [K in Exclude<keyof typeof inputKeys, "pfp">]: string;
+  [K in Exclude<keyof typeof inputKeys, "avatar">]: string;
 } & {
-  pfp: File | null;
+  avatar: File | null;
 };
 
 const Profile = () => {
   const [input, setInput] = useState<InputTypes>({
-    fullName: "",
-    emailAddress: "",
-    phoneNumber: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
     country: "",
-    pfp: null,
+    avatar: null,
   });
+  const [loading, setLoading] = useState(false);
+
+  const { data, isPending } = useFetchUserProfileQuery();
+  const userProfile: get_fetchUserProfile = data?.data.data;
+
+  const { showToast } = useToast();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -43,7 +56,7 @@ const Profile = () => {
   };
 
   const handleCountrySelect = (selected: ICountryData) => {
-    setInput((i) => ({ ...i, [inputKeys.country]: selected.name }));
+    setInput((i) => ({ ...i, [inputKeys.country]: selected.code }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,9 +65,30 @@ const Profile = () => {
     setInput((i) => ({ ...i, [id]: files[0] }));
   };
 
+  const handleSaveProfile = async () => {
+    setLoading(true);
+    const response = await backend().post_createUserProfile({
+      ...input,
+      phone: `+${input.phone}`,
+    });
+    if (response) {
+      showToast("Profile updated successfully", "success");
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    console.log(input);
-  }, [input]);
+    if (!isPending && userProfile) {
+      setInput({
+        firstname: userProfile.firstname,
+        lastname: userProfile.lastname,
+        email: userProfile.email,
+        phone: userProfile.phone,
+        country: userProfile.country,
+        avatar: null,
+      });
+    }
+  }, [isPending, userProfile]);
 
   return (
     <div className={classes.container}>
@@ -63,61 +97,77 @@ const Profile = () => {
         description="Update your personal details"
       />
 
-      <div className={classes.main}>
-        <div className={classes.pfp}>
-          <div className={classes.avatar}>
-            {input.pfp ? (
-              <Image
-                width={120}
-                height={120}
-                src={URL.createObjectURL(input.pfp)}
-                alt=""
+      {isPending ? (
+        <LoadingScreen style={{ height: "40vh" }} />
+      ) : (
+        <>
+          <div className={classes.main}>
+            <div className={classes.pfp}>
+              <div className={classes.avatar}>
+                {input.avatar ? (
+                  <Image
+                    width={120}
+                    height={120}
+                    src={URL.createObjectURL(input.avatar)}
+                    alt=""
+                  />
+                ) : null}
+              </div>
+              <ButtonWrapper className={classes.label}>
+                <CustomFileUpload
+                  id={inputKeys.avatar}
+                  accept="image/*"
+                  label="Change Picture"
+                  onChange={handleFileChange}
+                />
+              </ButtonWrapper>
+            </div>
+            <div className={classes.inputWrapper}>
+              <CustomTextInput
+                id={inputKeys.firstname}
+                value={input.firstname}
+                placeholder="Enter your first name"
+                label="First Name"
+                onChange={handleChange}
               />
-            ) : null}
+              <CustomTextInput
+                id={inputKeys.lastname}
+                value={input.lastname}
+                placeholder="Enter your last name"
+                label="Last Name"
+                onChange={handleChange}
+              />
+              <CustomEmailInput
+                id={inputKeys.email}
+                value={input.email}
+                placeholder="Enter your email address"
+                label="Email Address"
+                onChange={handleChange}
+              />
+              <CustomPhoneInput
+                id={inputKeys.phone}
+                value={input.phone}
+                placeholder="Enter your phone number"
+                label="Phone Number"
+                onChange={handleChange}
+              />
+              <CustomCountrySelect
+                id={inputKeys.country}
+                value={input.country}
+                placeholder="Select your country"
+                label="Country"
+                onSelect={handleCountrySelect}
+              />
+            </div>
           </div>
-          <ButtonWrapper className={classes.label}>
-            <CustomFileUpload
-              id={inputKeys.pfp}
-              label="Change Picture"
-              onChange={handleFileChange}
-            />
-          </ButtonWrapper>
-        </div>
-        <div className={classes.inputWrapper}>
-          <CustomTextInput
-            id={inputKeys.fullName}
-            value={input.fullName}
-            placeholder="Enter your full name"
-            label="Full Name"
-            onChange={handleChange}
-          />
-          <CustomEmailInput
-            id={inputKeys.emailAddress}
-            value={input.emailAddress}
-            placeholder="Enter your email address"
-            label="Email Address"
-            onChange={handleChange}
-          />
-          <CustomPhoneInput
-            id={inputKeys.phoneNumber}
-            value={input.phoneNumber}
-            placeholder="Enter your phone number"
-            label="Phone Number"
-            onChange={handleChange}
-          />
-          <CustomCountrySelect
-            id={inputKeys.country}
-            value={input.country}
-            placeholder="Select your country"
-            label="Country"
-            onSelect={handleCountrySelect}
-          />
-        </div>
-      </div>
 
-      <div className={classes.btnWrapper}>
-        <Button>Save Changes</Button>
-      </div>
+          <div className={classes.btnWrapper}>
+            <Button loading={loading} onClick={handleSaveProfile}>
+              Save Changes
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

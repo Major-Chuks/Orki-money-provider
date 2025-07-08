@@ -4,7 +4,7 @@ import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper"
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import TooltipIcon from "@/assets/app/TooltipIcon";
-import ModalLayout from "../../Modals/ModalLayout";
+import ModalLayout from "../../Drawer/Drawer";
 import { useFindTransactionQuery } from "@/services/queryApis";
 import { get_findTransaction } from "@/types/apis/transactions/get_findTransaction";
 import { formatDate, formatText } from "@/services/utils";

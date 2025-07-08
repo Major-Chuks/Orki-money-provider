@@ -53,7 +53,7 @@ const ManageSubscriptionModal = ({ onClose }: { onClose: () => void }) => {
       style={{ justifyContent: "flex-end", alignItems: "flex-start" }}
     >
       <ModalContent
-        headerSticky
+        stickyHeader
         title={"Manage Your Subscription"}
         subtitle="Change your plan, update billing frequency, or manage your subscription"
         onClose={onClose}

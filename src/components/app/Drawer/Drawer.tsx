@@ -1,7 +1,7 @@
-import classes from "./ModalLayout.module.css";
+import classes from "./Drawer.module.css";
 import { ReactNode, useEffect, useState } from "react";
 
-interface ModalLayoutProps {
+interface DrawerProps {
   children:
     | ReactNode
     | ((props: { open: boolean; close: () => void }) => ReactNode);
@@ -10,7 +10,7 @@ interface ModalLayoutProps {
   style?: React.CSSProperties;
 }
 
-const ModalLayout: React.FC<ModalLayoutProps> = ({
+const Drawer: React.FC<DrawerProps> = ({
   children,
   onClose,
   className,
@@ -50,4 +50,4 @@ const ModalLayout: React.FC<ModalLayoutProps> = ({
   );
 };
 
-export default ModalLayout;
+export default Drawer;
