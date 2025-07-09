@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { usePathname, useRouter } from "next/navigation";
 import { mapRoutesToHeading } from "../Sidebar/Sidebar.script";
 import classes from "./Navbar.module.css";
@@ -23,7 +24,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const heading = mapRoutesToHeading[pathname.split("/")[2] || "app"];
-  const pfp = null;
+  const pfp = currentUser?.avatar;
 
   const handleLogout = () => {
     dispatch(setCurrentUser(null));
@@ -49,12 +50,12 @@ const Navbar = () => {
               <div onClick={toggle} className={classes.profile}>
                 <div className={classes.imageContainer}>
                   {pfp ? (
-                    <Image width={40} height={40} src={pfp} alt="" />
+                    <img width={40} height={40} src={pfp} alt="" />
                   ) : (
                     <div className={classes.initial}>
                       {getInitial({
-                        firstName: "",
-                        lastName: "",
+                        firstName: currentUser?.firstname,
+                        lastName: currentUser?.lastname,
                       })}
                     </div>
                   )}

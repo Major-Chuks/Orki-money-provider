@@ -27,6 +27,7 @@ import {
 } from "@/components/CustomInput/CustomInput.script";
 import VerifyAccount from "../Components/VerifyAccount";
 import backend from "@/services/apis";
+import CustomPasswordValidator from "@/components/CustomInput/CustomPasswordValidator/CustomPasswordValidator";
 
 const roles = [
   { id: "developer", name: "Developer" },
@@ -63,9 +64,6 @@ const inputKeys = {
 
 type InputType = { [key in keyof typeof inputKeys]: string };
 
-// add a page to verfiy emails
-//
-
 const SignUp = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -91,6 +89,7 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
+  const [isValidPassword, setIsValidPassword] = useState(false);
 
   const router = useRouter();
 
@@ -110,6 +109,8 @@ const SignUp = () => {
   };
 
   const handleCreateAccount = async () => {
+    if (!isValidPassword) return;
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, ...payload } = input;
     setLoading(true);
@@ -121,13 +122,18 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    const isValid = validateInput({ input: input, setError: () => {} });
-    if (isValid && isChecked) {
+    const isValidInput = validateInput({ input: input, setError: () => {} });
+    if (
+      isValidInput &&
+      isChecked &&
+      input.password === input.confirmPassword &&
+      isValidPassword
+    ) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [input, isChecked]);
+  }, [input, isValidPassword, isChecked]);
 
   if (verifyAccount) return <VerifyAccount email={input.email} />;
 
@@ -227,6 +233,11 @@ const SignUp = () => {
           value={input.confirmPassword}
           onChange={handleChange}
           error={error}
+        />
+
+        <CustomPasswordValidator
+          onChange={setIsValidPassword}
+          password={input["password"]}
         />
 
         <div className={classes.note}>

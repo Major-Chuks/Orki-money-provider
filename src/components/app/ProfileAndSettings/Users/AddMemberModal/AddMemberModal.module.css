@@ -1,0 +1,110 @@
+.container {
+  width: 100%;
+}
+
+.emailInputContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 10%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputWrapper input {
+  width: 100%;
+  padding: 8px 16px;
+  padding-right: 96px;
+  border-radius: 8px;
+  border: 1px solid var(--brand, #6148c2);
+  background: var(--white, #fcfcfc);
+  box-shadow: 0px 0px 7px 0px #d5caff;
+  outline: none;
+}
+
+.inputWrapper input::placeholder {
+  color: var(--neutral-4, #777e90);
+  font-family: "DM Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.inputWrapper .dropdownContainer {
+  position: absolute;
+  right: 16px;
+}
+
+.membersContainer {
+  margin-top: 38px;
+  width: 100%;
+  color: var(--neutral-4, #777e90);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 87.5% */
+}
+
+.membersContainer .title {
+  color: var(--neutral-4, #777e90);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 87.5% */
+  margin-bottom: 24px;
+}
+
+.membersContainer .list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.container hr {
+  border: none;
+  border-top: 1px solid #e6e8ec;
+  margin: 30px 0;
+}
+
+.urlContainer {
+  display: flex;
+  width: 100%;
+  padding: 16px 24px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 12px;
+  background: var(--neutral-7, #f4f5f6);
+}
+
+.url {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3px;
+  white-space: nowrap;
+  overflow: auto;
+  width: calc(100% - 102px);
+  /* text */
+  color: var(--Neutrals-2, #23262f);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 171.429% */
+}
+
+.domain {
+  color: #2f2fdd;
+}

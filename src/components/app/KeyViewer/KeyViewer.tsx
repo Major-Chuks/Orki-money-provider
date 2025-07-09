@@ -42,7 +42,7 @@ const KeyViewer = ({
 
         <Copy value={value}>
           <div className={classes.copyIcon}>
-            <CopyIcon />
+            <CopyIcon style={{ color: "#1F2937" }} />
           </div>
         </Copy>
       </div>

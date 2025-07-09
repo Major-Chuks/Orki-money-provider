@@ -5,7 +5,7 @@ interface CopyProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
   value: string;
 }
 
-const Copy: React.FC<CopyProps> = ({ children, value }) => {
+const Copy: React.FC<CopyProps> = ({ children, value, style }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -19,6 +19,7 @@ const Copy: React.FC<CopyProps> = ({ children, value }) => {
 
   return (
     <div
+      style={style}
       onClick={handleCopy}
       className={`${classes.container} ${copied && classes.copied}`}
     >

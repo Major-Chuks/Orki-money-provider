@@ -76,6 +76,7 @@ const Webhooks = () => {
               label="Webhook URL"
               value={url}
               onChange={handleTextChange}
+              placeholder="https://your-domain.com/webhooks"
             />
             <div className={classes.note}>
               The URL where Orki Terminal will send real-time event
@@ -107,7 +108,11 @@ const Webhooks = () => {
             </div>
           </div>
 
-          <Button loading={isWebhookPending} onClick={handleSaveSettings}>
+          <Button
+            disabled={!url || !Object.values(events).some((e) => e)}
+            loading={isWebhookPending}
+            onClick={handleSaveSettings}
+          >
             Save Webhook Settings
           </Button>
         </div>

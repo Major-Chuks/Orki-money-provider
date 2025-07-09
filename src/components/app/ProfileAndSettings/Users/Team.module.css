@@ -1,0 +1,89 @@
+.container {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--gray-100, #f3f4f6);
+  background: var(--white, #fff);
+  box-shadow: 0px 0px 2px 0px rgba(99, 97, 97, 0.25);
+  padding: 24px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.tableWrapper {
+  width: 100%;
+  border: 1px solid #d6e0ee;
+  background: #fff;
+}
+
+.tableWrapper,
+.tableWrapper table,
+.tableWrapper tbody,
+.tableWrapper thead {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.tableWrapper th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.tableWrapper th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.tableWrapper tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.tableWrapper tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+.tableWrapper tr:last-child td {
+  border-bottom-right-radius: 12px;
+  border-bottom: none;
+}
+
+.tableWrapper table,
+.tableWrapper th,
+.tableWrapper td {
+  border-bottom: 1px solid #e6e8ec;
+  border-collapse: collapse;
+  border-collapse: separate;
+}
+
+.tableWrapper th {
+  padding: 20px 16px;
+  color: var(--gray-500, #6b7280);
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 171.429% */
+  text-align: left;
+  background: var(--gray-50, #f9fafb);
+}
+
+.tableWrapper td {
+  padding: 24px 16px;
+  color: var(--gray-900, #111827);
+  font-family: "DM Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 171.429% */
+  text-align: left;
+}

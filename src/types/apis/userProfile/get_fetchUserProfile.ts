@@ -5,5 +5,6 @@ export interface get_fetchUserProfile {
   email: string;
   phone: string;
   country: string;
+  avatar: string;
   role: string;
 }

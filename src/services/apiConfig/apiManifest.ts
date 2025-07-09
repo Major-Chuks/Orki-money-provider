@@ -100,6 +100,11 @@ export const apiManifest: ApiManifest = {
               "name": "otp",
               "isOptional": true,
               "type": "string | undefined"
+            },
+            {
+              "name": "invite_token",
+              "isOptional": true,
+              "type": "string | undefined"
             }
           ]
         }
@@ -336,6 +341,136 @@ export const apiManifest: ApiManifest = {
       ]
     },
     "delete_deletePaymentMethod": {
+      "args": [
+        {
+          "name": "{ id }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "teamManagement": {
+    "get_listManagementTeam": {
+      "args": []
+    },
+    "post_inviteTeamMember": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "role_id",
+              "isOptional": false,
+              "type": "number"
+            },
+            {
+              "name": "email",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "patch_resendInvite": {
+      "args": [
+        {
+          "name": "{ id }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "get_verifyInviteToken": {
+      "args": [
+        {
+          "name": "{ invite_token }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "invite_token",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "get_listRoles": {
+      "args": []
+    },
+    "patch_changeRole": {
+      "args": [
+        {
+          "name": "{\r\n    id,\r\n    role_id,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "id",
+              "isOptional": false,
+              "type": "string"
+            },
+            {
+              "name": "role_id",
+              "isOptional": false,
+              "type": "number"
+            }
+          ]
+        }
+      ]
+    },
+    "delete_removeTeamMember": {
+      "args": [
+        {
+          "name": "{ id }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "patch_deactivateTeamMember": {
+      "args": [
+        {
+          "name": "{ id }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "patch_activateTeamMember": {
       "args": [
         {
           "name": "{ id }",

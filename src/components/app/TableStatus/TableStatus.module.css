@@ -39,7 +39,8 @@
 .awaiting-confirmation,
 .pending-confirmation,
 .pending,
-.cancelling {
+.cancelling,
+.inactive {
   background: #fff2e2;
   color: #f29339;
 }

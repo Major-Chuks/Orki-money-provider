@@ -1,46 +1,87 @@
+/* === BASE STYLES === */
 .container {
-  position: absolute;
   z-index: 9;
   right: 0;
   bottom: -5px;
-  transform: translateY(100%);
   overflow: hidden;
 }
 
-.container.open .contentWrapper {
+/* Default absolute position */
+.container.absolute {
+  position: absolute;
+  transform: translateY(100%);
+}
+
+/* Default static position */
+.container.static {
+  position: static;
+  transform: none;
+  visibility: visible;
+  height: var(--container-height);
+}
+
+/* Close visibility (for absolute) */
+.container.close {
+  transition: visibility 450ms;
+  visibility: hidden;
+}
+
+/* === CONTENT TRANSITIONS === */
+
+/* Open/close slide */
+.container.open > .contentWrapper {
   transition: transform 450ms;
   transform: translateY(0);
 }
 
-.container.close .contentWrapper {
-  transition: transform 650ms;
+.container.close > .contentWrapper {
+  transition: transform 450ms;
   transform: translateY(-100%);
 }
 
-.container.close {
-  transition: visibility 650ms;
-  visibility: hidden;
-}
-
-.container.static {
-  position: static;
-  transform: translateY(0);
-  transition: height 450ms;
-  height: var(--container-height);
-}
-
-.container.static.open .contentWrapper {
-  transition: unset;
-  transform: translateY(0);
-}
-
-.container.static.close .contentWrapper {
-  transition: unset;
-  transform: translateY(0);
-}
-
+/* Static + close override height */
 .container.static.close {
   height: 0;
-  transition: height 300ms;
+  transition: height 450ms;
   visibility: visible;
+}
+
+/* === VARIANT: INSTANT === */
+
+.container.instant {
+  height: auto;
+}
+
+.container.instant.close {
+  height: 0;
+}
+
+/* Disable transition/transform for instant variant */
+.container.instant > .contentWrapper {
+  transition: unset;
+  transform: none;
+}
+
+/* === VARIANT: FADE === */
+
+/* .container.fade {
+  transition: unset;
+} */
+
+.container.fade.close {
+  /* transition: unset; */
+}
+
+.container.fade > .contentWrapper {
+  transition: all 450ms;
+}
+
+.container.fade.open > .contentWrapper {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.container.fade.close > .contentWrapper {
+  transform: translateY(-8px);
+  opacity: 0;
 }

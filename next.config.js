@@ -14,6 +14,12 @@ const nextConfig = {
         port: "",
         pathname: "*/**",
       },
+      {
+        protocol: "https",
+        hostname: "orki-money-storage.s3.af-south-1.amazonaws.com",
+        port: "",
+        pathname: "*/**",
+      },
     ],
   },
 };

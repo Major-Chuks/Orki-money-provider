@@ -177,7 +177,7 @@ const Payment = () => {
 
         {isBiPending ? (
           <LoadingScreen style={{ height: "40vh" }} />
-        ) : (
+        ) : billingInfo ? (
           <>
             <div className={classes.inputWrapper}>
               <CustomTextInput
@@ -237,7 +237,7 @@ const Payment = () => {
               </Button>
             </div>
           </>
-        )}
+        ) : null}
       </div>
 
       {action.type === "delete" && (

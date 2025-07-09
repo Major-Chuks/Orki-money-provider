@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import CustomTextInput from "@/components/CustomInput/CustomTextInput/CustomTextInput";
 import SettingsHeader from "../SettingsHeader/SettingsHeader";
 import classes from "./Profile.module.css";
@@ -15,6 +16,8 @@ import { useToast } from "@/context/Toast/ToastContext";
 import { useFetchUserProfileQuery } from "@/services/queryApis";
 import { get_fetchUserProfile } from "@/types/apis/userProfile/get_fetchUserProfile";
 import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
+import { setCurrentUser } from "@/redux/slices/user";
+import { useDispatch } from "react-redux";
 
 const inputKeys = {
   firstname: "firstname",
@@ -41,11 +44,12 @@ const Profile = () => {
     avatar: null,
   });
   const [loading, setLoading] = useState(false);
-
+  const [avatar, setAvatar] = useState("");
   const { data, isPending } = useFetchUserProfileQuery();
   const userProfile: get_fetchUserProfile = data?.data.data;
 
   const { showToast } = useToast();
+  const dispatch = useDispatch();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -74,6 +78,10 @@ const Profile = () => {
     if (response) {
       showToast("Profile updated successfully", "success");
     }
+    const userResponse = await backend().get_fetchUserProfile();
+    if (userResponse) {
+      dispatch(setCurrentUser(userResponse.data.data));
+    }
     setLoading(false);
   };
 
@@ -87,6 +95,7 @@ const Profile = () => {
         country: userProfile.country,
         avatar: null,
       });
+      setAvatar(userProfile.avatar);
     }
   }, [isPending, userProfile]);
 
@@ -104,7 +113,9 @@ const Profile = () => {
           <div className={classes.main}>
             <div className={classes.pfp}>
               <div className={classes.avatar}>
-                {input.avatar ? (
+                {avatar ? (
+                  <img src={avatar} alt="" />
+                ) : input.avatar ? (
                   <Image
                     width={120}
                     height={120}

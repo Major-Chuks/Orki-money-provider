@@ -12,12 +12,14 @@ import Security from "@/components/app/ProfileAndSettings/Security/Security";
 
 import classes from "./page.module.css";
 import Payment from "@/components/app/ProfileAndSettings/Payment/Payment";
+import Team from "@/components/app/ProfileAndSettings/Users/Team";
 
 const tabList = [
   "Profile",
   "Business",
   "Payment",
   "Security",
+  "Team",
   "Notifications",
   "Appearance",
 ] as const;
@@ -83,6 +85,7 @@ const ProfileAndSettingsPage = () => {
             {tab === "Business" && businessIcon}
             {tab === "Payment" && paymentIcon}
             {tab === "Security" && securityIcon}
+            {tab === "Team" && teamIcon}
             {tab === "Notifications" && notifications}
             {tab === "Appearance" && themeIcon}
             {tab}
@@ -96,6 +99,7 @@ const ProfileAndSettingsPage = () => {
       {tab === "Business" && <Business />}
       {tab === "Payment" && <Payment />}
       {tab === "Security" && <Security />}
+      {tab === "Team" && <Team />}
       {tab === "Notifications" && <Notifications />}
       {tab === "Appearance" && <Appearance />}
     </div>
@@ -198,24 +202,6 @@ const businessIcon = (
   </svg>
 );
 
-const securityIcon = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-  >
-    <path
-      d="M17.4252 9.26756C17.4252 13.3426 14.4669 17.1592 10.4252 18.2759C10.1502 18.3509 9.85019 18.3509 9.57519 18.2759C5.53352 17.1592 2.5752 13.3426 2.5752 9.26756V5.60922C2.5752 4.92588 3.09187 4.15088 3.73354 3.89255L8.37519 1.99258C9.41685 1.56758 10.5919 1.56758 11.6335 1.99258L16.2752 3.89255C16.9085 4.15088 17.4335 4.92588 17.4335 5.60922L17.4252 9.26756Z"
-      stroke="#6B7280"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 const paymentIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -250,6 +236,63 @@ const paymentIcon = (
     />
     <path
       d="M6.00957 2.91992H15.2679C18.2346 2.91992 18.9762 3.65326 18.9762 6.57826V13.4199C18.9762 16.3449 18.2346 17.0783 15.2762 17.0783H6.00957C3.05124 17.0866 2.30957 16.3533 2.30957 13.4283V6.57826C2.30957 3.65326 3.05124 2.91992 6.00957 2.91992Z"
+      stroke="#6B7280"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const securityIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <path
+      d="M17.4252 9.26756C17.4252 13.3426 14.4669 17.1592 10.4252 18.2759C10.1502 18.3509 9.85019 18.3509 9.57519 18.2759C5.53352 17.1592 2.5752 13.3426 2.5752 9.26756V5.60922C2.5752 4.92588 3.09187 4.15088 3.73354 3.89255L8.37519 1.99258C9.41685 1.56758 10.5919 1.56758 11.6335 1.99258L16.2752 3.89255C16.9085 4.15088 17.4335 4.92588 17.4335 5.60922L17.4252 9.26756Z"
+      stroke="#6B7280"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const teamIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="21"
+    height="20"
+    viewBox="0 0 21 20"
+    fill="none"
+  >
+    <path
+      d="M8.49056 9.05768C8.40723 9.04935 8.30723 9.04935 8.21556 9.05768C6.23223 8.99102 4.65723 7.36602 4.65723 5.36602C4.65723 3.32435 6.30723 1.66602 8.35723 1.66602C10.3989 1.66602 12.0572 3.32435 12.0572 5.36602C12.0489 7.36602 10.4739 8.99102 8.49056 9.05768Z"
+      stroke="#6B7280"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M14.5326 3.33398C16.1493 3.33398 17.4493 4.64232 17.4493 6.25065C17.4493 7.82565 16.1993 9.10899 14.641 9.16732C14.5743 9.15899 14.4993 9.15899 14.4243 9.16732"
+      stroke="#6B7280"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M4.32402 12.134C2.30736 13.484 2.30736 15.684 4.32402 17.0257C6.61569 18.559 10.374 18.559 12.6657 17.0257C14.6824 15.6757 14.6824 13.4757 12.6657 12.134C10.3824 10.609 6.62402 10.609 4.32402 12.134Z"
+      stroke="#6B7280"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M16.1406 16.666C16.7406 16.541 17.3073 16.2993 17.774 15.941C19.074 14.966 19.074 13.3577 17.774 12.3827C17.3156 12.0327 16.7573 11.7993 16.1656 11.666"
       stroke="#6B7280"
       strokeWidth="1.5"
       strokeLinecap="round"

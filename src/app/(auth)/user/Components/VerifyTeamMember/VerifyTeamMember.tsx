@@ -5,11 +5,11 @@ import Image from "next/image";
 import logo from "@/assets/logo-3.svg";
 import lockIcon from "@/assets/auth/lock-icon.svg";
 import emailIcon from "@/assets/auth/email-icon.svg";
-import classes from "./page.module.css";
+import classes from "./VerifyTeamMember.module.css";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import CustomPasswordInput from "@/components/CustomInput/CustomPasswordInput/CustomPasswordInput";
 import CustomEmailInput from "@/components/CustomInput/CustomEmailInput/CustomEmailInput";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { routes } from "@/services/routes";
 import {
   ErrorState,
@@ -18,36 +18,36 @@ import {
 } from "@/components/CustomInput/CustomInput.script";
 import { useEffect, useState } from "react";
 import backend from "@/services/apis";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setAccessToken, setCurrentUser } from "@/redux/slices/user";
-import { RootState } from "@/redux/store";
-import { clearError } from "@/redux/slices/error";
-import VerifyAccount from "../Components/VerifyAccount";
-import Verify2fa from "../Components/Verify2fa";
 import { useToast } from "@/context/Toast/ToastContext";
-import VerifyTeamMember from "../Components/VerifyTeamMember/VerifyTeamMember";
+import CustomPasswordValidator from "@/components/CustomInput/CustomPasswordValidator/CustomPasswordValidator";
+import { useVerifyInviteTokenQuery } from "@/services/queryApis";
+import { get_verifyInviteToken } from "@/types/apis/teamManagement/get_verifyInviteToken";
 
-const Login = () => {
-  const router = useRouter();
+const VerifyTeamMember = ({ inviteToken }: { inviteToken: string }) => {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorState>({
     email: false,
     password: false,
+    confirm_password: false,
   });
-  const [verifyEmail, setVerifyEmail] = useState(false);
-  const [verify2fa, setVerify2fa] = useState(false);
-
-  const searchParams = useSearchParams();
-  const inviteToken = searchParams.get("inviteToken");
-
-  const { label, message } = useSelector((state: RootState) => state.error);
 
   const [input, setInput] = useState({
     email: "",
     password: "",
+    confirm_password: "",
   });
 
+  const [isValidPassword, setIsValidPassword] = useState(false);
+
+  const { data, isPending } = useVerifyInviteTokenQuery({
+    invite_token: inviteToken,
+  });
+  const inviteEmail: get_verifyInviteToken["email"] = data?.data.data.email;
+
+  const router = useRouter();
   const dispatch = useDispatch();
   const { showToast } = useToast();
 
@@ -61,10 +61,14 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    dispatch(clearError());
+    if (!isValidPassword) return;
 
     setLoading(true);
-    const response = await backend().post_login(input);
+    const response = await backend().post_login({
+      email: input.email,
+      password: input.password,
+      invite_token: inviteToken,
+    });
     if (response) {
       dispatch(setAccessToken(response.data.data.access_token));
       const userResponse = await backend().get_fetchUserProfile();
@@ -80,13 +84,17 @@ const Login = () => {
   };
 
   useEffect(() => {
-    const isValid = validateInput({ input: input, setError: () => {} });
-    if (isValid) {
+    const isValidInput = validateInput({ input: input, setError: () => {} });
+    if (
+      isValidInput &&
+      input.password === input.confirm_password &&
+      isValidPassword
+    ) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [input]);
+  }, [input, isValidPassword]);
 
   useEffect(() => {
     const email = window.localStorage.getItem("email");
@@ -97,41 +105,8 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    if (label === "post_login" && message.includes("verify")) {
-      (async () => {
-        const response = await backend().post_resend_verification_otp({
-          email: input.email,
-        });
-        if (response) {
-          setVerifyEmail(true);
-        }
-      })();
-    }
-
-    if (
-      label === "post_login" &&
-      message.toLowerCase().includes("2fa enabled")
-    ) {
-      setVerify2fa(true);
-    }
-  }, [label, message]);
-
-  if (inviteToken) {
-    return <VerifyTeamMember inviteToken={inviteToken} />;
-  }
-
-  if (verifyEmail) {
-    return (
-      <VerifyAccount
-        email={input.email}
-        onSubmit={() => setVerifyEmail(false)}
-      />
-    );
-  }
-
-  if (verify2fa) {
-    return <Verify2fa email={input.email} password={input.password} />;
-  }
+    setInput((i) => ({ ...i, email: inviteEmail }));
+  }, [inviteEmail]);
 
   return (
     <div className={classes.container}>
@@ -153,6 +128,7 @@ const Login = () => {
             placeholder="name@example.com"
             value={input}
             error={error}
+            disabled={!!inviteToken}
             onChange={handleChange}
           />
 
@@ -165,6 +141,21 @@ const Login = () => {
             error={error}
             onChange={handleChange}
           />
+
+          <CustomPasswordInput
+            id="confirm_password"
+            leftIcon={lockIcon}
+            label="Confirm Password"
+            placeholder="Re enter password"
+            value={input}
+            error={error}
+            onChange={handleChange}
+          />
+
+          <CustomPasswordValidator
+            onChange={setIsValidPassword}
+            password={input["password"]}
+          />
         </div>
 
         <CustomButton
@@ -175,25 +166,13 @@ const Login = () => {
           }}
           disabled={disabled}
           onClick={handleLogin}
-          loading={loading}
+          loading={loading || isPending}
         >
-          Login
+          Complete Setup
         </CustomButton>
-
-        <div
-          onClick={() => router.push(routes.newPassword)}
-          className={classes.forgotPassword}
-        >
-          Forgot your password?
-        </div>
-      </div>
-
-      <div className={classes.otherOption}>
-        Already have an account?{" "}
-        <span onClick={() => router.push(routes.signUp)}>Sign up</span>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default VerifyTeamMember;

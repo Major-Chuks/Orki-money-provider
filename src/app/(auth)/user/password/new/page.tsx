@@ -5,10 +5,6 @@ import logo from "@/assets/logo-3.svg";
 import classes from "./page.module.css";
 import { useRouter } from "next/navigation";
 import { routes } from "@/services/routes";
-import {
-  ErrorState,
-  resetValidation,
-} from "@/components/CustomInput/CustomInput.script";
 import { useState } from "react";
 import InputEmail from "../InputEmail";
 import VerifyEmail from "../../Components/VerifyEmail/VerifyEmail";
@@ -31,11 +27,6 @@ export type InputState = {
 
 const NewPassword = () => {
   const router = useRouter();
-  const [error, setError] = useState<ErrorState>({
-    email: false,
-    password: false,
-  });
-
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -57,7 +48,6 @@ const NewPassword = () => {
   ) => {
     const { id, value } = event.target;
     if (!id) return;
-    resetValidation({ id, error, setError });
     setInput((i) => ({ ...i, [id]: value }));
   };
 
@@ -76,7 +66,6 @@ const NewPassword = () => {
         <InputEmail
           classes={classes}
           input={input}
-          error={error}
           onChange={handleChange}
           onSubmit={() => setStep(Steps.VERIFY_EMAIL)}
         />
@@ -96,7 +85,6 @@ const NewPassword = () => {
         <SetPassword
           classes={classes}
           input={input}
-          error={error}
           onChange={handleChange}
           onSubmit={() => setStep(Steps.PASSWORD_RESET_CONFIRMATION)}
         />

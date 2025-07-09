@@ -95,7 +95,7 @@ const TransactionDetails = ({
           <div className={classes.copyIcon}>
             <Copy value={JSON.stringify(code, null, 2)}>
               <ButtonWrapper className={classes.iconBtn}>
-                <CopyIcon /> Copy JSON
+                <CopyIcon style={{ color: "#1F2937" }} /> Copy JSON
               </ButtonWrapper>
             </Copy>
           </div>

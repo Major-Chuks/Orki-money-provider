@@ -1,20 +1,17 @@
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import CustomEmailInput from "@/components/CustomInput/CustomEmailInput/CustomEmailInput";
 import emailIcon from "@/assets/auth/email-icon.svg";
-import { ErrorState } from "@/components/CustomInput/CustomInput.script";
 import { isValidEmail } from "@/services/utils";
 import { InputState } from "./new/page";
 import { useState } from "react";
 import backend from "@/services/apis";
 
 const InputEmail = ({
-  error,
   input,
   classes,
   onChange,
   onSubmit,
 }: {
-  error: ErrorState;
   input: InputState;
   classes: Record<string, string>;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -42,7 +39,6 @@ const InputEmail = ({
           label="Email Address"
           placeholder="name@example.com"
           value={input}
-          error={error}
           onChange={onChange}
         />
       </div>

@@ -7,6 +7,7 @@ interface DropdownWrapperProps {
   open: boolean;
   children: React.ReactNode;
   position?: "static" | "absolute";
+  variant?: "fade" | "slide" | "instant";
 }
 
 const DropdownWrapper: React.FC<DropdownWrapperProps> = ({
@@ -15,6 +16,7 @@ const DropdownWrapper: React.FC<DropdownWrapperProps> = ({
   containerStyle,
   contentStyle,
   position = "absolute",
+  variant = "slide",
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerHeight, setContainerHeight] = useState("0px");
@@ -30,7 +32,7 @@ const DropdownWrapper: React.FC<DropdownWrapperProps> = ({
     <div
       className={`${classes.container} ${open ? classes.open : classes.close} ${
         classes[position]
-      }`}
+      } ${classes[variant]}`}
       style={
         {
           "--container-height": containerHeight,

@@ -5,6 +5,7 @@ export const authApi = {
     email: string;
     password: string;
     otp?: string;
+    invite_token?: string;
   }) => {
     const url = `/login`;
     return handleApiCall(() => AUTH_API.post(url, payload), "post_login");
