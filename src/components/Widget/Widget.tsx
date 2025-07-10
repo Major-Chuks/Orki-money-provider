@@ -19,6 +19,7 @@ import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import Redirect1 from "./Redirect/Redirect1";
 import Redirect2 from "./Redirect/Redirect2";
 import {
+  CoinifyWidgetType,
   get_defaults,
   // KoyweWidgetType,
   OnmetaWidgetType,
@@ -41,6 +42,7 @@ import {
   usePostChangeLocation,
 } from "@/services/apis_tanstack";
 import Koywe from "./SDK/Koywe/Koywe";
+import Coinify from "./SDK/Coinify/Coinify";
 
 const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -107,7 +109,13 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
 
     setToggleFirstRedirect(false);
 
+    // track when to open widget
     if (provider.widget && provider.provider.identifier === "koywe") {
+      setOpenWidget(true);
+      return;
+    }
+
+    if (provider.widget && provider.provider.identifier === "coinify") {
       setOpenWidget(true);
       return;
     }
@@ -291,7 +299,7 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
       isBuyOrSell,
       paymentMethod,
     ],
-    2000
+    1000
   ); // Adjust the debounce delay as needed
 
   useEffect(() => {
@@ -319,6 +327,39 @@ const Widget = ({}: { onLaunch?: (queryString: string) => void }) => {
               callbackUrl="https://money.orki.io/sdk/koywe/callback"
               onClose={() => setOpenWidget(false)}
               testing={true}
+            />
+          );
+        })()}
+
+      {openWidget &&
+        provider?.widget &&
+        provider.provider.identifier === "coinify" &&
+        (() => {
+          const widget = provider.widget as CoinifyWidgetType;
+          return (
+            <Coinify
+              payload={{
+                ...(isBuyOrSell === "BUY"
+                  ? { buyAmount: provider.asset?.fiat_amount || "" }
+                  : { sellAmount: provider.asset?.crypto_amount || "" }),
+                partnerName: "ORKI",
+                partnerId: "5c3da04c-53f0-44c6-a290-40b594c216ec", // const
+                primaryColor: "#6148C2",
+                fiatCurrencies: widget.fiat,
+                cryptoCurrencies: widget.crypto,
+                defaultCryptoCurrency: widget.crypto,
+                defaultFiatCurrency: widget.fiat,
+
+                ...(isBuyOrSell === "BUY"
+                  ? { isBuyAmountFixed: "true" }
+                  : { isSellAmountFixed: "true" }),
+                isBuyAmountWithFees: "true",
+                partnerContext: JSON.stringify({
+                  orderID: widget.metadata.orderID,
+                }),
+                targetPage: isBuyOrSell === "BUY" ? "buy" : "sell",
+              }}
+              onClose={() => setOpenWidget(false)}
             />
           );
         })()}

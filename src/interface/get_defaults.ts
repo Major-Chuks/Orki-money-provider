@@ -22,7 +22,7 @@ export type get_defaults = {
   quote_amount?: number;
   percentage_diff: number;
   is_supported: boolean;
-  widget?: KoyweWidgetType | OnmetaWidgetType | null;
+  widget?: KoyweWidgetType | OnmetaWidgetType | CoinifyWidgetType | null;
 }[];
 
 export type KoyweWidgetType = {
@@ -37,6 +37,17 @@ export type OnmetaWidgetType = {
   crypto: string;
   network: string;
   ticker: number;
+  payment_method: string;
+  metadata: {
+    orderID: string;
+  };
+};
+
+export type CoinifyWidgetType = {
+  fiat: string;
+  crypto: string;
+  network: string;
+  ticker: string;
   payment_method: string;
   metadata: {
     orderID: string;

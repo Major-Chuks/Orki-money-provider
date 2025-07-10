@@ -9,6 +9,7 @@ export default function KoyweIframePage() {
       const trustedOrigins = [
         "http://localhost:4000", // for local dev
         "https://money.orki.io", // for production
+        "https://orki-money.vercel.app",
       ];
 
       if (!trustedOrigins.includes(event.origin)) {
