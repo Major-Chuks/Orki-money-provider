@@ -3,8 +3,9 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
+  margin-top: 12px;
   /* text */
-  color: #000;
+  color: #8f8f8f;
   font-family: Inter;
   font-size: 14px;
   font-style: normal;
@@ -21,7 +22,7 @@
   height: 16px;
   border-radius: 50%;
   overflow: hidden;
-  background: #eeeeee;
+  background: #eceff0;
 }
 
 .iconContainer img,

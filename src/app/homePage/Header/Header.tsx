@@ -2,24 +2,17 @@ import classes from "./Header.module.css";
 import Responsive from "@/components/Responsive/Responsive";
 import Tag from "@/components/Tag/Tag";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
-import Widget from "@/components/Widget/Widget";
 import SlideUp from "@/components/SlideUp/SlideUp";
-import { useEffect, useState } from "react";
-import TransakIframe from "@/components/ProviderIframe/TransakIframe";
-import IframeWrapper from "@/components/Widget/IframeWrapper/IframeWrapper";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { routes } from "@/services/routes";
 import useWidth from "@/hooks/useWidth";
+import Widget from "@/components/Widget/Widget";
 
 const Header = () => {
-  const [purchaseLink, setQueryString] = useState("");
   const width = useWidth();
 
   const router = useRouter();
-
-  const handleLaunch = (purchaseLink: string) => {
-    setQueryString(purchaseLink);
-  };
 
   useEffect(() => {
     window.scrollTo({
@@ -74,25 +67,7 @@ const Header = () => {
           </div>
           <div className={classes.widgetWrapper}>
             <div className={classes.animationContainer}>
-              <div
-                style={{
-                  display: purchaseLink ? "none" : "block",
-                }}
-              >
-                <Widget onLaunch={handleLaunch} />
-              </div>
-              {/* Intended to integrate provider iframes */}
-              <IframeWrapper
-                style={{ display: purchaseLink ? "block" : "none" }}
-              >
-                <TransakIframe purchaseLink={purchaseLink} />
-                <CustomButton
-                  onClick={() => setQueryString("")}
-                  style={{ width: "max-content", background: "#f6f6f6" }}
-                >
-                  Close Modal
-                </CustomButton>
-              </IframeWrapper>
+              <Widget />
             </div>
           </div>
         </div>

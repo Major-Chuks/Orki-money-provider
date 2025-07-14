@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
-import Overlay from "../Overlay/Overlay";
 import classes from "./CryptoCurrencySearch.module.css";
-import Image from "next/image";
-import closeIcon from "@/assets/widget/close.svg";
-import Search from "../Search/Search";
 // import tickIcon from "@/assets/widget/tick.svg";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import CaretIcon from "@/assets/SvgComponents/CaretIcon";
+import WidgetDrawer from "../WidgetDrawer/WidgetDrawer";
+import DrawerHeader from "../WidgetDrawer/DrawerHeader/DrawerHeader";
 
 const CryptoCurrencySearch = ({
   cryptoCurrencies,
@@ -80,61 +78,53 @@ const CryptoCurrencySearch = ({
               "Select crypto currency"}
           </span>
         </div>
-        <CaretIcon />
+        <CaretIcon style={{ marginLeft: "4px" }} />
       </div>
+
       {toggleOverlay && (
-        <Overlay onClose={() => setToggleOverlay(false)}>
-          <div className={classes.wrapper}>
-            <div className={classes.headingSearch}>
-              <div className={classes.heading}>
-                Select Cryptocurrency{" "}
-                <Image
-                  onClick={() => setToggleOverlay(false)}
-                  src={closeIcon}
-                  alt=""
-                />
-              </div>
+        <WidgetDrawer onClose={() => setToggleOverlay(false)}>
+          {({ close }) => (
+            <div className={classes.searchWrapper}>
+              <DrawerHeader
+                title="Select Cryptocurrency"
+                onClose={close}
+                searchValue={searchValue}
+                onSearchChange={(e) => setSearchValue(e.target.value)}
+              />
 
-              <div className={classes.searchWrapper}>
-                <Search
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className={classes.countryWrapper}>
-              {filteredCryptoCurrencies?.map((c, idx) => (
-                <div
-                  onClick={() => {
-                    setSelected(c);
-                    setToggleOverlay(false);
-                  }}
-                  key={idx}
-                  className={classes.country}
-                >
-                  <div className={classes.countryFlag}>
-                    <span className={classes.iconContainer}>
-                      {c.crypto_icon && (
-                        <img
-                          width={24}
-                          height={24}
-                          src={c.crypto_icon}
-                          alt=""
-                        />
-                      )}
-                    </span>
-                    <div className={classes.nameCode}>
-                      <span className={classes.name}>{c.code}</span>
-                      <span className={classes.code}>{c.name}</span>
+              <div className={classes.countryWrapper}>
+                {filteredCryptoCurrencies?.map((c, idx) => (
+                  <div
+                    onClick={() => {
+                      setSelected(c);
+                      close();
+                    }}
+                    key={idx}
+                    className={classes.country}
+                  >
+                    <div className={classes.countryFlag}>
+                      <span className={classes.iconContainer}>
+                        {c.crypto_icon && (
+                          <img
+                            width={24}
+                            height={24}
+                            src={c.crypto_icon}
+                            alt=""
+                          />
+                        )}
+                      </span>
+                      <div className={classes.nameCode}>
+                        <span className={classes.name}>{c.code}</span>
+                        <span className={classes.code}>{c.name}</span>
+                      </div>
                     </div>
+                    <span className={classes.network}>{c.network}</span>
                   </div>
-                  <span className={classes.network}>{c.network}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </Overlay>
+          )}
+        </WidgetDrawer>
       )}
     </div>
   );

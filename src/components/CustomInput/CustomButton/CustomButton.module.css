@@ -54,18 +54,9 @@
 }
 
 .disabled {
-  /* background: var(--disabled); */
   cursor: not-allowed;
-  opacity: 0.5;
-  color: #000 !important;
-}
-
-.disabled {
-  /* color: var(--disabled-faint); */
-}
-
-.container.disabled:hover {
-  /* background: var(--disabled); */
+  color: #8f8f8f !important;
+  background: #f2f2f7 !important;
 }
 
 .loadingIcon {

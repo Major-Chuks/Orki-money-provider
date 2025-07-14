@@ -23,9 +23,7 @@ const Copy: React.FC<CopyProps> = ({ children, value, style }) => {
       onClick={handleCopy}
       className={`${classes.container} ${copied && classes.copied}`}
     >
-      <div className={classes.scrollArea}>
-        <div className={classes.main}>{children}</div>
-      </div>
+      <div className={classes.main}>{children}</div>
     </div>
   );
 };

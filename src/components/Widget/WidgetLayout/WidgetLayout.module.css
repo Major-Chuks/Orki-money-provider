@@ -1,0 +1,38 @@
+.container {
+  width: 100%;
+  max-width: 482px;
+  min-width: 400px;
+  min-height: 722px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 2px 50px 0px rgba(0, 0, 0, 0.12);
+  padding: 32px 24px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #eee;
+  position: relative;
+  opacity: 0;
+  transform: scale(0.95);
+  animation: enter 650ms forwards;
+}
+
+.container.overlay {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  box-shadow: none;
+  border: none;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

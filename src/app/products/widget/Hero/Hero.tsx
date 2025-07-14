@@ -3,8 +3,8 @@ import classes from "./Hero.module.css";
 import Responsive from "@/components/Responsive/Responsive";
 import checkIcon from "@/assets/widget-checkicon.svg";
 import Tag from "@/components/Tag/Tag";
-import Widget from "@/components/Widget/Widget";
 import SlideUp from "@/components/SlideUp/SlideUp";
+import Widget from "@/components/Widget/Widget";
 
 const data = [
   "Fully customizable.",
@@ -40,8 +40,7 @@ const Hero = () => {
         </div>
         <div className={classes.widgetWrapper}>
           <div className={classes.animationContainer}>
-            <Widget onLaunch={() => {}} />
-            {/* <TransakIframe /> */}
+            <Widget />
           </div>
         </div>
       </div>

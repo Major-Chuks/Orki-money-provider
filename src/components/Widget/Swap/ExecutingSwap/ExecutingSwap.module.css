@@ -1,0 +1,181 @@
+.container {
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 16px;
+  /* text */
+  color: #0c0c0c;
+  text-align: center;
+  font-family: "Plus Jakarta Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px; /* 116.667% */
+}
+
+.description {
+  margin-bottom: 24px;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+}
+
+.tokenWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  margin-bottom: 48px;
+}
+
+.tokenIcon {
+  width: 78px;
+  height: 79px;
+  padding: 11.531px 5.063px 6.75px 5.063px;
+  background: #eceff0;
+  border-radius: 50%;
+  position: relative;
+}
+
+.tokenIcon img {
+  width: 100%;
+  height: 100%;
+}
+
+.network {
+  width: 32px;
+  height: 32px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 1px solid #e2e2e2;
+  background: #f9f9f9;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 52px;
+}
+
+.progress .step:first-child .name {
+  color: #59b37a;
+}
+.progress .step:first-child .icon {
+  background: #59b37a;
+}
+
+.progress .step:nth-child(3) .name {
+  color: #225eca;
+}
+.progress .step:nth-child(3) .icon {
+  background: #6c9aed;
+}
+
+.progress .step:nth-child(5) .name {
+  color: #8e8e93;
+}
+.progress .step:nth-child(5) .icon {
+  background: #c7c7cc;
+}
+
+.step {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.line {
+  width: 1px;
+  height: 40px;
+  background: #c7c7cc;
+  margin-left: 24px;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid gainsboro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step .name {
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+}
+
+.rangeWrapper {
+  width: 100%;
+}
+
+.range {
+  margin-top: 12px;
+  width: 100%;
+  height: 8px;
+  border-radius: 99px;
+  background: #e6e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.thumb {
+  border-radius: 99px;
+  height: 100%;
+  width: 40%;
+  background: var(--Foundation-Brand-brand-500, #5b29ec);
+}
+
+.conversion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.price {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  text-align: center;
+  font-family: "Plus Jakarta Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 120% */
+}
+
+.duration {
+  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
+  text-align: center;
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

@@ -598,3 +598,16 @@ export const getCurrencySymbol = (currencyCode: string): string => {
 
   return currencyMap[code] || code;
 };
+
+// export const formatMoney = (amount: string): string => {
+//   if (!amount || !amount.trim() || isNaN(Number(amount))) return "";
+
+//   const [integerPart, decimalPart] = amount.toString().split(".");
+
+//   const formattedInt = parseInt(integerPart, 10).toLocaleString("en-US");
+//   if (amount.endsWith(".")) {
+//     return `${formattedInt}.`;
+//   }
+
+//   return decimalPart ? `${formattedInt}.${decimalPart}` : formattedInt;
+// };

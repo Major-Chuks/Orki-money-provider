@@ -4,6 +4,7 @@ import CryptoNetwork from "../CryptoCurrencySearch/CryptoNetwork";
 import { useEffect, useState } from "react";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import ErrorIcon from "@/assets/SvgComponents/ErrorIcon";
+import AmountInput from "../AmountInput/AmountInput";
 
 const CryptoPanel = ({
   title,
@@ -31,9 +32,8 @@ const CryptoPanel = ({
   const [inputValue, setInputValue] = useState(value);
 
   const validateInput = () => {
-    const minAmount = 0;
     setErrorMsg("");
-    if (Number(inputValue) < Number(minAmount)) {
+    if (Number(inputValue) < 0) {
       setErrorMsg("Please provide a valid order amount");
       return;
     }
@@ -54,17 +54,21 @@ const CryptoPanel = ({
   }, [value]);
 
   return (
-    <div className={`${classes.container} ${errorMsg && classes.error}`}>
+    <div
+      className={`${classes.container} ${classes.swap} ${
+        errorMsg && classes.error
+      }`}
+    >
       <div className={classes.title}>{title}</div>
 
       <div className={classes.innerContainer}>
         <div className={classes.value}>
-          <input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            type="number"
+          <AmountInput
+            id="crypto_amount"
             placeholder="0.00"
+            value={inputValue}
             disabled={disabled}
+            onChange={(e) => setInputValue(e.target.value)}
           />
         </div>
         <div className={classes.crypto_network}>
@@ -73,6 +77,7 @@ const CryptoPanel = ({
             cryptoCurrencies={cryptoCurrencies}
             cryptoCurrency={cryptoCurrency}
           />
+
           <CryptoNetwork network={currency?.network || defaultNetwork || ""} />
         </div>
       </div>

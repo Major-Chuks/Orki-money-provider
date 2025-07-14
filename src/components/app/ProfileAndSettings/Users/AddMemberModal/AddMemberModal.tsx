@@ -98,7 +98,7 @@ const AddMemberModal = ({
                   <span className={classes.domain}>https://</span>
                   <span>{invitationLink.split("https://")[1]}</span>
                 </div>
-                <Copy style={{ paddingRight: "0" }} value={invitationLink}>
+                <Copy value={invitationLink}>
                   <Button style={{ borderRadius: "4px", padding: "8px 16px" }}>
                     <CopyIcon
                       style={{ width: "12px", height: "12px", color: "#fff" }}

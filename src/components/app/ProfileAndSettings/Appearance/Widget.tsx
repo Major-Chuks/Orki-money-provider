@@ -3,8 +3,7 @@ import classes from "./Widget.module.css";
 import menuIcon from "@/assets/widget/menu.svg";
 import FiatPanel from "@/components/Widget/FiatPanel/FiatPanel";
 import CryptoPanel from "@/components/Widget/CryptoPanel/CryptoPanel";
-import RatePanel from "@/components/Widget/RatePanel/RatePanel";
-import PaymentMethod from "@/components/Widget/PaymentMethod/PaymentMethod";
+import PaymentMethod from "@/components/Widget/Ramps/PaymentMethod/PaymentMethod";
 import CustomButton from "@/components/CustomInput/CustomButton/CustomButton";
 import {
   defaultCryptoPanel,
@@ -15,6 +14,7 @@ import {
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import { get_defaults } from "@/interface/get_defaults";
+import RatePanel from "@/components/Widget/Ramps/RatePanel/RatePanel";
 
 const Widget = () => {
   return (

@@ -5,10 +5,10 @@ import classes from "./PasswordStrength.module.css";
 import { validatePassword } from "@/services/utils";
 
 const PasswordStrength = ({
-  value,
+  password,
   onValidate,
 }: {
-  value: string;
+  password: string;
   onValidate: (state: boolean) => void;
 }) => {
   const [isDefault, setIsDefault] = useState(false);
@@ -29,10 +29,10 @@ const PasswordStrength = ({
   });
 
   useEffect(() => {
-    const result = validatePassword(value);
+    const result = validatePassword(password);
     setValidation(result);
     onValidate(result.validCount === 5);
-  }, [value]);
+  }, [password]);
 
   useEffect(() => {
     const hasValid = Object.values(validation).some((i) => i);

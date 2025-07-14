@@ -13,9 +13,14 @@
   cursor: default;
 }
 
+.container.swap {
+  border: 1px solid #ebeefa;
+  background: #fafafc;
+}
+
 .container:hover {
   border-radius: 8px;
-  border: 1px solid var(--Foundation-Brand-brand-500, #5b29ec);
+  border: 1px solid #d2d8ea;
 }
 
 .container.error {

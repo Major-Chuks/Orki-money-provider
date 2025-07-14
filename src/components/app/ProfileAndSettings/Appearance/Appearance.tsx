@@ -5,7 +5,6 @@ import SettingsHeader from "../SettingsHeader/SettingsHeader";
 import classes from "./Appearance.module.css";
 import CustomColorInput from "@/components/CustomInput/CustomColorInput/CustomColorInput";
 import { useEffect, useRef, useState } from "react";
-import Widget from "./Widget";
 import backend from "@/services/apis";
 import { debounce } from "lodash";
 import { useToast } from "@/context/Toast/ToastContext";
@@ -13,6 +12,7 @@ import { useFetchWidgetThemeQuery } from "@/services/queryApis";
 import { get_fetchWidgetTheme } from "@/types/apis/userProfile/get_fetchWidgetTheme";
 import { InputIdState } from "@/components/CustomInput/CustomInput.script";
 import Button from "@/components/CustomInput/Button/Button";
+import Widget from "./Widget";
 
 const inputKeys = {
   brand_primary_color: "brand_primary_color",

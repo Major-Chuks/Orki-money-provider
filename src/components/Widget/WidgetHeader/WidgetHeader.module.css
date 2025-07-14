@@ -1,0 +1,57 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 34px;
+}
+
+.logo {
+  width: 24px;
+  height: auto;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  /* text */
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "Space Grotesk";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 100% */
+}
+
+.dropdown {
+  width: 157px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 8px;
+  border: 1px solid rgba(145, 176, 216, 0.2);
+  background: #fdfdfd;
+  box-shadow: 0px 10px 34px 0px rgba(48, 48, 48, 0.19);
+}
+
+.item {
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  /* text */
+  color: var(--neutral-3, #353945);
+  font-family: "Plus Jakarta Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 150% */
+  letter-spacing: 0.84px;
+}
+
+.item:hover {
+  background: #ebf1ff;
+}

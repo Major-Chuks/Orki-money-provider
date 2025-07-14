@@ -24,7 +24,11 @@ const FiatPanel = ({
   disabled: boolean;
 }) => {
   return (
-    <div className={`${classes.container} ${error && classes.error}`}>
+    <div
+      className={`${classes.container} ${error && classes.error} ${
+        classes.swap
+      } `}
+    >
       <div className={classes.title}>{title}</div>
 
       <div className={classes.innerContainer}>
