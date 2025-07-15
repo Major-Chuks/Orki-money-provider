@@ -2,6 +2,7 @@ import classes from "../dropdown.module.css";
 import innerClasses from "./ProductDropdown.module.css";
 import widgetIcon from "@/assets/widget-icon.svg";
 import offrampIcon from "@/assets/offramp-icon.svg";
+import swapsIcon from "@/assets/swaps-icon.svg";
 import apiIcon from "@/assets/api-icon.svg";
 import arrowRight from "@/assets/arrow-right.svg";
 import Image from "next/image";
@@ -28,7 +29,13 @@ const data = [
     icon: offrampIcon,
     title: "Offramp",
     description:
-      " Enjoy the flexibility and convenience of withdrawing funds with ease, directly to bank accounts or other preferred payment methods.",
+      "Enjoy the flexibility and convenience of withdrawing funds with ease, directly to bank accounts or other preferred payment methods.",
+  },
+  {
+    link: routes.swaps,
+    icon: swapsIcon,
+    title: "Swaps",
+    description: "Seamlessly integrate cross-chain swaps",
   },
 ];
 

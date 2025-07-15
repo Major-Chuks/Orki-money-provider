@@ -25,6 +25,7 @@ export const routes = {
   offramp: "/products/offramp",
   api: "/products/api",
   widget: "/products/widget",
+  swaps: "/products/swaps",
   miniWidget: "/products/widget/mini",
   // resources
   mediakit: "/mediakit",

@@ -1,0 +1,61 @@
+.container {
+  width: 372px;
+  height: 372px;
+  border-radius: 50%;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 85px;
+  overflow: hidden;
+}
+
+.title {
+  width: 100%;
+  max-width: 276px;
+  color: #fff;
+  font-family: "Space Grotesk";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: -0.2px;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.listContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  width: 280px;
+  transition: all 650ms;
+}
+
+.card {
+  transform: translateY(200%);
+  transition: all 650ms;
+}
+
+.listContainer.trigger .card {
+  transform: translateY(0);
+}
+
+.container:hover .listContainer {
+  gap: 30px;
+}
+
+@media screen and (max-width: 540px) {
+  .container {
+    width: 320px;
+    height: 320px;
+    padding-top: 60px;
+  }
+
+  .title {
+    max-width: 220px;
+  }
+}

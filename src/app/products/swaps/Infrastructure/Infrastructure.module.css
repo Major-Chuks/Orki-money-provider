@@ -1,0 +1,72 @@
+.wrapper {
+  width: 100%;
+  padding: 94px 0;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 84px;
+}
+
+.title {
+  max-width: 1022px;
+  color: #000;
+  text-align: center;
+  font-family: "Space Grotesk";
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 64.8px; /* 120% */
+}
+
+.listContainer {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  overflow: hidden;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  transition: all 650ms;
+  transform: translateY(100%);
+}
+
+.listItem.trigger {
+  transform: translateY(0);
+}
+
+.listItem img {
+  width: 64px;
+}
+
+.listItem .title {
+  white-space: nowrap;
+  color: var(--Grays-Black, var(--Grays-Black, #000));
+  text-align: center;
+  font-family: "Space Grotesk";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px; /* 108.333% */
+  letter-spacing: -0.2px;
+}
+
+.listItem .description {
+  color: #3a3a3c;
+  text-align: center;
+  font-family: Manrope;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px; /* 130% */
+  letter-spacing: -0.2px;
+}
