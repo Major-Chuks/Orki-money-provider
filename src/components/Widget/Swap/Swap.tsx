@@ -15,12 +15,15 @@ import ExecutingSwap from "@/components/Widget/Swap/ExecutingSwap/ExecutingSwap"
 import SwapCompleted from "@/components/Widget/Swap/SwapCompleted/SwapCompleted";
 import SwapAddress from "@/components/Widget/Swap/SwapAddress/SwapAddress";
 import SwapButton from "@/components/Widget/Swap/SwapButton/SwapButton";
+import {
+  useAppKitAccount,
+  useDisconnect,
+} from "@reown/appkit-controllers/react";
 
 export type SwapStatus = "insufficient_fund" | "successful" | "failed";
 
 const Swap = () => {
   const [openConnectWallet, setOpenConnectWallet] = useState(false);
-  const [activeConnection, setActiveConnection] = useState("");
   const [sendAmount, setSendAmount] = useState("");
   const [sendCurrency, setSendCurrency] = useState("");
   const [receiveAmount, setReceiveAmount] = useState("");
@@ -31,8 +34,15 @@ const Swap = () => {
   const [openSwapCompleted, setOpenSwapCompleted] = useState(false);
   const [openSwapAddress, setOpenSwapAddress] = useState(false);
 
+  const { isConnected, embeddedWalletInfo, address } = useAppKitAccount();
+  const { disconnect } = useDisconnect();
+
+  const handleDisconnect = async () => {
+    await disconnect();
+  };
+
   const handleSwap = () => {
-    if (activeConnection) {
+    if (isConnected) {
       setOpenVerifyAddress(true);
     } else {
       setOpenConnectWallet(true);
@@ -45,30 +55,26 @@ const Swap = () => {
     } else if (status === "insufficient_fund") {
       setOpenSwapAddress(true);
     }
-
     setOpenExecutingSwap(false);
   };
 
   useEffect(() => {
-    console.log({ sendAmount, receiveAmount, sendCurrency, receiveCurrency });
     if (
-      activeConnection &&
+      isConnected &&
       !(sendAmount && receiveAmount && sendCurrency && receiveCurrency)
     ) {
       setDisabled(false); // change to true
     }
-  }, [
-    sendAmount,
-    receiveAmount,
-    sendCurrency,
-    receiveCurrency,
-    activeConnection,
-  ]);
+  }, [sendAmount, receiveAmount, sendCurrency, receiveCurrency, isConnected]);
+
+  useEffect(() => {
+    console.log({ embeddedWalletInfo, isConnected, address });
+  }, [isConnected, address, embeddedWalletInfo]);
 
   return (
     <div className={classes.container}>
-      {activeConnection ? (
-        <SwapConnectedAccount onClose={() => setActiveConnection("")} />
+      {isConnected && address ? (
+        <SwapConnectedAccount onClose={handleDisconnect} address={address} />
       ) : null}
 
       <div className={classes.sect1}>
@@ -104,7 +110,7 @@ const Swap = () => {
       <div style={{ marginBottom: "71px" }}></div>
 
       <SwapButton onClick={handleSwap} disabled={disabled}>
-        {activeConnection ? "Next" : "Connect Wallet"}
+        {isConnected ? "Next" : "Connect Wallet"}
       </SwapButton>
 
       <>
@@ -113,8 +119,7 @@ const Swap = () => {
             {({ close }) => (
               <ConnectWalletOptions
                 onClose={close}
-                onSelect={(cn) => {
-                  setActiveConnection(cn);
+                onSelect={() => {
                   close();
                 }}
               />

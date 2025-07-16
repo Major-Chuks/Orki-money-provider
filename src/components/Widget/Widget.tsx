@@ -9,7 +9,7 @@ import CountrySearch from "./CountrySearch/CountrySearch";
 import Sidebar from "./Sidebar/Sidebar";
 import { ICountryData } from "@/constants/country";
 import WidgetFooter from "./WidgetFooter/WidgetFooter";
-
+// import { useAppKitAccount, useAppKitState } from "@reown/appkit/react";
 export type WidgetType = "Onramp" | "Offramp" | "Swap Crypto";
 
 const Widget = () => {
@@ -17,6 +17,11 @@ const Widget = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [openCountrySearch, setOpenCountrySearch] = useState(false);
   const [country, setCountry] = useState<ICountryData | null>(null);
+
+  // const { initialized, loading, selectedNetworkId, activeChain } =
+  //   useAppKitState();
+  // const { address, isConnected, caipAddress, status, embeddedWalletInfo } =
+  //   useAppKitAccount();
 
   const handleCountryChange = async (country: ICountryData) => {
     setCountry(country);
@@ -36,7 +41,6 @@ const Widget = () => {
 
       {widgetType === "Swap Crypto" && <Swap />}
 
-      {/* Widget Footer */}
       <WidgetFooter />
 
       {openCountrySearch && (

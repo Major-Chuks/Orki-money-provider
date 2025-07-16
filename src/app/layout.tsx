@@ -4,6 +4,8 @@ import "./globals.css";
 import classes from "./layout.module.css";
 import AppLayout from "./pageLayout";
 import { ToastProvider } from "@/context/Toast/ToastContext";
+import { headers } from "next/headers";
+import ContextProvider from "../../context";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,18 +23,23 @@ export const metadata: Metadata = {
   description: "Onramper Aggregator",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const headersObj = headers();
+  const cookies = headersObj.get("cookie");
+
   return (
     <html lang="en">
       <body
         className={`${classes.container} ${geistSans.variable} ${geistMono.variable}`}
       >
         <ToastProvider>
-          <AppLayout>{children}</AppLayout>
+          <ContextProvider cookies={cookies}>
+            <AppLayout>{children}</AppLayout>
+          </ContextProvider>
         </ToastProvider>
       </body>
     </html>
