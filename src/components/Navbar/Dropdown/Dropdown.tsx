@@ -21,6 +21,10 @@ const navs = [
     link: routes.offramp,
   },
   {
+    name: "Swaps",
+    link: routes.swaps,
+  },
+  {
     name: "Blogs",
     link: routes.blogs,
   },

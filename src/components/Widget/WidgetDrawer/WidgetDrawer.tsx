@@ -6,15 +6,17 @@ interface DrawerProps {
     | ReactNode
     | ((props: { open: boolean; close: () => void }) => ReactNode);
   onClose: () => void;
-  style?: React.CSSProperties;
-  fullHeight?: boolean;
+  layoutStyle?: React.CSSProperties;
+  modalStyle?: React.CSSProperties;
+  direction?: "rtl" | "ltr" | "ttb" | "btt";
 }
 
 const WidgetDrawer: React.FC<DrawerProps> = ({
   children,
   onClose,
-  style,
-  fullHeight,
+  layoutStyle,
+  modalStyle,
+  direction = "btt",
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -32,11 +34,15 @@ const WidgetDrawer: React.FC<DrawerProps> = ({
   return (
     <div
       className={`${classes.modalLayout} ${open ? classes.openModal : ""}`}
-      style={style}
+      style={layoutStyle}
     >
       <div
-        style={{ height: fullHeight ? "100%" : "" }}
-        className={classes.modal}
+        onClick={handleClose}
+        className={`${classes.overlay} ${open ? classes.openModal : ""}`}
+      ></div>
+      <div
+        style={modalStyle}
+        className={`${classes.modal} ${classes[direction]}`}
       >
         {typeof children === "function"
           ? (

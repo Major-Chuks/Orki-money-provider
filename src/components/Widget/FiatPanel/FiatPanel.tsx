@@ -3,6 +3,7 @@ import ErrorIcon from "@/assets/SvgComponents/ErrorIcon";
 import FiatCurrencySearch from "../FiatCurrencySearch/FiatCurrencySearch";
 import classes from "./FiatPanel.module.css";
 import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
+import AmountInput from "../AmountInput/AmountInput";
 
 const FiatPanel = ({
   title,
@@ -33,12 +34,12 @@ const FiatPanel = ({
 
       <div className={classes.innerContainer}>
         <div className={classes.value}>
-          <input
-            value={value}
-            onChange={(e) => onAmountChange(e.target.value)}
-            type="number"
+          <AmountInput
+            id="fiat_amount"
             placeholder="0.00"
+            value={value}
             disabled={disabled}
+            onChange={(e) => onAmountChange(e.target.value)}
           />
         </div>
         <FiatCurrencySearch

@@ -19,7 +19,7 @@
 
 .container:hover {
   border-radius: 8px;
-  border: 1px solid #d2d8ea;
+  border: 1px solid #a0aec0;
 }
 
 .container.error {

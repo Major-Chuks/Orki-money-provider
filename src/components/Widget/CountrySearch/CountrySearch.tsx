@@ -1,45 +1,23 @@
 import { useEffect, useState } from "react";
-import Overlay from "../Overlay/Overlay";
 import classes from "./CountrySearch.module.css";
 import Image from "next/image";
-import arrowIcon from "@/assets/widget/arrow-down.svg";
-import closeIcon from "@/assets/widget/close.svg";
-import Search from "../Search/Search";
 import { COUNTRY_DATA, ICountryData } from "@/constants/country";
 import tickIcon from "@/assets/widget/tick.svg";
+import DrawerHeader from "../WidgetDrawer/DrawerHeader/DrawerHeader";
 
 const CountrySearch = ({
   country,
-  overlayOnly,
-  onClick,
   onClose,
   onCountryChange,
 }: {
   country: ICountryData | null;
-  overlayOnly?: boolean;
-  onClick?: () => void;
-  onClose?: () => void;
+  onClose: () => void;
   onCountryChange: (country: ICountryData) => void;
 }) => {
-  const [toggleOverlay, setToggleOverlay] = useState(overlayOnly);
   const [selected, setSelected] = useState<ICountryData | null>(country);
   const [searchValue, setSearchValue] = useState("");
   const [filteredCountry, setFilteredCountry] =
     useState<ICountryData[]>(COUNTRY_DATA);
-
-  const handleClick = () => {
-    setToggleOverlay(!toggleOverlay);
-    if (onClick) {
-      onClick();
-    }
-  };
-
-  const handleClose = () => {
-    setToggleOverlay(false);
-    if (onClose) {
-      onClose();
-    }
-  };
 
   useEffect(() => {
     if (searchValue) {
@@ -54,75 +32,43 @@ const CountrySearch = ({
 
   return (
     <div className={classes.container}>
-      {!overlayOnly && (
-        <div onClick={handleClick} className={classes.selected}>
-          <div className={classes.countryFlag}>
-            {selected && (
+      <DrawerHeader
+        title="Select Country"
+        onClose={onClose}
+        searchValue={searchValue}
+        onSearchChange={(e) => setSearchValue(e.target.value)}
+      />
+
+      <div className={classes.countryWrapper}>
+        {filteredCountry.map((c, idx) => (
+          <div
+            onClick={() => {
+              setSelected(c);
+              onCountryChange(c);
+              onClose();
+            }}
+            key={idx}
+            className={classes.country}
+          >
+            <div className={classes.countryFlag}>
               <span className={classes.iconContainer}>
-                <Image width={24} height={24} src={selected?.flag} alt="" />
+                <Image width={24} height={24} src={c.flag} alt="" />
               </span>
-            )}
-            <span className={classes.name}>
-              {selected?.name || "Select country"}
-            </span>
-          </div>
-          <Image
-            className={`${toggleOverlay && classes.arrowUp}`}
-            src={arrowIcon}
-            alt=""
-          />
-        </div>
-      )}
-      {toggleOverlay && (
-        <Overlay onClose={handleClose}>
-          <div className={classes.wrapper}>
-            <div className={classes.headingContainer}>
-              <div className={classes.heading}>
-                Select Country{" "}
-                <Image onClick={handleClose} src={closeIcon} alt="" />
-              </div>
-
-              <div className={classes.searchWrapper}>
-                <Search
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                />
+              <div className={classes.nameCode}>
+                <span className={classes.name}>{c.name}</span>
+                <span className={classes.code}>{c.code}</span>
               </div>
             </div>
-
-            <div className={classes.countryWrapper}>
-              {filteredCountry.map((c, idx) => (
-                <div
-                  onClick={() => {
-                    setSelected(c);
-                    onCountryChange(c);
-                    handleClose();
-                  }}
-                  key={idx}
-                  className={classes.country}
-                >
-                  <div className={classes.countryFlag}>
-                    <span className={classes.iconContainer}>
-                      <Image width={24} height={24} src={c.flag} alt="" />
-                    </span>
-                    <div className={classes.nameCode}>
-                      <span className={classes.name}>{c.name}</span>
-                      <span className={classes.code}>{c.code}</span>
-                    </div>
-                  </div>
-                  <Image
-                    className={`${classes.tickIcon} ${
-                      selected?.code === c.code && classes.active
-                    }`}
-                    src={tickIcon}
-                    alt=""
-                  />
-                </div>
-              ))}
-            </div>
+            <Image
+              className={`${classes.tickIcon} ${
+                selected?.code === c.code && classes.active
+              }`}
+              src={tickIcon}
+              alt=""
+            />
           </div>
-        </Overlay>
-      )}
+        ))}
+      </div>
     </div>
   );
 };

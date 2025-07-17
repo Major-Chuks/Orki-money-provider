@@ -3,7 +3,6 @@
 }
 
 .container.loader {
-  width: 482px;
   height: 694px;
   max-height: 80vh;
   display: flex;

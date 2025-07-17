@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  max-width: 160px;
+  /* max-width: 160px; */
 }
 
 .container.center {

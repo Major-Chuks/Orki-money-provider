@@ -66,9 +66,7 @@ const Header = () => {
             </div>
           </div>
           <div className={classes.widgetWrapper}>
-            <div className={classes.animationContainer}>
-              <Widget />
-            </div>
+            <Widget />
           </div>
         </div>
       </Responsive>

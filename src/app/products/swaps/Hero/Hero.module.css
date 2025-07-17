@@ -8,29 +8,6 @@
   padding-bottom: 52px;
 }
 
-.widgetWrapper {
-  align-self: center;
-}
-
-.animationContainer {
-  width: 100%;
-  opacity: 0;
-  transform: translateX(-20%);
-  animation: enter 1s 850ms forwards;
-}
-
-@keyframes enter {
-  from {
-    opacity: 0;
-    transform: translateX(-20%) translateY(0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0) translateY(0);
-  }
-}
-
 .image {
   width: 100%;
 }
@@ -122,22 +99,6 @@
 
   .listContainer {
     gap: 16px;
-  }
-
-  .animationContainer {
-    transform: translateY(20%);
-  }
-
-  @keyframes enter {
-    from {
-      opacity: 0;
-      transform: translateX(0) translateY(20%);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateX(0) translateY(0);
-    }
   }
 }
 

@@ -20,16 +20,16 @@ const DrawerHeader = ({
 }) => {
   return (
     <div className={`${classes.container} ${border && classes.border}`}>
-      <div className={classes.titleAndClose}>
-        <div>
-          <div className={classes.title}>{title}</div>
-          {description ? (
-            <div className={classes.description}>{description}</div>
-          ) : null}
+      <div>
+        <div className={classes.title}>
+          {title}{" "}
+          <ButtonWrapper onClick={onClose} className={classes.close}>
+            <CloseIcon />
+          </ButtonWrapper>
         </div>
-        <ButtonWrapper onClick={onClose} className={classes.close}>
-          <CloseIcon />
-        </ButtonWrapper>
+        {description ? (
+          <div className={classes.description}>{description}</div>
+        ) : null}
       </div>
 
       {onSearchChange && (

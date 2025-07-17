@@ -38,11 +38,7 @@ const Hero = () => {
             ))}
           </div>
         </div>
-        <div className={classes.widgetWrapper}>
-          <div className={classes.animationContainer}>
-            <Widget />
-          </div>
-        </div>
+        <Widget />
       </div>
     </Responsive>
   );

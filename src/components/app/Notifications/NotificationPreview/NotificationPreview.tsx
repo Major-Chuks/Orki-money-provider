@@ -87,7 +87,12 @@ const NotificationPreview = () => {
 
           <DropdownWrapper
             open={open}
-            containerStyle={{ bottom: "-12px", padding: "1px" }}
+            variant="fade"
+            containerStyle={{
+              bottom: "-12px",
+              padding: "1px",
+              overflow: "visible",
+            }}
           >
             <div className={classes.dropdown}>
               <div className={classes.header}>

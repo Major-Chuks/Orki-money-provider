@@ -9,6 +9,7 @@ import CountrySearch from "./CountrySearch/CountrySearch";
 import Sidebar from "./Sidebar/Sidebar";
 import { ICountryData } from "@/constants/country";
 import WidgetFooter from "./WidgetFooter/WidgetFooter";
+import WidgetDrawer from "./WidgetDrawer/WidgetDrawer";
 // import { useAppKitAccount, useAppKitState } from "@reown/appkit/react";
 export type WidgetType = "Onramp" | "Offramp" | "Swap Crypto";
 
@@ -44,20 +45,34 @@ const Widget = () => {
       <WidgetFooter />
 
       {openCountrySearch && (
-        <CountrySearch
-          overlayOnly={true}
-          country={country}
-          onCountryChange={handleCountryChange}
-          onClose={() => setOpenCountrySearch(false)}
-        />
+        <WidgetDrawer onClose={() => setOpenCountrySearch(false)}>
+          {({ close }) => (
+            <CountrySearch
+              country={country}
+              onCountryChange={handleCountryChange}
+              onClose={close}
+            />
+          )}
+        </WidgetDrawer>
       )}
 
       {openSidebar && (
-        <Sidebar
-          country={country}
+        <WidgetDrawer
+          direction="ltr"
           onClose={() => setOpenSidebar(false)}
-          onCountrySearch={() => setOpenCountrySearch(true)}
-        />
+          modalStyle={{ height: "100%", borderRadius: "0", maxWidth: "355px" }}
+        >
+          {({ close }) => (
+            <Sidebar
+              country={country}
+              onClose={close}
+              onCountrySearch={() => {
+                close();
+                setOpenCountrySearch(true);
+              }}
+            />
+          )}
+        </WidgetDrawer>
       )}
     </WidgetLayout>
   );

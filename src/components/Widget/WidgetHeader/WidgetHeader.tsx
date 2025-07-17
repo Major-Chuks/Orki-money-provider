@@ -5,7 +5,6 @@ import DropdownWrapper from "@/components/app/Dropdown/DropdownWrapper/DropdownW
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import MenuIcon from "@/assets/SvgComponents/MenuIcon";
 import appLogo from "@/assets/widget/app-logo2.svg";
-import ChevronDown from "@/assets/app/ChevronDown";
 import { WidgetType } from "@/components/Widget/Widget";
 
 const dropdownItems: WidgetType[] = ["Onramp", "Offramp", "Swap Crypto"];
@@ -23,12 +22,26 @@ const WidgetHeader = ({
     <div className={classes.container}>
       <Image className={classes.logo} src={appLogo} alt="" />
 
-      <DropdownLayout>
+      <DropdownLayout classname={classes.dropdownLayout}>
         {({ open, close, toggle }) => (
           <>
             <div className={classes.label} onClick={toggle}>
               {widgetType}{" "}
-              <ChevronDown style={{ width: "24px", height: "24px" }} />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M8 10L12 14L16 10"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </div>
 
             <DropdownWrapper
@@ -37,7 +50,7 @@ const WidgetHeader = ({
                 width: "max-content",
                 borderRadius: "12px",
                 overflow: "visible",
-                // right: "-50%",
+                right: "unset",
               }}
               variant="fade"
             >

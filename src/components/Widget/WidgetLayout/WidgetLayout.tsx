@@ -8,8 +8,10 @@ const WidgetLayout = ({
   overlay?: boolean;
 }) => {
   return (
-    <div className={`${classes.container} ${overlay && classes.overlay} `}>
-      {children}
+    <div className={classes.wrapper}>
+      <div className={`${classes.container} ${overlay && classes.overlay} `}>
+        {children}
+      </div>
     </div>
   );
 };
