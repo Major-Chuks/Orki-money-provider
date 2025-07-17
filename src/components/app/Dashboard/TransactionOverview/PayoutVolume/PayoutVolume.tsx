@@ -1,53 +1,52 @@
+import { useState } from "react";
 import ChartDateFilter from "../../ChartDateFilter/ChartDateFilter";
 import Chart from "./Chart/Chart";
 import classes from "./PayoutVolume.module.css";
-
-const legend = [
-  "Onramp 1",
-  "Onramp 2",
-  "Onramp 3",
-  "Onramp 4",
-  "Onramp 5",
-  "Onramp 6",
-  "Onramp 7",
-  "Onramp 8",
-  "Onramp 9",
-  "Onramp 10",
-];
-
-const legendFill = [
-  "#743B09",
-  "#84C512",
-  "#6430FF",
-  "#B938FF",
-  "#2F9860",
-  "#D81C2F",
-  "#69D931",
-  "#3131E5",
-  "#22DA90",
-  "#3D9AC9",
-];
+import { IntervalType } from "../../Dashboard";
+import { useTransactionVolumeQuery } from "@/services/queryApis";
+import { get_transactionVolume } from "@/types/apis/analytics/get_transactionVolume";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
+import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const PayoutVolume = () => {
+  const [interval, setInterval] = useState<IntervalType>("1D");
+
+  const { data, isPending, isError } = useTransactionVolumeQuery({
+    interval,
+  });
+  const txVolume: get_transactionVolume = data?.data.data;
+
   return (
     <div className={classes.container}>
       <div className={classes.heading}>
-        <div className={classes.title}>Payout Volume</div>
-        <ChartDateFilter />
+        <div className={classes.title}>Transaction Volume</div>
+        <ChartDateFilter onChange={setInterval} />
       </div>
 
-      <div className={classes.chartContainer}>
-        <Chart />
-      </div>
-
-      <div className={classes.legend}>
-        {legend.map((item, idx) => (
-          <div key={idx} className={classes.item}>
-            <span style={{ background: legendFill[idx] }}></span>
-            {item}
+      {isPending ? (
+        <>
+          <LoadingScreen style={{ height: "320px" }} />
+        </>
+      ) : isError ? (
+        <ErrorScreen style={{ height: "320px" }} />
+      ) : (
+        <>
+          <div className={classes.chartContainer}>
+            <Chart key={interval} data={txVolume} interval={interval} />
           </div>
-        ))}
-      </div>
+
+          <div className={classes.legend}>
+            {Object.entries(txVolume.provider_color_map).map(
+              ([key, value], idx) => (
+                <div key={idx} className={classes.item}>
+                  <span style={{ background: value }}></span>
+                  {key}
+                </div>
+              )
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

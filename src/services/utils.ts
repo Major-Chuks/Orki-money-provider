@@ -599,15 +599,30 @@ export const getCurrencySymbol = (currencyCode: string): string => {
   return currencyMap[code] || code;
 };
 
-// export const formatMoney = (amount: string): string => {
-//   if (!amount || !amount.trim() || isNaN(Number(amount))) return "";
+export const formatDateByInterval = (
+  dateStr: string,
+  interval: string
+): string => {
+  const date = new Date(dateStr);
 
-//   const [integerPart, decimalPart] = amount.toString().split(".");
+  switch (interval) {
+    case "1D":
+      // Show full timestamp (e.g. "12:30 PM")
+      return date.toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+      });
 
-//   const formattedInt = parseInt(integerPart, 10).toLocaleString("en-US");
-//   if (amount.endsWith(".")) {
-//     return `${formattedInt}.`;
-//   }
+    case "7D":
+    case "30D":
+      // Show short date (e.g. "Jul 10")
+      return date.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+      });
 
-//   return decimalPart ? `${formattedInt}.${decimalPart}` : formattedInt;
-// };
+    default:
+      // Default to full date (e.g. "2025-07-10")
+      return date.toISOString().split("T")[0];
+  }
+};

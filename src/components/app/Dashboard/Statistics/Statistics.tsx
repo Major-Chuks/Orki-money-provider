@@ -1,26 +1,92 @@
 import InfoIcon from "@/assets/app/InfoIcon";
 import classes from "./Statistics.module.css";
 import ChartDateFilter from "../ChartDateFilter/ChartDateFilter";
+import { useState } from "react";
+import {
+  useCompletedTransactionsQuery,
+  useFailedTransactionsQuery,
+  useTotalTransactionsQuery,
+  useTotalVolumeQuery,
+} from "@/services/queryApis";
+import { IntervalType } from "../Dashboard";
+import { get_totalTransactions } from "@/types/apis/analytics/get_totalTransactions";
+import { get_failedTransactions } from "@/types/apis/analytics/get_failedTransactions";
+import { get_completedTransactions } from "@/types/apis/analytics/get_completedTransactions";
+import { get_totalVolume } from "@/types/apis/analytics/get_totalVolume";
+import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 
 const Statistics = () => {
+  const [interval, setInterval] = useState<IntervalType>("1D");
+
+  const totalTransactions = useTotalTransactionsQuery({ interval });
+  const totalTxData: get_totalTransactions = totalTransactions.data?.data.data;
+  const totalVolume = useTotalVolumeQuery({ interval });
+  const totalVolData: get_totalVolume = totalVolume.data?.data.data;
+  const completedTransactions = useCompletedTransactionsQuery({ interval });
+  const completedTxData: get_completedTransactions =
+    totalVolume.data?.data.data;
+  const failedTransactions = useFailedTransactionsQuery({ interval });
+  const FailedTxData: get_failedTransactions = totalVolume.data?.data.data;
+
   return (
     <div className={classes.container}>
-      <ChartDateFilter />
+      <ChartDateFilter onChange={setInterval} />
       <div className={classes.statsContainer}>
-        <Stat name="Total Transactions" value="$0" percentage="0.00%" info="" />
-        <Stat
-          name="Total Volume (Fiat)"
-          value="$0"
-          percentage="0.00%"
-          info=""
-        />
-        <Stat
-          name="Completed Transactions"
-          value="$0"
-          percentage="0.00%"
-          info=""
-        />
-        <Stat name="Failed Transactions" value="0" percentage="0.00%" info="" />
+        <>
+          {totalTransactions.isPending ? (
+            <LoadingScreen style={{ height: "127px" }} />
+          ) : totalTransactions.isError ? (
+            <ErrorScreen style={{ height: "127px" }} />
+          ) : (
+            <Stat
+              name="Total Transactions"
+              value={totalTxData?.result}
+              percentage={totalTxData?.difference}
+              info=""
+            />
+          )}
+        </>
+        {totalVolume.isPending ? (
+          <LoadingScreen style={{ height: "127px" }} />
+        ) : totalVolume.isError ? (
+          <ErrorScreen style={{ height: "127px" }} />
+        ) : (
+          <Stat
+            name="Total Volume (Fiat)"
+            value={totalVolData?.result}
+            percentage={totalVolData?.difference}
+            info=""
+          />
+        )}
+        {completedTransactions.isPending ? (
+          <LoadingScreen style={{ height: "127px" }} />
+        ) : completedTransactions.isError ? (
+          <ErrorScreen style={{ height: "127px" }} />
+        ) : (
+          <Stat
+            name="Completed Transactions"
+            value={completedTxData?.result}
+            percentage={completedTxData?.difference}
+            info=""
+          />
+        )}
+        {failedTransactions.isPending ? (
+          <div className={classes.card}>
+            <LoadingScreen style={{ height: "127px" }} />
+          </div>
+        ) : failedTransactions.isError ? (
+          <div className={classes.card}>
+            <ErrorScreen style={{ height: "127px" }} />
+          </div>
+        ) : (
+          <Stat
+            name="Failed Transactions"
+            value={FailedTxData?.result}
+            percentage={FailedTxData?.difference}
+            info=""
+          />
+        )}
       </div>
     </div>
   );

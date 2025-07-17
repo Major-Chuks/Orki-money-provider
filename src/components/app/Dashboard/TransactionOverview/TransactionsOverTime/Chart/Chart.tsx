@@ -8,9 +8,14 @@ import {
   LegendComponent,
 } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
-import type { EChartsOption } from "echarts";
+import type {
+  EChartsOption,
+  SeriesOption,
+  TooltipComponentOption,
+} from "echarts";
 import React, { useEffect, useRef } from "react";
 
+// Register ECharts components
 echarts.use([
   LineChart,
   TitleComponent,
@@ -20,19 +25,58 @@ echarts.use([
   CanvasRenderer,
 ]);
 
-const Chart = ({ data, series }: { data: string[]; series: number[] }) => {
+// Props type now accepts multiple series
+type ChartProps = {
+  data: string[]; // x-axis labels
+  series: { name: string; data: number[]; color?: string }[]; // multiple lines
+};
+
+const Chart = ({ data, series }: ChartProps) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts | null>(null);
 
   useEffect(() => {
     if (chartRef.current) {
       chartInstance.current = echarts.init(chartRef.current);
+
+      const seriesOptions: SeriesOption[] = series.map((s) => ({
+        name: s.name,
+        type: "line",
+        stack: "total", // Important for stacking
+        areaStyle: {}, // Enable filled area
+        emphasis: { focus: "series" },
+        data: s.data,
+        color: s.color,
+      }));
+
       const options: EChartsOption = {
+        tooltip: {
+          trigger: "axis",
+          formatter: function (params) {
+            const items = Array.isArray(params) ? params : [params];
+            return items
+              .map((item) => {
+                const isSuccess = (item.seriesName ?? "")
+                  .toLowerCase()
+                  .includes("success");
+                const color = isSuccess ? "#30CF22" : "#E03130";
+                return `
+                  <div style="margin-bottom: 4px;">
+                    <span style="color:${color}; font-weight: 500; font-size: 12px">● ${item.seriesName}</span>: ${item.data}
+                  </div>
+                `;
+              })
+              .join("");
+          },
+        } as TooltipComponentOption,
+        legend: {
+          top: 0,
+        },
         grid: {
           left: "0%",
           right: "2%",
           bottom: "0%",
-          top: "3%",
+          top: "10%",
           containLabel: true,
         },
         xAxis: {
@@ -43,14 +87,9 @@ const Chart = ({ data, series }: { data: string[]; series: number[] }) => {
         yAxis: {
           type: "value",
         },
-        series: [
-          {
-            data: series,
-            type: "line",
-            areaStyle: {},
-          },
-        ],
+        series: seriesOptions,
       };
+
       chartInstance.current.setOption(options);
     }
 
@@ -77,9 +116,10 @@ const Chart = ({ data, series }: { data: string[]; series: number[] }) => {
   return <div className={classes.chart} ref={chartRef}></div>;
 };
 
-export default React.memo(Chart, (prevProps, nextProps) => {
+// Memoize chart rendering
+export default React.memo(Chart, (prev, next) => {
   return (
-    JSON.stringify(prevProps.data) === JSON.stringify(nextProps.data) &&
-    JSON.stringify(prevProps.series) === JSON.stringify(nextProps.series)
+    JSON.stringify(prev.data) === JSON.stringify(next.data) &&
+    JSON.stringify(prev.series) === JSON.stringify(next.series)
   );
 });

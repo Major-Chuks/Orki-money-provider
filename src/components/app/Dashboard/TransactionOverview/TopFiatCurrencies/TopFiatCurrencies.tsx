@@ -1,73 +1,60 @@
+import { useState } from "react";
 import ChartDateFilter from "../../ChartDateFilter/ChartDateFilter";
+import { IntervalType } from "../../Dashboard";
 import Chart from "../TopPaymentMethod/Chart/Chart";
 import classes from "./TopFiatCurrencies.module.css";
+import { useTopFiatCurrenciesQuery } from "@/services/queryApis";
+import { get_topFiatCurrencies } from "@/types/apis/analytics/get_topFiatCurrencies";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
+import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const TopFiatCurrencies = () => {
-  const payoutStats = [
-    {
-      label: "USD",
-      color: "#00E065",
-      value: 0,
-      percentage: "0.00",
-    },
-    {
-      label: "EUR",
-      color: "#FFC561",
-      value: 0,
-      percentage: "0.00",
-    },
-    {
-      label: "GBP",
-      color: "#FF7B7B",
-      value: 0,
-      percentage: "0.00",
-    },
-    {
-      label: "AED",
-      color: "#616CFF",
-      value: 0,
-      percentage: "0.00",
-    },
-    {
-      label: "INR",
-      color: "#0BA2CC",
-      value: 0,
-      percentage: "0.00",
-    },
-  ];
+  const [interval, setInterval] = useState<IntervalType>("1D");
+
+  const { data, isPending, isError } = useTopFiatCurrenciesQuery({ interval });
+  const topFiatCurrencies: get_topFiatCurrencies[] = data?.data.data;
 
   return (
     <div className={classes.container}>
       <div>
         <div className={classes.header}>
           <div className={classes.title}>Top Fiat Currencies</div>
-          <ChartDateFilter />
+          <ChartDateFilter onChange={setInterval} />
         </div>
 
-        <div className={classes.chartContainer}>
-          {true && (
+        {isPending ? (
+          <>
+            <LoadingScreen style={{ height: "320px" }} />
+          </>
+        ) : isError ? (
+          <ErrorScreen style={{ height: "320px" }} />
+        ) : (
+          <div className={classes.chartContainer}>
             <Chart
-              data={payoutStats.map(({ label, value, color }) => ({
-                value: Number(value),
-                name: label,
-                color,
-              }))}
+              name="Top Fiat Currencies"
+              data={topFiatCurrencies.map(
+                ({ fiat_currency, percentage, color }) => ({
+                  value: Number(percentage.split("%")[0]),
+                  name: fiat_currency,
+                  color,
+                })
+              )}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <div className={classes.legend}>
-        {payoutStats.map(({ label, color, percentage }, idx) => (
+        {topFiatCurrencies?.map(({ fiat_currency, color, percentage }, idx) => (
           <div key={idx} className={classes.item}>
             <div className={classes.tag}>
               <div
                 className={classes.indicator}
                 style={{ background: color }}
               ></div>
-              <div className={classes.label}>{label}</div>
+              <div className={classes.label}>{fiat_currency}</div>
             </div>
-            <div className={classes.percent}>{percentage}%</div>
+            <div className={classes.percent}>{percentage}</div>
           </div>
         ))}
       </div>

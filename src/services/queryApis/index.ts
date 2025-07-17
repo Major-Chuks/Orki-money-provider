@@ -19,6 +19,7 @@ export const useApiQuery = <TData>(
   });
 
 // Export all generated query hooks
+export * from "./useAnalyticsQueries";
 export * from "./useApiKeysQueries";
 export * from "./useApiLogsQueries";
 export * from "./useAuthQueries";

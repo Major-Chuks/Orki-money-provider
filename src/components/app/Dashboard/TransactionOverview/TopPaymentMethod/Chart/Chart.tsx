@@ -20,7 +20,13 @@ echarts.use([
   CanvasRenderer,
 ]);
 
-const Chart = ({ data }: { data: { value: number; name: string, color:  string }[] }) => {
+const Chart = ({
+  data,
+  name,
+}: {
+  data: { value: number; name: string; color: string }[];
+  name: string;
+}) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts | null>(null);
 
@@ -32,7 +38,7 @@ const Chart = ({ data }: { data: { value: number; name: string, color:  string }
         series: [
           {
             color: ["#00E065", "#FFC561", "#FF7B7B", "#00E065"],
-            name: "Payout Success Rate",
+            name,
             type: "pie",
             radius: ["70%", "100%"],
             avoidLabelOverlap: false,

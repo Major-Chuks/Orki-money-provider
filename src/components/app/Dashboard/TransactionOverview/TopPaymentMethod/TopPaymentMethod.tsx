@@ -1,73 +1,60 @@
+import { useState } from "react";
 import ChartDateFilter from "../../ChartDateFilter/ChartDateFilter";
+import { IntervalType } from "../../Dashboard";
 import Chart from "./Chart/Chart";
 import classes from "./TopPaymentMethod.module.css";
+import { get_topPaymentMethods } from "@/types/apis/analytics/get_topPaymentMethods";
+import { useTopPaymentMethodsQuery } from "@/services/queryApis";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
+import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const TopPaymentMethod = () => {
-  const payoutStats = [
-    {
-      label: "Card",
-      color: "#00E065",
-      value: 0,
-      percentage: "0.00",
-    },
-    {
-      label: "Apple Pay",
-      color: "#FFC561",
-      value: 0,
-      percentage: "0.00",
-    },
-    {
-      label: "Google Pay",
-      color: "#FF7B7B",
-      value: 0,
-      percentage: "0.00",
-    },
-    {
-      label: "UPI",
-      color: "#616CFF",
-      value: 0,
-      percentage: "0.00",
-    },
-    {
-      label: "Bank Transfer",
-      color: "#0BA2CC",
-      value: 0,
-      percentage: "0.00",
-    },
-  ];
+  const [interval, setInterval] = useState<IntervalType>("1D");
+
+  const { data, isPending, isError } = useTopPaymentMethodsQuery({ interval });
+  const topPaymentMethod: get_topPaymentMethods[] = data?.data.data;
 
   return (
     <div className={classes.container}>
       <div>
         <div className={classes.header}>
           <div className={classes.title}>Top Payment Method</div>
-          <ChartDateFilter />
+          <ChartDateFilter onChange={setInterval} />
         </div>
 
-        <div className={classes.chartContainer}>
-          {true && (
+        {isPending ? (
+          <>
+            <LoadingScreen style={{ height: "320px" }} />
+          </>
+        ) : isError ? (
+          <ErrorScreen style={{ height: "320px" }} />
+        ) : (
+          <div className={classes.chartContainer}>
             <Chart
-              data={payoutStats.map(({ label, value, color }) => ({
-                value: Number(value),
-                name: label,
-                color,
-              }))}
+              name="Top Payment Method"
+              data={topPaymentMethod.map(
+                ({ payment_method, percentage, color }) => ({
+                  value: Number(percentage.split("%")[0]),
+                  name: payment_method,
+                  color,
+                })
+              )}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <div className={classes.legend}>
-        {payoutStats.map(({ label, color, percentage }, idx) => (
+        {topPaymentMethod?.map(({ payment_method, color, percentage }, idx) => (
           <div key={idx} className={classes.item}>
             <div className={classes.tag}>
               <div
                 className={classes.indicator}
                 style={{ background: color }}
               ></div>
-              <div className={classes.label}>{label}</div>
+              <div className={classes.label}>{payment_method}</div>
             </div>
-            <div className={classes.percent}>{percentage}%</div>
+            <div className={classes.percent}>{percentage}</div>
           </div>
         ))}
       </div>

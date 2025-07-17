@@ -4,6 +4,8 @@ import RecentTransactions from "./RecentTransactions/RecentTransactions";
 import Statistics from "./Statistics/Statistics";
 import TransactionOverview from "./TransactionOverview/TransactionOverview";
 
+export type IntervalType = "1D" | "7D" | "30D";
+
 const Dashboard = () => {
   const { showToast } = useToast();
 

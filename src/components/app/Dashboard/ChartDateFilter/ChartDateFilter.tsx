@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./ChartDateFilter.module.css";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 
-const ChartDateFilter = () => {
-  const [date, setDate] = useState<"1" | "7" | "30">("1");
+const ChartDateFilter = ({
+  onChange,
+}: {
+  onChange: (interval: "1D" | "7D" | "30D") => void;
+}) => {
+  const [interval, setInterval] = useState<"1D" | "7D" | "30D">("1D");
+
+  useEffect(() => {
+    onChange(interval);
+  }, [interval]);
 
   return (
     <div className={classes.container}>
       <ButtonWrapper>
         <div
-          onClick={() => setDate("1")}
-          className={`${classes.item} ${date === "1" && classes.active}`}
+          onClick={() => setInterval("1D")}
+          className={`${classes.item} ${interval === "1D" && classes.active}`}
         >
           1D
         </div>
@@ -18,8 +26,8 @@ const ChartDateFilter = () => {
 
       <ButtonWrapper>
         <div
-          onClick={() => setDate("7")}
-          className={`${classes.item} ${date === "7" && classes.active}`}
+          onClick={() => setInterval("7D")}
+          className={`${classes.item} ${interval === "7D" && classes.active}`}
         >
           7D
         </div>
@@ -27,8 +35,8 @@ const ChartDateFilter = () => {
 
       <ButtonWrapper>
         <div
-          onClick={() => setDate("30")}
-          className={`${classes.item} ${date === "30" && classes.active}`}
+          onClick={() => setInterval("30D")}
+          className={`${classes.item} ${interval === "30D" && classes.active}`}
         >
           30D
         </div>

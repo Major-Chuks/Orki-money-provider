@@ -23,6 +23,141 @@ export interface ApiManifest {
 }
 
 export const apiManifest: ApiManifest = {
+  "analytics": {
+    "get_totalTransactions": {
+      "args": [
+        {
+          "name": "{\r\n    interval,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "interval",
+              "isOptional": false,
+              "type": "\"1D\" | \"7D\" | \"30D\""
+            }
+          ]
+        }
+      ]
+    },
+    "get_completedTransactions": {
+      "args": [
+        {
+          "name": "{\r\n    interval,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "interval",
+              "isOptional": false,
+              "type": "\"1D\" | \"7D\" | \"30D\""
+            }
+          ]
+        }
+      ]
+    },
+    "get_totalVolume": {
+      "args": [
+        {
+          "name": "{ interval }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "interval",
+              "isOptional": false,
+              "type": "\"1D\" | \"7D\" | \"30D\""
+            }
+          ]
+        }
+      ]
+    },
+    "get_failedTransactions": {
+      "args": [
+        {
+          "name": "{\r\n    interval,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "interval",
+              "isOptional": false,
+              "type": "\"1D\" | \"7D\" | \"30D\""
+            }
+          ]
+        }
+      ]
+    },
+    "get_transactionVolume": {
+      "args": [
+        {
+          "name": "{\r\n    interval,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "interval",
+              "isOptional": false,
+              "type": "\"1D\" | \"7D\" | \"30D\""
+            }
+          ]
+        }
+      ]
+    },
+    "get_transactionHistory": {
+      "args": [
+        {
+          "name": "{\r\n    interval,\r\n    currency,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "interval",
+              "isOptional": false,
+              "type": "\"1D\" | \"7D\" | \"30D\""
+            },
+            {
+              "name": "currency",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "get_topPaymentMethods": {
+      "args": [
+        {
+          "name": "{\r\n    interval,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "interval",
+              "isOptional": false,
+              "type": "\"1D\" | \"7D\" | \"30D\""
+            }
+          ]
+        }
+      ]
+    },
+    "get_topFiatCurrencies": {
+      "args": [
+        {
+          "name": "{\r\n    interval,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "interval",
+              "isOptional": false,
+              "type": "\"1D\" | \"7D\" | \"30D\""
+            }
+          ]
+        }
+      ]
+    }
+  },
   "apiKeys": {
     "get_apiKeys": {
       "args": [

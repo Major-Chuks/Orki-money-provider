@@ -11,6 +11,9 @@ import {
 import { CanvasRenderer } from "echarts/renderers";
 import React, { useEffect, useRef } from "react";
 import type { BarSeriesOption } from "echarts/charts";
+import { get_transactionVolume } from "@/types/apis/analytics/get_transactionVolume";
+import { IntervalType } from "../../../Dashboard";
+import { formatDateByInterval } from "@/services/utils";
 
 // Register the required components
 echarts.use([
@@ -22,18 +25,34 @@ echarts.use([
   CanvasRenderer,
 ]);
 
-const Chart = () => {
+const convertToChartData = (input: get_transactionVolume): number[][] => {
+  const providers = Object.keys(
+    input.provider_color_map
+  ) as (keyof get_transactionVolume["data"][number]["providers"])[];
+
+  // Initialize empty arrays: one per provider
+  const chartData: number[][] = providers.map(() => []);
+
+  input.data.forEach((entry) => {
+    providers.forEach((provider, providerIndex) => {
+      const value = entry.providers[provider] ?? 0;
+      chartData[providerIndex].push(value);
+    });
+  });
+
+  return chartData;
+};
+
+const Chart = ({
+  data,
+}: {
+  data: get_transactionVolume;
+  interval: IntervalType;
+}) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts | null>(null);
 
-  // There should not be negative values in rawData
-  const rawData = [
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-  ];
+  const rawData = convertToChartData(data);
 
   const totalData: number[] = [];
   for (let i = 0; i < rawData[0].length; ++i) {
@@ -44,27 +63,30 @@ const Chart = () => {
     totalData.push(sum);
   }
 
-  const series: BarSeriesOption[] = [
-    "Direct",
-    "Mail Ad",
-    "Affiliate Ad",
-    "Video Ad",
-    "Search Engine",
-  ].map((name, sid) => {
-    return {
-      name,
-      type: "bar",
-      stack: "total",
-      barWidth: "60%",
-      label: {
-        show: true,
-        formatter: (params: any) => Math.round(params.value * 1000) / 10 + "%",
-      },
-      data: rawData[sid].map((d, did) =>
-        totalData[did] <= 0 ? 0 : d / totalData[did]
-      ),
-    };
-  });
+  const series: BarSeriesOption[] = Object.keys(data.provider_color_map).map(
+    (name, sid) => {
+      return {
+        name,
+        type: "bar",
+        stack: "total",
+        barWidth: "60%",
+        itemStyle: {
+          color:
+            data.provider_color_map[
+              name as keyof typeof data.provider_color_map
+            ],
+        },
+        label: {
+          show: true,
+          formatter: (params: any) =>
+            Math.round(params.value * 1000) / 10 + "%",
+        },
+        data: rawData[sid].map((d, did) =>
+          totalData[did] <= 0 ? 0 : d / totalData[did]
+        ),
+      };
+    }
+  );
 
   useEffect(() => {
     if (chartRef.current) {
@@ -82,7 +104,9 @@ const Chart = () => {
         },
         xAxis: {
           type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          data: data.data.map((entry) =>
+            formatDateByInterval(entry.date, data.interval)
+          ),
         },
         series,
       };
