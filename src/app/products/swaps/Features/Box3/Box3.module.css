@@ -29,7 +29,7 @@
 }
 
 .bg .bgImage {
-  animation: moveAndRotate 5s 650ms linear infinite;
+  animation: moveAndRotate 15s 650ms linear infinite;
 }
 
 @keyframes moveAndRotate {
@@ -51,5 +51,18 @@
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .bg {
+    width: 88vw;
+    height: 88vw;
+  }
+
+  .container img {
+    width: 275px;
+    height: 339px;
+    aspect-ratio: 275/339;
   }
 }

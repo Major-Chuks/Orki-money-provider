@@ -81,3 +81,10 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+@media screen and (max-width: 540px) {
+  .bg {
+    width: 88vw;
+    height: 88vw;
+  }
+}

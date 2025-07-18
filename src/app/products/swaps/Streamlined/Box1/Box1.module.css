@@ -100,3 +100,27 @@
 .stackContainer .card:nth-child(5) {
   animation-delay: 0.5s;
 }
+
+@media screen and (max-width: 540px) {
+  .container {
+    width: 320px;
+    height: 320px;
+    padding-top: 60px;
+  }
+
+  .stackContainer .card:nth-child(1) {
+    width: 280px;
+  }
+  .stackContainer .card:nth-child(2) {
+    width: 240px;
+  }
+  .stackContainer .card:nth-child(3) {
+    width: 210px;
+  }
+  .stackContainer .card:nth-child(4) {
+    width: 180px;
+  }
+  .stackContainer .card:nth-child(5) {
+    width: 160px;
+  }
+}

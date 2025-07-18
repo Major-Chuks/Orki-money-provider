@@ -21,15 +21,27 @@ const Box2 = ({ trigger }: { trigger: boolean }) => {
         <div className={classes.section}>
           <Image className={classes.card} src={icon1} alt="" />
           <Image className={classes.card} src={icon2} alt="" />
+
+          <Image className={classes.card} src={icon1} alt="" />
+          <Image className={classes.card} src={icon2} alt="" />
           <Image className={classes.card} src={icon3} alt="" />
           <Image className={classes.card} src={icon4} alt="" />
           <Image className={classes.card} src={icon5} alt="" />
+
+          <Image className={classes.card} src={icon1} alt="" />
+          <Image className={classes.card} src={icon2} alt="" />
         </div>
         <div className={classes.section}>
           <Image className={classes.card} src={icon6} alt="" />
           <Image className={classes.card} src={icon6} alt="" />
+
+          <Image className={classes.card} src={icon6} alt="" />
+          <Image className={classes.card} src={icon6} alt="" />
           <Image className={classes.card} src={icon7} alt="" />
           <Image className={classes.card} src={icon8} alt="" />
+
+          <Image className={classes.card} src={icon6} alt="" />
+          <Image className={classes.card} src={icon6} alt="" />
         </div>
       </div>
     </div>
