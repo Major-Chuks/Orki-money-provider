@@ -11,6 +11,10 @@ import unlimitIcon from "@/assets/onramp-providers/unlimit.svg";
 import fonbnkIcon from "@/assets/onramp-providers/fonbnk.svg";
 import transfiIcon from "@/assets/onramp-providers/transfi.svg";
 import yellowCardIcon from "@/assets/onramp-providers/yellow-card.svg";
+import coinifyIcon from "@/assets/onramp-providers/coinify.svg";
+import koyweIcon from "@/assets/onramp-providers/koywe.svg";
+import onmetaIcon from "@/assets/onramp-providers/onmeta.svg";
+import onrampMoneyIcon from "@/assets/onramp-providers/onramp-money.svg";
 
 const data = [
   {
@@ -52,6 +56,26 @@ const data = [
     icon: moonpayIcon,
     name: "MoonPay",
     isComingSoon: true,
+  },
+  {
+    icon: onrampMoneyIcon,
+    name: "Onramp.money",
+    isComingSoon: false,
+  },
+  {
+    icon: onmetaIcon,
+    name: "Onmeta",
+    isComingSoon: false,
+  },
+  {
+    icon: coinifyIcon,
+    name: "Coinify",
+    isComingSoon: false,
+  },
+  {
+    icon: koyweIcon,
+    name: "Koywe",
+    isComingSoon: false,
   },
 ];
 
