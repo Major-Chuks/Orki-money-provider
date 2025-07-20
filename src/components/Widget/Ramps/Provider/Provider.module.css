@@ -2,23 +2,7 @@
   width: 100%;
   height: 100%;
   background: var(--white, #fff);
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 9;
   padding: 32px 24px;
-  transform: translateY(100%);
-  animation: enter 200ms forwards;
-}
-
-@keyframes enter {
-  from {
-    transform: translateY(100%);
-  }
-
-  to {
-    transform: translateY(0);
-  }
 }
 
 .heading {
@@ -47,7 +31,7 @@
 
 .boxContainer {
   width: 100%;
-  height: calc(100% - 98px);
+  height: calc(100% - 48px);
   display: flex;
   flex-direction: column;
   gap: 12px;

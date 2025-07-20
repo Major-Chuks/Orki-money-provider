@@ -65,9 +65,7 @@ const Header = () => {
               </SlideUp>
             </div>
           </div>
-          <div className={classes.widgetWrapper}>
-            <Widget />
-          </div>
+          <Widget />
         </div>
       </Responsive>
     </div>

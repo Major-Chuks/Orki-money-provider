@@ -63,8 +63,11 @@ const get_defaults = async () => {
 };
 
 // Hooks for queries and mutations
-export const useGetUserLocation = () =>
-  useQuery({ queryKey: ["get_user_location"], queryFn: get_user_location });
+export const useGetUserLocation = (pathname: string) =>
+  useQuery({
+    queryKey: ["get_user_location", pathname],
+    queryFn: get_user_location,
+  });
 
 export const useGetCoverage = () =>
   useQuery({ queryKey: ["get_coverage"], queryFn: get_coverage });
@@ -74,9 +77,9 @@ export const usePostChangeLocation = () =>
     mutationFn: (country: string) => post_change_location(country),
   });
 
-export const useGetPaymentMethods = (fiat?: string) =>
+export const useGetPaymentMethods = (pathname: string, fiat?: string) =>
   useQuery({
-    queryKey: ["get_payment_methods", fiat],
+    queryKey: ["get_payment_methods", fiat, pathname],
     queryFn: () => get_payment_methods(fiat!),
     enabled: !!fiat,
   });
@@ -91,18 +94,21 @@ export const usePostBuyQuote = () =>
     mutationFn: (payload: post_buy_quote_type) => post_buy_quote(payload),
   });
 
-export const useGetFiatCurrencies = () =>
-  useQuery({ queryKey: ["get_fiat_currencies"], queryFn: get_fiat_currencies });
-
-export const useGetCryptoCurencies = () =>
+export const useGetFiatCurrencies = (pathname: string) =>
   useQuery({
-    queryKey: ["get_crypto_currencies"],
+    queryKey: ["get_fiat_currencies", pathname],
+    queryFn: get_fiat_currencies,
+  });
+
+export const useGetCryptoCurencies = (pathname: string) =>
+  useQuery({
+    queryKey: ["get_crypto_currencies", pathname],
     queryFn: () => get_crypto_currencies(),
   });
 
-export const useGetDefaults = () =>
+export const useGetDefaults = (pathname: string) =>
   useQuery({
-    queryKey: ["get_defaults"],
+    queryKey: ["get_defaults", pathname],
     queryFn: get_defaults,
   });
 

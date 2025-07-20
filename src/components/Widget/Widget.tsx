@@ -10,11 +10,15 @@ import Sidebar from "./Sidebar/Sidebar";
 import { ICountryData } from "@/constants/country";
 import WidgetFooter from "./WidgetFooter/WidgetFooter";
 import WidgetDrawer from "./WidgetDrawer/WidgetDrawer";
+import { usePathname } from "next/navigation";
 // import { useAppKitAccount, useAppKitState } from "@reown/appkit/react";
 export type WidgetType = "Onramp" | "Offramp" | "Swap Crypto";
 
 const Widget = () => {
-  const [widgetType, setWidgetType] = useState<WidgetType>("Onramp");
+  const pathname = usePathname();
+  const [widgetType, setWidgetType] = useState<WidgetType>(
+    pathname === "/products/swaps" ? "Swap Crypto" : "Onramp"
+  );
   const [openSidebar, setOpenSidebar] = useState(false);
   const [openCountrySearch, setOpenCountrySearch] = useState(false);
   const [country, setCountry] = useState<ICountryData | null>(null);

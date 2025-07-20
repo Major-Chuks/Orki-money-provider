@@ -39,6 +39,8 @@ import Redirect2 from "./Redirect/Redirect2";
 import RatePanel from "./RatePanel/RatePanel";
 import Provider from "./Provider/Provider";
 import SwapButton from "../Swap/SwapButton/SwapButton";
+import WidgetDrawer from "../WidgetDrawer/WidgetDrawer";
+import { usePathname } from "next/navigation";
 
 const Ramps = ({
   type: widgetType,
@@ -71,19 +73,21 @@ const Ramps = ({
   const isFirstQuoteRender = useRef(0);
   const [openWidget, setOpenWidget] = useState(false);
 
+  const pathname = usePathname();
+
   const { data: fiatResponse, isSuccess: isFiatSuccess } =
-    useGetFiatCurrencies();
+    useGetFiatCurrencies(pathname);
   const { data: cryptoResponse, isSuccess: isCryptoSuccess } =
-    useGetCryptoCurencies();
+    useGetCryptoCurencies(pathname);
   const { data: defaultsResponse, isSuccess: isDefaultsSuccess } =
-    useGetDefaults();
+    useGetDefaults(pathname);
   const { data: locationResponse, isSuccess: isLocationSuccess } =
-    useGetUserLocation();
+    useGetUserLocation(pathname);
   const {
     data: paymentMethodResponse,
     isPending: isPaymentMethodPending,
     isSuccess: isPaymentMethodSuccess,
-  } = useGetPaymentMethods(fiatCurrency);
+  } = useGetPaymentMethods(pathname, fiatCurrency);
 
   const { mutateAsync } = usePostChangeLocation();
 
@@ -399,6 +403,24 @@ const Ramps = ({
 
       {/* Modals ******************************************************************* */}
       <>
+        {toggleProvider && (
+          <WidgetDrawer
+            onClose={() => setToggleProvider(false)}
+            modalStyle={{
+              height: "100%",
+              borderRadius: "0",
+            }}
+          >
+            {({ close }) => (
+              <Provider
+                allProviders={allProviders}
+                onSelect={setProvider}
+                onClose={close}
+                widgetType={widgetType}
+              />
+            )}
+          </WidgetDrawer>
+        )}
         {toggleFirstRedirect && (
           <Redirect1 widgetType={widgetType} provider={provider} />
         )}
@@ -407,14 +429,6 @@ const Ramps = ({
             handleOpenProvider={handleContinueProcess}
             handleCloseProvider={() => setToggleSecondRedirect(false)}
             provider={provider}
-          />
-        )}
-        {toggleProvider && (
-          <Provider
-            allProviders={allProviders}
-            onSelect={setProvider}
-            onClose={() => setToggleProvider(false)}
-            widgetType={widgetType}
           />
         )}
       </>
