@@ -1,7 +1,7 @@
 .wrapper {
   position: sticky;
   top: 0;
-  z-index: 9999;
+  z-index: 999;
   background: #fff;
   animation: wrapper_enter 1s 1s forwards;
   border-bottom: 1px solid var(--Gray-400, #cbd5e0);

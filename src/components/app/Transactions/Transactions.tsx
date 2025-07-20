@@ -15,10 +15,12 @@ import AdvancedSearch, {
   SearchParamsType,
 } from "./AdvancedSearch/AdvancedSearch";
 import { useState } from "react";
+import DropdownLayout from "../Dropdown/DropdownLayout/DropdownLayout";
+import DropdownWrapper from "../Dropdown/DropdownWrapper/DropdownWrapper";
 
 const Transactions = () => {
   const [params, setParams] = useState("");
-  const [openSearch, setOpenSearch] = useState(false);
+  // const [openSearch, setOpenSearch] = useState(false);
 
   const { data, isPending, isError } = useTransactionsQuery({
     params,
@@ -84,44 +86,54 @@ const Transactions = () => {
             View all transactions processed through Orki Terminal.
           </div>
 
-          <div className={classes.searchAndFilters}>
-            <CustomButton
-              style={{
-                width: "max-content",
-                borderRadius: "8px",
-                background: "#FEFEFE",
-                border: "1px solid #E5E7EB",
-                color: "#374151",
-                fontSize: "14px",
-                fontWeight: "500",
-                padding: "12px 16px",
-              }}
-              leftIcon={filterIcon}
-              rightIcon={chevronIcon}
-              onClick={() => setOpenSearch(!openSearch)}
-            >
-              Filter
-            </CustomButton>
+          <DropdownLayout>
+            {({ open, toggle }) => (
+              <>
+                <div className={classes.searchAndFilters}>
+                  <CustomButton
+                    style={{
+                      width: "max-content",
+                      borderRadius: "8px",
+                      background: "#FEFEFE",
+                      border: "1px solid #E5E7EB",
+                      color: "#374151",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      padding: "12px 16px",
+                    }}
+                    leftIcon={filterIcon}
+                    rightIcon={chevronIcon}
+                    onClick={toggle}
+                  >
+                    Filter
+                  </CustomButton>
 
-            <CustomButton
-              style={{
-                width: "max-content",
-                borderRadius: "8px",
-                background: "#FEFEFE",
-                border: "1px solid #E5E7EB",
-                color: "#374151",
-                fontSize: "14px",
-                fontWeight: "500",
-                padding: "12px 16px",
-              }}
-              leftIcon={exportIcon}
-              onClick={() => {}}
-            >
-              Export
-            </CustomButton>
-          </div>
+                  <CustomButton
+                    style={{
+                      width: "max-content",
+                      borderRadius: "8px",
+                      background: "#FEFEFE",
+                      border: "1px solid #E5E7EB",
+                      color: "#374151",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      padding: "12px 16px",
+                    }}
+                    leftIcon={exportIcon}
+                    onClick={() => {}}
+                  >
+                    Export
+                  </CustomButton>
+                </div>
 
-          {openSearch ? <AdvancedSearch onSearch={handleSearch} /> : null}
+                <DropdownWrapper position="static" variant="fade" open={open}>
+                  <AdvancedSearch onSearch={handleSearch} />
+                </DropdownWrapper>
+
+                {open && <div style={{ marginBottom: "34px" }}></div>}
+              </>
+            )}
+          </DropdownLayout>
 
           {isPending ? (
             <LoadingScreen />
