@@ -29,6 +29,7 @@ import {
   useGetFiatCurrencies,
   useGetPaymentMethods,
   useGetUserLocation,
+  usePatchSelectedQuote,
   usePostChangeLocation,
 } from "@/services/apis_tanstack";
 import Koywe from "../SDK/Koywe/Koywe";
@@ -65,8 +66,13 @@ const Ramps = ({
     useState<PaymentMethodResponse | null>(null);
   const [loadingQuotes, setLoadingQuotes] = useState(false);
   const [error, setError] = useState("");
-  const [allProviders, setAllProviders] = useState<get_defaults | null>(null);
-  const [provider, setProvider] = useState<get_defaults[number] | null>(null);
+  const [allProviders, setAllProviders] = useState<
+    get_defaults["quotes"] | null
+  >(null);
+  const [provider, setProvider] = useState<
+    get_defaults["quotes"][number] | null
+  >(null);
+  const [requestId, setRequestId] = useState("");
   const [toggleFirstRedirect, setToggleFirstRedirect] = useState(false);
   const [toggleSecondRedirect, setToggleSecondRedirect] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
@@ -91,78 +97,93 @@ const Ramps = ({
 
   const { mutateAsync } = usePostChangeLocation();
 
+  const patchSelectedQuote = usePatchSelectedQuote();
+
   const handleFiatCurrencyChange = async (c: string) => {
     setFiatCurrency(c);
   };
 
   const handleProceed = async () => {
-    const sanitizeName = (str: string) => str.replace(/[^a-zA-Z0-9_]/g, "_");
+    try {
+      await patchSelectedQuote.mutateAsync({
+        provider: provider?.provider.identifier || "",
+        request_id: requestId,
+      });
 
-    if (!provider) return;
-    // before window will open, show the initial redirect screen.
-    setToggleFirstRedirect(true);
+      //************************************************** */
 
-    // delay for 1000ms
-    await new Promise((res) => {
-      setTimeout(() => {
-        res("");
-      }, 1000);
-    });
+      const sanitizeName = (str: string) => str.replace(/[^a-zA-Z0-9_]/g, "_");
 
-    setToggleFirstRedirect(false);
+      if (!provider) return;
+      // before window will open, show the initial redirect screen.
+      setToggleFirstRedirect(true);
 
-    // track when to open widget
-    if (provider.widget && provider.provider.identifier === "koywe") {
-      setOpenWidget(true);
-      return;
-    }
+      // delay for 1000ms
+      await new Promise((res) => {
+        setTimeout(() => {
+          res("");
+        }, 1000);
+      });
 
-    if (provider.widget && provider.provider.identifier === "coinify") {
-      setOpenWidget(true);
-      return;
-    }
+      setToggleFirstRedirect(false);
 
-    let onmetaUrl = "";
-
-    if (provider.widget && provider.provider.identifier === "onmeta") {
-      const widget = provider.widget as OnmetaWidgetType;
-      const asset = provider.asset;
-
-      const payload = {
-        fiatType: widget.fiat.toLowerCase(),
-        tokenSymbol: widget.crypto,
-        environment: "production",
-        metadata: JSON.stringify({ orderID: widget.metadata.orderID }),
-        fiatAmount:
-          widgetType === "Onramp"
-            ? Number(asset?.fiat_amount)
-            : Number(asset?.crypto_amount),
-        chainId: String(widget.ticker),
-        onRamp: widgetType === "Onramp" ? "enabled" : "disabled",
-        offRamp: widgetType === "Offramp" ? "enabled" : "disabled",
-      };
-
-      const queryString = new URLSearchParams(payload as any).toString();
-      onmetaUrl = `https://onmeta-widget-orki.vercel.app?${queryString}`;
-    }
-
-    const popupWindow = window.open(
-      onmetaUrl ? onmetaUrl : provider.link,
-      sanitizeName(
-        `${provider.provider.identifier}_${network}_${fiatAmount}_${fiatCurrency}_${cryptoAmount}_${cryptoCurrency}`
-      )
-    );
-    if (!popupWindow) return console.log("No popup window");
-
-    setToggleSecondRedirect(true);
-
-    setPopupWindow(popupWindow);
-    const checkPopupClosed: NodeJS.Timeout = setInterval(() => {
-      if (popupWindow.closed) {
-        clearInterval(checkPopupClosed);
-        setToggleSecondRedirect(false);
+      // track when to open widget
+      if (provider.widget && provider.provider.identifier === "koywe") {
+        setOpenWidget(true);
+        return;
       }
-    }, 500);
+
+      if (provider.widget && provider.provider.identifier === "coinify") {
+        setOpenWidget(true);
+        return;
+      }
+
+      let onmetaUrl = "";
+
+      if (provider.widget && provider.provider.identifier === "onmeta") {
+        const widget = provider.widget as OnmetaWidgetType;
+        const asset = provider.asset;
+
+        const payload = {
+          fiatType: widget.fiat.toLowerCase(),
+          tokenSymbol: widget.crypto,
+          environment: "production",
+          metadata: JSON.stringify({ orderID: widget.metadata.orderID }),
+          fiatAmount:
+            widgetType === "Onramp"
+              ? Number(asset?.fiat_amount)
+              : Number(asset?.crypto_amount),
+          chainId: String(widget.ticker),
+          onRamp: widgetType === "Onramp" ? "enabled" : "disabled",
+          offRamp: widgetType === "Offramp" ? "enabled" : "disabled",
+        };
+
+        const queryString = new URLSearchParams(payload as any).toString();
+        onmetaUrl = `https://onmeta-widget-orki.vercel.app?${queryString}`;
+      }
+
+      const popupWindow = window.open(
+        onmetaUrl ? onmetaUrl : provider.link,
+        sanitizeName(
+          `${provider.provider.identifier}_${network}_${fiatAmount}_${fiatCurrency}_${cryptoAmount}_${cryptoCurrency}`
+        )
+      );
+      if (!popupWindow) return console.log("No popup window");
+
+      setToggleSecondRedirect(true);
+
+      setPopupWindow(popupWindow);
+      const checkPopupClosed: NodeJS.Timeout = setInterval(() => {
+        if (popupWindow.closed) {
+          clearInterval(checkPopupClosed);
+          setToggleSecondRedirect(false);
+        }
+      }, 500);
+      //************************************************ */
+    } catch (err) {
+      fetchAndUpdateQuotes();
+      console.error(err);
+    }
   };
 
   const handleContinueProcess = () => {
@@ -176,7 +197,7 @@ const Ramps = ({
       isChangeLocation: !!defaultsData,
       fiatData: fiatResponse?.data.data,
       cryptoData: cryptoResponse?.data.data,
-      defaultData: defaultsData ?? defaultsResponse?.data.data,
+      defaultData: defaultsData?.quotes ?? defaultsResponse?.data.data.quotes,
       locationData: locationResponse?.data.data,
       setAllProviders,
       setProvider,
@@ -192,6 +213,11 @@ const Ramps = ({
       setError,
       setCountry: () => {},
     });
+    if (defaultsData) {
+      setRequestId(defaultsData.request_id);
+    } else {
+      setRequestId(defaultsResponse?.data.data.request_id);
+    }
   };
 
   const handleCountryChange = async (country: ICountryData) => {
@@ -237,6 +263,62 @@ const Ramps = ({
     }
   }, [isFiatSuccess, isCryptoSuccess, isDefaultsSuccess, isLocationSuccess]);
 
+  const fetchAndUpdateQuotes = async () => {
+    const { minBuyAmount, maxBuyAmount } = getQuoteLimit({
+      fiatCurrencies,
+      fiatCurrency,
+      providerName: provider?.provider.identifier || "",
+      paymentMethod,
+    });
+
+    const isValid = validQuoteLimit({
+      minBuyAmount,
+      maxBuyAmount,
+      fiatAmount: Number(fiatAmount),
+      fiatCurrency,
+      setError,
+    });
+
+    if (!isValid) return;
+
+    setError("");
+    setLoadingQuotes(true);
+    const response = await fetchQuotes({
+      fiatAmount,
+      cryptoAmount,
+      fiatCurrency,
+      cryptoCurrency,
+      network,
+      widgetType,
+      paymentMethod,
+    });
+    setLoadingQuotes(false);
+    if (response && typeof response === "object") {
+      const _defaults: get_defaults = response.data.data;
+      setAllProviders(_defaults.quotes);
+      setRequestId(_defaults.request_id);
+      const _bestProvider = _defaults.quotes.find((dp) => dp.is_best);
+      if (!_bestProvider) return;
+      setProvider(_bestProvider);
+      setFiatAmount(String(_bestProvider.asset?.fiat_amount));
+      setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
+
+      // removed the function to fetch payment options from here
+    } else if (response && typeof response === "string") {
+      setAllProviders(null);
+      setProvider(null);
+      setRequestId("");
+      setError(response);
+    } else {
+      const countryData = COUNTRY_DATA.find(
+        (c) => c.currency.toLowerCase() === fiatCurrency.toLowerCase()
+      );
+      if (countryData) {
+        handleCountryChange(countryData);
+      }
+    }
+  };
+
   // Fetch quotes
   useDebouncedEffect(
     async () => {
@@ -244,58 +326,7 @@ const Ramps = ({
         isFirstQuoteRender.current += 1;
         return; // Exit early on first render
       }
-
-      const { minBuyAmount, maxBuyAmount } = getQuoteLimit({
-        fiatCurrencies,
-        fiatCurrency,
-        providerName: provider?.provider.identifier || "",
-        paymentMethod,
-      });
-
-      const isValid = validQuoteLimit({
-        minBuyAmount,
-        maxBuyAmount,
-        fiatAmount: Number(fiatAmount),
-        fiatCurrency,
-        setError,
-      });
-
-      if (!isValid) return;
-
-      setError("");
-      setLoadingQuotes(true);
-      const response = await fetchQuotes({
-        fiatAmount,
-        cryptoAmount,
-        fiatCurrency,
-        cryptoCurrency,
-        network,
-        widgetType,
-        paymentMethod,
-      });
-      setLoadingQuotes(false);
-      if (response && typeof response === "object") {
-        const _defaults: get_defaults = response.data.data;
-        setAllProviders(_defaults);
-        const _bestProvider = _defaults.find((dp) => dp.is_best);
-        if (!_bestProvider) return;
-        setProvider(_bestProvider);
-        setFiatAmount(String(_bestProvider.asset?.fiat_amount));
-        setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
-
-        // removed the function to fetch payment options from here
-      } else if (response && typeof response === "string") {
-        setAllProviders(null);
-        setProvider(null);
-        setError(response);
-      } else {
-        const countryData = COUNTRY_DATA.find(
-          (c) => c.currency.toLowerCase() === fiatCurrency.toLowerCase()
-        );
-        if (countryData) {
-          handleCountryChange(countryData);
-        }
-      }
+      fetchAndUpdateQuotes();
     },
     [
       widgetType === "Onramp" ? fiatAmount : cryptoAmount,
@@ -422,14 +453,32 @@ const Ramps = ({
           </WidgetDrawer>
         )}
         {toggleFirstRedirect && (
-          <Redirect1 widgetType={widgetType} provider={provider} />
+          <WidgetDrawer
+            onClose={() => {}}
+            modalStyle={{
+              height: "100%",
+              borderRadius: "0",
+            }}
+          >
+            {() => <Redirect1 widgetType={widgetType} provider={provider} />}
+          </WidgetDrawer>
         )}
         {toggleSecondRedirect && (
-          <Redirect2
-            handleOpenProvider={handleContinueProcess}
-            handleCloseProvider={() => setToggleSecondRedirect(false)}
-            provider={provider}
-          />
+          <WidgetDrawer
+            onClose={() => setToggleSecondRedirect(false)}
+            modalStyle={{
+              height: "100%",
+              borderRadius: "0",
+            }}
+          >
+            {({ close }) => (
+              <Redirect2
+                handleOpenProvider={handleContinueProcess}
+                handleCloseProvider={close}
+                provider={provider}
+              />
+            )}
+          </WidgetDrawer>
         )}
       </>
 

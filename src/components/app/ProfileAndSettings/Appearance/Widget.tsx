@@ -64,7 +64,7 @@ const Widget = () => {
           loading={defaultRatePanel.loading}
           onProviderClick={() => {}}
           provider={
-            defaultRatePanel.provider as unknown as get_defaults[number]
+            defaultRatePanel.provider as unknown as get_defaults["quotes"][number]
           }
           hasError={defaultRatePanel.hasError}
         />

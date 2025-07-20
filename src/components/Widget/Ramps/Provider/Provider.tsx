@@ -13,9 +13,9 @@ const Provider = ({
   onSelect,
   widgetType,
 }: {
-  allProviders: get_defaults | null;
+  allProviders: get_defaults["quotes"] | null;
   onClose: () => void;
-  onSelect: (provider: get_defaults[number]) => void;
+  onSelect: (provider: get_defaults["quotes"][number]) => void;
   widgetType: WidgetType;
 }) => {
   const sortedProviders = sortProviders(allProviders);

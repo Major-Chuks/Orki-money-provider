@@ -61,7 +61,6 @@ const FiatCurrencySearch = ({
     if (afc) {
       setDefaultCurrencyIcon(afc.fiat_icon);
     }
-    console.log({ fiatCurrency, afc });
   }, []);
 
   return (

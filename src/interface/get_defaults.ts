@@ -13,7 +13,7 @@ type Asset = {
   payment_method: string;
 };
 
-export type get_defaults = {
+type Quote = {
   provider: Provider;
   exchange_rate?: number;
   is_best: boolean;
@@ -23,7 +23,12 @@ export type get_defaults = {
   percentage_diff: number;
   is_supported: boolean;
   widget?: KoyweWidgetType | OnmetaWidgetType | CoinifyWidgetType | null;
-}[];
+};
+
+export type get_defaults = {
+  request_id: string;
+  quotes: Quote[];
+};
 
 export type KoyweWidgetType = {
   clientId: string;

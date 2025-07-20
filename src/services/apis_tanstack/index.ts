@@ -44,6 +44,15 @@ const post_buy_quote = async (payload: post_buy_quote_type) => {
   return response;
 };
 
+const patch_selected_quote = async (payload: {
+  provider: string;
+  request_id: string;
+}) => {
+  const url = `/quotes/selected`;
+  const response = await BACKEND_API.patch(url, payload);
+  return response;
+};
+
 const get_fiat_currencies = async () => {
   const url = "/fiat-currencies";
   const response = await BACKEND_API.get(url);
@@ -92,6 +101,12 @@ export const usePostSellQuote = () =>
 export const usePostBuyQuote = () =>
   useMutation({
     mutationFn: (payload: post_buy_quote_type) => post_buy_quote(payload),
+  });
+
+export const usePatchSelectedQuote = () =>
+  useMutation({
+    mutationFn: (payload: { provider: string; request_id: string }) =>
+      patch_selected_quote(payload),
   });
 
 export const useGetFiatCurrencies = (pathname: string) =>

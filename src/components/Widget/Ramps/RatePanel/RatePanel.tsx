@@ -14,7 +14,7 @@ const RatePanel = ({
   hasError,
 }: {
   loading: boolean;
-  provider: get_defaults[number] | null;
+  provider: get_defaults["quotes"][number] | null;
   onProviderClick: () => void;
   hasError: boolean;
 }) => {

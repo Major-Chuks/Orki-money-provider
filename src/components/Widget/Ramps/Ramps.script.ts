@@ -9,7 +9,7 @@ import { formatMoneyToNumber } from "@/services/utils";
 import { SetStateAction } from "react";
 import { WidgetType } from "../Widget";
 
-export const sortProviders = (providers: get_defaults | null) => {
+export const sortProviders = (providers: get_defaults["quotes"] | null) => {
   if (!providers) return null;
   const supportedProviders = providers.filter((p) => p.is_supported);
   const noSupported = providers.filter((p) => !p.is_supported);
@@ -39,11 +39,13 @@ export const InitStates = ({
   isChangeLocation?: boolean;
   fiatData: get_fiat_currencies;
   cryptoData: get_crypto_currencies;
-  defaultData: get_defaults;
+  defaultData: get_defaults["quotes"];
   locationData: get_user_location;
-  setAllProviders: React.Dispatch<React.SetStateAction<get_defaults | null>>;
+  setAllProviders: React.Dispatch<
+    React.SetStateAction<get_defaults["quotes"] | null>
+  >;
   setProvider: React.Dispatch<
-    React.SetStateAction<get_defaults[number] | null>
+    React.SetStateAction<get_defaults["quotes"][number] | null>
   >;
   setError: React.Dispatch<SetStateAction<string>>;
   setFiatAmount: React.Dispatch<React.SetStateAction<string>>;

@@ -7,7 +7,6 @@ import CloseIcon from "@/assets/SvgComponents/CloseIcon";
 import Securityicon from "@/assets/SvgComponents/SecurityIcon";
 import { toSentenceCase } from "@/services/utils";
 import { get_defaults } from "@/interface/get_defaults";
-import Overlay from "../../Overlay/Overlay";
 
 const Redirect2 = ({
   handleOpenProvider,
@@ -16,51 +15,45 @@ const Redirect2 = ({
 }: {
   handleOpenProvider: () => void;
   handleCloseProvider: () => void;
-  provider: get_defaults[number] | null;
+  provider: get_defaults["quotes"][number] | null;
 }) => {
   return (
-    <Overlay onClose={() => {}}>
-      <div className={classes.container}>
-        <div className={classes.main}>
-          <div className={classes.heading}>
-            <div>Continue Payment</div>
-            <div
-              onClick={handleCloseProvider}
-              className={classes.iconContainer}
-            >
-              <CloseIcon />
-            </div>
-          </div>
-
-          <div className={classes.imageContainer}>
-            <Image src={creditCard} alt="" />
-          </div>
-
-          <div className={classes.title}>
-            Complete your purchase with {provider?.provider.name.toLowerCase()}{" "}
-            in the new tab
-          </div>
-
-          <div className={classes.description}>
-            If new tab is not opened, check setting related to tabs in your
-            browser and try again by clicking the button below.
-          </div>
-
-          <CustomButton
-            onClick={handleOpenProvider}
-            style={{ background: "#6148C2" }}
-          >
-            <div className={classes.btnContent}>
-              Open {toSentenceCase(provider?.provider.name)} in new tab
-              <ExternalLink />
-            </div>
-          </CustomButton>
-          <div className={classes.note}>
-            <Securityicon /> Your connection is secure
-          </div>
+    <div className={classes.container}>
+      <div className={classes.heading}>
+        <div>Continue Payment</div>
+        <div onClick={handleCloseProvider} className={classes.iconContainer}>
+          <CloseIcon />
         </div>
       </div>
-    </Overlay>
+
+      <div className={classes.imageContainer}>
+        <Image src={creditCard} alt="" />
+      </div>
+
+      <div className={classes.title}>
+        Complete your purchase with {provider?.provider.name.toLowerCase()} in
+        the new tab
+      </div>
+
+      <div className={classes.description}>
+        If new tab is not opened, check setting related to tabs in your browser
+        and try again by clicking the button below.
+      </div>
+
+      <CustomButton
+        onClick={handleOpenProvider}
+        style={{ background: "#6148C2" }}
+      >
+        <div className={classes.btnContent}>
+          Open {toSentenceCase(provider?.provider.name)} in new tab
+          <ExternalLink />
+        </div>
+      </CustomButton>
+      <div style={{ width: "100%", flex: "1" }}></div>
+      <div className={classes.note}>
+        <Securityicon /> Your connection is secure
+      </div>
+    </div>
   );
 };
 
