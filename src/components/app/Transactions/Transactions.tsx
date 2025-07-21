@@ -1,4 +1,3 @@
-import AccountSetupBanner from "../AccountSetupBanner/AccountSetupBanner";
 import classes from "./Transactions.module.css";
 import EmptyState from "./EmptyState/EmptyState";
 import Pagination from "../Pagination/Pagination";
@@ -72,13 +71,6 @@ const Transactions = () => {
 
   return (
     <>
-      {false && (
-        <>
-          <AccountSetupBanner />
-          <div style={{ marginBottom: "40px" }} />
-        </>
-      )}
-
       <div className={classes.container}>
         <div className={classes.header}>
           <div className={classes.title}>Transaction History</div>

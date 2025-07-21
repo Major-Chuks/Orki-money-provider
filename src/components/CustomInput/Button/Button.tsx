@@ -16,6 +16,7 @@ interface ButtonProps
     | "outline";
   variant?: "filled" | "outlined";
   loading?: boolean;
+  loadingText?: string;
   disabled?: boolean;
   onClick?: () => void;
 }
@@ -26,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
   type = "primary",
   variant = "filled",
   loading,
+  loadingText,
   disabled,
   onClick,
 }) => {
@@ -57,7 +59,7 @@ const Button: React.FC<ButtonProps> = ({
     >
       {loading ? (
         <div className={classes.iconContainer}>
-          <LoadingIcon />
+          <LoadingIcon /> {loadingText ? <span>Please wait</span> : null}
         </div>
       ) : (
         children

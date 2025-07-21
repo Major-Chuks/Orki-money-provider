@@ -13,6 +13,7 @@ import { billingApi } from "./billing";
 import { toast } from "@/context/Toast/ToastService";
 import { userProfileApi } from "./userProfile";
 import { teamManagementApi } from "./teamManagement";
+import { onboardingApi } from "./onboarding";
 
 export const baseURL = "https://api.money.orki.io/api";
 
@@ -92,5 +93,6 @@ export default function backend() {
     ...billingApi,
     ...userProfileApi,
     ...teamManagementApi,
+    ...onboardingApi,
   };
 }

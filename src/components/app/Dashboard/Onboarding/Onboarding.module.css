@@ -72,3 +72,38 @@
   flex-direction: column;
   gap: 16px;
 }
+
+/* KYB Modal */
+
+.kybModalContainer {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  z-index: 999;
+  background: rgba(46, 44, 44, 0.69);
+}
+
+.kybModal {
+  height: 100% !important;
+  overflow: auto;
+}
+
+.kybModal > * {
+  min-height: 100% !important;
+  overflow: auto;
+}
+
+.closeBtn {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  right: 16px;
+  top: 16px;
+}

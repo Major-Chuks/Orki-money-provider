@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import TabNavigation from "../TabNavigation/TabNavigation";
 import classes from "./ApiManagement.module.css";
-import Banner from "./Banner/Banner";
 import ApiKeys from "./ApiKeys/ApiKeys";
 import ApiLogs from "./ApiLogs/ApiLogs";
 import Webhooks from "./Webhooks/Webhooks";
@@ -51,10 +50,6 @@ const ApiManagement = () => {
 
   return (
     <div className={classes.container}>
-      <Banner />
-
-      <div style={{ marginBottom: "28px" }} />
-
       <TabNavigation
         tabList={tabList}
         tab={tab}

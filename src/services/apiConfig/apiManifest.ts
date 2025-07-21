@@ -492,6 +492,27 @@ export const apiManifest: ApiManifest = {
       ]
     }
   },
+  "onboarding": {
+    "get_initiateKyb": {
+      "args": []
+    },
+    "patch_updateChecklist": {
+      "args": [
+        {
+          "name": "{}",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "key",
+              "isOptional": false,
+              "type": "\"read_checklist\" | \"read_docs\""
+            }
+          ]
+        }
+      ]
+    }
+  },
   "teamManagement": {
     "get_listManagementTeam": {
       "args": []
