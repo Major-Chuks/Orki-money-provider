@@ -25,9 +25,12 @@ const Statistics = () => {
   const totalVolData: get_totalVolume = totalVolume.data?.data.data;
   const completedTransactions = useCompletedTransactionsQuery({ interval });
   const completedTxData: get_completedTransactions =
-    totalVolume.data?.data.data;
+    completedTransactions.data?.data.data;
   const failedTransactions = useFailedTransactionsQuery({ interval });
-  const FailedTxData: get_failedTransactions = totalVolume.data?.data.data;
+  const FailedTxData: get_failedTransactions =
+    failedTransactions.data?.data.data;
+
+  console.log({ FailedTxData });
 
   return (
     <div className={classes.container}>
@@ -119,7 +122,10 @@ const Stat = ({
         </span>
       </div>
       <div className={classes.value}>
-        {value} <span className={classes.percentage}>{percentage}</span>
+        {value}{" "}
+        {percentage.includes("%") ? (
+          <span className={classes.percentage}>{percentage}</span>
+        ) : null}
       </div>
     </div>
   );

@@ -19,6 +19,7 @@ import {
   useAppKitAccount,
   useDisconnect,
 } from "@reown/appkit-controllers/react";
+import { useAppKit } from "@reown/appkit/react";
 
 export type SwapStatus = "insufficient_fund" | "successful" | "failed";
 
@@ -36,6 +37,7 @@ const Swap = () => {
 
   const { isConnected, embeddedWalletInfo, address } = useAppKitAccount();
   const { disconnect } = useDisconnect();
+  const { open } = useAppKit();
 
   const handleDisconnect = async () => {
     await disconnect();
@@ -45,7 +47,7 @@ const Swap = () => {
     if (isConnected) {
       setOpenVerifyAddress(true);
     } else {
-      setOpenConnectWallet(true);
+      open({ view: "Connect" });
     }
   };
 
