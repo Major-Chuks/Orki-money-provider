@@ -14,6 +14,7 @@ import { toast } from "@/context/Toast/ToastService";
 import { userProfileApi } from "./userProfile";
 import { teamManagementApi } from "./teamManagement";
 import { onboardingApi } from "./onboarding";
+import { swapApi } from "./swap";
 
 export const baseURL = "https://api.money.orki.io/api";
 
@@ -94,5 +95,6 @@ export default function backend() {
     ...userProfileApi,
     ...teamManagementApi,
     ...onboardingApi,
+    ...swapApi,
   };
 }

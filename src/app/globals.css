@@ -5,6 +5,7 @@
 
 :root {
   --error: #dc2626;
+  --widget-hover-color: rgb(96, 72, 194);
 }
 
 html,

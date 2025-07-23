@@ -7,11 +7,17 @@ const WidgetLayout = ({
   children: React.ReactNode;
   overlay?: boolean;
 }) => {
-  return (
-    <div className={classes.wrapper}>
+  if (overlay) {
+    return (
       <div className={`${classes.container} ${overlay && classes.overlay} `}>
         {children}
       </div>
+    );
+  }
+
+  return (
+    <div className={classes.wrapper}>
+      <div className={classes.container}>{children}</div>
     </div>
   );
 };

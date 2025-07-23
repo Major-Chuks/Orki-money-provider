@@ -6,6 +6,7 @@ import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import CaretIcon from "@/assets/SvgComponents/CaretIcon";
 import WidgetDrawer from "../WidgetDrawer/WidgetDrawer";
 import DrawerHeader from "../WidgetDrawer/DrawerHeader/DrawerHeader";
+import ListBuilder from "./ListBuilder";
 
 const CryptoCurrencySearch = ({
   cryptoCurrencies,
@@ -93,34 +94,41 @@ const CryptoCurrencySearch = ({
               />
 
               <div className={classes.countryWrapper}>
-                {filteredCryptoCurrencies?.map((c, idx) => (
-                  <div
-                    onClick={() => {
-                      setSelected(c);
-                      close();
-                    }}
-                    key={idx}
-                    className={classes.country}
-                  >
-                    <div className={classes.countryFlag}>
-                      <span className={classes.iconContainer}>
-                        {c.crypto_icon && (
-                          <img
-                            width={24}
-                            height={24}
-                            src={c.crypto_icon}
-                            alt=""
-                          />
-                        )}
-                      </span>
-                      <div className={classes.nameCode}>
-                        <span className={classes.name}>{c.code}</span>
-                        <span className={classes.code}>{c.name}</span>
+                {filteredCryptoCurrencies && (
+                  <ListBuilder
+                    items={filteredCryptoCurrencies || []}
+                    height={300}
+                    estimateSize={60}
+                    renderItem={(c, idx) => (
+                      <div
+                        onClick={() => {
+                          setSelected(c);
+                          close();
+                        }}
+                        key={idx}
+                        className={classes.country}
+                      >
+                        <div className={classes.countryFlag}>
+                          <span className={classes.iconContainer}>
+                            {c.crypto_icon && (
+                              <img
+                                width={24}
+                                height={24}
+                                src={c.crypto_icon}
+                                alt=""
+                              />
+                            )}
+                          </span>
+                          <div className={classes.nameCode}>
+                            <span className={classes.name}>{c.code}</span>
+                            <span className={classes.code}>{c.name}</span>
+                          </div>
+                        </div>
+                        <span className={classes.network}>{c.network}</span>
                       </div>
-                    </div>
-                    <span className={classes.network}>{c.network}</span>
-                  </div>
-                ))}
+                    )}
+                  />
+                )}
               </div>
             </div>
           )}

@@ -2,6 +2,14 @@
   width: 100%;
 }
 
+.container.loader {
+  height: 694px;
+  max-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .sect1 {
   width: 100%;
   display: flex;

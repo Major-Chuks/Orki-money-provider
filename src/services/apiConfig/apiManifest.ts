@@ -499,7 +499,7 @@ export const apiManifest: ApiManifest = {
     "patch_updateChecklist": {
       "args": [
         {
-          "name": "{}",
+          "name": "payload",
           "isOptional": false,
           "isObject": true,
           "properties": [
@@ -507,6 +507,110 @@ export const apiManifest: ApiManifest = {
               "name": "key",
               "isOptional": false,
               "type": "\"read_checklist\" | \"read_docs\""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "swap": {
+    "get_swapPairs": {
+      "args": []
+    },
+    "get_swap": {
+      "args": [
+        {
+          "name": "{ id }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "get_swapQuote": {
+      "args": [
+        {
+          "name": "{\r\n    pairId,\r\n    amount,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "pairId",
+              "isOptional": false,
+              "type": "string"
+            },
+            {
+              "name": "amount",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "post_initiateSwap": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "source_address",
+              "isOptional": false,
+              "type": "string"
+            },
+            {
+              "name": "input_amount",
+              "isOptional": false,
+              "type": "number"
+            },
+            {
+              "name": "quote_amount",
+              "isOptional": false,
+              "type": "number"
+            },
+            {
+              "name": "to_address",
+              "isOptional": false,
+              "type": "string"
+            },
+            {
+              "name": "to_address_tag",
+              "isOptional": true,
+              "type": "string | undefined"
+            },
+            {
+              "name": "pair_id",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "patch_updateSwap": {
+      "args": [
+        {
+          "name": "{\r\n    id,\r\n    transaction_hash,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "id",
+              "isOptional": false,
+              "type": "string"
+            },
+            {
+              "name": "transaction_hash",
+              "isOptional": false,
+              "type": "string"
             }
           ]
         }

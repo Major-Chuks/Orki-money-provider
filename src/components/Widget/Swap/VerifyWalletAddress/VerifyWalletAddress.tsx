@@ -11,21 +11,8 @@ import usdtLogo from "@/assets/widget/usdtLogo.svg";
 import EquivalentIcon from "@/assets/SvgComponents/EquivalentIcon";
 import SwapButton from "../SwapButton/SwapButton";
 import DrawerHeader from "../../WidgetDrawer/DrawerHeader/DrawerHeader";
-
-const connectedWalletList = [
-  {
-    description: "Your ETH (Ethereum) wallet",
-    name: "MetaMask",
-    address: "0x5848d...9E393A6",
-    icon: metamaskIcon,
-  },
-  {
-    description: "Your USDT (Tether) wallet",
-    name: "MetaMask",
-    address: "0x5848d...9E393A6",
-    icon: metamaskIcon,
-  },
-];
+import { useAppKitAccount } from "@reown/appkit/react";
+import { formatText } from "@/services/utils";
 
 const VerifyWalletAddress = ({
   onClose,
@@ -37,6 +24,22 @@ const VerifyWalletAddress = ({
   const [walletAddress, setWalletAddress] = useState("");
   const [addWalletAddress, setAddWalletAddress] = useState(false);
   const [openConfirmation, setOpenConfirmation] = useState(false);
+  const { address } = useAppKitAccount();
+
+  const connectedWalletList = [
+    {
+      description: "Your ETH (Ethereum) wallet",
+      name: "MetaMask",
+      address: formatText(address || "", "clip", [7, 7]),
+      icon: metamaskIcon,
+    },
+    {
+      description: "Your USDT (Tether) wallet",
+      name: "MetaMask",
+      address: formatText(address || "", "clip", [7, 7]),
+      icon: metamaskIcon,
+    },
+  ];
 
   return (
     <div className={classes.container}>

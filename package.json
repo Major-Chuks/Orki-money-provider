@@ -16,6 +16,7 @@
     "fix:svg-attributes": "node scripts/fix-svg-attributes"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.9.0",
     "@koyweforest/koywe-ramp-sdk": "^0.0.52",
     "@moonpay/moonpay-js": "^0.6.4",
     "@moonpay/moonpay-react": "^1.8.7",
@@ -26,6 +27,7 @@
     "@stripe/stripe-js": "^7.4.0",
     "@sumsub/websdk": "^2.3.19",
     "@tanstack/react-query": "^5.83.0",
+    "@tanstack/react-virtual": "^3.13.12",
     "@transak/transak-sdk": "^3.2.0",
     "@types/react-tooltip": "^4.2.4",
     "axios": "^1.7.9",

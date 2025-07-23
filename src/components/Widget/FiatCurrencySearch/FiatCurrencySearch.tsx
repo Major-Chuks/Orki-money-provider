@@ -8,6 +8,7 @@ import { get_fiat_currencies } from "@/interface/get_fiat_currencies";
 import CaretIcon from "@/assets/SvgComponents/CaretIcon";
 import WidgetDrawer from "../WidgetDrawer/WidgetDrawer";
 import DrawerHeader from "../WidgetDrawer/DrawerHeader/DrawerHeader";
+import ListBuilder from "../CryptoCurrencySearch/ListBuilder";
 
 const FiatCurrencySearch = ({
   fiatCurrency,
@@ -94,31 +95,36 @@ const FiatCurrencySearch = ({
               />
 
               <div className={classes.countryWrapper}>
-                {filteredCurrencies?.map((c, idx) => (
-                  <div
-                    onClick={() => {
-                      setSelected(c);
-                      close();
-                    }}
-                    key={idx}
-                    className={classes.country}
-                  >
-                    <div className={classes.countryFlag}>
-                      <span className={classes.iconContainer}>
-                        {c.fiat_icon && <SvgIcon svgString={c.fiat_icon} />}
-                      </span>
-                      <div className={classes.nameCode}>
-                        <span className={classes.name}>{c.name}</span>
-                        <span className={classes.code}>{c.code}</span>
+                <ListBuilder
+                  items={filteredCurrencies || []}
+                  height={300}
+                  estimateSize={60}
+                  renderItem={(c, idx) => (
+                    <div
+                      onClick={() => {
+                        setSelected(c);
+                        close();
+                      }}
+                      key={idx}
+                      className={classes.country}
+                    >
+                      <div className={classes.countryFlag}>
+                        <span className={classes.iconContainer}>
+                          {c.fiat_icon && <SvgIcon svgString={c.fiat_icon} />}
+                        </span>
+                        <div className={classes.nameCode}>
+                          <span className={classes.name}>{c.name}</span>
+                          <span className={classes.code}>{c.code}</span>
+                        </div>
                       </div>
+                      <Image
+                        className={classes.rightArrowIcon}
+                        src={rightArrowIcon}
+                        alt=""
+                      />
                     </div>
-                    <Image
-                      className={classes.rightArrowIcon}
-                      src={rightArrowIcon}
-                      alt=""
-                    />
-                  </div>
-                ))}
+                  )}
+                />
               </div>
             </div>
           )}

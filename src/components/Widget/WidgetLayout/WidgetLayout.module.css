@@ -5,10 +5,11 @@
   justify-content: flex-end;
   transform: translateX(-20%);
   opacity: 0;
-  animation: enter 1s 850ms forwards;
+  animation: enter-wrapper 1s 850ms forwards;
+  position: relative;
 }
 
-@keyframes enter {
+@keyframes enter-wrapper {
   from {
     opacity: 0;
     transform: translateX(-20%);
@@ -34,7 +35,7 @@
   position: relative;
   opacity: 0;
   transform: scale(0.95);
-  animation: enter 650ms forwards;
+  animation: enter-container 650ms forwards;
 }
 
 .container.overlay {
@@ -46,16 +47,15 @@
   z-index: 99999;
   box-shadow: none;
   border: none;
+  animation: enter-container 650ms forwards;
 }
 
-@keyframes enter {
+@keyframes enter-container {
   from {
     opacity: 0;
-    transform: scale(1);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 

@@ -58,7 +58,7 @@
 }
 
 .provider:not(.notSupported):hover {
-  border: 1px solid #a0aec0;
+  border: 1px solid var(--widget-hover-color);
 }
 
 .lowerSection {
