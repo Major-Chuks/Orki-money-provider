@@ -1,25 +1,43 @@
+/* eslint-disable @next/next/no-img-element */
 import SwapNotification from "../SwapNotification/SwapNotification";
 import classes from "./SwapAddress.module.css";
 import WidgetDrawer from "../../WidgetDrawer/WidgetDrawer";
 import CautionIconSolid from "@/assets/SvgComponents/CautionIconSolid";
-import qrcode from "@/assets/widget/qrcode.svg";
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import Copy from "@/components/app/Copy/Copy";
 import SwapButton from "../SwapButton/SwapButton";
+import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
+import { PaymentDetails } from "../Swap";
 
 const SwapAddress = ({
+  quote,
+  paymentDetails,
+  confirmTransaction,
   onClose,
   goBack,
-  onRetry,
+  onConfirm,
 }: {
+  quote: get_swapQuote;
+  paymentDetails: PaymentDetails;
+  confirmTransaction: boolean;
   onClose: () => void;
   goBack: () => void;
-  onRetry: () => void;
+  onConfirm: () => void;
 }) => {
-  const [openInsufficientFund, setOpenInsufficient] = useState(true);
+  const [openInsufficientFund, setOpenInsufficient] = useState(false);
   const [openHasTransferred, setOpenHasTransferred] = useState(false);
+
+  const token = quote.pair_id.split("_")[0];
+  const tokenNetwork = "--network";
+
+  useEffect(() => {
+    if (!confirmTransaction) {
+      setOpenInsufficient(true);
+    } else {
+      setOpenHasTransferred(true);
+    }
+  }, [confirmTransaction]);
 
   return (
     <div className={classes.container}>
@@ -28,19 +46,18 @@ const SwapAddress = ({
           <ArrowLeft />
         </div>
         <div className={classes.title}>
-          Send 0.1 ETH on Ethereum to the following address
+          Send {quote.input_amount} {token} on {tokenNetwork} to the following
+          address
         </div>
       </div>
 
       <div className={classes.qrCodeWrapper}>
-        <Image src={qrcode} alt="" />
+        <img src={paymentDetails.qr_code} alt="" />
       </div>
 
       <div className={classes.inputWrapper}>
-        <div className={classes.input}>
-          0x17a5df9c6c308c330e7cfofc501eb4bfe997fbd673
-        </div>
-        <Copy value="0x17a5df9c6c308c330e7cfofc501eb4bfe997fbd673">
+        <div className={classes.input}>{paymentDetails.pay_in_address} </div>
+        <Copy value={paymentDetails.pay_in_address}>
           <div className={classes.copy}>Copy</div>
         </Copy>
       </div>
@@ -98,7 +115,7 @@ const SwapAddress = ({
                   <SwapButton
                     onClick={() => {
                       close();
-                      onRetry();
+                      onConfirm();
                     }}
                   >
                     Confirm

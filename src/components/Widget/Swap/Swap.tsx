@@ -29,6 +29,14 @@ import { debounce } from "lodash";
 
 export type SwapStatus = "insufficient_fund" | "successful" | "failed";
 
+export type PaymentDetails = {
+  id: string;
+  pay_in_address: string;
+  status: string;
+  qr_code: string;
+  to_amount: number;
+};
+
 const Swap = () => {
   const [openConnectWallet, setOpenConnectWallet] = useState(false);
   const [sendAmount, setSendAmount] = useState("");
@@ -42,6 +50,14 @@ const Swap = () => {
   const [openSwapAddress, setOpenSwapAddress] = useState(false);
   const [quote, setQuote] = useState<get_swapQuote | null>(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
+  const [txAddress, setTxAddress] = useState({
+    sendingAdderss: "",
+    receivingAddress: "",
+  });
+  const [paymentDetails, setPaymentDetails] = useState<PaymentDetails | null>(
+    null
+  );
+  const [confirmTransaction, setConfirmTransaction] = useState(false);
 
   const { isConnected, address } = useAppKitAccount();
   const { disconnect } = useDisconnect();
@@ -60,12 +76,15 @@ const Swap = () => {
     } else {
       open({ view: "Connect" });
     }
+    setConfirmTransaction(false);
   };
 
   const handleSwapComplete = (status: SwapStatus) => {
     if (status === "successful") {
       setOpenSwapCompleted(true);
     } else if (status === "insufficient_fund") {
+      setOpenSwapAddress(true);
+    } else if (status === "failed") {
       setOpenSwapAddress(true);
     }
     setOpenExecutingSwap(false);
@@ -107,10 +126,6 @@ const Swap = () => {
       debouncedGetQuote(sendAmount, sendToken);
     }
   }, [sendAmount, sendToken]);
-
-  // useEffect(() => {
-  //   console.log({ embeddedWalletInfo, isConnected, address, swapPairs });
-  // }, [isConnected, address, embeddedWalletInfo, swapPairs]);
 
   return (
     <React.Fragment>
@@ -178,7 +193,7 @@ const Swap = () => {
               </WidgetDrawer>
             )}
 
-            {openVerifyAddress && (
+            {openVerifyAddress && quote && (
               <WidgetLayout overlay>
                 <VerifyWalletAddress
                   onClose={() => setOpenVerifyAddress(false)}
@@ -186,23 +201,25 @@ const Swap = () => {
                     setOpenVerifyAddress(false);
                     setOpenExecutingSwap(true);
                   }}
+                  quote={quote}
+                  onAddressChange={setTxAddress}
                 />
               </WidgetLayout>
             )}
 
-            {openExecutingSwap && (
+            {openExecutingSwap && quote && (
               <WidgetLayout overlay>
-                <ExecutingSwap onComplete={handleSwapComplete} />
+                <ExecutingSwap
+                  onComplete={handleSwapComplete}
+                  quote={quote}
+                  txAddress={txAddress}
+                  setPaymentDetails={setPaymentDetails}
+                  confirmTransaction={confirmTransaction}
+                />
               </WidgetLayout>
             )}
 
-            {openSwapCompleted && (
-              <WidgetLayout overlay>
-                <SwapCompleted onClose={() => setOpenSwapCompleted(false)} />
-              </WidgetLayout>
-            )}
-
-            {openSwapAddress && (
+            {openSwapAddress && quote && paymentDetails && (
               <WidgetLayout overlay>
                 <SwapAddress
                   goBack={() => {
@@ -210,11 +227,21 @@ const Swap = () => {
                     setOpenVerifyAddress(true);
                   }}
                   onClose={() => setOpenSwapAddress(false)}
-                  onRetry={() => {
+                  onConfirm={() => {
                     setOpenSwapAddress(false);
                     setOpenExecutingSwap(true);
+                    setConfirmTransaction(true);
                   }}
+                  quote={quote}
+                  paymentDetails={paymentDetails}
+                  confirmTransaction={confirmTransaction}
                 />
+              </WidgetLayout>
+            )}
+
+            {openSwapCompleted && (
+              <WidgetLayout overlay>
+                <SwapCompleted onClose={() => setOpenSwapCompleted(false)} />
               </WidgetLayout>
             )}
           </>

@@ -18,6 +18,7 @@ export const wagmiAdapter = new WagmiAdapter({
   ssr: true,
   projectId,
   networks,
+  // connectors: [injected()],
 });
 
 export const config = wagmiAdapter.wagmiConfig;

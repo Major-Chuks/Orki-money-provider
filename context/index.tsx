@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
-import { mainnet, arbitrum } from "@reown/appkit/networks";
+import { polygonAmoy } from "@reown/appkit/networks";
 import React, { type ReactNode } from "react";
 import { cookieToInitialState, WagmiProvider, type Config } from "wagmi";
 import { projectId, wagmiAdapter } from "../config";
@@ -16,18 +16,18 @@ if (!projectId) {
 
 // Set up metadata
 const metadata = {
-  name: "appkit-example",
-  description: "AppKit Example",
+  name: "Orki-Money",
+  description: "Swap",
   url: "http://localhost:4000/", // origin must match your domain & subdomain
-  icons: ["https://avatars.githubusercontent.com/u/179229932"],
+  icons: ["http://localhost:4000/_next/static/media/logo.2ff79353.svg"],
 };
 
 // Create the modal
 createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: [mainnet, arbitrum],
-  defaultNetwork: mainnet,
+  networks: [polygonAmoy], //mainnet, arbitrum,
+  defaultNetwork: polygonAmoy,
   metadata: metadata,
   features: {
     swaps: false,
