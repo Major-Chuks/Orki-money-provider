@@ -30,8 +30,6 @@ const Statistics = () => {
   const FailedTxData: get_failedTransactions =
     failedTransactions.data?.data.data;
 
-  console.log({ FailedTxData });
-
   return (
     <div className={classes.container}>
       <ChartDateFilter onChange={setInterval} />

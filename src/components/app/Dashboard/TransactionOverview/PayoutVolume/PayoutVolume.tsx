@@ -32,18 +32,21 @@ const PayoutVolume = () => {
       ) : (
         <>
           <div className={classes.chartContainer}>
-            <Chart key={interval} data={txVolume} interval={interval} />
+            {txVolume.provider_color_map && (
+              <Chart key={interval} data={txVolume} interval={interval} />
+            )}
           </div>
 
           <div className={classes.legend}>
-            {Object.entries(txVolume.provider_color_map).map(
-              ([key, value], idx) => (
-                <div key={idx} className={classes.item}>
-                  <span style={{ background: value }}></span>
-                  {key}
-                </div>
-              )
-            )}
+            {txVolume.provider_color_map &&
+              Object.entries(txVolume.provider_color_map).map(
+                ([key, value], idx) => (
+                  <div key={idx} className={classes.item}>
+                    <span style={{ background: value }}></span>
+                    {key}
+                  </div>
+                )
+              )}
           </div>
         </>
       )}

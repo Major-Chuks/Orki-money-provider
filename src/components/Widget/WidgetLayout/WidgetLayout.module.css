@@ -61,11 +61,13 @@
 
 @media screen and (max-width: 1024px) {
   .wrapper {
+    width: 100%;
+    max-width: max-content;
     justify-content: center;
     transform: translateY(20%);
   }
 
-  @keyframes enter {
+  @keyframes enter-wrapper {
     from {
       opacity: 0;
       transform: translateX(0) translateY(20%);

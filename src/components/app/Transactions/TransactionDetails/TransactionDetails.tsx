@@ -7,10 +7,11 @@ import TooltipIcon from "@/assets/app/TooltipIcon";
 import ModalLayout from "../../Drawer/Drawer";
 import { useFindTransactionQuery } from "@/services/queryApis";
 import { get_findTransaction } from "@/types/apis/transactions/get_findTransaction";
-import { formatDate, formatText } from "@/services/utils";
+import { formatText, formatTxDate } from "@/services/utils";
 import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 import TableStatus from "../../TableStatus/TableStatus";
+import EquivalentIcon from "@/assets/SvgComponents/EquivalentIcon";
 
 const TransactionDetails = ({
   id,
@@ -69,7 +70,7 @@ const TransactionDetails = ({
                   <div className={classes.item}>
                     <div className={classes.name}>Date & Time</div>
                     <div className={classes.value}>
-                      {formatDate(tx.created_at)}
+                      {formatTxDate(tx.created_at)}
                     </div>
                   </div>
                   <div className={classes.item}>
@@ -137,7 +138,10 @@ const TransactionDetails = ({
                     </div>
                     <div className={classes.item}>
                       <div className={classes.name}>Exchange Rate</div>
-                      <div className={classes.value}>{tx.exchange_rate}</div>
+                      <div className={classes.value}>
+                        1 {tx.crypto_currency} <EquivalentIcon />{" "}
+                        {tx.exchange_rate} {tx.fiat_currency}{" "}
+                      </div>
                     </div>
                     <div className={classes.item}>
                       <div className={classes.name}>Payment Method</div>
