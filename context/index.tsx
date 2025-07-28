@@ -18,8 +18,8 @@ if (!projectId) {
 const metadata = {
   name: "Orki-Money",
   description: "Swap",
-  url: "http://localhost:4000/", // origin must match your domain & subdomain
-  icons: ["http://localhost:4000/_next/static/media/logo.2ff79353.svg"],
+  url: "https://orki-money.vercel.app/", // origin must match your domain & subdomain
+  icons: ["https://orki-money.vercel.app/_next/static/media/logo.2ff79353.svg"],
 };
 
 // Create the modal
