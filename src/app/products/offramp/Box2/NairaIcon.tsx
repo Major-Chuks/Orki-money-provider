@@ -10,23 +10,23 @@ const NairaIcon = () => {
       <path
         d="M6.66699 15.8333V5L13.3337 15.8333V5"
         stroke="#5B29EC"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M4.16699 9.16667H15.8337"
         stroke="#5B29EC"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M4.16699 12.5H15.8337"
         stroke="#5B29EC"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

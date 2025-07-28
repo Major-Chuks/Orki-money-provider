@@ -10,23 +10,23 @@ const YuanIcon = () => {
       <path
         d="M10.8337 15.8333V10.4167M10.8337 10.4167L6.66699 5M10.8337 10.4167L15.0003 5"
         stroke="#5B29EC"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8 14H14"
         stroke="#5B29EC"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8 11H14"
         stroke="#5B29EC"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
