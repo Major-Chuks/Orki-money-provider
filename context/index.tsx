@@ -2,10 +2,10 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
-import { polygonAmoy } from "@reown/appkit/networks";
+import { AppKitNetwork } from "@reown/appkit/networks";
 import React, { type ReactNode } from "react";
 import { cookieToInitialState, WagmiProvider, type Config } from "wagmi";
-import { projectId, wagmiAdapter } from "../config";
+import { networks, projectId, wagmiAdapter } from "../config";
 
 // Set up queryClient
 const queryClient = new QueryClient();
@@ -26,14 +26,9 @@ const metadata = {
 createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: [polygonAmoy], //mainnet, arbitrum,
-  defaultNetwork: polygonAmoy,
+  networks: networks as unknown as [AppKitNetwork, ...AppKitNetwork[]], //mainnet, arbitrum,
+  defaultNetwork: networks[0] as unknown as AppKitNetwork,
   metadata: metadata,
-  features: {
-    swaps: false,
-    send: false,
-    analytics: false, // optional
-  },
   themeMode: "light",
 });
 
