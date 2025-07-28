@@ -11,8 +11,19 @@ import ethereumLogo from "@/assets/widget/ethereumLogo.svg";
 import usdtLogo from "@/assets/widget/usdtLogo.svg";
 import Image from "next/image";
 import SwapButton from "../SwapButton/SwapButton";
+import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
+import EquivalentIcon from "@/assets/SvgComponents/EquivalentIcon";
 
-const SwapCompleted = ({ onClose }: { onClose: () => void }) => {
+const SwapCompleted = ({
+  onClose,
+  quote,
+}: {
+  onClose: () => void;
+  quote: get_swapQuote;
+}) => {
+  const token = quote.pair_id.split("_")[0];
+  const pair = quote.pair_id.split("_")[1];
+
   return (
     <div className={classes.container}>
       <div className={classes.successIconWrapper}>
@@ -25,43 +36,44 @@ const SwapCompleted = ({ onClose }: { onClose: () => void }) => {
           <div className={classes.icon}>
             <Image src={ethereumLogo} alt="" />
           </div>
-          1 ETH
+          --
         </div>
         <ArrowDown width={20} height={20} color="#AEAEB2" />
         <div className={classes.tokenWrapper}>
           <div className={classes.icon}>
             <Image src={usdtLogo} alt="" />
           </div>
-          1791.499499 USDT
+          --
         </div>
       </div>
 
       <div className={classes.transactionDetails}>
         <div className={classes.item}>
           <span>Transaction time:</span>
-          <span>2.3 seconds</span>
+          <span>--</span>
         </div>
 
         <div className={classes.item}>
           <span>Network fee:</span>
-          <span>$0.45</span>
+          <span>--</span>
         </div>
 
         <div className={classes.item}>
           <span>Exchange rate:</span>
-          <span>1 ETH ≈ 1791.50 USDT</span>
+          <span>1 {token}</span> <EquivalentIcon />{" "}
+          <span>
+            {quote.exchange_rate} {pair}
+          </span>
         </div>
       </div>
 
       <div className={classes.transactionHash}>
         <div className={classes.label}>Transaction Hash</div>
         <div className={classes.hashWrapper}>
-          <div className={classes.hash}>
-            0x17a5df9c6c308c330e7cfofc501eb4bfe997fbd673
-          </div>
+          <div className={classes.hash}>--</div>
 
           <div className={classes.icons}>
-            <Copy value="0x17a5df9c6c308c330e7cfofc501eb4bfe997fbd673">
+            <Copy value="--">
               <ButtonWrapper>
                 <CopyIcon width={16} height={16} color="#8E8E93" />
               </ButtonWrapper>

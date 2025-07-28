@@ -164,9 +164,9 @@ const MapIconsToNames: Record<string, React.JSX.Element> = {
         <path
           d="M3.5 16.5L9.5 10L13.5 16L21.5 6.5"
           stroke="#3B8CE9"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </div>

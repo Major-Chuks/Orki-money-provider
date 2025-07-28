@@ -26,8 +26,11 @@ import SwapPanel from "./SwapPanel/SwapPanel";
 import backend from "@/services/apis";
 import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
 import { debounce } from "lodash";
+import SwapError from "./SwapError/SwapError";
 
 export type SwapStatus = "insufficient_fund" | "successful" | "failed";
+
+export type SwapSteps = "initiating" | "processing" | "executing";
 
 export type PaymentDetails = {
   id: string;
@@ -48,6 +51,7 @@ const Swap = () => {
   const [openExecutingSwap, setOpenExecutingSwap] = useState(false);
   const [openSwapCompleted, setOpenSwapCompleted] = useState(false);
   const [openSwapAddress, setOpenSwapAddress] = useState(false);
+  const [openSwapError, setOpenSwapError] = useState(false);
   const [quote, setQuote] = useState<get_swapQuote | null>(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
   const [txAddress, setTxAddress] = useState({
@@ -85,7 +89,7 @@ const Swap = () => {
     } else if (status === "insufficient_fund") {
       setOpenSwapAddress(true);
     } else if (status === "failed") {
-      setOpenSwapAddress(true);
+      setOpenSwapError(true);
     }
     setOpenExecutingSwap(false);
   };
@@ -239,9 +243,24 @@ const Swap = () => {
               </WidgetLayout>
             )}
 
-            {openSwapCompleted && (
+            {openSwapCompleted && quote && (
               <WidgetLayout overlay>
-                <SwapCompleted onClose={() => setOpenSwapCompleted(false)} />
+                <SwapCompleted
+                  onClose={() => setOpenSwapCompleted(false)}
+                  quote={quote}
+                />
+              </WidgetLayout>
+            )}
+
+            {openSwapError && (
+              <WidgetLayout overlay>
+                <SwapError
+                  onClose={() => {
+                    setOpenSwapError(false);
+                    setOpenExecutingSwap(false);
+                    setOpenSwapAddress(false);
+                  }}
+                />
               </WidgetLayout>
             )}
           </>

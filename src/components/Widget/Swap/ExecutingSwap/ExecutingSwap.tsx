@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import TrippleChevronIcon from "@/assets/SvgComponents/TrippleChevronIcon";
 import classes from "./ExecutingSwap.module.css";
@@ -7,19 +8,25 @@ import Image from "next/image";
 import { CheckIcon, Clock } from "lucide-react";
 import LoadingIcon from "@/assets/app/LoadingIcon";
 import { useEffect, useState } from "react";
-import { PaymentDetails, SwapStatus } from "../Swap";
+import { PaymentDetails, SwapStatus, SwapSteps } from "../Swap";
 import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
 import EquivalentIcon from "@/assets/SvgComponents/EquivalentIcon";
-import {
-  useBalance,
-  usePublicClient,
-  useWaitForTransactionReceipt,
-} from "wagmi";
-import { useAppKitAccount } from "@reown/appkit/react";
-import { formatEther, parseEther, parseGwei, type Address } from "viem";
 import backend from "@/services/apis";
-import { useSendTransaction } from "wagmi";
-import { wagmiAdapter } from "../../../../../config";
+import { handleSubscribeToSwapEvents, handleTestTokenSwap } from "./script";
+// import { handleERC20TokenSwap, handleNativeTokenSwap, handleNonEvmTokenSwap } from "./script";
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
+import { useEcho } from "@/hooks/useEcho";
+import { formatText } from "@/services/utils";
+
+declare global {
+  interface Window {
+    Echo: Echo<any>;
+    Pusher: typeof Pusher;
+  }
+}
+
+// TODO implement network switching
 
 const ExecutingSwap = ({
   quote,
@@ -39,41 +46,14 @@ const ExecutingSwap = ({
     React.SetStateAction<PaymentDetails | null>
   >;
 }) => {
-  const [step, setStep] = useState<"initiating" | "processing" | "executing">(
-    "initiating"
-  );
+  const [step, setStep] = useState<SwapSteps>("initiating");
+  const [status, setStatus] = useState("");
   const token = quote.pair_id.split("_")[0];
   const pair = quote.pair_id.split("_")[1];
 
-  const publicClient = usePublicClient({ config: wagmiAdapter.wagmiConfig });
-  // const { data: gas } = useEstimateGas({ ...TEST_TX });
-  const { data: hash, sendTransaction } = useSendTransaction();
-  const { isLoading, isSuccess } = useWaitForTransactionReceipt({ hash });
-
-  const { address } = useAppKitAccount();
-
-  const { refetch } = useBalance({
-    address: address as Address,
-    chainId: 80002,
-  });
-
-  // function to get the balance
-  const handleGetBalance = async () => {
-    const balance = await refetch();
-    console.log(
-      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-      balance.data?.value.toString()
-    );
-
-    if (balance.data) {
-      return formatEther(balance.data?.value);
-    }
-  };
+  const echo = useEcho();
 
   const handleInitiateSwap = async () => {
-    const balance = await handleGetBalance();
-    console.log({ balance });
-
     // initiate swap
     const response = await backend().post_initiateSwap({
       source_address: txAddress.sendingAdderss,
@@ -83,56 +63,56 @@ const ExecutingSwap = ({
       pair_id: quote.pair_id,
     });
 
-    if (response) {
-      const res: PaymentDetails = response.data.data;
-      setPaymentDetails(res);
-      if (balance && Number(balance) <= Number(quote.input_amount)) {
-        onComplete("insufficient_fund");
-      } else {
-        // Todo: send the fund
-        let gas;
-        if (publicClient) {
-          gas = await publicClient.estimateGas({
-            account: txAddress.sendingAdderss as Address,
-            to: res.pay_in_address as Address,
-            value: parseEther(String(quote.input_amount)),
-          });
-        } else {
-          console.error("publicClient is undefined");
-          return;
-        }
-        try {
-          sendTransaction({
-            to: txAddress.receivingAddress as Address, // example recipient
-            value: parseGwei("0.01"), // convert ETH unit to wei
-            gas,
-          });
-
-          console.log(hash);
-        } catch (err) {
-          console.error("Error sending transaction:", err);
-        }
-      }
-    } else {
+    if (!response) {
       setPaymentDetails(null);
       onComplete("failed");
+      return;
     }
+
+    const res: PaymentDetails = response.data.data;
+    setPaymentDetails(res);
+
+    handleSubscribeToSwapEvents({
+      echo,
+      swapId: res.id,
+      onStatusChange: setStatus,
+    });
+
+    // check token type
+    // currently assumes that the token is evm and native
+    setStep("processing");
+
+    handleTestTokenSwap({
+      fromAddress: txAddress.sendingAdderss,
+      toAddress: res.pay_in_address,
+      amount: res.to_amount,
+      onComplete,
+      setStep,
+    });
+
+    // // if native token: tokenSymbol === network's tokenSymbol
+    // handleNativeTokenSwap()
+
+    // // if erc20 token: tokenSymbol !== network's tokenSymbol
+    // handleERC20TokenSwap();
+
+    // // if non-evm tokens: if network symbol is not part of view's supported networks
+    // handleNonEvmTokenSwap();
   };
 
-  console.log({ isLoading, isSuccess });
-
   useEffect(() => {
-    console.log({ confirmTransaction });
-
     if (confirmTransaction) {
       setStep("processing");
-      setTimeout(() => {
-        onComplete("failed");
-      }, 5000);
-    } else {
+    } else if (echo) {
       handleInitiateSwap();
     }
-  }, [confirmTransaction]);
+  }, [confirmTransaction, echo]);
+
+  useEffect(() => {
+    if (status === "complete") {
+      onComplete("successful");
+    }
+  }, [status]);
 
   return (
     <div className={classes.container}>
@@ -164,7 +144,11 @@ const ExecutingSwap = ({
           }`}
         >
           <div className={classes.icon}>
-            <CheckIcon color="#FFFFFF" />
+            {step === "initiating" ? (
+              <LoadingIcon width={32} height={32} color="#fff" />
+            ) : (
+              <CheckIcon color="#FFFFFF" />
+            )}
           </div>
           <div className={classes.name}>Initiating swap</div>
         </div>
@@ -172,12 +156,18 @@ const ExecutingSwap = ({
         <div
           className={`${classes.step} ${
             step === "processing" && classes.active
-          }`}
+          } ${step === "executing" && classes.complete}`}
         >
           <div className={classes.icon}>
-            <LoadingIcon width={32} height={32} color="#fff" />
+            {step === "initiating" ? (
+              <div />
+            ) : step === "processing" ? (
+              <LoadingIcon width={32} height={32} color="#fff" />
+            ) : (
+              <CheckIcon color="#FFFFFF" />
+            )}
           </div>
-          <div className={classes.rangeWrapper}>
+          <div className={classes.nameWrapper}>
             <div className={classes.name}>Processing</div>
             <div className={classes.range}>
               <div className={classes.thumb}></div>
@@ -191,9 +181,22 @@ const ExecutingSwap = ({
           }`}
         >
           <div className={classes.icon}>
-            <Clock color="#FFFFFF" />
+            {step === "initiating" || step === "processing" ? (
+              <Clock color="#FFFFFF" />
+            ) : step === "executing" ? (
+              <LoadingIcon width={32} height={32} color="#fff" />
+            ) : (
+              <CheckIcon color="#FFFFFF" />
+            )}
           </div>
-          <div className={classes.name}>Executing transaction</div>
+          <div className={classes.nameWrapper}>
+            <div className={classes.name}>Executing transaction</div>
+            {status && (
+              <div className={classes.status}>
+                {formatText(status, "titleCase")}...
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

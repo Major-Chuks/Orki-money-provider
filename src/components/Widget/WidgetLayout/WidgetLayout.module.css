@@ -47,7 +47,7 @@
   z-index: 99999;
   box-shadow: none;
   border: none;
-  animation: enter-container 650ms forwards;
+  animation: enter-container 300ms forwards;
 }
 
 @keyframes enter-container {
