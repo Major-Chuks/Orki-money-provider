@@ -7,18 +7,18 @@ import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import Copy from "@/components/app/Copy/Copy";
 import SwapButton from "../SwapButton/SwapButton";
-import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
 import { PaymentDetails } from "../Swap";
+import { get_swapPairs } from "@/types/apis/swap/get_swapPairs";
 
 const SwapAddress = ({
-  quote,
+  token,
   paymentDetails,
   confirmTransaction,
   onClose,
   goBack,
   onConfirm,
 }: {
-  quote: get_swapQuote;
+  token: get_swapPairs[number];
   paymentDetails: PaymentDetails;
   confirmTransaction: boolean;
   onClose: () => void;
@@ -27,9 +27,6 @@ const SwapAddress = ({
 }) => {
   const [openInsufficientFund, setOpenInsufficient] = useState(false);
   const [openHasTransferred, setOpenHasTransferred] = useState(false);
-
-  const token = quote.pair_id.split("_")[0];
-  const tokenNetwork = "--network";
 
   useEffect(() => {
     if (!confirmTransaction) {
@@ -46,8 +43,8 @@ const SwapAddress = ({
           <ArrowLeft />
         </div>
         <div className={classes.title}>
-          Send {quote.input_amount} {token} on {tokenNetwork} to the following
-          address
+          Send {paymentDetails.pay_in_amount} {token.id} on {token.network} to
+          the following address
         </div>
       </div>
 

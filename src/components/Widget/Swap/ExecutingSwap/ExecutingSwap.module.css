@@ -210,13 +210,3 @@
   font-weight: 600;
   line-height: 24px; /* 120% */
 }
-
-.duration {
-  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
-  text-align: center;
-  font-family: "Plus Jakarta Sans";
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-}

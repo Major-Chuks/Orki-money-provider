@@ -212,14 +212,19 @@
 
 .tokenWrapper .icon {
   display: flex;
-  width: 16px;
-  height: 16px;
-  padding: 1.438px 3.941px 1.437px 4px;
+  width: 18px;
+  height: 18px;
+  padding: 2px;
   justify-content: center;
   align-items: center;
   aspect-ratio: 1/1;
   border-radius: 50%;
   background: #e6e7ec;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
 }
 
 .conversionRate {

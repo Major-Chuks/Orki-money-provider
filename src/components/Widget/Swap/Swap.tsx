@@ -37,15 +37,18 @@ export type PaymentDetails = {
   pay_in_address: string;
   status: string;
   qr_code: string;
-  to_amount: number;
+  pay_in_amount: number;
+  pay_out_amount: number;
 };
 
 const Swap = () => {
   const [openConnectWallet, setOpenConnectWallet] = useState(false);
-  const [sendAmount, setSendAmount] = useState("");
-  const [sendToken, setSendToken] = useState("");
-  const [receiveAmount, setReceiveAmount] = useState("");
-  const [receiveToken, setReceiveToken] = useState("");
+  const [amount, setAmount] = useState("");
+  const [token, setToken] = useState<get_swapPairs[number] | null>(null);
+  const [amountPair, setAmountPair] = useState("");
+  const [tokenPair, setTokenPair] = useState<get_swapPairs[number] | null>(
+    null
+  );
   const [disabled, setDisabled] = useState(false);
   const [openVerifyAddress, setOpenVerifyAddress] = useState(false);
   const [openExecutingSwap, setOpenExecutingSwap] = useState(false);
@@ -108,7 +111,10 @@ const Swap = () => {
         if (response) {
           const quote: get_swapQuote = response.data.data;
           setQuote(quote);
-          setReceiveAmount(String(quote.quote_amount));
+          setAmountPair(String(quote.quote_amount));
+        } else {
+          setQuote(null);
+          setAmountPair("");
         }
       }, 1000),
     []
@@ -117,19 +123,21 @@ const Swap = () => {
   useEffect(() => {
     if (
       isConnected &&
-      !(sendAmount && receiveAmount && sendToken && receiveToken)
+      !(amount && Number(amount) && amountPair && token && tokenPair)
     ) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
-  }, [sendAmount, receiveAmount, sendToken, receiveToken, isConnected]);
+  }, [amount, amountPair, token, tokenPair, isConnected]);
 
   useEffect(() => {
-    if (sendAmount && sendToken) {
-      debouncedGetQuote(sendAmount, sendToken);
+    setAmountPair("");
+
+    if (amount && Number(amount) && token && tokenPair) {
+      debouncedGetQuote(amount, `${token.id}_${tokenPair.id}`);
     }
-  }, [sendAmount, sendToken]);
+  }, [amount, token, tokenPair]);
 
   return (
     <React.Fragment>
@@ -150,14 +158,11 @@ const Swap = () => {
             <SwapPanel
               swapTokens={swapPairs || []}
               title="You Send"
-              onAmountChange={setSendAmount}
-              onTokenChange={(tokenId) => {
-                setSendToken(tokenId);
-                setReceiveToken(tokenId);
-              }}
-              disabled={false}
-              value={sendAmount}
-              swapToken={sendToken}
+              onAmountChange={setAmount}
+              onTokenChange={setToken}
+              searchDisabled={quoteLoading}
+              amountDisabled={quoteLoading}
+              value={amount}
             />
 
             <ButtonWrapper className={classes.swapBtn}>
@@ -167,11 +172,11 @@ const Swap = () => {
             <SwapPanel
               swapTokens={swapPairs || []}
               title="You Receieve"
-              onAmountChange={setReceiveAmount}
-              onTokenChange={setReceiveToken}
-              disabled={true}
-              value={receiveAmount}
-              swapToken={receiveToken}
+              onAmountChange={setAmountPair}
+              onTokenChange={setTokenPair}
+              searchDisabled={quoteLoading}
+              amountDisabled={true}
+              value={amountPair}
             />
           </div>
 
@@ -197,7 +202,7 @@ const Swap = () => {
               </WidgetDrawer>
             )}
 
-            {openVerifyAddress && quote && (
+            {openVerifyAddress && quote && token && tokenPair && (
               <WidgetLayout overlay>
                 <VerifyWalletAddress
                   onClose={() => setOpenVerifyAddress(false)}
@@ -206,24 +211,28 @@ const Swap = () => {
                     setOpenExecutingSwap(true);
                   }}
                   quote={quote}
+                  token={token}
+                  tokenPair={tokenPair}
                   onAddressChange={setTxAddress}
                 />
               </WidgetLayout>
             )}
 
-            {openExecutingSwap && quote && (
+            {openExecutingSwap && quote && token && tokenPair && (
               <WidgetLayout overlay>
                 <ExecutingSwap
                   onComplete={handleSwapComplete}
+                  setPaymentDetails={setPaymentDetails}
                   quote={quote}
                   txAddress={txAddress}
-                  setPaymentDetails={setPaymentDetails}
+                  token={token}
+                  tokenPair={tokenPair}
                   confirmTransaction={confirmTransaction}
                 />
               </WidgetLayout>
             )}
 
-            {openSwapAddress && quote && paymentDetails && (
+            {openSwapAddress && quote && paymentDetails && token && (
               <WidgetLayout overlay>
                 <SwapAddress
                   goBack={() => {
@@ -236,7 +245,7 @@ const Swap = () => {
                     setOpenExecutingSwap(true);
                     setConfirmTransaction(true);
                   }}
-                  quote={quote}
+                  token={token}
                   paymentDetails={paymentDetails}
                   confirmTransaction={confirmTransaction}
                 />

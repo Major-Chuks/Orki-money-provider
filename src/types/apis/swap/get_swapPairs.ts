@@ -1,9 +1,13 @@
-/* sync-disabled */
+/* sync-type-disable */
 
 export type get_swapPairs = get_swapPair[];
 
 interface get_swapPair {
-  from: string;
-  to: string;
   id: string;
+  network: string;
+  name: string;
+  chainId: null | string;
+  contractAddress: null | string;
+  symbol: string;
+  logo: string;
 }

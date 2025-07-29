@@ -1,23 +1,31 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import TrippleChevronIcon from "@/assets/SvgComponents/TrippleChevronIcon";
 import classes from "./ExecutingSwap.module.css";
-import ethereumLogo from "@/assets/widget/ethereumLogo.svg";
-import usdtLogo from "@/assets/widget/usdtLogo.svg";
-import Image from "next/image";
 import { CheckIcon, Clock } from "lucide-react";
 import LoadingIcon from "@/assets/app/LoadingIcon";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PaymentDetails, SwapStatus, SwapSteps } from "../Swap";
 import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
 import EquivalentIcon from "@/assets/SvgComponents/EquivalentIcon";
 import backend from "@/services/apis";
-import { handleSubscribeToSwapEvents, handleTestTokenSwap } from "./script";
+import {
+  handleErc20TokenSwap,
+  handleNativeTokenSwap,
+  // handleNonEvmTokenSwap,
+  handleSubscribeToSwapEvents,
+} from "./script";
 // import { handleERC20TokenSwap, handleNativeTokenSwap, handleNonEvmTokenSwap } from "./script";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import { useEcho } from "@/hooks/useEcho";
 import { formatText } from "@/services/utils";
+import { get_swapPairs } from "@/types/apis/swap/get_swapPairs";
+import CompletionTime from "./CompletionTime";
+import { useAppKitNetwork } from "@reown/appkit/react";
+import { networks } from "../../../../../config";
+import { AppKitNetwork } from "@reown/appkit/networks";
 
 declare global {
   interface Window {
@@ -31,6 +39,8 @@ declare global {
 const ExecutingSwap = ({
   quote,
   txAddress,
+  token,
+  tokenPair,
   confirmTransaction,
   onComplete,
   setPaymentDetails,
@@ -41,6 +51,8 @@ const ExecutingSwap = ({
     receivingAddress: string;
   };
   confirmTransaction: boolean;
+  token: get_swapPairs[number];
+  tokenPair: get_swapPairs[number];
   onComplete: (status: SwapStatus) => void;
   setPaymentDetails: React.Dispatch<
     React.SetStateAction<PaymentDetails | null>
@@ -48,10 +60,24 @@ const ExecutingSwap = ({
 }) => {
   const [step, setStep] = useState<SwapSteps>("initiating");
   const [status, setStatus] = useState("");
-  const token = quote.pair_id.split("_")[0];
-  const pair = quote.pair_id.split("_")[1];
+  const tokenId = token.id;
+  const pairId = tokenPair.id;
 
   const echo = useEcho();
+
+  const { switchNetwork } = useAppKitNetwork();
+
+  const handleSwitchNetwork = useCallback(() => {
+    const network: AppKitNetwork | undefined = (
+      networks as unknown as AppKitNetwork[]
+    ).find((n) => Number(n.id) === Number(token.chainId));
+    if (network) {
+      switchNetwork(network);
+      console.log("Switched network to " + network.name);
+    } else {
+      throw new Error("Invalid network!");
+    }
+  }, [switchNetwork, token.chainId]);
 
   const handleInitiateSwap = async () => {
     // initiate swap
@@ -78,26 +104,36 @@ const ExecutingSwap = ({
       onStatusChange: setStatus,
     });
 
-    // check token type
-    // currently assumes that the token is evm and native
     setStep("processing");
 
-    handleTestTokenSwap({
-      fromAddress: txAddress.sendingAdderss,
-      toAddress: res.pay_in_address,
-      amount: res.to_amount,
-      onComplete,
-      setStep,
-    });
+    if (token.contractAddress && token.chainId) {
+      handleSwitchNetwork();
 
-    // // if native token: tokenSymbol === network's tokenSymbol
-    // handleNativeTokenSwap()
+      // // if erc20 tokenId: tokenSymbol !== network's tokenSymbol
+      handleErc20TokenSwap({
+        fromAddress: txAddress.sendingAdderss,
+        toAddress: res.pay_in_address,
+        amount: res.pay_in_amount,
+        onComplete,
+        setStep,
+        tokenAddress: token.contractAddress,
+      });
+    } else if (!token.contractAddress && token.chainId) {
+      handleSwitchNetwork();
 
-    // // if erc20 token: tokenSymbol !== network's tokenSymbol
-    // handleERC20TokenSwap();
-
-    // // if non-evm tokens: if network symbol is not part of view's supported networks
-    // handleNonEvmTokenSwap();
+      // // if native tokenId: tokenSymbol === network's tokenSymbol
+      handleNativeTokenSwap({
+        fromAddress: txAddress.sendingAdderss,
+        toAddress: res.pay_in_address,
+        amount: res.pay_in_amount,
+        onComplete,
+        setStep,
+      });
+    } else if (!token.contractAddress && !token.chainId) {
+      // // if non-evm tokens: if network symbol is not part of view's supported networks
+      setStep("processing");
+      // handleNonEvmTokenSwap();
+    }
   };
 
   useEffect(() => {
@@ -123,17 +159,13 @@ const ExecutingSwap = ({
 
       <div className={classes.tokenWrapper}>
         <div className={classes.tokenIcon}>
-          <Image src={ethereumLogo} alt="" />
-          <div className={classes.network}>
-            <Image src={ethereumLogo} alt="" />
-          </div>
+          <img src={token.logo} alt="" />
+          <div className={classes.network}>{/* TODO: add network icon */}</div>
         </div>
         <TrippleChevronIcon />
         <div className={classes.tokenIcon}>
-          <Image src={usdtLogo} alt="" />
-          <div className={classes.network}>
-            <Image src={ethereumLogo} alt="" />
-          </div>
+          <img src={tokenPair.logo} alt="" />
+          <div className={classes.network}>{/* TODO: add network icon */}</div>
         </div>
       </div>
 
@@ -202,9 +234,9 @@ const ExecutingSwap = ({
 
       <div className={classes.conversion}>
         <div className={classes.price}>
-          1 {token} <EquivalentIcon /> {quote.exchange_rate} {pair}
+          1 {tokenId} <EquivalentIcon /> {quote.exchange_rate} {pairId}
         </div>
-        <div className={classes.duration}>Estimated completion: 30 seconds</div>
+        <CompletionTime expiryTime={quote.expiry} />
       </div>
     </div>
   );

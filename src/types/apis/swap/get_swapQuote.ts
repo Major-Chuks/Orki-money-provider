@@ -7,5 +7,5 @@ export interface get_swapQuote {
   exchange_rate: number;
   min_from_amount: number;
   max_from_amount: number;
-  expiry: number;
+  expiry: Date;
 }

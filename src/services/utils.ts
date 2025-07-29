@@ -626,3 +626,66 @@ export const formatDateByInterval = (
       return date.toISOString().split("T")[0];
   }
 };
+
+export const formatDateCounter = (time: number) => {
+  let remaining = time;
+
+  const SECONDS_IN_MINUTE = 60;
+  const SECONDS_IN_HOUR = 3600;
+  const SECONDS_IN_DAY = SECONDS_IN_HOUR * 24;
+  const SECONDS_IN_WEEK = SECONDS_IN_DAY * 7;
+  const SECONDS_IN_MONTH = SECONDS_IN_DAY * 30;
+  const SECONDS_IN_YEAR = SECONDS_IN_DAY * 365;
+
+  const years = Math.floor(remaining / SECONDS_IN_YEAR);
+  remaining %= SECONDS_IN_YEAR;
+
+  const months = Math.floor(remaining / SECONDS_IN_MONTH);
+  remaining %= SECONDS_IN_MONTH;
+
+  const weeks = Math.floor(remaining / SECONDS_IN_WEEK);
+  remaining %= SECONDS_IN_WEEK;
+
+  const days = Math.floor(remaining / SECONDS_IN_DAY);
+  remaining %= SECONDS_IN_DAY;
+
+  const hours = Math.floor(remaining / SECONDS_IN_HOUR);
+  remaining %= SECONDS_IN_HOUR;
+
+  const minutes = Math.floor(remaining / SECONDS_IN_MINUTE);
+  const seconds = remaining % SECONDS_IN_MINUTE;
+
+  // Readable long format
+  let instant = "";
+  if (years > 0) instant = years === 1 ? "1 year" : `${years} years`;
+  else if (months > 0) instant = months === 1 ? "1 month" : `${months} months`;
+  else if (weeks > 0) instant = weeks === 1 ? "1 week" : `${weeks} weeks`;
+  else if (days > 0) instant = days === 1 ? "1 day" : `${days} days`;
+  else if (hours > 0) instant = hours === 1 ? "1 hour" : `${hours} hours`;
+  else if (minutes > 0)
+    instant = minutes === 1 ? "1 minute" : `${minutes} minutes`;
+  else instant = seconds === 1 ? "1 second" : `${seconds} seconds`;
+
+  // Compact mode (e.g. "1y 2mo 3d 4h 5m 6s")
+  const compactParts: string[] = [];
+  if (years) compactParts.push(`${years}y`);
+  if (months) compactParts.push(`${months}mo`);
+  if (weeks) compactParts.push(`${weeks}w`);
+  if (days) compactParts.push(`${days}d`);
+  if (hours) compactParts.push(`${hours}h`);
+  if (minutes) compactParts.push(`${minutes}m`);
+  if (seconds) compactParts.push(`${seconds}s`);
+  const compact = compactParts.join(" ") || "0s";
+
+  return {
+    years,
+    months,
+    weeks,
+    days,
+    hours,
+    minutes,
+    seconds,
+    instant,
+    compact,
+  };
+};

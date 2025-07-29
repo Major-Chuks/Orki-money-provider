@@ -2,23 +2,20 @@
 /* eslint-disable @next/next/no-img-element */
 import CustomCheckbox from "@/components/CustomInput/CustomCheckbox/CustomCheckbox";
 import classes from "./VerifyWalletAddress.module.css";
-import Image from "next/image";
-// import metamaskIcon from "@/assets/widget/metamask.svg";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import WidgetDrawer from "../../WidgetDrawer/WidgetDrawer";
 import SwapNotification from "../SwapNotification/SwapNotification";
-import ethereumLogo from "@/assets/widget/ethereumLogo.svg";
-import usdtLogo from "@/assets/widget/usdtLogo.svg";
 import EquivalentIcon from "@/assets/SvgComponents/EquivalentIcon";
 import SwapButton from "../SwapButton/SwapButton";
 import DrawerHeader from "../../WidgetDrawer/DrawerHeader/DrawerHeader";
 import { useAppKitAccount, useWalletInfo } from "@reown/appkit/react";
 import { formatText } from "@/services/utils";
 import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
+import { get_swapPairs } from "@/types/apis/swap/get_swapPairs";
 
 type ConnectedWalletInfo = {
-  token: string;
+  tokenId: string;
   network: string;
   wallet: string;
   address: string;
@@ -27,11 +24,15 @@ type ConnectedWalletInfo = {
 
 const VerifyWalletAddress = ({
   quote,
+  token,
+  tokenPair,
   onClose,
   onConfirm,
   onAddressChange,
 }: {
   quote: get_swapQuote;
+  token: get_swapPairs[number];
+  tokenPair: get_swapPairs[number];
   onClose: () => void;
   onConfirm: () => void;
   onAddressChange: ({
@@ -50,12 +51,12 @@ const VerifyWalletAddress = ({
 
   const { walletInfo } = useWalletInfo();
 
-  const token = quote.pair_id.split("_")[0];
-  const tokenNetwork = "";
-  const tokenIcon = "";
-  const pair = quote.pair_id.split("_")[1];
-  const pairNetwork = "";
-  const pairIcon = "";
+  const tokenId = token.id;
+  const tokenNetwork = token.network;
+  const tokenIcon = token.logo;
+  const pairId = tokenPair.id;
+  const pairNetwork = tokenPair.network;
+  const pairIcon = tokenPair.logo;
 
   const [tokenWallet, setTokenWallet] = useState<ConnectedWalletInfo | null>(
     null
@@ -67,33 +68,33 @@ const VerifyWalletAddress = ({
 
   useEffect(() => {
     if (walletInfo && address) {
-      setTokenWallet({
-        token: token,
-        network: tokenNetwork,
-        wallet: walletInfo.name,
-        address: address,
-        walletIcon: walletInfo.icon || "",
-      });
+      if (token.contractAddress || token.chainId) {
+        // // if EVM Compatible
+        setTokenWallet({
+          tokenId: tokenId,
+          network: tokenNetwork,
+          wallet: walletInfo.name,
+          address: address,
+          walletIcon: walletInfo.icon || tokenIcon,
+        });
+      } else {
+        // // if non-evm tokens:
+        setTokenWallet(null);
+      }
 
-      setPairWallet({
-        token: pair,
-        network: pairNetwork,
-        wallet: walletInfo.name,
-        address: address,
-        walletIcon: walletInfo.icon || "",
-      });
-
-      // TODO
-      // Check connected wallet
-      // Check token to send eg. ETH if it is compatible with the wallet
-      // If true, update tokenWallet
-      // else provide input to input address and setTokenWallet(null)
-
-      // // do the same for the pair wallet //
-      // Check connected wallet
-      // Check token to receive (pair eg BTC) if it is compatible with the wallet
-      // If true, update pairWallet
-      // else provide input to input address setPairWallet(null)
+      if (tokenPair.contractAddress || tokenPair.chainId) {
+        // // if EVM Compatible
+        setPairWallet({
+          tokenId: pairId,
+          network: pairNetwork,
+          wallet: walletInfo.name,
+          address: address,
+          walletIcon: walletInfo.icon || pairIcon,
+        });
+      } else {
+        // // if non-evm tokens:
+        setPairWallet(null);
+      }
     }
   }, []);
 
@@ -129,7 +130,7 @@ const VerifyWalletAddress = ({
               className={classes.addressInput}
             />
             <div className={classes.addressNote}>
-              This is the wallet you will send {token} ({tokenNetwork}) from.
+              This is the wallet you will send {tokenId} ({tokenNetwork}) from.
             </div>
           </div>
         )}
@@ -149,7 +150,7 @@ const VerifyWalletAddress = ({
               className={classes.addressInput}
             />
             <div className={classes.addressNote}>
-              This is the wallet you will send {pair} ({pairNetwork}) from.
+              This is the wallet you will send {pairId} ({pairNetwork}) from.
             </div>
           </div>
         )}
@@ -203,22 +204,24 @@ const VerifyWalletAddress = ({
                 <div className={classes.conversion}>
                   <div className={classes.tokenWrapper}>
                     <div className={classes.icon}>
-                      <Image src={ethereumLogo} alt="" />
+                      {token.logo ? <img src={token.logo} alt="" /> : null}
                     </div>
-                    {quote.input_amount} {token}
+                    {quote.input_amount} {tokenId}
                   </div>
                   <ArrowRight width={20} height={20} color="#AEAEB2" />
                   <div className={classes.tokenWrapper}>
                     <div className={classes.icon}>
-                      <Image src={usdtLogo} alt="" />
+                      {tokenPair.logo ? (
+                        <img src={tokenPair.logo} alt="" />
+                      ) : null}
                     </div>
-                    {quote.quote_amount} {pair}
+                    {quote.quote_amount} {pairId}
                   </div>
                 </div>
                 <div className={classes.conversionRate}>
-                  <span>1 {token}</span> <EquivalentIcon />{" "}
+                  <span>1 {tokenId}</span> <EquivalentIcon />{" "}
                   <span>
-                    {quote.exchange_rate} {pair}
+                    {quote.exchange_rate} {pairId}
                   </span>
                 </div>
 
@@ -232,7 +235,7 @@ const VerifyWalletAddress = ({
                   {senderAddress ? (
                     <ConnectedWallet
                       {...{
-                        token,
+                        tokenId,
                         network: tokenNetwork,
                         wallet: "External Wallet",
                         address: senderAddress,
@@ -246,7 +249,7 @@ const VerifyWalletAddress = ({
                   {receiverAddress ? (
                     <ConnectedWallet
                       {...{
-                        token: pair,
+                        tokenId: pairId,
                         network: pairNetwork,
                         wallet: "External Wallet",
                         address: receiverAddress,
@@ -278,13 +281,13 @@ const VerifyWalletAddress = ({
 export default VerifyWalletAddress;
 
 const ConnectedWallet = ({
-  token,
+  tokenId,
   network,
   address,
   wallet,
   walletIcon,
 }: {
-  token: string;
+  tokenId: string;
   network: string;
   address: string;
   wallet: string;
@@ -292,7 +295,7 @@ const ConnectedWallet = ({
 }) => {
   return (
     <div className={classes.connection}>
-      <div className={classes.description}>{`Your ${token} (${
+      <div className={classes.description}>{`Your ${tokenId} (${
         network || "--network"
       }) wallet`}</div>
 

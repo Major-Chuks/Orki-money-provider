@@ -8,18 +8,18 @@ import SwapSearch from "./SwapSearch";
 const SwapPanel = ({
   title,
   swapTokens,
-  swapToken,
   value,
-  disabled,
+  searchDisabled,
+  amountDisabled,
   onTokenChange,
   onAmountChange,
 }: {
   title: string;
   swapTokens: get_swapPairs | null;
-  swapToken: string;
   value: string;
-  disabled: boolean;
-  onTokenChange: (id: get_swapPairs[number]["id"]) => void;
+  searchDisabled: boolean;
+  amountDisabled: boolean;
+  onTokenChange: (id: get_swapPairs[number]) => void;
   onAmountChange: (value: string) => void;
 }) => {
   const [errorMsg, setErrorMsg] = useState("");
@@ -56,16 +56,15 @@ const SwapPanel = ({
             id="crypto_amount"
             placeholder="0.00"
             value={inputValue}
-            disabled={disabled}
+            disabled={amountDisabled}
             onChange={(e) => setInputValue(e.target.value)}
           />
         </div>
         <div className={classes.crypto_network}>
           <SwapSearch
-            onTokenChange={(token) => onTokenChange(token.id)}
+            onTokenChange={(token) => onTokenChange(token)}
             swapTokens={swapTokens}
-            swapToken={swapToken}
-            disabled={disabled}
+            disabled={searchDisabled}
           />
         </div>
       </div>

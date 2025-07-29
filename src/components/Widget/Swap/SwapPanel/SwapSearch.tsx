@@ -10,11 +10,9 @@ import DrawerHeader from "../../WidgetDrawer/DrawerHeader/DrawerHeader";
 const SwapSearch = ({
   swapTokens,
   onTokenChange,
-  swapToken,
   disabled,
 }: {
   swapTokens: get_swapPairs | null;
-  swapToken?: string;
   disabled?: boolean;
   onTokenChange: (tokenId: get_swapPairs[number]) => void;
 }) => {
@@ -53,12 +51,10 @@ const SwapSearch = ({
     <div className={`${classes.container} ${disabled && classes.disabled}`}>
       <div onClick={handleClick} className={classes.selected}>
         <div className={classes.countryFlag}>
-          <span className={classes.iconContainer}></span>
-          <span className={classes.name}>
-            {selected?.id ||
-              swapToken?.toUpperCase() ||
-              "Select swap swapToken"}
+          <span className={classes.iconContainer}>
+            {selected?.logo ? <img src={selected?.logo} alt="" /> : null}
           </span>
+          <span className={classes.name}>{selected?.id || "Select token"}</span>
         </div>
         <CaretIcon style={{ marginLeft: "4px" }} />
       </div>
@@ -90,12 +86,15 @@ const SwapSearch = ({
                         className={classes.country}
                       >
                         <div className={classes.countryFlag}>
+                          <span className={classes.iconContainer}>
+                            {c.logo ? <img src={c?.logo} alt="" /> : null}
+                          </span>
                           <div className={classes.nameCode}>
-                            <span className={classes.name}>{c.from}</span>
-                            <span className={classes.code}>{c.to}</span>
+                            <span className={classes.name}>{c.id}</span>
+                            <span className={classes.code}>{c.name}</span>
                           </div>
                         </div>
-                        <span className={classes.network}>{c.id}</span>
+                        <span className={classes.network}>{c.network}</span>
                       </div>
                     )}
                   />

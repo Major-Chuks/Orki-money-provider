@@ -21,7 +21,7 @@ const SwapProvider = ({
       </div>
 
       {loading ? (
-        <div>Fetching quote...</div>
+        <div className={classes.loadingText}>Fetching quote...</div>
       ) : quote ? (
         <div className={classes.conversion}>
           <span>1 {quote.pair_id.split("_")[0]}</span> <EquivalentIcon />{" "}
@@ -29,9 +29,7 @@ const SwapProvider = ({
             {quote.exchange_rate} {quote.pair_id.split("_")[1]}
           </span>
         </div>
-      ) : (
-        <div>Select Pair and Input Amount</div>
-      )}
+      ) : null}
     </div>
   );
 };

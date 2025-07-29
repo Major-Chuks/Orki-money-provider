@@ -43,3 +43,13 @@
   font-weight: 500;
   line-height: normal;
 }
+
+.loadingText {
+  color: #8f8f8f;
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.2px;
+}
