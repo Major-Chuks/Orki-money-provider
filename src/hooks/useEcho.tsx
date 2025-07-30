@@ -19,27 +19,17 @@ export function useEcho() {
       window.Pusher = Pusher;
     }
 
-    // const isLocalhost =
-    //   window.location.hostname === "localhost" ||
-    //   window.location.hostname === "127.0.0.1" ||
-    //   window.location.hostname === "[::1]";
+    const isLocalhost =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.hostname === "[::1]";
 
     // Initialize Echo
     const echoInstance = new Echo({
       broadcaster: "reverb",
       key: process.env.NEXT_PUBLIC_WEBSOCKET_ID!,
       wsHost: "ws.money.orki.io",
-      forceTLS: false,
-      enabledTransports: ["ws", "wss"],
-      wsPort: 80,
-      wssPort: 80,
-    });
-
-    console.log({
-      broadcaster: "reverb",
-      key: process.env.NEXT_PUBLIC_WEBSOCKET_ID!,
-      wsHost: "ws.money.orki.io",
-      forceTLS: false,
+      forceTLS: !isLocalhost,
       enabledTransports: ["ws", "wss"],
       wsPort: 80,
       wssPort: 80,
