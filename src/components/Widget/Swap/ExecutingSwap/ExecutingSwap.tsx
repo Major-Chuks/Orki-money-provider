@@ -26,6 +26,7 @@ import CompletionTime from "./CompletionTime";
 import { useAppKitNetwork } from "@reown/appkit/react";
 import { networks } from "../../../../../config";
 import { AppKitNetwork } from "@reown/appkit/networks";
+import { usePublicClient } from "wagmi";
 
 declare global {
   interface Window {
@@ -62,6 +63,8 @@ const ExecutingSwap = ({
   const [status, setStatus] = useState("");
   const tokenSymbol = token.symbol;
   const pairSymbol = tokenPair.symbol;
+
+  const publicClient = usePublicClient();
 
   const echo = useEcho();
 
@@ -106,6 +109,12 @@ const ExecutingSwap = ({
 
     setStep("processing");
 
+    if (!publicClient) {
+      setPaymentDetails(null);
+      onComplete("failed");
+      return;
+    }
+
     if (token.contractAddress && token.chainId) {
       handleSwitchNetwork();
 
@@ -117,6 +126,7 @@ const ExecutingSwap = ({
         onComplete,
         setStep,
         tokenAddress: token.contractAddress,
+        publicClient,
       });
     } else if (!token.contractAddress && token.chainId) {
       handleSwitchNetwork();
@@ -128,6 +138,7 @@ const ExecutingSwap = ({
         amount: res.pay_in_amount,
         onComplete,
         setStep,
+        publicClient,
       });
     } else if (!token.contractAddress && !token.chainId) {
       // // if non-evm tokens: if network symbol is not part of view's supported networks

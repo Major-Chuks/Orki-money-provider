@@ -4,15 +4,14 @@ import {
   formatEther,
   parseEther,
   parseUnits,
+  type PublicClient,
   type Address,
 } from "viem";
-import { getWalletClient, getPublicClient } from "@wagmi/core";
+import { getWalletClient } from "@wagmi/core";
 import { config } from "../../../../../config";
 import { SwapStatus, SwapSteps } from "../Swap";
 import Echo from "laravel-echo";
 import React from "react";
-
-const publicClient = getPublicClient(config);
 
 // handle native token swap
 export const handleNativeTokenSwap = async ({
@@ -21,12 +20,14 @@ export const handleNativeTokenSwap = async ({
   amount,
   onComplete,
   setStep,
+  publicClient,
 }: {
   fromAddress: string;
   toAddress: string;
   amount: number;
   onComplete: (status: SwapStatus) => void;
   setStep: React.Dispatch<React.SetStateAction<SwapSteps>>;
+  publicClient: PublicClient;
 }) => {
   const parsedAmount = parseEther(String(amount));
 
@@ -99,6 +100,7 @@ export const handleErc20TokenSwap = async ({
   decimals = 18,
   onComplete,
   setStep,
+  publicClient,
 }: {
   fromAddress: string;
   toAddress: string;
@@ -107,6 +109,7 @@ export const handleErc20TokenSwap = async ({
   decimals?: number;
   onComplete: (status: SwapStatus) => void;
   setStep: React.Dispatch<React.SetStateAction<SwapSteps>>;
+  publicClient: PublicClient;
 }) => {
   const parsedAmount = parseUnits(String(amount), decimals);
 
