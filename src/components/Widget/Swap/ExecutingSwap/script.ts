@@ -44,7 +44,7 @@ export const handleNativeTokenSwap = async ({
     await new Promise((res) => {
       setTimeout(() => {
         res("");
-      }, 1000);
+      }, 2000);
     });
 
     // Check token balance
@@ -52,13 +52,8 @@ export const handleNativeTokenSwap = async ({
       address: fromAddress as Address,
     });
 
-    // const formatted = formatEther(balance);
-    // console.log({formatted});
-
-    // if (Number(formatted) <= amount) {
-    //   onComplete("insufficient_fund");
-    //   return;
-    // }
+    const formatted = formatEther(balance);
+    console.log({ formatted });
 
     if (balance < parsedAmount) {
       onComplete("insufficient_fund");
@@ -122,7 +117,7 @@ export const handleErc20TokenSwap = async ({
     await new Promise((res) => {
       setTimeout(() => {
         res("");
-      }, 1000);
+      }, 2000);
     });
 
     // Check token balance
@@ -133,8 +128,8 @@ export const handleErc20TokenSwap = async ({
       args: [fromAddress as Address],
     });
 
-    // const formatted = formatEther(balance);
-    // console.log({ formatted });
+    const formatted = formatEther(balance);
+    console.log({ formatted });
 
     if (balance < parsedAmount) {
       onComplete("insufficient_fund");
