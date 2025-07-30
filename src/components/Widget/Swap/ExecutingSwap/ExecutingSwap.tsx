@@ -60,8 +60,8 @@ const ExecutingSwap = ({
 }) => {
   const [step, setStep] = useState<SwapSteps>("initiating");
   const [status, setStatus] = useState("");
-  const tokenId = token.id;
-  const pairId = tokenPair.id;
+  const tokenSymbol = token.symbol;
+  const pairSymbol = tokenPair.symbol;
 
   const echo = useEcho();
 
@@ -109,7 +109,7 @@ const ExecutingSwap = ({
     if (token.contractAddress && token.chainId) {
       handleSwitchNetwork();
 
-      // // if erc20 tokenId: tokenSymbol !== network's tokenSymbol
+      // // if erc20 tokenSymbol: tokenSymbol !== network's tokenSymbol
       handleErc20TokenSwap({
         fromAddress: txAddress.sendingAdderss,
         toAddress: res.pay_in_address,
@@ -121,7 +121,7 @@ const ExecutingSwap = ({
     } else if (!token.contractAddress && token.chainId) {
       handleSwitchNetwork();
 
-      // // if native tokenId: tokenSymbol === network's tokenSymbol
+      // // if native tokenSymbol: tokenSymbol === network's tokenSymbol
       handleNativeTokenSwap({
         fromAddress: txAddress.sendingAdderss,
         toAddress: res.pay_in_address,
@@ -159,13 +159,17 @@ const ExecutingSwap = ({
 
       <div className={classes.tokenWrapper}>
         <div className={classes.tokenIcon}>
-          <img src={token.logo} alt="" />
-          <div className={classes.network}>{/* TODO: add network icon */}</div>
+          <img src={token.token_logo} alt="" />
+          <div className={classes.network}>
+            <img src={token.network_logo} alt="" />
+          </div>
         </div>
         <TrippleChevronIcon />
         <div className={classes.tokenIcon}>
-          <img src={tokenPair.logo} alt="" />
-          <div className={classes.network}>{/* TODO: add network icon */}</div>
+          <img src={tokenPair.token_logo} alt="" />
+          <div className={classes.network}>
+            <img src={token.network_logo} alt="" />
+          </div>
         </div>
       </div>
 
@@ -234,7 +238,7 @@ const ExecutingSwap = ({
 
       <div className={classes.conversion}>
         <div className={classes.price}>
-          1 {tokenId} <EquivalentIcon /> {quote.exchange_rate} {pairId}
+          1 {tokenSymbol} <EquivalentIcon /> {quote.exchange_rate} {pairSymbol}
         </div>
         <CompletionTime expiryTime={quote.expiry} />
       </div>

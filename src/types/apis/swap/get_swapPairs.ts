@@ -9,5 +9,6 @@ interface get_swapPair {
   chainId: null | string;
   contractAddress: null | string;
   symbol: string;
-  logo: string;
+  token_logo: string;
+  network_logo: string;
 }

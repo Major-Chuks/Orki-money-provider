@@ -135,7 +135,7 @@ const Swap = () => {
     setAmountPair("");
 
     if (amount && Number(amount) && token && tokenPair) {
-      debouncedGetQuote(amount, `${token.id}_${tokenPair.id}`);
+      debouncedGetQuote(amount, `${token.symbol}_${tokenPair.symbol}`);
     }
   }, [amount, token, tokenPair]);
 

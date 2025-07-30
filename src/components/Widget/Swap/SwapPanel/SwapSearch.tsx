@@ -14,7 +14,7 @@ const SwapSearch = ({
 }: {
   swapTokens: get_swapPairs | null;
   disabled?: boolean;
-  onTokenChange: (tokenId: get_swapPairs[number]) => void;
+  onTokenChange: (tokenSymbol: get_swapPairs[number]) => void;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
   const [selected, setSelected] = useState<get_swapPairs[number] | null>(null);
@@ -52,7 +52,9 @@ const SwapSearch = ({
       <div onClick={handleClick} className={classes.selected}>
         <div className={classes.countryFlag}>
           <span className={classes.iconContainer}>
-            {selected?.logo ? <img src={selected?.logo} alt="" /> : null}
+            {selected?.token_logo ? (
+              <img src={selected?.token_logo} alt="" />
+            ) : null}
           </span>
           <span className={classes.name}>{selected?.id || "Select token"}</span>
         </div>
@@ -87,7 +89,9 @@ const SwapSearch = ({
                       >
                         <div className={classes.countryFlag}>
                           <span className={classes.iconContainer}>
-                            {c.logo ? <img src={c?.logo} alt="" /> : null}
+                            {c.token_logo ? (
+                              <img src={c.token_logo} alt="" />
+                            ) : null}
                           </span>
                           <div className={classes.nameCode}>
                             <span className={classes.name}>{c.id}</span>

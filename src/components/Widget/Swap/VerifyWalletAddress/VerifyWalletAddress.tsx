@@ -15,7 +15,7 @@ import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
 import { get_swapPairs } from "@/types/apis/swap/get_swapPairs";
 
 type ConnectedWalletInfo = {
-  tokenId: string;
+  tokenSymbol: string;
   network: string;
   wallet: string;
   address: string;
@@ -51,12 +51,12 @@ const VerifyWalletAddress = ({
 
   const { walletInfo } = useWalletInfo();
 
-  const tokenId = token.id;
+  const tokenSymbol = token.symbol;
   const tokenNetwork = token.network;
-  const tokenIcon = token.logo;
-  const pairId = tokenPair.id;
+  const tokenIcon = token.token_logo;
+  const pairSymbol = tokenPair.symbol;
   const pairNetwork = tokenPair.network;
-  const pairIcon = tokenPair.logo;
+  const pairIcon = tokenPair.token_logo;
 
   const [tokenWallet, setTokenWallet] = useState<ConnectedWalletInfo | null>(
     null
@@ -71,7 +71,7 @@ const VerifyWalletAddress = ({
       if (token.contractAddress || token.chainId) {
         // // if EVM Compatible
         setTokenWallet({
-          tokenId: tokenId,
+          tokenSymbol: tokenSymbol,
           network: tokenNetwork,
           wallet: walletInfo.name,
           address: address,
@@ -85,7 +85,7 @@ const VerifyWalletAddress = ({
       if (tokenPair.contractAddress || tokenPair.chainId) {
         // // if EVM Compatible
         setPairWallet({
-          tokenId: pairId,
+          tokenSymbol: pairSymbol,
           network: pairNetwork,
           wallet: walletInfo.name,
           address: address,
@@ -130,7 +130,8 @@ const VerifyWalletAddress = ({
               className={classes.addressInput}
             />
             <div className={classes.addressNote}>
-              This is the wallet you will send {tokenId} ({tokenNetwork}) from.
+              This is the wallet you will send {tokenSymbol} ({tokenNetwork})
+              from.
             </div>
           </div>
         )}
@@ -150,7 +151,8 @@ const VerifyWalletAddress = ({
               className={classes.addressInput}
             />
             <div className={classes.addressNote}>
-              This is the wallet you will send {pairId} ({pairNetwork}) from.
+              This is the wallet you will send {pairSymbol} ({pairNetwork})
+              from.
             </div>
           </div>
         )}
@@ -204,24 +206,26 @@ const VerifyWalletAddress = ({
                 <div className={classes.conversion}>
                   <div className={classes.tokenWrapper}>
                     <div className={classes.icon}>
-                      {token.logo ? <img src={token.logo} alt="" /> : null}
+                      {token.token_logo ? (
+                        <img src={token.token_logo} alt="" />
+                      ) : null}
                     </div>
-                    {quote.input_amount} {tokenId}
+                    {quote.input_amount} {tokenSymbol}
                   </div>
                   <ArrowRight width={20} height={20} color="#AEAEB2" />
                   <div className={classes.tokenWrapper}>
                     <div className={classes.icon}>
-                      {tokenPair.logo ? (
-                        <img src={tokenPair.logo} alt="" />
+                      {tokenPair.token_logo ? (
+                        <img src={tokenPair.token_logo} alt="" />
                       ) : null}
                     </div>
-                    {quote.quote_amount} {pairId}
+                    {quote.quote_amount} {pairSymbol}
                   </div>
                 </div>
                 <div className={classes.conversionRate}>
-                  <span>1 {tokenId}</span> <EquivalentIcon />{" "}
+                  <span>1 {tokenSymbol}</span> <EquivalentIcon />{" "}
                   <span>
-                    {quote.exchange_rate} {pairId}
+                    {quote.exchange_rate} {pairSymbol}
                   </span>
                 </div>
 
@@ -235,7 +239,7 @@ const VerifyWalletAddress = ({
                   {senderAddress ? (
                     <ConnectedWallet
                       {...{
-                        tokenId,
+                        tokenSymbol,
                         network: tokenNetwork,
                         wallet: "External Wallet",
                         address: senderAddress,
@@ -249,7 +253,7 @@ const VerifyWalletAddress = ({
                   {receiverAddress ? (
                     <ConnectedWallet
                       {...{
-                        tokenId: pairId,
+                        tokenSymbol: pairSymbol,
                         network: pairNetwork,
                         wallet: "External Wallet",
                         address: receiverAddress,
@@ -281,13 +285,13 @@ const VerifyWalletAddress = ({
 export default VerifyWalletAddress;
 
 const ConnectedWallet = ({
-  tokenId,
+  tokenSymbol,
   network,
   address,
   wallet,
   walletIcon,
 }: {
-  tokenId: string;
+  tokenSymbol: string;
   network: string;
   address: string;
   wallet: string;
@@ -295,7 +299,7 @@ const ConnectedWallet = ({
 }) => {
   return (
     <div className={classes.connection}>
-      <div className={classes.description}>{`Your ${tokenId} (${
+      <div className={classes.description}>{`Your ${tokenSymbol} (${
         network || "--network"
       }) wallet`}</div>
 

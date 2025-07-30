@@ -43,8 +43,8 @@ const SwapAddress = ({
           <ArrowLeft />
         </div>
         <div className={classes.title}>
-          Send {paymentDetails.pay_in_amount} {token.id} on {token.network} to
-          the following address
+          Send {paymentDetails.pay_in_amount} {token.symbol} on {token.network}{" "}
+          to the following address
         </div>
       </div>
 
