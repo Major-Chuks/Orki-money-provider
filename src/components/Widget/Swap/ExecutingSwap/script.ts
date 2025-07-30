@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { erc20Abi, parseEther, parseUnits, type Address } from "viem";
+import {
+  erc20Abi,
+  formatEther,
+  parseEther,
+  parseUnits,
+  type Address,
+} from "viem";
 import { getWalletClient, getPublicClient } from "@wagmi/core";
 import { config } from "../../../../../config";
 import { SwapStatus, SwapSteps } from "../Swap";
@@ -34,12 +40,20 @@ export const handleNativeTokenSwap = async ({
   try {
     if (!publicClient) throw new Error("Missing public client");
 
+    // create a minor delay
+    await new Promise((res) => {
+      setTimeout(() => {
+        res("");
+      }, 1000);
+    });
+
     // Check token balance
     const balance = await publicClient.getBalance({
       address: fromAddress as Address,
     });
 
     // const formatted = formatEther(balance);
+    // console.log({formatted});
 
     // if (Number(formatted) <= amount) {
     //   onComplete("insufficient_fund");
@@ -57,6 +71,10 @@ export const handleNativeTokenSwap = async ({
     // Estimate Gas
     const gasEstimate = await publicClient.estimateGas(transaction);
     const gas = gasEstimate + BigInt(10_000); // small buffer
+
+    const formattedGas = formatEther(gas);
+
+    console.log({ formattedGas });
 
     // Send Fund
     const txHash = await walletClient.sendTransaction({
@@ -100,6 +118,13 @@ export const handleErc20TokenSwap = async ({
   try {
     if (!publicClient) throw new Error("Missing public client");
 
+    // create a minor delay
+    await new Promise((res) => {
+      setTimeout(() => {
+        res("");
+      }, 1000);
+    });
+
     // Check token balance
     const balance: bigint = await publicClient.readContract({
       address: tokenAddress as Address,
@@ -107,6 +132,9 @@ export const handleErc20TokenSwap = async ({
       functionName: "balanceOf",
       args: [fromAddress as Address],
     });
+
+    // const formatted = formatEther(balance);
+    // console.log({ formatted });
 
     if (balance < parsedAmount) {
       onComplete("insufficient_fund");

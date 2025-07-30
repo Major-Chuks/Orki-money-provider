@@ -19,7 +19,7 @@ import {
   useSendTransaction,
   useWriteContract,
 } from "wagmi";
-import { Address, erc20Abi, parseEther, parseUnits } from "viem";
+import { Address, erc20Abi, formatEther, parseEther, parseUnits } from "viem";
 import { wagmiAdapter } from "../../../config";
 import { debounce } from "lodash";
 
@@ -167,6 +167,21 @@ export default function Web3Page() {
     }
   }, [isConnected, toAddress, ethValue, publicClient, address]);
 
+  const handleCheckBalance = async () => {
+    if (!publicClient) throw new Error("Missing public client");
+
+    const balance: bigint = await publicClient.readContract({
+      address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      abi: erc20Abi,
+      functionName: "balanceOf",
+      args: ["0x320685Ad4B07e2F23f8831c181387836268Bbe79"],
+    });
+
+    const formatted = formatEther(balance);
+
+    console.log({ formatted });
+  };
+
   // Effects
   useEffect(() => {
     if (isConnected) {
@@ -225,7 +240,8 @@ export default function Web3Page() {
       <button onClick={handleConnect}>Connect wallet</button>{" "}
       <button onClick={handleDisconnect}>Disconnect</button>{" "}
       <button onClick={handleSwitchNetwork}>Switch Network</button>{" "}
-      <button onClick={handleEstimateGas}>Estimate Gas</button>
+      <button onClick={handleEstimateGas}>Estimate Gas</button>{" "}
+      <button onClick={handleCheckBalance}>Check Balance</button>
       <br />
       <br />
       <div>
