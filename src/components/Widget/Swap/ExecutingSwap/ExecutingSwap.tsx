@@ -131,7 +131,7 @@ const ExecutingSwap = ({
       });
     } else if (!token.contractAddress && !token.chainId) {
       // // if non-evm tokens: if network symbol is not part of view's supported networks
-      setStep("processing");
+      onComplete("external_transfer");
       // handleNonEvmTokenSwap();
     }
   };
@@ -168,7 +168,7 @@ const ExecutingSwap = ({
         <div className={classes.tokenIcon}>
           <img src={tokenPair.token_logo} alt="" />
           <div className={classes.network}>
-            <img src={token.network_logo} alt="" />
+            <img src={tokenPair.network_logo} alt="" />
           </div>
         </div>
       </div>

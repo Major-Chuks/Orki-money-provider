@@ -28,7 +28,11 @@ import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
 import { debounce } from "lodash";
 import SwapError from "./SwapError/SwapError";
 
-export type SwapStatus = "insufficient_fund" | "successful" | "failed";
+export type SwapStatus =
+  | "insufficient_fund"
+  | "successful"
+  | "failed"
+  | "external_transfer";
 
 export type SwapSteps = "initiating" | "processing" | "executing";
 
@@ -65,6 +69,7 @@ const Swap = () => {
     null
   );
   const [confirmTransaction, setConfirmTransaction] = useState(false);
+  const [isExternalTransfer, setIsExternalTransfer] = useState(false);
 
   const { isConnected, address } = useAppKitAccount();
   const { disconnect } = useDisconnect();
@@ -93,6 +98,9 @@ const Swap = () => {
       setOpenSwapAddress(true);
     } else if (status === "failed") {
       setOpenSwapError(true);
+    } else if (status === "external_transfer") {
+      setOpenSwapAddress(true);
+      setIsExternalTransfer(true);
     }
     setOpenExecutingSwap(false);
   };
@@ -248,6 +256,7 @@ const Swap = () => {
                   token={token}
                   paymentDetails={paymentDetails}
                   confirmTransaction={confirmTransaction}
+                  isExternalTransfer={isExternalTransfer}
                 />
               </WidgetLayout>
             )}

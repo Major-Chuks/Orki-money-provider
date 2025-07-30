@@ -14,6 +14,7 @@ const SwapAddress = ({
   token,
   paymentDetails,
   confirmTransaction,
+  isExternalTransfer,
   onClose,
   goBack,
   onConfirm,
@@ -21,6 +22,7 @@ const SwapAddress = ({
   token: get_swapPairs[number];
   paymentDetails: PaymentDetails;
   confirmTransaction: boolean;
+  isExternalTransfer: boolean;
   onClose: () => void;
   goBack: () => void;
   onConfirm: () => void;
@@ -29,12 +31,13 @@ const SwapAddress = ({
   const [openHasTransferred, setOpenHasTransferred] = useState(false);
 
   useEffect(() => {
-    if (!confirmTransaction) {
-      setOpenInsufficient(true);
-    } else {
+    if (isExternalTransfer) return;
+    if (confirmTransaction) {
       setOpenHasTransferred(true);
+    } else {
+      setOpenInsufficient(true);
     }
-  }, [confirmTransaction]);
+  }, [confirmTransaction, isExternalTransfer]);
 
   return (
     <div className={classes.container}>

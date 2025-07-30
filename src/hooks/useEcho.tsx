@@ -35,6 +35,16 @@ export function useEcho() {
       wssPort: 80,
     });
 
+    console.log({
+      broadcaster: "reverb",
+      key: process.env.NEXT_PUBLIC_WEBSOCKET_ID!,
+      wsHost: "ws.money.orki.io",
+      forceTLS: !isLocalhost,
+      enabledTransports: ["ws", "wss"],
+      wsPort: 80,
+      wssPort: 80,
+    });
+
     // Only bind if connector is a PusherConnector and has 'pusher'
     if (
       echoInstance.connector &&
