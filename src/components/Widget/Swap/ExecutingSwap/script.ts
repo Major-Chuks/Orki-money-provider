@@ -10,7 +10,6 @@ import {
 import { getWalletClient } from "@wagmi/core";
 import { config } from "../../../../../config";
 import { SwapStatus, SwapSteps } from "../Swap";
-import Echo from "laravel-echo";
 import React from "react";
 
 // handle native token swap
@@ -174,49 +173,5 @@ export const handleErc20TokenSwap = async ({
   } catch (error) {
     console.error(error);
     onComplete("failed");
-  }
-};
-
-// handle no evm swap
-export const handleNonEvmTokenSwap = async () => {};
-
-export const handleSubscribeToSwapEvents = ({
-  echo,
-  swapId,
-  onStatusChange,
-}: {
-  echo: Echo<any>;
-  swapId: string;
-  onStatusChange: React.Dispatch<React.SetStateAction<string>>;
-}) => {
-  if (echo) {
-    echo
-      .channel(`swaps.${swapId}`)
-      .listen(".swaps.status_changed", (e: any) => {
-        console.log("Swap status changed event:", e);
-        onStatusChange(e.status);
-        switch (e.status) {
-          case "awaiting":
-            break;
-          case "complete":
-            break;
-          case "delayed":
-            break;
-          case "expired":
-            break;
-          case "in progress":
-            break;
-          case "failed":
-            break;
-          case "refunded":
-            break;
-          case "swapped":
-            break;
-          case "pending":
-            break;
-          default:
-            console.warn("Unknown status:", e.status);
-        }
-      });
   }
 };

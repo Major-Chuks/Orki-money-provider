@@ -10,13 +10,7 @@ import { PaymentDetails, SwapStatus, SwapSteps } from "../Swap";
 import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
 import EquivalentIcon from "@/assets/SvgComponents/EquivalentIcon";
 import backend from "@/services/apis";
-import {
-  handleErc20TokenSwap,
-  handleNativeTokenSwap,
-  // handleNonEvmTokenSwap,
-  handleSubscribeToSwapEvents,
-} from "./script";
-// import { handleERC20TokenSwap, handleNativeTokenSwap, handleNonEvmTokenSwap } from "./script";
+import { handleErc20TokenSwap, handleNativeTokenSwap } from "./script";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import { useEcho } from "@/hooks/useEcho";
@@ -34,8 +28,6 @@ declare global {
     Pusher: typeof Pusher;
   }
 }
-
-// TODO implement network switching
 
 const ExecutingSwap = ({
   quote,
@@ -60,6 +52,7 @@ const ExecutingSwap = ({
   >;
 }) => {
   const [step, setStep] = useState<SwapSteps>("initiating");
+  const [swapId, setSwapId] = useState<string | null>(null);
   const [status, setStatus] = useState("");
   const tokenSymbol = token.symbol;
   const pairSymbol = tokenPair.symbol;
@@ -83,6 +76,11 @@ const ExecutingSwap = ({
   }, [switchNetwork, token.chainId]);
 
   const handleInitiateSwap = async () => {
+    if (!publicClient) {
+      onComplete("failed");
+      return;
+    }
+
     // initiate swap
     const response = await backend().post_initiateSwap({
       source_address: txAddress.sendingAdderss,
@@ -101,19 +99,9 @@ const ExecutingSwap = ({
     const res: PaymentDetails = response.data.data;
     setPaymentDetails(res);
 
-    handleSubscribeToSwapEvents({
-      echo,
-      swapId: res.id,
-      onStatusChange: setStatus,
-    });
+    setSwapId(res.id);
 
     setStep("processing");
-
-    if (!publicClient) {
-      setPaymentDetails(null);
-      onComplete("failed");
-      return;
-    }
 
     if (token.contractAddress && token.chainId) {
       handleSwitchNetwork();
@@ -141,6 +129,11 @@ const ExecutingSwap = ({
         publicClient,
       });
     } else if (!token.contractAddress && !token.chainId) {
+      await new Promise((res) => {
+        setTimeout(() => {
+          res("");
+        }, 1000);
+      });
       // // if non-evm tokens: if network symbol is not part of view's supported networks
       onComplete("external_transfer");
       // handleNonEvmTokenSwap();
@@ -156,10 +149,45 @@ const ExecutingSwap = ({
   }, [confirmTransaction, echo]);
 
   useEffect(() => {
-    if (status === "complete") {
-      onComplete("successful");
-    }
-  }, [status]);
+    if (!swapId || !echo) return;
+    console.log("🔁 Subscribing to", swapId);
+
+    const channel = echo.channel(`swaps.${swapId}`);
+
+    channel.listen(".swap.status_changed", (e: any) => {
+      console.log("Swap status changed event:", e);
+      setStatus(e.status);
+      switch (e.status) {
+        case "awaiting":
+          break;
+        case "complete":
+          onComplete("successful");
+          break;
+        case "delayed":
+          break;
+        case "expired":
+          break;
+        case "in progress":
+          break;
+        case "failed":
+          break;
+        case "refunded":
+          break;
+        case "swapped":
+          break;
+        case "pending":
+          break;
+        default:
+          console.warn("Unknown status:", e.status);
+      }
+    });
+
+    // return () => {
+    //   console.log("Unsubscribing to", swapId);
+    //   // Cleanup on unmount or swapId change
+    //   echo.channel(`swaps.${swapId}`).stopListening(".swap.status_changed");
+    // };
+  }, [swapId, echo]);
 
   return (
     <div className={classes.container}>
@@ -240,7 +268,7 @@ const ExecutingSwap = ({
             <div className={classes.name}>Executing transaction</div>
             {status && (
               <div className={classes.status}>
-                {formatText(status, "titleCase")}...
+                Status: {formatText(status, "titleCase")}
               </div>
             )}
           </div>

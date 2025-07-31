@@ -47,12 +47,6 @@ export function useEcho() {
     }
 
     setEcho(echoInstance);
-
-    // Cleanup on unmount
-    return () => {
-      echoInstance.disconnect();
-      setEcho(null);
-    };
   }, []);
 
   return echo;
