@@ -53,7 +53,7 @@ export const handleNativeTokenSwap = async ({
     });
 
     const formatted = formatEther(balance);
-    console.log({ formatted });
+    console.log({ formatted, balance, parsedAmount });
 
     if (balance < parsedAmount) {
       onComplete("insufficient_fund");
@@ -96,7 +96,6 @@ export const handleErc20TokenSwap = async ({
   toAddress,
   amount,
   tokenAddress,
-  decimals = 18,
   onComplete,
   setStep,
   publicClient,
@@ -105,15 +104,22 @@ export const handleErc20TokenSwap = async ({
   toAddress: string;
   amount: number;
   tokenAddress: string;
-  decimals?: number;
   onComplete: (status: SwapStatus) => void;
   setStep: React.Dispatch<React.SetStateAction<SwapSteps>>;
   publicClient: PublicClient;
 }) => {
-  const parsedAmount = parseUnits(String(amount), decimals);
-
+  // const parsedAmountInUSDTDecimals = parsedAmount / 10n ** 12n;
   try {
     if (!publicClient) throw new Error("Missing public client");
+
+    // Check token balance
+    const decimals = await publicClient.readContract({
+      address: tokenAddress as Address,
+      abi: erc20Abi,
+      functionName: "decimals",
+    });
+
+    const parsedAmount = parseUnits(String(amount), decimals);
 
     // create a minor delay
     await new Promise((res) => {
@@ -131,7 +137,7 @@ export const handleErc20TokenSwap = async ({
     });
 
     const formatted = formatEther(balance);
-    console.log({ formatted });
+    console.log({ formatted, balance, parsedAmount });
 
     if (balance < parsedAmount) {
       onComplete("insufficient_fund");
