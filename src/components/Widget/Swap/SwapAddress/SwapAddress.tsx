@@ -9,12 +9,16 @@ import Copy from "@/components/app/Copy/Copy";
 import SwapButton from "../SwapButton/SwapButton";
 import { PaymentDetails } from "../Swap";
 import { get_swapPairs } from "@/types/apis/swap/get_swapPairs";
+import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
+import CompletionTime from "../ExecutingSwap/CompletionTime";
 
 const SwapAddress = ({
   token,
   paymentDetails,
   confirmTransaction,
   isExternalTransfer,
+  quote,
+  quoteLoading,
   onClose,
   goBack,
   onConfirm,
@@ -23,6 +27,8 @@ const SwapAddress = ({
   paymentDetails: PaymentDetails;
   confirmTransaction: boolean;
   isExternalTransfer: boolean;
+  quote: get_swapQuote;
+  quoteLoading: boolean;
   onClose: () => void;
   goBack: () => void;
   onConfirm: () => void;
@@ -69,7 +75,18 @@ const SwapAddress = ({
 
       <div className={classes.offsetHeight}></div>
 
-      <SwapButton onClick={() => setOpenHasTransferred(true)}>Next</SwapButton>
+      <SwapButton
+        loading={quoteLoading}
+        onClick={() => setOpenHasTransferred(true)}
+      >
+        Next (
+        <CompletionTime
+          style={{ color: "#fff" }}
+          key={JSON.stringify(quote)}
+          expiryTime={quote.expiry}
+        />
+        ){" "}
+      </SwapButton>
 
       <>
         {openInsufficientFund && (

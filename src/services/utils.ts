@@ -689,3 +689,8 @@ export const formatDateCounter = (time: number) => {
     compact,
   };
 };
+
+export const formatNumber = (num: number, digits: number) => {
+  const fixed = num.toFixed(digits);
+  return fixed.replace(/\.?0+$/, "");
+};

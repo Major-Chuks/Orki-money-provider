@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import TrippleChevronIcon from "@/assets/SvgComponents/TrippleChevronIcon";
 import classes from "./ExecutingSwap.module.css";
-import { CheckIcon, Clock } from "lucide-react";
+import { ArrowRight, CheckIcon, Clock } from "lucide-react";
 import LoadingIcon from "@/assets/app/LoadingIcon";
 import { useCallback, useEffect, useState } from "react";
 import { PaymentDetails, SwapStatus, SwapSteps } from "../Swap";
@@ -16,7 +16,6 @@ import Pusher from "pusher-js";
 import { useEcho } from "@/hooks/useEcho";
 import { formatText } from "@/services/utils";
 import { get_swapPairs } from "@/types/apis/swap/get_swapPairs";
-import CompletionTime from "./CompletionTime";
 import { useAppKitNetwork } from "@reown/appkit/react";
 import { networks } from "../../../../../config";
 import { AppKitNetwork } from "@reown/appkit/networks";
@@ -275,11 +274,28 @@ const ExecutingSwap = ({
         </div>
       </div>
 
-      <div className={classes.conversion}>
-        <div className={classes.price}>
+      <div className={classes.conversionWrapper}>
+        <div className={classes.conversion}>
+          <div className={classes.tokenWrapper}>
+            <div className={classes.icon}>
+              {token.token_logo ? <img src={token.token_logo} alt="" /> : null}
+            </div>
+            {quote.input_amount} {tokenSymbol}
+          </div>
+          <ArrowRight width={20} height={20} color="#AEAEB2" />
+          <div className={classes.tokenWrapper}>
+            <div className={classes.icon}>
+              {tokenPair.token_logo ? (
+                <img src={tokenPair.token_logo} alt="" />
+              ) : null}
+            </div>
+            {quote.quote_amount} {pairSymbol}
+          </div>
+        </div>
+
+        <div className={classes.conversionRate}>
           1 {tokenSymbol} <EquivalentIcon /> {quote.exchange_rate} {pairSymbol}
         </div>
-        <CompletionTime expiryTime={quote.expiry} />
       </div>
     </div>
   );

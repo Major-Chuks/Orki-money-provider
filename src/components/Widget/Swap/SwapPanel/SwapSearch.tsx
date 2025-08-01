@@ -9,10 +9,12 @@ import DrawerHeader from "../../WidgetDrawer/DrawerHeader/DrawerHeader";
 
 const SwapSearch = ({
   swapTokens,
+  token,
   onTokenChange,
   disabled,
 }: {
   swapTokens: get_swapPairs | null;
+  token: get_swapPairs[number] | null;
   disabled?: boolean;
   onTokenChange: (tokenSymbol: get_swapPairs[number]) => void;
 }) => {
@@ -34,8 +36,10 @@ const SwapSearch = ({
   useEffect(() => {
     if (searchValue) {
       const results =
-        swapTokens?.filter((c) =>
-          c.id?.toLowerCase().includes(searchValue.toLowerCase())
+        swapTokens?.filter(
+          (c) =>
+            c.symbol?.toLowerCase().includes(searchValue.toLowerCase()) ||
+            c.name?.toLowerCase().includes(searchValue.toLowerCase())
         ) || null;
       setFilteredCryptoCurrencies(results);
     }
@@ -43,22 +47,39 @@ const SwapSearch = ({
 
   useEffect(() => {
     if (selected) {
-      onTokenChange({ ...selected });
+      onTokenChange(selected);
     }
   }, [selected]);
+
+  useEffect(() => {
+    setSelected(token);
+  }, [token]);
 
   return (
     <div className={`${classes.container} ${disabled && classes.disabled}`}>
       <div onClick={handleClick} className={classes.selected}>
-        <div className={classes.countryFlag}>
+        <div className={classes.token}>
           <span className={classes.iconContainer}>
             {selected?.token_logo ? (
               <img src={selected?.token_logo} alt="" />
             ) : null}
           </span>
-          <span className={classes.name}>{selected?.id || "Select token"}</span>
+          <span className={classes.name}>
+            {selected?.symbol || "Select token"}
+          </span>
         </div>
         <CaretIcon style={{ marginLeft: "4px" }} />
+      </div>
+
+      <div className={classes.network}>
+        <span className={classes.iconContainer}>
+          {selected?.network_logo ? (
+            <img src={selected?.network_logo} alt="" />
+          ) : null}
+        </span>
+        <span className={classes.name}>
+          {selected?.network || "Select token"}
+        </span>
       </div>
 
       {toggleOverlay && (
@@ -72,7 +93,7 @@ const SwapSearch = ({
                 onSearchChange={(e) => setSearchValue(e.target.value)}
               />
 
-              <div className={classes.countryWrapper}>
+              <div className={classes.listContainer}>
                 {filteredTokens && (
                   <ListBuilder
                     items={filteredTokens || []}
@@ -85,20 +106,20 @@ const SwapSearch = ({
                           close();
                         }}
                         key={idx}
-                        className={classes.country}
+                        className={classes.listItem}
                       >
-                        <div className={classes.countryFlag}>
+                        <div className={classes.token}>
                           <span className={classes.iconContainer}>
                             {c.token_logo ? (
                               <img src={c.token_logo} alt="" />
                             ) : null}
                           </span>
                           <div className={classes.nameCode}>
-                            <span className={classes.name}>{c.id}</span>
+                            <span className={classes.name}>{c.symbol}</span>
                             <span className={classes.code}>{c.name}</span>
                           </div>
                         </div>
-                        <span className={classes.network}>{c.network}</span>
+                        <span className={classes.network2}>{c.network}</span>
                       </div>
                     )}
                   />

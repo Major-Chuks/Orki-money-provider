@@ -7,7 +7,7 @@
   cursor: default;
 }
 
-.country {
+.listItem {
   width: 100%;
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@
   transition: all 300ms;
 }
 
-.country {
+.listItem {
   padding: 8px 24px;
 }
 
@@ -38,18 +38,18 @@
   border: 1px solid var(--widget-hover-color);
 }
 
-.country:hover {
+.listItem:hover {
   background: rgba(90, 41, 236, 0.03);
 }
 
-.countryFlag {
+.token {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 12px;
 }
 
-.country .countryFlag {
+.listItem .token {
   gap: 18px;
 }
 
@@ -74,6 +74,24 @@
   line-height: normal;
 }
 
+.network {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.network .name {
+  color: var(--Foundation-Text-color-text-color-200, #8f8f8f);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
 .code {
   color: var(--Foundation-Text-color-text-color-200, #8f8f8f);
   font-family: Inter;
@@ -93,6 +111,14 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+.network .iconContainer {
+  display: flex;
+  width: 16px;
+  height: 16px;
+  justify-content: center;
+  align-items: center;
 }
 
 .iconContainer img {
@@ -136,14 +162,14 @@
   cursor: pointer;
 }
 
-.countryWrapper {
+.listContainer {
   width: 100%;
   height: 300px;
   overflow: auto;
   padding-right: 4px;
 }
 
-.network {
+.listItem .network2 {
   border-radius: 4px;
   background: var(--gray-100, #f3f4f6);
   padding: 4px;

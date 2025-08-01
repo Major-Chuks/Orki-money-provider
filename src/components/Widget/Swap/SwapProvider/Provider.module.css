@@ -30,6 +30,12 @@
   gap: 4px;
 }
 
+.conversionWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .conversion {
   display: flex;
   align-items: center;

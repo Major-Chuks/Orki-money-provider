@@ -13,6 +13,7 @@ import { useAppKitAccount, useWalletInfo } from "@reown/appkit/react";
 import { formatText } from "@/services/utils";
 import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
 import { get_swapPairs } from "@/types/apis/swap/get_swapPairs";
+import CompletionTime from "../ExecutingSwap/CompletionTime";
 
 type ConnectedWalletInfo = {
   tokenSymbol: string;
@@ -26,6 +27,7 @@ const VerifyWalletAddress = ({
   quote,
   token,
   tokenPair,
+  quoteLoading,
   onClose,
   onConfirm,
   onAddressChange,
@@ -33,6 +35,7 @@ const VerifyWalletAddress = ({
   quote: get_swapQuote;
   token: get_swapPairs[number];
   tokenPair: get_swapPairs[number];
+  quoteLoading: boolean;
   onClose: () => void;
   onConfirm: () => void;
   onAddressChange: ({
@@ -151,8 +154,8 @@ const VerifyWalletAddress = ({
               className={classes.addressInput}
             />
             <div className={classes.addressNote}>
-              This is the wallet you will send {pairSymbol} ({pairNetwork})
-              from.
+              This is the wallet you will receive {pairSymbol} ({pairNetwork})
+              on.
             </div>
           </div>
         )}
@@ -270,8 +273,15 @@ const VerifyWalletAddress = ({
                     close();
                     onConfirm();
                   }}
+                  loading={quoteLoading}
                 >
-                  Confirm Swap
+                  Confirm Swap (
+                  <CompletionTime
+                    key={JSON.stringify(quote.expiry)}
+                    expiryTime={quote.expiry}
+                    style={{ color: "#fff" }}
+                  />
+                  )
                 </SwapButton>
               </div>
             </div>

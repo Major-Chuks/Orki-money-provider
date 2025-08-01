@@ -1,8 +1,7 @@
 .duration {
-  color: var(--Foundation-Text-color-text-color-300, #5c5c5c);
-  text-align: center;
-  font-family: "Plus Jakarta Sans";
-  font-size: 14px;
+  color: var(--Foundation-Text-color-text-color-400, #3d3d3d);
+  font-family: Inter;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;

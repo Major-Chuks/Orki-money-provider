@@ -1,7 +1,6 @@
 "use client";
 
 import classes from "./Swap.module.css";
-import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import SwapProvider from "@/components/Widget/Swap/SwapProvider/Provider";
 import SwapIcon from "@/assets/SvgComponents/SwapIcon";
 import React, { useEffect, useMemo, useState } from "react";
@@ -27,6 +26,8 @@ import backend from "@/services/apis";
 import { get_swapQuote } from "@/types/apis/swap/get_swapQuote";
 import { debounce } from "lodash";
 import SwapError from "./SwapError/SwapError";
+import { formatNumber } from "@/services/utils";
+import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 
 export type SwapStatus =
   | "insufficient_fund"
@@ -70,6 +71,8 @@ const Swap = () => {
   );
   const [confirmTransaction, setConfirmTransaction] = useState(false);
   const [isExternalTransfer, setIsExternalTransfer] = useState(false);
+  const [toggleSwap, setToggleSwap] = useState(false);
+  const [isEVM, setIsEVM] = useState(false);
 
   const { isConnected, address } = useAppKitAccount();
   const { disconnect } = useDisconnect();
@@ -83,7 +86,7 @@ const Swap = () => {
   };
 
   const handleSwap = () => {
-    if (isConnected) {
+    if (isConnected || !isEVM) {
       setOpenVerifyAddress(true);
     } else {
       open({ view: "Connect" });
@@ -128,28 +131,90 @@ const Swap = () => {
     []
   );
 
+  const handleRefetchQuote = () => {
+    if (openExecutingSwap) return;
+    if (token && tokenPair)
+      debouncedGetQuote(amount, `${token.symbol}_${tokenPair.symbol}`);
+  };
+
   useEffect(() => {
+    handleRefetchQuote();
+  }, [openExecutingSwap]);
+
+  useEffect(() => {
+    // Handle disabling the next button
+
+    if (!isConnected && !isEVM) {
+      setDisabled(false);
+      return;
+    }
+
     if (
-      isConnected &&
-      !(amount && Number(amount) && amountPair && token && tokenPair)
+      !(
+        quote &&
+        amount &&
+        Number(amount) &&
+        amountPair &&
+        token &&
+        tokenPair &&
+        Number(amount) >= quote.min_from_amount &&
+        Number(amount) <= quote.max_from_amount
+      )
     ) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
-  }, [amount, amountPair, token, tokenPair, isConnected]);
+  }, [amount, amountPair, token, tokenPair, isConnected, isEVM, quote]);
 
   useEffect(() => {
+    // Handle quotes
     setAmountPair("");
-
+    setQuote(null);
     if (amount && Number(amount) && token && tokenPair) {
+      if (token.symbol === tokenPair.symbol) return;
       debouncedGetQuote(amount, `${token.symbol}_${tokenPair.symbol}`);
     }
   }, [amount, token, tokenPair]);
 
+  useEffect(() => {
+    // Set default swap parameters
+    if (swapPairs) {
+      setToken(swapPairs[0]);
+      setTokenPair(swapPairs[1]);
+      setAmount("0.1");
+    }
+  }, [swapPairs]);
+
+  useEffect(() => {
+    // Handle toggle swap panel
+    if (!quote) return;
+    const tokenAcc = { ...token } as get_swapPairs[number];
+
+    setAmount(amountPair);
+    setToken(tokenPair);
+    setTokenPair(tokenAcc);
+    setAmountPair("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toggleSwap]);
+
+  useEffect(() => {
+    // Handle connecting wallet based on the selected swap tokens
+    if (
+      token?.chainId ||
+      token?.contractAddress ||
+      tokenPair?.chainId ||
+      tokenPair?.contractAddress
+    ) {
+      setIsEVM(true);
+    } else {
+      setIsEVM(false);
+    }
+  }, [token, tokenPair]);
+
   return (
     <React.Fragment>
-      {isPending ? (
+      {isPending || !token || !tokenPair || !amount ? (
         <div className={`${classes.container} ${classes.loader}`}>
           <LargeLoadingIcon />
         </div>
@@ -170,10 +235,18 @@ const Swap = () => {
               onTokenChange={setToken}
               searchDisabled={quoteLoading}
               amountDisabled={quoteLoading}
+              min_from_amount={quote?.min_from_amount}
+              max_from_amount={quote?.max_from_amount}
+              setDisabled={setDisabled}
+              isConnected={isConnected}
               value={amount}
+              token={token}
             />
 
-            <ButtonWrapper className={classes.swapBtn}>
+            <ButtonWrapper
+              onClick={() => setToggleSwap(!toggleSwap)}
+              className={classes.swapBtn}
+            >
               <SwapIcon />
             </ButtonWrapper>
 
@@ -184,16 +257,21 @@ const Swap = () => {
               onTokenChange={setTokenPair}
               searchDisabled={quoteLoading}
               amountDisabled={true}
-              value={amountPair}
+              value={formatNumber(Number(amountPair), 6)}
+              token={tokenPair}
             />
           </div>
 
-          <SwapProvider quote={quote} loading={quoteLoading} />
+          <SwapProvider
+            quote={quote}
+            loading={quoteLoading}
+            onRefresh={handleRefetchQuote}
+          />
 
           <div style={{ marginBottom: "71px" }}></div>
 
-          <SwapButton onClick={handleSwap} disabled={disabled}>
-            {isConnected ? "Next" : "Connect Wallet"}
+          <SwapButton onClick={handleSwap} disabled={disabled || quoteLoading}>
+            {isConnected || !isEVM ? "Next" : "Connect Wallet"}
           </SwapButton>
 
           <>
@@ -221,6 +299,7 @@ const Swap = () => {
                   quote={quote}
                   token={token}
                   tokenPair={tokenPair}
+                  quoteLoading={quoteLoading}
                   onAddressChange={setTxAddress}
                 />
               </WidgetLayout>
@@ -257,6 +336,8 @@ const Swap = () => {
                   paymentDetails={paymentDetails}
                   confirmTransaction={confirmTransaction}
                   isExternalTransfer={isExternalTransfer}
+                  quote={quote}
+                  quoteLoading={quoteLoading}
                 />
               </WidgetLayout>
             )}
