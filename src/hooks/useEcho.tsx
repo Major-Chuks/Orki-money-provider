@@ -32,7 +32,7 @@ export function useEcho() {
       forceTLS: !isLocalhost,
       enabledTransports: ["ws", "wss"],
       wsPort: 80,
-      wssPort: 80,
+      wssPort: 443,
     });
 
     // Only bind if connector is a PusherConnector and has 'pusher'
