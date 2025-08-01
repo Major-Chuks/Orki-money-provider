@@ -32,7 +32,7 @@ export function useEcho() {
       forceTLS: !isLocalhost,
       enabledTransports: ["ws", "wss"],
       wsPort: 80,
-      wssPort: 443,
+      wssPort: 80,
     });
 
     // Only bind if connector is a PusherConnector and has 'pusher'
@@ -44,6 +44,8 @@ export function useEcho() {
       echoInstance.connector.pusher.connection.bind("connected", () => {
         console.log("✅ Connected successfully to WebSocket server!");
       });
+    } else {
+      console.log("❌WebSocket server not connected.");
     }
 
     setEcho(echoInstance);
