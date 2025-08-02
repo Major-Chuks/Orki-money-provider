@@ -43,8 +43,8 @@ export const billingApi = {
       "post_swapSubscription"
     );
   },
-  get_listBillingHistory: async () => {
-    const url = "/billing/history";
+  get_listBillingHistory: async ({ params }: { params: string }) => {
+    const url = `/billing/history${params}`;
     return handleApiCall(() => BACKEND_API.get(url), "get_listBillingHistory");
   },
   get_downloadInvoice: async ({ invoiceId }: { invoiceId: string }) => {

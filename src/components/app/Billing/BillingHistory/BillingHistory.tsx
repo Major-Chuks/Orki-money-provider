@@ -8,25 +8,21 @@ import { useListBillingHistoryQuery } from "@/services/queryApis";
 import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 import { get_listBillingHistory } from "@/types/apis/billing/get_listBillingHistory";
+import { useState } from "react";
 
 const BillingHistory = () => {
-  const { data, isPending, isError } = useListBillingHistoryQuery();
+  const [params, setParams] = useState("");
+
+  const { data, isPending, isError } = useListBillingHistoryQuery({
+    params,
+  });
   const billingHistory: get_listBillingHistory["data"] = data?.data.data.data;
   const metadata: get_listBillingHistory["meta"] = data?.data.data.meta;
 
-  const handlePrev = (): void => {
-    if (!metadata?.previousPageUrl) return;
-    // refetch({ page: Number(metadata?.previousPageUrl.split("=")[1]) });
-  };
-
-  const handleNext = (): void => {
-    if (!metadata?.nextPageUrl) return;
-    // refetch({ page: Number(metadata?.nextPageUrl.split("=")[1]) });
-  };
-
-  const handleGoto = (page: number) => {
-    console.log(page);
-    // refetch({ page });
+  const handlePagination = (page: number) => {
+    const searchParams = new URLSearchParams(params || "");
+    searchParams.set("page", String(page));
+    setParams(`?${searchParams.toString()}`);
   };
 
   if (isPending) return <LoadingScreen />;
@@ -57,9 +53,7 @@ const BillingHistory = () => {
             {metadata && (
               <Pagination
                 metadata={metadata}
-                handleGoto={handleGoto}
-                handleNext={handleNext}
-                handlePrev={handlePrev}
+                handlePagination={handlePagination}
               />
             )}
           </div>

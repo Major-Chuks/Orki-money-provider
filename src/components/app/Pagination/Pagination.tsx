@@ -13,18 +13,11 @@ export interface Metadata {
 }
 
 interface Pagination {
-  handleNext: () => void;
-  handlePrev: () => void;
-  handleGoto: (pageNumber: number) => void;
+  handlePagination: (pageNumber: number) => void;
   metadata: Metadata;
 }
 
-const Pagination = ({
-  handleGoto,
-  handleNext,
-  handlePrev,
-  metadata,
-}: Pagination) => {
+const Pagination = ({ handlePagination, metadata }: Pagination) => {
   if (metadata.total < metadata.perPage) return null;
 
   return (
@@ -37,19 +30,31 @@ const Pagination = ({
         items out of {metadata.total} results found
       </div>
       <div className={classes.control}>
-        <div onClick={handlePrev}>Previous</div>
+        <div
+          onClick={() =>
+            handlePagination(Number(metadata.previousPageUrl?.split("=")[1]))
+          }
+        >
+          Previous
+        </div>
         {metadata.firstPage < metadata.currentPage && (
-          <div onClick={() => handleGoto(metadata.firstPage)}>
+          <div onClick={() => handlePagination(metadata.firstPage)}>
             {metadata.firstPage}
           </div>
         )}
         <div className={classes.active}>{metadata.currentPage}</div>
         {metadata.lastPage > metadata.currentPage && (
-          <div onClick={() => handleGoto(metadata.lastPage)}>
+          <div onClick={() => handlePagination(metadata.lastPage)}>
             {metadata.lastPage}
           </div>
         )}
-        <div onClick={handleNext}>Next</div>
+        <div
+          onClick={() =>
+            handlePagination(Number(metadata.nextPageUrl?.split("=")[1]))
+          }
+        >
+          Next
+        </div>
       </div>
     </div>
   );

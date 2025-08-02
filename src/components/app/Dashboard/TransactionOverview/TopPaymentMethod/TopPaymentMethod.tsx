@@ -9,7 +9,7 @@ import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const TopPaymentMethod = () => {
-  const [interval, setInterval] = useState<IntervalType>("1D");
+  const [interval, setInterval] = useState<IntervalType>("30D");
 
   const { data, isPending, isError } = useTopPaymentMethodsQuery({ interval });
   const topPaymentMethod: get_topPaymentMethods[] = data?.data.data;

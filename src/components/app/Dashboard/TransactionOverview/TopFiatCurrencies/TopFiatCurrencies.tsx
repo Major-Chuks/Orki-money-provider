@@ -9,7 +9,7 @@ import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const TopFiatCurrencies = () => {
-  const [interval, setInterval] = useState<IntervalType>("1D");
+  const [interval, setInterval] = useState<IntervalType>("30D");
 
   const { data, isPending, isError } = useTopFiatCurrenciesQuery({ interval });
   const topFiatCurrencies: get_topFiatCurrencies[] = data?.data.data;

@@ -7,7 +7,7 @@ const ChartDateFilter = ({
 }: {
   onChange: (interval: "1D" | "7D" | "30D") => void;
 }) => {
-  const [interval, setInterval] = useState<"1D" | "7D" | "30D">("1D");
+  const [interval, setInterval] = useState<"1D" | "7D" | "30D">("30D");
 
   useEffect(() => {
     onChange(interval);

@@ -10,8 +10,7 @@ import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const TransactionsOverTime = () => {
-  const [interval, setInterval] = useState<IntervalType>("1D");
-  // const [currency, setCurrency] = useState<string>("USD");
+  const [interval, setInterval] = useState<IntervalType>("30D");
 
   const currency = "USD";
 

@@ -10,8 +10,11 @@ import { useApiQuery, useApiMutation } from ".";
 export const useSubscribeToWebhookMutation = () =>
   useApiMutation(webhookApi.patch_subscribeToWebhook);
 
-export const useWebhookLogsQuery = () =>
-  useApiQuery(["get_webhookLogs"], webhookApi.get_webhookLogs);
+export const useWebhookLogsQuery = (params: { params: string }) =>
+    // Add JSON.stringify(params) to queryKey for cache uniqueness
+  useApiQuery(["get_webhookLogs", JSON.stringify(params)], () =>
+    webhookApi.get_webhookLogs(params)
+  );
 
 export const useWebhooksQuery = () =>
   useApiQuery(["get_webhooks"], webhookApi.get_webhooks);

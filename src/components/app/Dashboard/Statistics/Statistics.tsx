@@ -17,7 +17,7 @@ import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 
 const Statistics = () => {
-  const [interval, setInterval] = useState<IntervalType>("1D");
+  const [interval, setInterval] = useState<IntervalType>("30D");
 
   const totalTransactions = useTotalTransactionsQuery({ interval });
   const totalTxData: get_totalTransactions = totalTransactions.data?.data.data;

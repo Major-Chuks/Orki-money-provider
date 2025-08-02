@@ -7,5 +7,8 @@ import { useApiQuery } from ".";
 
 
 
-export const useApiLogsQuery = () =>
-  useApiQuery(["get_apiLogs"], apiLogsApi.get_apiLogs);
+export const useApiLogsQuery = (params: { params: string }) =>
+    // Add JSON.stringify(params) to queryKey for cache uniqueness
+  useApiQuery(["get_apiLogs", JSON.stringify(params)], () =>
+    apiLogsApi.get_apiLogs(params)
+  );

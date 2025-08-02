@@ -210,7 +210,20 @@ export const apiManifest: ApiManifest = {
   },
   "apiLogs": {
     "get_apiLogs": {
-      "args": []
+      "args": [
+        {
+          "name": "{ params }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "params",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
     }
   },
   "auth": {
@@ -422,7 +435,20 @@ export const apiManifest: ApiManifest = {
       ]
     },
     "get_listBillingHistory": {
-      "args": []
+      "args": [
+        {
+          "name": "{ params }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "params",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
     },
     "get_downloadInvoice": {
       "args": [
@@ -1093,7 +1119,20 @@ export const apiManifest: ApiManifest = {
       ]
     },
     "get_webhookLogs": {
-      "args": []
+      "args": [
+        {
+          "name": "{ params }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "params",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
     },
     "get_webhooks": {
       "args": []

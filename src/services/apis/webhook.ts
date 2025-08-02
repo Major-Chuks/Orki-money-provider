@@ -13,8 +13,8 @@ export const webhookApi = {
     );
   },
 
-  get_webhookLogs: async () => {
-    const url = "/webhooks/logs";
+  get_webhookLogs: async ({ params }: { params: string }) => {
+    const url = `/webhooks/logs${params}`;
     return handleApiCall(() => BACKEND_API.get(url), "get_webhookLogs");
   },
 

@@ -28,19 +28,10 @@ const Transactions = () => {
     data?.data.data.transactions;
   const metadata: get_transactions["meta"] = data?.data.data.meta;
 
-  const handlePrev = (): void => {
-    if (!metadata?.previousPageUrl) return;
-    // refetch({ page: Number(metadata?.previousPageUrl.split("=")[1]) });
-  };
-
-  const handleNext = (): void => {
-    if (!metadata?.nextPageUrl) return;
-    // refetch({ page: Number(metadata?.nextPageUrl.split("=")[1]) });
-  };
-
-  const handleGoto = (page: number) => {
-    console.log(page);
-    // refetch({ page });
+  const handlePagination = (page: number) => {
+    const searchParams = new URLSearchParams(params || "");
+    searchParams.set("page", String(page));
+    setParams(`?${searchParams.toString()}`);
   };
 
   const handleSearch = async (searchParams: SearchParamsType) => {
@@ -135,12 +126,10 @@ const Transactions = () => {
             <EmptyState isSearch={params} />
           )}
 
-          {false && (
+          {metadata && (
             <Pagination
               metadata={metadata}
-              handleGoto={handleGoto}
-              handleNext={handleNext}
-              handlePrev={handlePrev}
+              handlePagination={handlePagination}
             />
           )}
         </div>

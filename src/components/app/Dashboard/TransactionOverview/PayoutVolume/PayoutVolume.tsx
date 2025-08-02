@@ -9,7 +9,8 @@ import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 const PayoutVolume = () => {
-  const [interval, setInterval] = useState<IntervalType>("1D");
+  const [interval, setInterval] = useState<IntervalType>("30D");
+  // const [currency, setCurrency] = useState<string>("USD");
 
   const { data, isPending, isError } = useTransactionVolumeQuery({
     interval,

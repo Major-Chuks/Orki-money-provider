@@ -25,8 +25,11 @@ export const useResumeSubscriptionMutation = () =>
 export const useSwapSubscriptionMutation = () =>
   useApiMutation(billingApi.post_swapSubscription);
 
-export const useListBillingHistoryQuery = () =>
-  useApiQuery(["get_listBillingHistory"], billingApi.get_listBillingHistory);
+export const useListBillingHistoryQuery = (params: { params: string }) =>
+    // Add JSON.stringify(params) to queryKey for cache uniqueness
+  useApiQuery(["get_listBillingHistory", JSON.stringify(params)], () =>
+    billingApi.get_listBillingHistory(params)
+  );
 
 export const useDownloadInvoiceQuery = (params: { invoiceId: string }) =>
     // Add JSON.stringify(params) to queryKey for cache uniqueness
