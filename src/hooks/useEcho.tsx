@@ -10,45 +10,48 @@ declare global {
 }
 
 export function useEcho() {
-  const [echo, setEcho] = useState<any | null>(null);
+  const [echo, setEcho] = useState<Echo<any> | null>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined") return console.log("Window not found");
-    // Set Pusher on window if not set already
+    if (typeof window === "undefined") {
+      console.log("Window not found");
+      return;
+    }
+
     if (!window.Pusher) {
       window.Pusher = Pusher;
     }
 
-    // const isLocalhost =
-    //   window.location.hostname === "localhost" ||
-    //   window.location.hostname === "127.0.0.1" ||
-    //   window.location.hostname === "[::1]";
+    const isDev = process.env.NEXT_PUBLIC_ENVIRONMENT === "dev";
 
-    // Initialize Echo
     const echoInstance = new Echo({
       broadcaster: "reverb",
       key: process.env.NEXT_PUBLIC_WEBSOCKET_ID!,
       wsHost: "ws.money.orki.io",
-      forceTLS: true,
+      forceTLS: !isDev,
       enabledTransports: ["ws", "wss"],
-      // wsPort: 80,
-      wssPort: 443,
+      wssPort: isDev ? 80 : 443,
     });
 
-    // Only bind if connector is a PusherConnector and has 'pusher'
-    if (
-      echoInstance.connector &&
-      "pusher" in echoInstance.connector &&
-      echoInstance.connector.pusher?.connection
-    ) {
-      echoInstance.connector.pusher.connection.bind("connected", () => {
-        console.log("✅ Connected successfully to WebSocket server!");
-      });
-    } else {
-      console.log("❌WebSocket server not connected.");
+    const connection = (echoInstance.connector as any)?.pusher?.connection;
+
+    const handleConnected = () => {
+      console.log("✅ Connected successfully to WebSocket server!");
+    };
+
+    if (connection) {
+      connection.bind("connected", handleConnected);
     }
 
     setEcho(echoInstance);
+
+    return () => {
+      if (connection) {
+        connection.unbind("connected", handleConnected); // ✅ precise unbinding
+      }
+      echoInstance.leaveAllChannels();
+      echoInstance.disconnect();
+    };
   }, []);
 
   return echo;

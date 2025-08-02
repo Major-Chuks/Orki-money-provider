@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import classes from "./Swap.module.css";
@@ -28,6 +29,9 @@ import { debounce } from "lodash";
 import SwapError from "./SwapError/SwapError";
 import { formatNumber } from "@/services/utils";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
+import { useEcho } from "@/hooks/useEcho";
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
 
 export type SwapStatus =
   | "insufficient_fund"
@@ -46,7 +50,17 @@ export type PaymentDetails = {
   pay_out_amount: number;
 };
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Echo: Echo<any>;
+    Pusher: typeof Pusher;
+  }
+}
+
 const Swap = () => {
+  const echo = useEcho();
+
   const [openConnectWallet, setOpenConnectWallet] = useState(false);
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState<get_swapPairs[number] | null>(null);
@@ -73,6 +87,7 @@ const Swap = () => {
   const [isExternalTransfer, setIsExternalTransfer] = useState(false);
   const [toggleSwap, setToggleSwap] = useState(false);
   const [isEVM, setIsEVM] = useState(false);
+  const [swapId, setSwapId] = useState("");
 
   const { isConnected, address } = useAppKitAccount();
   const { disconnect } = useDisconnect();
@@ -94,8 +109,9 @@ const Swap = () => {
     setConfirmTransaction(false);
   };
 
-  const handleSwapComplete = (status: SwapStatus) => {
-    if (status === "successful") {
+  const handleSwapComplete = (status: SwapStatus, id?: string) => {
+    if (status === "successful" && id) {
+      setSwapId(id);
       setOpenSwapCompleted(true);
     } else if (status === "insufficient_fund") {
       setOpenSwapAddress(true);
@@ -305,9 +321,10 @@ const Swap = () => {
               </WidgetLayout>
             )}
 
-            {openExecutingSwap && quote && token && tokenPair && (
+            {openExecutingSwap && quote && token && tokenPair && echo && (
               <WidgetLayout overlay>
                 <ExecutingSwap
+                  echo={echo}
                   onComplete={handleSwapComplete}
                   setPaymentDetails={setPaymentDetails}
                   quote={quote}
@@ -333,6 +350,7 @@ const Swap = () => {
                     setConfirmTransaction(true);
                   }}
                   token={token}
+                  tokenPair={tokenPair}
                   paymentDetails={paymentDetails}
                   confirmTransaction={confirmTransaction}
                   isExternalTransfer={isExternalTransfer}
@@ -346,7 +364,12 @@ const Swap = () => {
               <WidgetLayout overlay>
                 <SwapCompleted
                   onClose={() => setOpenSwapCompleted(false)}
-                  quote={quote}
+                  swapId={swapId}
+                  onComplete={() => {
+                    setOpenSwapCompleted(false);
+                    setSwapId("");
+                    setOpenSwapError(true);
+                  }}
                 />
               </WidgetLayout>
             )}

@@ -11,7 +11,7 @@ const SwapError = ({ onClose }: { onClose: () => void }) => {
       </div>
 
       <div className={classes.main}>
-        <div>Something went wrong</div>
+        <div className={classes.errorText}>Something went wrong!</div>
       </div>
     </div>
   );

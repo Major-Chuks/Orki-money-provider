@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import TrippleChevronIcon from "@/assets/SvgComponents/TrippleChevronIcon";
 import classes from "./ExecutingSwap.module.css";
-import { ArrowRight, CheckIcon, Clock } from "lucide-react";
+import { CheckIcon, Clock } from "lucide-react";
 import LoadingIcon from "@/assets/app/LoadingIcon";
 import { useCallback, useEffect, useState } from "react";
 import { PaymentDetails, SwapStatus, SwapSteps } from "../Swap";
@@ -12,23 +12,16 @@ import EquivalentIcon from "@/assets/SvgComponents/EquivalentIcon";
 import backend from "@/services/apis";
 import { handleErc20TokenSwap, handleNativeTokenSwap } from "./script";
 import Echo from "laravel-echo";
-import Pusher from "pusher-js";
-import { useEcho } from "@/hooks/useEcho";
 import { formatText } from "@/services/utils";
 import { get_swapPairs } from "@/types/apis/swap/get_swapPairs";
 import { useAppKitNetwork } from "@reown/appkit/react";
 import { networks } from "../../../../../config";
 import { AppKitNetwork } from "@reown/appkit/networks";
 import { usePublicClient } from "wagmi";
-
-declare global {
-  interface Window {
-    Echo: Echo<any>;
-    Pusher: typeof Pusher;
-  }
-}
+import { useEffectOnce } from "@/hooks/useEffectOnce";
 
 const ExecutingSwap = ({
+  echo,
   quote,
   txAddress,
   token,
@@ -37,6 +30,7 @@ const ExecutingSwap = ({
   onComplete,
   setPaymentDetails,
 }: {
+  echo: Echo<any>;
   quote: get_swapQuote;
   txAddress: {
     sendingAdderss: string;
@@ -45,7 +39,7 @@ const ExecutingSwap = ({
   confirmTransaction: boolean;
   token: get_swapPairs[number];
   tokenPair: get_swapPairs[number];
-  onComplete: (status: SwapStatus) => void;
+  onComplete: (status: SwapStatus, id?: string) => void;
   setPaymentDetails: React.Dispatch<
     React.SetStateAction<PaymentDetails | null>
   >;
@@ -58,10 +52,9 @@ const ExecutingSwap = ({
 
   const publicClient = usePublicClient();
 
-  const echo = useEcho();
-
   const { switchNetwork } = useAppKitNetwork();
 
+  // TODO: Async Switch Chain
   const handleSwitchNetwork = useCallback(() => {
     const network: AppKitNetwork | undefined = (
       networks as unknown as AppKitNetwork[]
@@ -99,6 +92,9 @@ const ExecutingSwap = ({
     setPaymentDetails(res);
 
     setSwapId(res.id);
+
+    // Hold swap ID
+    window.sessionStorage.setItem("swapId", res.id);
 
     setStep("processing");
 
@@ -139,16 +135,25 @@ const ExecutingSwap = ({
     }
   };
 
-  useEffect(() => {
+  useEffectOnce(() => {
     if (confirmTransaction) {
+      const savedId = window.sessionStorage.getItem("swapId");
+      if (savedId) {
+        setSwapId(savedId);
+      }
       setStep("processing");
-    } else if (echo) {
+    } else {
+      window.sessionStorage.removeItem("swapId");
       handleInitiateSwap();
     }
-  }, [confirmTransaction, echo]);
+  }, [confirmTransaction]);
 
   useEffect(() => {
     if (!swapId || !echo) return;
+    console.log({
+      "Connection status": echo.connector.pusher.connection.state,
+    });
+
     console.log("🔁 Subscribing to", swapId);
 
     const channel = echo.channel(`swaps.${swapId}`);
@@ -160,13 +165,14 @@ const ExecutingSwap = ({
         case "awaiting":
           break;
         case "complete":
-          onComplete("successful");
+          onComplete("successful", e.id);
           break;
         case "delayed":
           break;
         case "expired":
           break;
         case "in progress":
+          setStep("executing");
           break;
         case "failed":
           break;
@@ -181,11 +187,11 @@ const ExecutingSwap = ({
       }
     });
 
-    // return () => {
-    //   console.log("Unsubscribing to", swapId);
-    //   // Cleanup on unmount or swapId change
-    //   echo.channel(`swaps.${swapId}`).stopListening(".swap.status_changed");
-    // };
+    return () => {
+      console.log("Unsubscribing to", swapId);
+      // Cleanup on unmount or swapId change
+      echo.channel(`swaps.${swapId}`).stopListening(".swap.status_changed");
+    };
   }, [swapId, echo]);
 
   return (
@@ -275,24 +281,6 @@ const ExecutingSwap = ({
       </div>
 
       <div className={classes.conversionWrapper}>
-        <div className={classes.conversion}>
-          <div className={classes.tokenWrapper}>
-            <div className={classes.icon}>
-              {token.token_logo ? <img src={token.token_logo} alt="" /> : null}
-            </div>
-            {quote.input_amount} {tokenSymbol}
-          </div>
-          <ArrowRight width={20} height={20} color="#AEAEB2" />
-          <div className={classes.tokenWrapper}>
-            <div className={classes.icon}>
-              {tokenPair.token_logo ? (
-                <img src={tokenPair.token_logo} alt="" />
-              ) : null}
-            </div>
-            {quote.quote_amount} {pairSymbol}
-          </div>
-        </div>
-
         <div className={classes.conversionRate}>
           1 {tokenSymbol} <EquivalentIcon /> {quote.exchange_rate} {pairSymbol}
         </div>
