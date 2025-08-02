@@ -38,21 +38,21 @@ export const analyticsApi = {
 
   get_transactionVolume: async ({
     interval,
-  }: {
-    interval: "1D" | "7D" | "30D";
-  }) => {
-    const url = `/dashboard/analytics/transaction-volume?interval=${interval}`;
-    return handleApiCall(() => BACKEND_API.get(url), "get_transactionVolume");
-  },
-
-  get_transactionHistory: async ({
-    interval,
     currency,
   }: {
     interval: "1D" | "7D" | "30D";
     currency: string;
   }) => {
-    const url = `/dashboard/analytics/transaction-history?interval=${interval}&currency=${currency}`;
+    const url = `/dashboard/analytics/transaction-volume?interval=${interval}&currency=${currency}`;
+    return handleApiCall(() => BACKEND_API.get(url), "get_transactionVolume");
+  },
+
+  get_transactionHistory: async ({
+    interval,
+  }: {
+    interval: "1D" | "7D" | "30D";
+  }) => {
+    const url = `/dashboard/analytics/transaction-history?interval=${interval}`;
     return handleApiCall(() => BACKEND_API.get(url), "get_transactionHistory");
   },
 

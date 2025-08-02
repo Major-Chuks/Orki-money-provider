@@ -15,6 +15,7 @@ import { userProfileApi } from "./userProfile";
 import { teamManagementApi } from "./teamManagement";
 import { onboardingApi } from "./onboarding";
 import { swapApi } from "./swap";
+import { utilityApi } from "./utility";
 
 export const baseURL = "https://api.money.orki.io/api";
 
@@ -96,5 +97,6 @@ export default function backend() {
     ...teamManagementApi,
     ...onboardingApi,
     ...swapApi,
+    ...utilityApi,
   };
 }

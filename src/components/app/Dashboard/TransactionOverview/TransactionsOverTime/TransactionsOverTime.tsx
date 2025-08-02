@@ -16,7 +16,6 @@ const TransactionsOverTime = () => {
 
   const { data, isPending, isError } = useTransactionHistoryQuery({
     interval,
-    currency,
   });
   const txOverTime: get_transactionHistory[] = data?.data.data;
 

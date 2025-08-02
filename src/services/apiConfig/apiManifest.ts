@@ -91,22 +91,6 @@ export const apiManifest: ApiManifest = {
     "get_transactionVolume": {
       "args": [
         {
-          "name": "{\r\n    interval,\r\n  }",
-          "isOptional": false,
-          "isObject": true,
-          "properties": [
-            {
-              "name": "interval",
-              "isOptional": false,
-              "type": "\"1D\" | \"7D\" | \"30D\""
-            }
-          ]
-        }
-      ]
-    },
-    "get_transactionHistory": {
-      "args": [
-        {
           "name": "{\r\n    interval,\r\n    currency,\r\n  }",
           "isOptional": false,
           "isObject": true,
@@ -120,6 +104,22 @@ export const apiManifest: ApiManifest = {
               "name": "currency",
               "isOptional": false,
               "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    "get_transactionHistory": {
+      "args": [
+        {
+          "name": "{\r\n    interval,\r\n  }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "interval",
+              "isOptional": false,
+              "type": "\"1D\" | \"7D\" | \"30D\""
             }
           ]
         }
@@ -1094,6 +1094,11 @@ export const apiManifest: ApiManifest = {
           ]
         }
       ]
+    }
+  },
+  "utility": {
+    "get_fetchFiatCurrencies": {
+      "args": []
     }
   },
   "webhook": {

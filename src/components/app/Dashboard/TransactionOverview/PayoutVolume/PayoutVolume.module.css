@@ -29,6 +29,14 @@
   letter-spacing: -0.2px;
 }
 
+.filterWrapper {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .chartContainer {
   width: 100%;
   height: auto;
@@ -64,4 +72,23 @@
   height: 8px;
   border-radius: 50%;
   margin-right: 4px;
+}
+
+.infoText {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #dedfe2;
+  background: #fff;
+  box-shadow: 0 0 4px 2px #ecf2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* text */
+  color: var(--Neutral-4, #777e90);
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 112.5% */
 }

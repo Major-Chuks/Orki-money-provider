@@ -29,5 +29,6 @@ export * from "./useSwapQueries";
 export * from "./useTeamManagementQueries";
 export * from "./useTransactionsQueries";
 export * from "./useUserProfileQueries";
+export * from "./useUtilityQueries";
 export * from "./useWebhookQueries";
 export * from "./useWidgetQueries";

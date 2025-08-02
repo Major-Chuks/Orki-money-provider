@@ -31,13 +31,13 @@ export const useFailedTransactionsQuery = (params: { interval: "1D" | "7D" | "30
     analyticsApi.get_failedTransactions(params)
   );
 
-export const useTransactionVolumeQuery = (params: { interval: "1D" | "7D" | "30D" }) =>
+export const useTransactionVolumeQuery = (params: { interval: "1D" | "7D" | "30D"; currency: string }) =>
     // Add JSON.stringify(params) to queryKey for cache uniqueness
   useApiQuery(["get_transactionVolume", JSON.stringify(params)], () =>
     analyticsApi.get_transactionVolume(params)
   );
 
-export const useTransactionHistoryQuery = (params: { interval: "1D" | "7D" | "30D"; currency: string }) =>
+export const useTransactionHistoryQuery = (params: { interval: "1D" | "7D" | "30D" }) =>
     // Add JSON.stringify(params) to queryKey for cache uniqueness
   useApiQuery(["get_transactionHistory", JSON.stringify(params)], () =>
     analyticsApi.get_transactionHistory(params)

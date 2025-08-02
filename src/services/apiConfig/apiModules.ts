@@ -10,6 +10,7 @@ import { swapApi } from '../apis/swap';
 import { teamManagementApi } from '../apis/teamManagement';
 import { transactionsApi } from '../apis/transactions';
 import { userProfileApi } from '../apis/userProfile';
+import { utilityApi } from '../apis/utility';
 import { webhookApi } from '../apis/webhook';
 import { widgetApi } from '../apis/widget';
 
@@ -24,6 +25,7 @@ export const apiModules = {
   'teamManagement': teamManagementApi,
   'transactions': transactionsApi,
   'userProfile': userProfileApi,
+  'utility': utilityApi,
   'webhook': webhookApi,
   'widget': widgetApi,
 };

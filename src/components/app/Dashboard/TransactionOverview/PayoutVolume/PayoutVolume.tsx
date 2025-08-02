@@ -7,21 +7,27 @@ import { useTransactionVolumeQuery } from "@/services/queryApis";
 import { get_transactionVolume } from "@/types/apis/analytics/get_transactionVolume";
 import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
+import CurrencyFilter from "../../CurrencyFilter/CurrencyFilter";
 
 const PayoutVolume = () => {
   const [interval, setInterval] = useState<IntervalType>("30D");
-  // const [currency, setCurrency] = useState<string>("USD");
+  const [currency, setCurrency] = useState<string>("USD");
 
   const { data, isPending, isError } = useTransactionVolumeQuery({
     interval,
+    currency,
   });
+
   const txVolume: get_transactionVolume = data?.data.data;
 
   return (
     <div className={classes.container}>
       <div className={classes.heading}>
         <div className={classes.title}>Transaction Volume</div>
-        <ChartDateFilter onChange={setInterval} />
+        <div className={classes.filterWrapper}>
+          <CurrencyFilter onChange={setCurrency} />
+          <ChartDateFilter onChange={setInterval} />
+        </div>
       </div>
 
       {isPending ? (
@@ -33,8 +39,16 @@ const PayoutVolume = () => {
       ) : (
         <>
           <div className={classes.chartContainer}>
-            {txVolume.provider_color_map && (
-              <Chart key={interval} data={txVolume} interval={interval} />
+            {txVolume.data.length ? (
+              txVolume.provider_color_map && (
+                <Chart
+                  key={interval + currency}
+                  data={txVolume}
+                  interval={interval}
+                />
+              )
+            ) : (
+              <div className={classes.infoText}>No result found</div>
             )}
           </div>
 
