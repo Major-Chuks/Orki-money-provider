@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import classes from "./SwapCompleted.module.css";
 import {
   ArrowDown,
@@ -7,9 +8,6 @@ import {
 } from "lucide-react";
 import Copy from "@/components/app/Copy/Copy";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
-import ethereumLogo from "@/assets/widget/ethereumLogo.svg";
-import usdtLogo from "@/assets/widget/usdtLogo.svg";
-import Image from "next/image";
 import SwapButton from "../SwapButton/SwapButton";
 import { useSwapQuery } from "@/services/queryApis";
 import { get_swap } from "@/types/apis/swap/get_swap";
@@ -41,9 +39,11 @@ const SwapCompleted = ({
         <div className={classes.loadingText}>Retrieving receipt...</div>
       ) : swap ? (
         <>
-          <div className={classes.successIconWrapper}>
-            <CheckIcon width={57} height={57} color="#16A34A" />
-          </div>
+          {swap.status === "complete" ? (
+            <div className={classes.successIconWrapper}>
+              <CheckIcon width={57} height={57} color="#16A34A" />
+            </div>
+          ) : null}
           {swap.status === "complete" ? (
             <div className={classes.title}>Swap Completed!</div>
           ) : (
@@ -55,51 +55,75 @@ const SwapCompleted = ({
           <div className={classes.conversion}>
             <div className={classes.tokenWrapper}>
               <div className={classes.icon}>
-                <Image src={ethereumLogo} alt="" />
+                <img src={swap.from_asset.logo} alt="" />
               </div>
-              --
+              {swap.from_amount}
             </div>
             <ArrowDown width={20} height={20} color="#AEAEB2" />
             <div className={classes.tokenWrapper}>
               <div className={classes.icon}>
-                <Image src={usdtLogo} alt="" />
+                <img src={swap.to_asset.logo} alt="" />
               </div>
-              --
+              {swap.payout_amount}
             </div>
           </div>
 
           <div className={classes.transactionDetails}>
-            {/* <div className={classes.item}>
-              <span>From address:</span>
-              <span>{formatText(swap.from_address, "clip", [5, 8])}</span>
+            <div className={classes.item}>
+              <span className={classes.key}>From address:</span>
+              <div className={classes.withCopy}>
+                <span className={classes.value}>
+                  {formatText(swap.from_address, "clip", [5, 6])}
+                </span>
+                <Copy value={swap.from_address}>
+                  <ButtonWrapper>
+                    <CopyIcon width={16} height={16} color="#8E8E93" />
+                  </ButtonWrapper>
+                </Copy>
+              </div>
             </div>
 
             <div className={classes.item}>
-              <span>To address:</span>
-              <span>{formatText(swap.to_address, "clip", [5, 8])}</span>
+              <span className={classes.key}>To address:</span>
+              <div className={classes.withCopy}>
+                <span className={classes.value}>
+                  {formatText(swap.to_address, "clip", [5, 6])}
+                </span>
+                <Copy value={swap.to_address}>
+                  <ButtonWrapper>
+                    <CopyIcon width={16} height={16} color="#8E8E93" />
+                  </ButtonWrapper>
+                </Copy>
+              </div>
             </div>
 
             <div className={classes.item}>
-              <span>Pay in address:</span>
-              <span>{formatText(swap.pay_in_address, "clip", [5, 8])}</span>
-            </div> */}
-
-            <div className={classes.item}>
-              <span>Transaction time:</span>
-              <span>{swap.elapsed_time}</span>
+              <span className={classes.key}>Pay in address:</span>
+              <div className={classes.withCopy}>
+                <span className={classes.value}>
+                  {formatText(swap.pay_in_address, "clip", [5, 6])}
+                </span>
+                <Copy value={swap.pay_in_address}>
+                  <ButtonWrapper>
+                    <CopyIcon width={16} height={16} color="#8E8E93" />
+                  </ButtonWrapper>
+                </Copy>
+              </div>
             </div>
 
             <div className={classes.item}>
-              <span>Network fee:</span>
-              <span>--</span>
+              <span className={classes.key}>Transaction time:</span>
+              <span className={classes.value}>{swap.elapsed_time}</span>
             </div>
 
             <div className={classes.item}>
-              <span>Exchange rate:</span>
-              <span>1 {swap.from_asset}</span> <EquivalentIcon />{" "}
-              <span>
-                {swap.exchange_rate} {swap.to_asset}
-              </span>
+              <span className={classes.key}>Exchange rate:</span>
+              <div className={`${classes.rate} ${classes.value}`}>
+                <span>1 {swap.from_asset.asset}</span> <EquivalentIcon />{" "}
+                <span>
+                  {swap.exchange_rate} {swap.to_asset.asset}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -114,9 +138,13 @@ const SwapCompleted = ({
                     <CopyIcon width={16} height={16} color="#8E8E93" />
                   </ButtonWrapper>
                 </Copy>
-                <ButtonWrapper>
-                  <ExternalLink width={16} height={16} color="#8E8E93" />
-                </ButtonWrapper>
+                {swap.explorer ? (
+                  <ButtonWrapper
+                    onClick={() => window.open(swap.explorer, "_blank")}
+                  >
+                    <ExternalLink width={16} height={16} color="#8E8E93" />
+                  </ButtonWrapper>
+                ) : null}
               </div>
             </div>
           </div>

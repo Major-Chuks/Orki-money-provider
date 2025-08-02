@@ -25,16 +25,33 @@
 }
 
 .successIconWrapper {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
   background: #dcfce7;
   margin-bottom: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  animation: pulse-bg 2s ease-in-out infinite;
+}
+
+@keyframes pulse-bg {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 12px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
 }
 
 .title {
@@ -68,7 +85,7 @@
   justify-content: space-between;
 }
 
-.item span:first-child {
+.key {
   color: var(--Grays-Gray, var(--Grays-Gray, #8e8e93));
   font-family: Inter;
   font-size: 16px;
@@ -77,8 +94,22 @@
   line-height: 24px; /* 150% */
 }
 
-.item span:last-child {
-  color: var(--Foundation-Text-color-text-color-400, #3d3d3d);
+.withCopy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.rate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.value {
+  color: #3d3d3d !important;
   text-align: right;
   font-family: Inter;
   font-size: 16px;
@@ -124,6 +155,11 @@
   aspect-ratio: 1/1;
   border-radius: 50%;
   background: #e6e7ec;
+}
+
+.tokenWrapper .icon img {
+  width: 100%;
+  height: auto;
 }
 
 .transactionHash {
