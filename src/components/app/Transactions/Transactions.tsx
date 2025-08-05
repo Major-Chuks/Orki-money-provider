@@ -49,9 +49,9 @@ const Transactions = () => {
     activeSearch.forEach((s) => {
       const key = s as keyof typeof searchParams;
       if (!params) {
-        params += `?filters[${s.toLowerCase()}]=${searchParams[key]}`;
+        params += `?filter[${s.toLowerCase()}]=${searchParams[key]}`;
       } else {
-        params += `&filters[${s.toLowerCase()}]=${searchParams[key]}`;
+        params += `&filter[${s.toLowerCase()}]=${searchParams[key]}`;
       }
     });
 
