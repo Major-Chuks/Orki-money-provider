@@ -293,7 +293,7 @@ const Ramps = ({
       paymentMethod,
     });
     setLoadingQuotes(false);
-    if (response && typeof response === "object") {
+    if (response && typeof response === "object" && response.data.data) {
       const _defaults: get_defaults = response.data.data;
       setAllProviders(_defaults.quotes);
       setRequestId(_defaults.request_id);
