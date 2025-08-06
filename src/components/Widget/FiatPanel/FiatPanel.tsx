@@ -46,6 +46,7 @@ const FiatPanel = ({
           onCurrencyChange={onCurrencyChange}
           fiatCurrencies={fiatCurrencies}
           fiatCurrency={fiatCurrency}
+          disabled={disabled}
         />
       </div>
 

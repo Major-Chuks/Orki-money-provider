@@ -10,10 +10,12 @@ const PaymentMethod = ({
   onPaymentMethodChange,
   paymentMethod,
   loading,
+  disabled,
 }: {
   paymentOptions: PaymentMethodResponse | null;
   paymentMethod: string;
   loading: boolean;
+  disabled?: boolean;
   onPaymentMethodChange: (
     option: PaymentMethodResponse["payment_methods"][number]
   ) => void;
@@ -24,6 +26,11 @@ const PaymentMethod = ({
     return paymentOptions?.payment_methods.find(
       (pm) => pm.orki_id === paymentMethod
     );
+  };
+
+  const handleClick = () => {
+    if (loading || disabled) return;
+    setTogglePaymentMethod(true);
   };
 
   return (
@@ -37,7 +44,7 @@ const PaymentMethod = ({
       />
       <div className={classes.title}>Payment method</div>
       <div
-        onClick={() => !loading && setTogglePaymentMethod(true)}
+        onClick={handleClick}
         className={`${classes.selectionBox} ${loading && classes.loading}`}
       >
         <div>

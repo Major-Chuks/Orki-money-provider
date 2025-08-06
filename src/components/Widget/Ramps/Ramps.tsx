@@ -304,6 +304,15 @@ const Ramps = ({
       setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
 
       // removed the function to fetch payment options from here
+    } else if (
+      response &&
+      typeof response === "object" &&
+      !response.data.data
+    ) {
+      setAllProviders(null);
+      setProvider(null);
+      setRequestId("");
+      setError(response.data.msg);
     } else if (response && typeof response === "string") {
       setAllProviders(null);
       setProvider(null);
@@ -424,6 +433,7 @@ const Ramps = ({
             onPaymentMethodChange={(pm) => setPaymentMethod(pm.orki_id)}
             paymentMethod={paymentMethod}
             loading={isPaymentMethodPending}
+            disabled={loadingQuotes}
           />
 
           <SwapButton disabled={!provider} onClick={handleProceed}>

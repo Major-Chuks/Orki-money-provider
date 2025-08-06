@@ -12,10 +12,12 @@ const CryptoCurrencySearch = ({
   cryptoCurrencies,
   onCurrencyChange,
   cryptoCurrency,
+  disabled,
 }: {
   cryptoCurrencies: get_crypto_currencies | null;
   onCurrencyChange: (currency: get_crypto_currencies[number]) => void;
   cryptoCurrency?: string;
+  disabled?: boolean;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
   const [selected, setSelected] = useState<
@@ -27,6 +29,7 @@ const CryptoCurrencySearch = ({
   const [defaultCurrencyIcon, setDefaultCurrencyIcon] = useState("");
 
   const handleClick = () => {
+    if (disabled) return;
     if (!toggleOverlay) {
       setFilteredCryptoCurrencies(cryptoCurrencies);
       setSearchValue("");

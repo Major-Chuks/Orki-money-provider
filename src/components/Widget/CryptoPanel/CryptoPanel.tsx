@@ -76,6 +76,7 @@ const CryptoPanel = ({
             onCurrencyChange={setCurrency}
             cryptoCurrencies={cryptoCurrencies}
             cryptoCurrency={cryptoCurrency}
+            disabled={disabled}
           />
 
           <CryptoNetwork network={currency?.network || defaultNetwork || ""} />

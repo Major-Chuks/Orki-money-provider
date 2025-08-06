@@ -13,10 +13,12 @@ import ListBuilder from "../CryptoCurrencySearch/ListBuilder";
 const FiatCurrencySearch = ({
   fiatCurrency,
   fiatCurrencies,
+  disabled,
   onCurrencyChange,
 }: {
   fiatCurrency: string;
   fiatCurrencies: get_fiat_currencies | null;
+  disabled?: boolean;
   onCurrencyChange: (symbol: string) => void;
 }) => {
   const [toggleOverlay, setToggleOverlay] = useState(false);
@@ -29,6 +31,7 @@ const FiatCurrencySearch = ({
   const [defaultCurrencyIcon, setDefaultCurrencyIcon] = useState("");
 
   const handleClick = () => {
+    if (disabled) return;
     if (!toggleOverlay) {
       setFilteredCurrencies(fiatCurrencies);
       setSearchValue("");
