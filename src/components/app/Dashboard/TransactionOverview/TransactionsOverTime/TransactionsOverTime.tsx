@@ -47,7 +47,12 @@ const TransactionsOverTime = () => {
                 name: `Successful Transactions: ${
                   successTxns.length
                 } (${currency}  ${formatStringToMoney(
-                  String(successTxns.reduce((acc, curr) => acc + curr, 0))
+                  String(
+                    successTxns.reduce(
+                      (acc, curr) => Number(acc) + Number(curr),
+                      0
+                    )
+                  )
                 )})`,
                 data: successTxns,
                 color: "#2268D178",
@@ -56,7 +61,12 @@ const TransactionsOverTime = () => {
                 name: `Failed Transaction: ${
                   failedTxns.length
                 } (${currency}  ${formatStringToMoney(
-                  String(failedTxns.reduce((acc, curr) => acc + curr, 0))
+                  String(
+                    failedTxns.reduce(
+                      (acc, curr) => Number(acc) + Number(curr),
+                      0
+                    )
+                  )
                 )})`,
                 data: failedTxns,
                 color: "#2268D1",

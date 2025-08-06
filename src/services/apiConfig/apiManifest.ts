@@ -805,6 +805,22 @@ export const apiManifest: ApiManifest = {
           ]
         }
       ]
+    },
+    "get_exportTransaction": {
+      "args": [
+        {
+          "name": "{ params }",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "params",
+              "isOptional": false,
+              "type": "string"
+            }
+          ]
+        }
+      ]
     }
   },
   "userProfile": {

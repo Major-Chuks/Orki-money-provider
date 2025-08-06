@@ -11,4 +11,9 @@ export const transactionsApi = {
     const url = `/transactions/${transactionId}`;
     return handleApiCall(() => BACKEND_API.get(url), "get_transactions");
   },
+
+  get_exportTransaction: async ({ params }: { params: string }) => {
+    const url = `/transactions/export${params}`;
+    return handleApiCall(() => BACKEND_API.get(url), "get_exportTransaction");
+  },
 };

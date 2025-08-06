@@ -3,7 +3,7 @@ import CustomDateInput from "@/components/CustomInput/CustomDateInput/CustomDate
 import CustomSelect, {
   Option,
 } from "@/components/CustomInput/CustomSelect/CustomSelect";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   InputIdState,
   InputState,
@@ -21,7 +21,7 @@ export type SearchParamsType = {
   crypto: string;
   network: string;
   paymentMethod: string;
-  created_between: string;
+  processed_at: string;
 };
 
 const AdvancedSearch = ({
@@ -36,8 +36,16 @@ const AdvancedSearch = ({
     crypto: "",
     network: "",
     paymentMethod: "",
-    created_between: ",",
+    processed_at: ",",
   });
+
+  // Refs for dropdown positioning
+  const statusRef = useRef<HTMLDivElement>(null);
+  const typeRef = useRef<HTMLDivElement>(null);
+  const fiatRef = useRef<HTMLDivElement>(null);
+  const cryptoRef = useRef<HTMLDivElement>(null);
+  const networkRef = useRef<HTMLDivElement>(null);
+  const paymentMethodRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -47,14 +55,14 @@ const AdvancedSearch = ({
     if (!id) return;
 
     if (id === "from" || id === "to") {
-      const cb = input["created_between"].split(",");
+      const cb = input["processed_at"].split(",");
       if (id === "from") {
         cb[0] = value;
       } else {
         cb[1] = value;
       }
       const cbStr = cb.join(",");
-      setInput((i) => ({ ...i, created_between: cbStr }));
+      setInput((i) => ({ ...i, processed_at: cbStr }));
     } else {
       setInput((i) => ({ ...i, [id]: value }));
     }
@@ -73,7 +81,7 @@ const AdvancedSearch = ({
       crypto: "",
       network: "",
       paymentMethod: "",
-      created_between: ",",
+      processed_at: ",",
     };
     setInput(_input);
     onSearch(_input as unknown as SearchParamsType);
@@ -86,101 +94,89 @@ const AdvancedSearch = ({
   return (
     <div className={classes.container}>
       <CustomSelect
-        options={[
-          {
-            id: "pending",
-            name: "Pending",
-          },
-          {
-            id: "success",
-            name: "Success",
-          },
-          {
-            id: "failed",
-            name: "Failed",
-          },
-        ]}
+        ref={statusRef}
         id="status"
         label="Status"
         placeholder="Select"
         onSelect={handleSelect}
         value={input["status"]}
+        options={[
+          { id: "pending", name: "Pending" },
+          { id: "success", name: "Success" },
+          { id: "failed", name: "Failed" },
+        ]}
+        portalTo="trn_filter"
       />
 
       <CustomSelect
-        options={[
-          {
-            id: "buy",
-            name: "Buy",
-          },
-          {
-            id: "sell",
-            name: "Sell",
-          },
-        ]}
+        ref={typeRef}
         id="type"
         label="Type"
         placeholder="Select"
         onSelect={handleSelect}
         value={input["type"]}
+        options={[
+          { id: "buy", name: "Buy" },
+          { id: "sell", name: "Sell" },
+        ]}
+        portalTo="trn_filter"
       />
 
       <CustomSelect
-        options={FIAT_CURRENCY.map((c) => ({
-          id: c.symbol.toLowerCase(),
-          name: c.symbol,
-        }))}
+        ref={fiatRef}
         id="fiat_currency"
         label="Fiat Currency"
         placeholder="Select"
         onSelect={handleSelect}
         value={input["fiat_currency"]}
+        options={FIAT_CURRENCY.map((c) => ({
+          id: c.symbol.toLowerCase(),
+          name: c.symbol,
+        }))}
+        portalTo="trn_filter"
       />
 
       <CustomSelect
-        options={CRYPTO_TOKENS.map((c) => ({
-          id: c.id,
-          name: c.name,
-        }))}
+        ref={cryptoRef}
         id="crypto_currency"
         label="Crypto Currency"
         placeholder="Select"
         onSelect={handleSelect}
         value={input["crypto_currency"]}
+        options={CRYPTO_TOKENS.map((c) => ({
+          id: c.id,
+          name: c.name,
+        }))}
+        portalTo="trn_filter"
       />
 
       <CustomSelect
-        options={NETWORKS.filter((n) => n).map((n) => ({
-          id: n.toLowerCase(),
-          name: formatText(n),
-        }))}
+        ref={networkRef}
         id="network"
         label="Network"
         placeholder="Select"
         onSelect={handleSelect}
         value={input["network"]}
+        options={NETWORKS.filter(Boolean).map((n) => ({
+          id: n.toLowerCase(),
+          name: formatText(n),
+        }))}
+        portalTo="trn_filter"
       />
 
       <CustomSelect
-        options={[
-          {
-            id: "card",
-            name: "Card",
-          },
-          {
-            id: "transfer",
-            name: "Transfer",
-          },
-          {
-            id: "money_mobile",
-            name: "Money Mobile",
-          },
-        ]}
+        ref={paymentMethodRef}
         id="paymentMethod"
         label="Payment Method"
         placeholder="Select"
         onSelect={handleSelect}
         value={input["paymentMethod"]}
+        options={[
+          { id: "card", name: "Card" },
+          { id: "transfer", name: "Transfer" },
+          { id: "money_mobile", name: "Money Mobile" },
+        ]}
+        portalTo="trn_filter"
       />
 
       <CustomDateInput
@@ -188,7 +184,7 @@ const AdvancedSearch = ({
         id="from"
         label="From"
         placeholder="yyyy-mm-dd"
-        value={input["created_between"].split(",")[0]}
+        value={input["processed_at"].split(",")[0]}
       />
 
       <CustomDateInput
@@ -196,7 +192,7 @@ const AdvancedSearch = ({
         id="to"
         label="To"
         placeholder="yyyy-mm-dd"
-        value={input["created_between"].split(",")[1]}
+        value={input["processed_at"].split(",")[1]}
       />
 
       <div className={classes.wrapper}>

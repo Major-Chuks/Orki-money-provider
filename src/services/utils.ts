@@ -427,8 +427,18 @@ export const getCountryByCode = (code: string) => {
 };
 
 export const formatStringToMoney = (inputValue: string) => {
-  const numericValue = inputValue.replace(/,/g, "").replace(/\D/g, "");
-  return numericValue ? Number(numericValue).toLocaleString() : "";
+  const cleaned = inputValue.replace(/,/g, "");
+
+  const match = cleaned.match(/^(\d*)(\.?\d*)/);
+  if (!match) return "";
+
+  const [integerPart, decimalPart] = match[1]
+    ? [match[1], match[2] || ""]
+    : ["0", ""];
+
+  const formattedInteger = Number(integerPart).toLocaleString();
+
+  return `${formattedInteger}${decimalPart}`;
 };
 
 // export const formatStringToMoney = (inputValue: string) => {

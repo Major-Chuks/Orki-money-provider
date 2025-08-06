@@ -13,6 +13,7 @@ interface DropdownLayoutProps {
   onToggle?: (open: boolean) => void;
   classname?: string;
   style?: React.CSSProperties;
+  portal?: boolean;
 }
 
 const DropdownLayout: React.FC<DropdownLayoutProps> = ({
@@ -21,6 +22,7 @@ const DropdownLayout: React.FC<DropdownLayoutProps> = ({
   onToggle,
   classname,
   style,
+  portal,
 }) => {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = isOpen !== undefined ? isOpen : internalOpen;
@@ -47,6 +49,7 @@ const DropdownLayout: React.FC<DropdownLayoutProps> = ({
   useOutsideClick({
     ref: clickRef,
     onOutsideClick: () => {
+      if (portal) return;
       if (open) close();
     },
   });
@@ -55,7 +58,11 @@ const DropdownLayout: React.FC<DropdownLayoutProps> = ({
     <div
       className={classname}
       ref={clickRef}
-      style={{ ...style, position: "relative", zIndex }}
+      style={{
+        ...style,
+        position: "relative",
+        zIndex,
+      }}
     >
       {children({ open, toggle: handleToggle, close })}
     </div>

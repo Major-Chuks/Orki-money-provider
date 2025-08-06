@@ -18,3 +18,9 @@ export const useFindTransactionQuery = (params: { transactionId: string }) =>
   useApiQuery(["get_findTransaction", JSON.stringify(params)], () =>
     transactionsApi.get_findTransaction(params)
   );
+
+export const useExportTransactionQuery = (params: { params: string }) =>
+    // Add JSON.stringify(params) to queryKey for cache uniqueness
+  useApiQuery(["get_exportTransaction", JSON.stringify(params)], () =>
+    transactionsApi.get_exportTransaction(params)
+  );

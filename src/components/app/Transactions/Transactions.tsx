@@ -16,10 +16,11 @@ import AdvancedSearch, {
 import { useState } from "react";
 import DropdownLayout from "../Dropdown/DropdownLayout/DropdownLayout";
 import DropdownWrapper from "../Dropdown/DropdownWrapper/DropdownWrapper";
+import backend from "@/services/apis";
 
 const Transactions = () => {
   const [params, setParams] = useState("");
-  // const [openSearch, setOpenSearch] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   const { data, isPending, isError } = useTransactionsQuery({
     params,
@@ -37,10 +38,7 @@ const Transactions = () => {
   const handleSearch = async (searchParams: SearchParamsType) => {
     const activeSearch = Object.keys(searchParams).filter((s) => {
       const key = s as keyof typeof searchParams;
-      if (
-        s === "created_between" &&
-        !searchParams[s].split(",").every((t) => t)
-      ) {
+      if (s === "processed_at" && !searchParams[s].split(",").every((t) => t)) {
         return false;
       }
       return searchParams[key];
@@ -58,6 +56,15 @@ const Transactions = () => {
     setParams(params);
   };
 
+  const handleExport = async () => {
+    setExporting(true);
+    const response = await backend().get_exportTransaction({ params });
+    if (response) {
+      window.open(response.data.data, "_blank");
+    }
+    setExporting(false);
+  };
+
   if (isError) return <ErrorScreen />;
 
   return (
@@ -72,7 +79,7 @@ const Transactions = () => {
           <DropdownLayout>
             {({ open, toggle }) => (
               <>
-                <div className={classes.searchAndFilters}>
+                <div id="trn_filter" className={classes.searchAndFilters}>
                   <CustomButton
                     style={{
                       width: "max-content",
@@ -103,17 +110,22 @@ const Transactions = () => {
                       padding: "12px 16px",
                     }}
                     leftIcon={exportIcon}
-                    onClick={() => {}}
+                    loading={exporting}
+                    onClick={handleExport}
                   >
                     Export
                   </CustomButton>
                 </div>
 
-                <DropdownWrapper position="static" variant="fade" open={open}>
+                <DropdownWrapper
+                  position="static"
+                  open={open}
+                  containerStyle={{
+                    marginBottom: "34px",
+                  }}
+                >
                   <AdvancedSearch onSearch={handleSearch} />
                 </DropdownWrapper>
-
-                {open && <div style={{ marginBottom: "34px" }}></div>}
               </>
             )}
           </DropdownLayout>

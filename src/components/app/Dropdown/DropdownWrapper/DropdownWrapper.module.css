@@ -40,10 +40,25 @@
 }
 
 /* Static + close override height */
+.container.static.open {
+  transition: height 650ms;
+}
+
 .container.static.close {
   height: 0;
   transition: height 450ms;
   visibility: visible;
+}
+
+/* Open/close static slide */
+.container.static.open > .contentWrapper {
+  transition: unset;
+  transform: translateY(0);
+}
+
+.container.static.close > .contentWrapper {
+  transition: unset;
+  transform: translateY(0);
 }
 
 /* === VARIANT: INSTANT === */
