@@ -11,12 +11,10 @@ const RatePanel = ({
   loading,
   provider,
   onProviderClick,
-  hasError,
 }: {
   loading: boolean;
   provider: get_defaults["quotes"][number] | null;
   onProviderClick: () => void;
-  hasError: boolean;
 }) => {
   return (
     <>
@@ -43,28 +41,22 @@ const RatePanel = ({
             <div className={classes.loadingText}></div>
           )}
 
-          {!hasError ? (
-            <div className={classes.provider} onClick={onProviderClick}>
-              {provider?.provider.name && <span>By</span>}
-              {provider?.provider.icon && (
-                <img
-                  width={80}
-                  height={16}
-                  src={provider?.provider.icon}
-                  alt=""
-                  className={classes.logo}
-                />
-              )}
-              <span className={classes.providerName}>
-                {provider?.provider.name}
-              </span>
-              <CaretIcon fill="#E7E7E7" />
-            </div>
-          ) : (
-            <div style={{ cursor: "default" }} className={classes.provider}>
-              <CaretIcon fill="#E7E7E7" />
-            </div>
-          )}
+          <div className={classes.provider} onClick={onProviderClick}>
+            {provider?.provider.name && <span>By</span>}
+            {provider?.provider.icon && (
+              <img
+                width={80}
+                height={16}
+                src={provider?.provider.icon}
+                alt=""
+                className={classes.logo}
+              />
+            )}
+            <span className={classes.providerName}>
+              {provider?.provider.name}
+            </span>
+            <CaretIcon fill="#E7E7E7" />
+          </div>
         </div>
       )}
     </>

@@ -4,7 +4,7 @@ import classes from "./TransactionTable.module.css";
 import TransactionDetails from "../TransactionDetails/TransactionDetails";
 import { useState } from "react";
 import { get_transactions } from "@/types/apis/transactions/get_transactions";
-import { formatText, formatTxDate } from "@/services/utils";
+import { customToFixed, formatText, formatTxDate } from "@/services/utils";
 
 const TransactionTable = ({
   data,
@@ -21,7 +21,7 @@ const TransactionTable = ({
       <table>
         <thead>
           <tr>
-            <th>Client ID</th>
+            <th>Provider Txn ID</th>
             <th>Transaction ID</th>
             <th>Date & Time</th>
             <th>Type</th>
@@ -41,10 +41,12 @@ const TransactionTable = ({
               <td>{formatTxDate(item.created_at)}</td>
               <td>{formatText(item.type)}</td>
               <td>
-                {Number(item.fiat_amount)?.toFixed(2)} {item.fiat_currency}
+                {customToFixed(Number(item.fiat_amount), 6)}{" "}
+                {item.fiat_currency}
               </td>
               <td>
-                {Number(item.crypto_amount)?.toFixed(2)} {item.crypto_currency}
+                {customToFixed(Number(item.crypto_amount), 6)}{" "}
+                {item.crypto_currency}
               </td>
               <td>{formatText(item.payment_method)}</td>
               <td>{formatText(item.provider)}</td>

@@ -43,7 +43,8 @@ const Widget = () => {
           title={defaultFiatPanel.title}
           value={defaultFiatPanel.value}
           error={defaultFiatPanel.error}
-          disabled={false}
+          disableCurrency={false}
+          disableAmount={false}
         />
         <CryptoPanel
           cryptoCurrencies={
@@ -54,8 +55,10 @@ const Widget = () => {
           onCurrencyChange={() => {}}
           value={defaultCryptoPanel.value}
           cryptoCurrency={defaultCryptoPanel.cryptoCurrency}
+          network={defaultCryptoPanel.defaultNetwork}
           defaultNetwork={defaultCryptoPanel.defaultNetwork}
-          disabled={false}
+          disableCurrency={false}
+          disableAmount={false}
         />
       </div>
 
@@ -66,7 +69,6 @@ const Widget = () => {
           provider={
             defaultRatePanel.provider as unknown as get_defaults["quotes"][number]
           }
-          hasError={defaultRatePanel.hasError}
         />
       </div>
 

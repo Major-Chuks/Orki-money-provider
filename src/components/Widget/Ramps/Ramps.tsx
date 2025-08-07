@@ -264,24 +264,14 @@ const Ramps = ({
   }, [isFiatSuccess, isCryptoSuccess, isDefaultsSuccess, isLocationSuccess]);
 
   const fetchAndUpdateQuotes = async () => {
-    const { minBuyAmount, maxBuyAmount } = getQuoteLimit({
-      fiatCurrencies,
-      fiatCurrency,
-      providerName: provider?.provider.identifier || "",
-      paymentMethod,
-    });
-
-    const isValid = validQuoteLimit({
-      minBuyAmount,
-      maxBuyAmount,
-      fiatAmount: Number(fiatAmount),
-      fiatCurrency,
-      setError,
-    });
-
-    if (!isValid) return;
-
     setError("");
+
+    if (widgetType === "Onramp") {
+      if (Number(fiatAmount) <= 0) return;
+    } else if (widgetType === "Offramp") {
+      if (Number(cryptoAmount) <= 0) return;
+    }
+
     setLoadingQuotes(true);
     const response = await fetchQuotes({
       fiatAmount,
@@ -300,9 +290,12 @@ const Ramps = ({
       const _bestProvider = _defaults.quotes.find((dp) => dp.is_best);
       if (!_bestProvider) return;
       setProvider(_bestProvider);
-      setFiatAmount(String(_bestProvider.asset?.fiat_amount));
-      setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
-
+      // Only set the changing value to avoid race condition
+      if (widgetType === "Onramp") {
+        setCryptoAmount(String(_bestProvider.asset?.crypto_amount));
+      } else if (widgetType === "Offramp") {
+        setFiatAmount(String(_bestProvider.asset?.fiat_amount));
+      }
       // removed the function to fetch payment options from here
     } else if (
       response &&
@@ -358,6 +351,24 @@ const Ramps = ({
     }
   }, [provider]);
 
+  useEffect(() => {
+    // check quote limit
+    const { minBuyAmount, maxBuyAmount } = getQuoteLimit({
+      fiatCurrencies,
+      fiatCurrency,
+      providerName: provider?.provider.identifier || "",
+      paymentMethod,
+    });
+
+    validQuoteLimit({
+      minBuyAmount,
+      maxBuyAmount,
+      fiatAmount: Number(fiatAmount),
+      fiatCurrency,
+      setError,
+    });
+  }, [provider, fiatCurrencies, fiatCurrency, fiatAmount, paymentMethod]);
+
   return (
     <React.Fragment>
       {loading ? (
@@ -376,7 +387,8 @@ const Ramps = ({
                 title="You Pay"
                 value={fiatAmount}
                 error={error}
-                disabled={loadingQuotes}
+                disableCurrency={loadingQuotes}
+                disableAmount={false}
               />
               <CryptoPanel
                 cryptoCurrencies={cryptoCurrencies}
@@ -386,9 +398,11 @@ const Ramps = ({
                   setCryptoCurrency(symbol);
                   setNetwork(network);
                 }}
-                disabled={loadingQuotes}
+                disableCurrency={loadingQuotes}
+                disableAmount={true}
                 value={cryptoAmount}
                 cryptoCurrency={cryptoCurrency}
+                network={network}
                 defaultNetwork={provider?.asset?.network}
               />
             </div>
@@ -402,9 +416,11 @@ const Ramps = ({
                   setCryptoCurrency(symbol);
                   setNetwork(network);
                 }}
-                disabled={loadingQuotes}
+                disableCurrency={loadingQuotes}
+                disableAmount={false}
                 value={cryptoAmount}
                 cryptoCurrency={cryptoCurrency}
+                network={network}
               />
               <FiatPanel
                 onAmountChange={setFiatAmount}
@@ -414,7 +430,8 @@ const Ramps = ({
                 title="You Receive"
                 value={fiatAmount}
                 error={error}
-                disabled={loadingQuotes}
+                disableCurrency={loadingQuotes}
+                disableAmount={true}
               />
             </div>
           )}
@@ -424,7 +441,6 @@ const Ramps = ({
               loading={loadingQuotes}
               onProviderClick={() => setToggleProvider(true)}
               provider={provider}
-              hasError={!!error}
             />
           </div>
 
@@ -436,7 +452,10 @@ const Ramps = ({
             disabled={loadingQuotes}
           />
 
-          <SwapButton disabled={!provider} onClick={handleProceed}>
+          <SwapButton
+            disabled={!provider || !!error || loadingQuotes}
+            onClick={handleProceed}
+          >
             Proceed
           </SwapButton>
         </div>

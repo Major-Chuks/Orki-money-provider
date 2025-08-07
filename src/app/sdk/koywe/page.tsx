@@ -19,7 +19,7 @@ export default function KoyweIframePage() {
 
       if (event.data?.type === "INIT_KOYWE") {
         const { KoyweRampSDK } = await import("@koyweforest/koywe-ramp-sdk");
-        console.log({ payload: event.data.payload });
+        // console.log({ payload: event.data.payload });
 
         const koywe = new KoyweRampSDK({
           ...event.data.payload,

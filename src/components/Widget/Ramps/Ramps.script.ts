@@ -239,14 +239,14 @@ export const validQuoteLimit = ({
 }) => {
   if (fiatAmount < minBuyAmount) {
     setError(
-      `Order value can’t be lesser than ${fiatCurrency.toUpperCase()} ${minBuyAmount.toLocaleString()}`
+      `Order value can't be lesser than ${fiatCurrency.toUpperCase()} ${minBuyAmount.toLocaleString()}`
     );
     return false;
   }
   if (maxBuyAmount) {
     if (fiatAmount > maxBuyAmount) {
       setError(
-        `Order value can’t be higher than ${fiatCurrency.toUpperCase()} ${maxBuyAmount.toLocaleString()}`
+        `Order value can't be higher than ${fiatCurrency.toUpperCase()} ${maxBuyAmount.toLocaleString()}`
       );
       return false;
     }

@@ -1,7 +1,6 @@
 import CryptoCurrencySearch from "../CryptoCurrencySearch/CryptoCurrencySearch";
 import classes from "./CryptoPanel.module.css";
 import CryptoNetwork from "../CryptoCurrencySearch/CryptoNetwork";
-import { useEffect, useState } from "react";
 import { get_crypto_currencies } from "@/interface/get_crypto_currencies";
 import ErrorIcon from "@/assets/SvgComponents/ErrorIcon";
 import AmountInput from "../AmountInput/AmountInput";
@@ -10,55 +9,29 @@ const CryptoPanel = ({
   title,
   cryptoCurrencies,
   cryptoCurrency,
+  network,
   value,
   defaultNetwork,
-  disabled,
+  disableCurrency,
+  disableAmount,
   onCurrencyChange,
   onAmountChange,
 }: {
   title: string;
   cryptoCurrencies: get_crypto_currencies | null;
   cryptoCurrency: string;
+  network: string;
   value: string;
   defaultNetwork?: string;
-  disabled: boolean;
+  disableCurrency: boolean;
+  disableAmount: boolean;
   onCurrencyChange: (symbol: string, network: string) => void;
   onAmountChange: (value: string) => void;
 }) => {
-  const [currency, setCurrency] = useState<
-    get_crypto_currencies[number] | null
-  >(null);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [inputValue, setInputValue] = useState(value);
-
-  const validateInput = () => {
-    setErrorMsg("");
-    if (Number(inputValue) < 0) {
-      setErrorMsg("Please provide a valid order amount");
-      return;
-    }
-    onAmountChange(inputValue);
-  };
-
-  useEffect(() => {
-    if (!currency) return;
-    onCurrencyChange(currency.code, currency.network);
-  }, [currency]);
-
-  useEffect(() => {
-    validateInput();
-  }, [inputValue]);
-
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
+  const error = "";
 
   return (
-    <div
-      className={`${classes.container} ${classes.swap} ${
-        errorMsg && classes.error
-      }`}
-    >
+    <div className={`${classes.container} ${error && classes.error}`}>
       <div className={classes.title}>{title}</div>
 
       <div className={classes.innerContainer}>
@@ -66,26 +39,26 @@ const CryptoPanel = ({
           <AmountInput
             id="crypto_amount"
             placeholder="0.00"
-            value={inputValue}
-            disabled={disabled}
-            onChange={(e) => setInputValue(e.target.value)}
+            value={value}
+            disabled={disableAmount}
+            onChange={(e) => onAmountChange(e.target.value)}
           />
         </div>
         <div className={classes.crypto_network}>
           <CryptoCurrencySearch
-            onCurrencyChange={setCurrency}
+            onCurrencyChange={(c) => onCurrencyChange(c.code, c.network)}
             cryptoCurrencies={cryptoCurrencies}
             cryptoCurrency={cryptoCurrency}
-            disabled={disabled}
+            disabled={disableCurrency}
           />
 
-          <CryptoNetwork network={currency?.network || defaultNetwork || ""} />
+          <CryptoNetwork network={network || defaultNetwork || ""} />
         </div>
       </div>
 
-      {errorMsg && (
+      {error && (
         <div className={classes.error}>
-          <ErrorIcon /> {errorMsg}
+          <ErrorIcon /> {error}
         </div>
       )}
     </div>
