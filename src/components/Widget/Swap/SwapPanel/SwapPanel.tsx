@@ -7,20 +7,7 @@ import SwapSearch from "./SwapSearch";
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import { formatNumber } from "@/services/utils";
 
-const SwapPanel = ({
-  title,
-  swapTokens,
-  value,
-  searchDisabled,
-  amountDisabled,
-  token,
-  min_from_amount,
-  max_from_amount,
-  isConnected,
-  onTokenChange,
-  onAmountChange,
-  setDisabled,
-}: {
+type SwapPanelProps = {
   title: string;
   swapTokens: get_swapPairs | null;
   value: string;
@@ -33,42 +20,60 @@ const SwapPanel = ({
   onTokenChange: (id: get_swapPairs[number]) => void;
   onAmountChange: (value: string) => void;
   setDisabled?: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+};
+
+const SwapPanel = ({
+  title,
+  swapTokens,
+  value,
+  searchDisabled,
+  amountDisabled,
+  token,
+  min_from_amount,
+  max_from_amount,
+  isConnected = false,
+  onTokenChange,
+  onAmountChange,
+  setDisabled,
+}: SwapPanelProps) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [inputValue, setInputValue] = useState(value);
 
-  const validateInput = async () => {
+  const validateInput = () => {
     setErrorMsg("");
-    if (!isConnected) {
-      if (setDisabled) setDisabled(false);
-    } else {
-      // Call Delay
-      await new Promise((res) => {
-        setTimeout(() => {
-          res("");
-        }, 500);
-      });
-      if (setDisabled) setDisabled(true);
+
+    const numValue = Number(inputValue);
+    if (isNaN(numValue) || numValue < 0) {
+      setErrorMsg("Please provide a valid order amount");
+      return false;
+    }
+    if (typeof min_from_amount === "number" && numValue < min_from_amount) {
+      setErrorMsg("Order amount cannot be less than " + min_from_amount);
+      return false;
+    }
+    if (typeof max_from_amount === "number" && numValue > max_from_amount) {
+      setErrorMsg("Order amount cannot be greater than " + max_from_amount);
+      return false;
     }
 
-    if (Number(inputValue) < 0) {
-      setErrorMsg("Please provide a valid order amount");
-      return;
-    }
-    if (min_from_amount && Number(inputValue) < min_from_amount) {
-      setErrorMsg("Order amount cannot be less than " + min_from_amount);
-      return;
-    }
-    if (max_from_amount && Number(inputValue) > max_from_amount) {
-      setErrorMsg("Order amount cannot be greater than " + max_from_amount);
-      return;
-    }
     onAmountChange(inputValue);
-    if (setDisabled) setDisabled(false);
+    return true;
   };
 
   useEffect(() => {
-    validateInput();
+    let isMounted = true;
+    if (setDisabled) setDisabled(true);
+
+    const handler = setTimeout(() => {
+      if (!isMounted) return;
+      const isValid = validateInput();
+      if (setDisabled) setDisabled(!isValid);
+    }, 300);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(handler);
+    };
   }, [inputValue, isConnected]);
 
   useEffect(() => {
@@ -78,7 +83,7 @@ const SwapPanel = ({
   return (
     <div
       className={`${classes.container} ${classes.swap} ${
-        errorMsg && classes.error
+        errorMsg ? classes.error : ""
       }`}
     >
       <div className={classes.title}>{title}</div>
@@ -95,7 +100,7 @@ const SwapPanel = ({
         </div>
         <div className={classes.crypto_network}>
           <SwapSearch
-            onTokenChange={(token) => onTokenChange(token)}
+            onTokenChange={onTokenChange}
             swapTokens={swapTokens}
             disabled={searchDisabled}
             token={token}
@@ -103,22 +108,23 @@ const SwapPanel = ({
         </div>
       </div>
 
-      {min_from_amount && max_from_amount ? (
-        <div className={classes.minMax}>
-          <ButtonWrapper
-            onClick={() => setInputValue(String(min_from_amount))}
-            className={classes.minMaxBtn}
-          >
-            Min: {formatNumber(min_from_amount, 4)}
-          </ButtonWrapper>{" "}
-          <ButtonWrapper
-            onClick={() => setInputValue(String(max_from_amount))}
-            className={classes.minMaxBtn}
-          >
-            Max: {formatNumber(max_from_amount, 4)}
-          </ButtonWrapper>
-        </div>
-      ) : null}
+      {typeof min_from_amount === "number" &&
+        typeof max_from_amount === "number" && (
+          <div className={classes.minMax}>
+            <ButtonWrapper
+              onClick={() => setInputValue(String(min_from_amount))}
+              className={classes.minMaxBtn}
+            >
+              Min: {formatNumber(min_from_amount, 4)}
+            </ButtonWrapper>
+            <ButtonWrapper
+              onClick={() => setInputValue(String(max_from_amount))}
+              className={classes.minMaxBtn}
+            >
+              Max: {formatNumber(max_from_amount, 4)}
+            </ButtonWrapper>
+          </div>
+        )}
 
       {errorMsg && (
         <div className={classes.error}>

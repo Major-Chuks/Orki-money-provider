@@ -20,7 +20,7 @@ export type SearchParamsType = {
   fiat: string;
   crypto: string;
   network: string;
-  paymentMethod: string;
+  payment_method: string;
   processed_at: string;
 };
 
@@ -35,7 +35,7 @@ const AdvancedSearch = ({
     fiat: "",
     crypto: "",
     network: "",
-    paymentMethod: "",
+    payment_method: "",
     processed_at: ",",
   });
 
@@ -80,7 +80,7 @@ const AdvancedSearch = ({
       fiat: "",
       crypto: "",
       network: "",
-      paymentMethod: "",
+      payment_method: "",
       processed_at: ",",
     };
     setInput(_input);
@@ -166,11 +166,11 @@ const AdvancedSearch = ({
 
       <CustomSelect
         ref={paymentMethodRef}
-        id="paymentMethod"
+        id="payment_method"
         label="Payment Method"
         placeholder="Select"
         onSelect={handleSelect}
-        value={input["paymentMethod"]}
+        value={input["payment_method"]}
         options={[
           { id: "card", name: "Card" },
           { id: "transfer", name: "Transfer" },
