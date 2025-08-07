@@ -285,6 +285,10 @@ const ExecutingSwap = ({
           1 {tokenSymbol} <EquivalentIcon /> {quote.exchange_rate} {pairSymbol}
         </div>
       </div>
+
+      <div className={classes.note}>
+        This may take a few mins, please wait...
+      </div>
     </div>
   );
 };

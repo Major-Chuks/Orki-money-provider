@@ -8,13 +8,30 @@ const apiDir = path.resolve(__dirname, "../src/services/apis");
 const apiConfigDir = path.resolve(__dirname, "../src/services/apiConfig");
 const manifestPath = path.resolve(apiConfigDir, "apiModules.ts");
 
-// Create apiConfig directory if it doesn't exist
+// Ensure the apis directory exists
+if (!fs.existsSync(apiDir)) {
+  fs.mkdirSync(apiDir, { recursive: true });
+  console.log(`📁 Created directory: ${apiDir}`);
+}
+
+// Ensure the apiConfig directory exists
 if (!fs.existsSync(apiConfigDir)) {
   fs.mkdirSync(apiConfigDir, { recursive: true });
   console.log(`📁 Created directory: ${apiConfigDir}`);
 }
 
-const files = fs.readdirSync(apiDir).filter((f) => f.endsWith(".ts") && f !== "index.ts");
+const files = fs
+  .readdirSync(apiDir)
+  .filter((f) => f.endsWith(".ts") && f !== "index.ts");
+
+if (files.length === 0) {
+  console.warn(`⚠️ No API files found in ${apiDir}.`);
+  fs.writeFileSync(
+    manifestPath,
+    `// No API files found in "${apiDir}".\n\nexport const apiModules = {};\n`
+  );
+  process.exit(0);
+}
 
 const imports = files
   .map((file) => {
