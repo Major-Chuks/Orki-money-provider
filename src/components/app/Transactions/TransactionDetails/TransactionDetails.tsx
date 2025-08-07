@@ -163,15 +163,21 @@ const TransactionDetails = ({
                 <div className={classes.dataFlex}>
                   <div className={classes.item}>
                     <div className={classes.name}>Network Fee</div>
-                    <div className={classes.value}>{tx.network_fee}</div>
+                    <div className={classes.value}>
+                      {tx.network_fee} {tx.fiat_currency}{" "}
+                    </div>
                   </div>
                   <div className={classes.item}>
                     <div className={classes.name}>Provider Fee</div>
-                    <div className={classes.value}>{tx.provider_fee}</div>
+                    <div className={classes.value}>
+                      {tx.provider_fee} {tx.fiat_currency}{" "}
+                    </div>
                   </div>
                   <div className={classes.item}>
                     <div className={classes.name}>Orki Fee</div>
-                    <div className={classes.value}>{tx.orki_fee}</div>
+                    <div className={classes.value}>
+                      {tx.orki_fee} {tx.fiat_currency}{" "}
+                    </div>
                   </div>
                   <div className={classes.line}></div>
                   <div className={classes.item}>
@@ -179,7 +185,8 @@ const TransactionDetails = ({
                     <div className={classes.total}>
                       {Number(tx.network_fee || 0) +
                         Number(tx.provider_fee || 0) +
-                        Number(tx.orki_fee || 0) || ""}
+                        Number(tx.orki_fee || 0) || ""}{" "}
+                      {tx.fiat_currency}{" "}
                     </div>
                   </div>
                 </div>
