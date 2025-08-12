@@ -5,7 +5,7 @@ import DropdownWrapper from "@/components/app/Dropdown/DropdownWrapper/DropdownW
 import ButtonWrapper from "@/components/CustomInput/ButtonWrapper/ButtonWrapper";
 import MenuIcon from "@/assets/SvgComponents/MenuIcon";
 import appLogo from "@/assets/widget/app-logo2.svg";
-import { WidgetType } from "@/components/Widget/Widget";
+import { WidgetType } from "@/types";
 
 const dropdownItems: WidgetType[] = ["Onramp", "Offramp", "Swap Crypto"];
 

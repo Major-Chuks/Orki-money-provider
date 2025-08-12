@@ -6,8 +6,8 @@ import { PaymentMethodResponse } from "@/interface/get_payment_methods";
 import { get_user_location } from "@/interface/get_user_location";
 import backend from "@/services/apis";
 import { formatMoneyToNumber } from "@/services/utils";
+import { WidgetType } from "@/types";
 import { SetStateAction } from "react";
-import { WidgetType } from "../Widget";
 
 export const sortProviders = (providers: get_defaults["quotes"] | null) => {
   if (!providers) return null;

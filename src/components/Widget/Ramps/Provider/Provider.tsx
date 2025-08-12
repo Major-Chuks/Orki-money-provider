@@ -4,8 +4,8 @@ import classes from "./Provider.module.css";
 import closeIcon from "@/assets/widget/close.svg";
 import badgeIcon from "@/assets/widget/badge.svg";
 import { get_defaults } from "@/interface/get_defaults";
-import { WidgetType } from "../../Widget";
 import { sortProviders } from "../Ramps.script";
+import { WidgetType } from "@/types";
 
 const Provider = ({
   allProviders,

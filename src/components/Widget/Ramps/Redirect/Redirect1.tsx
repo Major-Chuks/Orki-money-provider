@@ -5,7 +5,7 @@ import TrippleChevronIcon from "@/assets/SvgComponents/TrippleChevronIcon";
 import businessLogo from "@/assets/widget/business-logo.svg";
 import Image from "next/image";
 import { get_defaults } from "@/interface/get_defaults";
-import { WidgetType } from "../../Widget";
+import { WidgetType } from "@/types";
 
 const Redirect1 = ({
   provider,

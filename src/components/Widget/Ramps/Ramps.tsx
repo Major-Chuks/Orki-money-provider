@@ -34,7 +34,6 @@ import {
 } from "@/services/apis_tanstack";
 import Koywe from "../SDK/Koywe/Koywe";
 import Coinify from "../SDK/Coinify/Coinify";
-import { WidgetType } from "../Widget";
 import Redirect1 from "./Redirect/Redirect1";
 import Redirect2 from "./Redirect/Redirect2";
 import RatePanel from "./RatePanel/RatePanel";
@@ -42,6 +41,7 @@ import Provider from "./Provider/Provider";
 import SwapButton from "../Swap/SwapButton/SwapButton";
 import WidgetDrawer from "../WidgetDrawer/WidgetDrawer";
 import { usePathname } from "next/navigation";
+import { WidgetType } from "@/types";
 
 const Ramps = ({
   type: widgetType,
@@ -388,7 +388,7 @@ const Ramps = ({
                 value={fiatAmount}
                 error={error}
                 disableCurrency={loadingQuotes}
-                disableAmount={false}
+                disableAmount={loadingQuotes}
               />
               <CryptoPanel
                 cryptoCurrencies={cryptoCurrencies}
@@ -417,7 +417,7 @@ const Ramps = ({
                   setNetwork(network);
                 }}
                 disableCurrency={loadingQuotes}
-                disableAmount={false}
+                disableAmount={loadingQuotes}
                 value={cryptoAmount}
                 cryptoCurrency={cryptoCurrency}
                 network={network}
