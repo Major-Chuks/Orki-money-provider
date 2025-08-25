@@ -14,6 +14,8 @@ import CustomTextInput from "@/components/CustomInput/CustomTextInput/CustomText
 import { useEffect, useState } from "react";
 import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
+import KeyViewer from "../../KeyViewer/KeyViewer";
+import CreateKey from "../CreateKey/CreateKey";
 
 const Webhooks = () => {
   const { data, isPending } = useWebhooksQuery();
@@ -24,6 +26,7 @@ const Webhooks = () => {
 
   const [url, setUrl] = useState("");
   const [events, setEvents] = useState({});
+  const [openCreateModal, setOpenCreateModal] = useState(false);
 
   const handleEventChange = (state: ToggleState, id?: ToggleId) => {
     if (!id) return;
@@ -50,6 +53,8 @@ const Webhooks = () => {
     );
   };
 
+  // const handleCreateKey = () => {};
+
   useEffect(() => {
     if (webhook) {
       setUrl(webhook.url);
@@ -63,7 +68,7 @@ const Webhooks = () => {
       ) : false ? (
         <ErrorScreen />
       ) : true ? (
-        <div className={classes.configSection}>
+        <div className={classes.section}>
           <div className={classes.header}>
             <div className={classes.title}>Webhooks</div>
             <div className={classes.description}>
@@ -118,7 +123,42 @@ const Webhooks = () => {
         </div>
       ) : null}
 
+      <div className={classes.section}>
+        <div className={classes.innerSection}>
+          <div className={classes.header}>
+            <div className={classes.title}>Webhook Secret</div>
+            <div className={classes.description}>
+              Use this secret to verify webhook authenticity in your
+              application.
+            </div>
+          </div>
+
+          <Button onClick={() => setOpenCreateModal(true)}>
+            Create New Key
+          </Button>
+        </div>
+
+        <KeyViewer
+          value={""}
+          label="Secret Key"
+          note="When you generate a new secret, the old one will be automatically invalidated."
+        />
+      </div>
+
       <Transactions />
+
+      {openCreateModal ? (
+        <CreateKey
+          onClose={() => {
+            setOpenCreateModal(false);
+          }}
+          onSubmit={() => {
+            setOpenCreateModal(false);
+            // refetch()
+          }}
+          module="webhook"
+        />
+      ) : null}
     </div>
   );
 };

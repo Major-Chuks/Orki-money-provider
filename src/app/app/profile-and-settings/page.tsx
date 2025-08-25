@@ -13,6 +13,7 @@ import Security from "@/components/app/ProfileAndSettings/Security/Security";
 import classes from "./page.module.css";
 import Payment from "@/components/app/ProfileAndSettings/Payment/Payment";
 import Team from "@/components/app/ProfileAndSettings/Users/Team";
+import FeesAndMarkup from "@/components/app/ProfileAndSettings/FeesAndMarkup/FeesAndMarkup";
 
 const tabList = [
   "Profile",
@@ -22,6 +23,7 @@ const tabList = [
   "Team",
   "Notifications",
   "Appearance",
+  "Fees & Markup",
 ] as const;
 
 type TabType = (typeof tabList)[number];
@@ -88,6 +90,7 @@ const ProfileAndSettingsPage = () => {
             {tab === "Team" && teamIcon}
             {tab === "Notifications" && notifications}
             {tab === "Appearance" && themeIcon}
+            {tab === "Fees & Markup" && feesIcon}
             {tab}
           </div>
         )}
@@ -102,6 +105,7 @@ const ProfileAndSettingsPage = () => {
       {tab === "Team" && <Team />}
       {tab === "Notifications" && <Notifications />}
       {tab === "Appearance" && <Appearance />}
+      {tab === "Fees & Markup" && <FeesAndMarkup />}
     </div>
   );
 };
@@ -361,6 +365,23 @@ const themeIcon = (
       d="M8.9126 5.83203C8.9126 5.99779 8.84675 6.15676 8.72954 6.27397C8.61233 6.39118 8.45336 6.45703 8.2876 6.45703C8.12184 6.45703 7.96287 6.39118 7.84566 6.27397C7.72845 6.15676 7.6626 5.99779 7.6626 5.83203C7.6626 5.66627 7.72845 5.5073 7.84566 5.39009C7.96287 5.27288 8.12184 5.20703 8.2876 5.20703C8.45336 5.20703 8.61233 5.27288 8.72954 5.39009C8.84675 5.5073 8.9126 5.66627 8.9126 5.83203ZM13.0084 5.83203C13.0084 5.99779 12.9426 6.15676 12.8254 6.27397C12.7082 6.39118 12.5492 6.45703 12.3834 6.45703C12.2177 6.45703 12.0587 6.39118 11.9415 6.27397C11.8243 6.15676 11.7584 5.99779 11.7584 5.83203C11.7584 5.66627 11.8243 5.5073 11.9415 5.39009C12.0587 5.27288 12.2177 5.20703 12.3834 5.20703C12.5492 5.20703 12.7082 5.27288 12.8254 5.39009C12.9426 5.5073 13.0084 5.66627 13.0084 5.83203Z"
       stroke="#6B7280"
       strokeWidth="1.5"
+    />
+  </svg>
+);
+
+const feesIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="21"
+    height="20"
+    viewBox="0 0 21 20"
+    fill="none"
+  >
+    <path
+      d="M8 12.5H11.125C11.8125 12.5 12.375 11.9375 12.375 11.25C12.375 10.5625 11.8125 10 11.125 10H9.875C9.1875 10 8.625 9.4375 8.625 8.75C8.625 8.0625 9.1875 7.5 9.875 7.5H13M10.5 5.625V7.08375M10.5 11.875V14.375M18.625 10C18.625 12.1549 17.769 14.2215 16.2452 15.7452C14.7215 17.269 12.6549 18.125 10.5 18.125C8.34512 18.125 6.27849 17.269 4.75476 15.7452C3.23102 14.2215 2.375 12.1549 2.375 10C2.375 7.84512 3.23102 5.77849 4.75476 4.25476C6.27849 2.73102 8.34512 1.875 10.5 1.875C12.6549 1.875 14.7215 2.73102 16.2452 4.25476C17.769 5.77849 18.625 7.84512 18.625 10Z"
+      stroke="#6B7280"
+      strokeMiterlimit="10"
+      strokeLinejoin="round"
     />
   </svg>
 );

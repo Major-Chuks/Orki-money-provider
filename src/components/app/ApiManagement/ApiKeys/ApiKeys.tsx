@@ -112,6 +112,7 @@ const ApiKeys = () => {
             setOpenCreateModal(false);
             refetch();
           }}
+          module="apiKey"
         />
       ) : null}
 

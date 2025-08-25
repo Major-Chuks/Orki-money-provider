@@ -11,17 +11,25 @@ import { toSentenceCase } from "@/services/utils";
 const CreateKey = ({
   onClose,
   onSubmit,
+  module: _module,
 }: {
   onClose: () => void;
   onSubmit: () => void;
+  module: "apiKey" | "webhook";
 }) => {
   const [type, setType] = useState<"live" | "test">("test");
   const [keyName, setKeyName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCreate = async () => {
+    if (!_module) return;
     setIsLoading(true);
-    const response = await backend().post_createApiKey({ type });
+    let response = null;
+    if (_module === "apiKey") {
+      response = await backend().post_createApiKey({ type });
+    } else {
+      onSubmit();
+    }
     if (response) {
       onSubmit();
     }
