@@ -5,6 +5,7 @@ import { apiKeysApi } from '../apis/apiKeys';
 import { apiLogsApi } from '../apis/apiLogs';
 import { authApi } from '../apis/auth';
 import { billingApi } from '../apis/billing';
+import { markupApi } from '../apis/markup';
 import { onboardingApi } from '../apis/onboarding';
 import { swapApi } from '../apis/swap';
 import { teamManagementApi } from '../apis/teamManagement';
@@ -20,6 +21,7 @@ export const apiModules = {
   'apiLogs': apiLogsApi,
   'auth': authApi,
   'billing': billingApi,
+  'markup': markupApi,
   'onboarding': onboardingApi,
   'swap': swapApi,
   'teamManagement': teamManagementApi,

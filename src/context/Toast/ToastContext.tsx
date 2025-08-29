@@ -15,7 +15,7 @@ import { formatText } from "@/services/utils";
 import { setToastApi } from "./ToastService";
 
 type Toast = {
-  id: number;
+  id: string; // ✅ changed from number to string
   message: string;
   type?: "success" | "error" | "info";
 };
@@ -37,7 +37,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [hasMounted, setHasMounted] = useState(false);
 
   const showToast = (message: string, type: Toast["type"] = "info") => {
-    const id = Date.now();
+    const id = crypto.randomUUID(); // ✅ guaranteed unique
     setToasts((prev) => [...prev, { id, message, type }]);
 
     setTimeout(() => {
@@ -45,7 +45,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     }, 3000);
   };
 
-  const handleClose = (id: number) => {
+  const handleClose = (id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
   };
 

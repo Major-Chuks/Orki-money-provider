@@ -24,6 +24,7 @@ export * from "./useApiKeysQueries";
 export * from "./useApiLogsQueries";
 export * from "./useAuthQueries";
 export * from "./useBillingQueries";
+export * from "./useMarkupQueries";
 export * from "./useOnboardingQueries";
 export * from "./useSwapQueries";
 export * from "./useTeamManagementQueries";

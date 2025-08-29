@@ -218,7 +218,7 @@ const paymentIcon = (
       d="M2.30957 7.08789H18.9762"
       stroke="#6B7280"
       strokeWidth="1.5"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -226,7 +226,7 @@ const paymentIcon = (
       d="M5.64282 13.7539H7.30949"
       stroke="#6B7280"
       strokeWidth="1.5"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -234,7 +234,7 @@ const paymentIcon = (
       d="M9.39282 13.7539H12.7262"
       stroke="#6B7280"
       strokeWidth="1.5"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />

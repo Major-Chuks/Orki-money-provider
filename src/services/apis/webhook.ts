@@ -27,4 +27,14 @@ export const webhookApi = {
     const url = `/webhooks/${webhookId}/retry`;
     return handleApiCall(() => BACKEND_API.post(url), "post_retryWebhook");
   },
+
+  patch_webhookSecret: async () => {
+    const url = "/webhooks/secret";
+    return handleApiCall(() => BACKEND_API.patch(url), "patch_webhookSecret");
+  },
+
+  get_webhookSecret: async () => {
+    const url = "/webhooks/secret";
+    return handleApiCall(() => BACKEND_API.get(url), "get_webhookSecret");
+  },
 };

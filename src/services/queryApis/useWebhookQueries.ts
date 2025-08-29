@@ -21,3 +21,9 @@ export const useWebhooksQuery = () =>
 
 export const useRetryWebhookMutation = () =>
   useApiMutation(webhookApi.post_retryWebhook);
+
+export const useWebhookSecretMutation = () =>
+  useApiMutation(webhookApi.patch_webhookSecret);
+
+export const useWebhookSecretQuery = () =>
+  useApiQuery(["get_webhookSecret"], webhookApi.get_webhookSecret);

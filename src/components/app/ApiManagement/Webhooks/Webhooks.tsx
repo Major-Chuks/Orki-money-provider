@@ -7,6 +7,8 @@ import ToggleButton, {
 } from "../../ToggleButton/ToggleButton";
 import {
   useSubscribeToWebhookMutation,
+  useWebhookSecretMutation,
+  useWebhookSecretQuery,
   useWebhooksQuery,
 } from "@/services/queryApis";
 import { get_webhooks } from "@/types/apis/webhook/get_webhooks";
@@ -16,6 +18,7 @@ import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 import KeyViewer from "../../KeyViewer/KeyViewer";
 import CreateKey from "../CreateKey/CreateKey";
+import { useToast } from "@/context/Toast/ToastContext";
 
 const Webhooks = () => {
   const { data, isPending } = useWebhooksQuery();
@@ -27,6 +30,18 @@ const Webhooks = () => {
   const [url, setUrl] = useState("");
   const [events, setEvents] = useState({});
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const {
+    mutate: webhookSecretMutation,
+    isPending: isWebhookSecretMutationPending,
+  } = useWebhookSecretMutation();
+
+  const {
+    data: webhookSecretData,
+    isPending: isWebhookSecretPending,
+    refetch: refetchWebhookSecret,
+  } = useWebhookSecretQuery();
+
+  const { showToast } = useToast();
 
   const handleEventChange = (state: ToggleState, id?: ToggleId) => {
     if (!id) return;
@@ -38,6 +53,21 @@ const Webhooks = () => {
   ) => {
     const value = event.target.value;
     setUrl(value);
+  };
+
+  const handleCreateKey = () => {
+    webhookSecretMutation(
+      {},
+      {
+        onSuccess: (data) => {
+          refetchWebhookSecret();
+          showToast(data?.data.msg, "success");
+        },
+        onError: () => {
+          showToast("Failed to create webhook secret.", "error");
+        },
+      }
+    );
   };
 
   const handleSaveSettings = () => {
@@ -53,8 +83,6 @@ const Webhooks = () => {
     );
   };
 
-  // const handleCreateKey = () => {};
-
   useEffect(() => {
     if (webhook) {
       setUrl(webhook.url);
@@ -63,7 +91,7 @@ const Webhooks = () => {
 
   return (
     <div className={classes.container}>
-      {isPending ? (
+      {isPending || isWebhookSecretPending ? (
         <LoadingScreen />
       ) : false ? (
         <ErrorScreen />
@@ -133,13 +161,16 @@ const Webhooks = () => {
             </div>
           </div>
 
-          <Button onClick={() => setOpenCreateModal(true)}>
+          <Button
+            loading={isWebhookSecretMutationPending}
+            onClick={handleCreateKey}
+          >
             Create New Key
           </Button>
         </div>
 
         <KeyViewer
-          value={""}
+          value={webhookSecretData?.data?.data?.secret}
           label="Secret Key"
           note="When you generate a new secret, the old one will be automatically invalidated."
         />

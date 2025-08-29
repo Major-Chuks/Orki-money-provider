@@ -518,6 +518,43 @@ export const apiManifest: ApiManifest = {
       ]
     }
   },
+  "markup": {
+    "get_globalarkupSettings": {
+      "args": []
+    },
+    "patch_globalMarkupSettings": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false,
+          "isObject": true,
+          "properties": [
+            {
+              "name": "global_offramp",
+              "isOptional": false,
+              "type": "number"
+            },
+            {
+              "name": "global_onramp",
+              "isOptional": false,
+              "type": "number"
+            }
+          ]
+        }
+      ]
+    },
+    "get_localMarkupSettings": {
+      "args": []
+    },
+    "patch_localMarkupSettings": {
+      "args": [
+        {
+          "name": "payload",
+          "isOptional": false
+        }
+      ]
+    }
+  },
   "onboarding": {
     "get_initiateKyb": {
       "args": []
@@ -1173,6 +1210,12 @@ export const apiManifest: ApiManifest = {
           ]
         }
       ]
+    },
+    "patch_webhookSecret": {
+      "args": []
+    },
+    "get_webhookSecret": {
+      "args": []
     }
   },
   "widget": {
