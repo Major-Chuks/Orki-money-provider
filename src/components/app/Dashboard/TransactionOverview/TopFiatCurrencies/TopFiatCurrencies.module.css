@@ -83,7 +83,7 @@
 .percent {
   color: var(--neutral-2, #23262f);
   text-align: right;
-  font-family: var(--font-plus-jakarta-sans);
+  font-family: "Plus Jakarta Sans";
   font-size: 12px;
   font-style: normal;
   font-weight: 600;

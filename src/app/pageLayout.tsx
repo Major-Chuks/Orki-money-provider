@@ -26,6 +26,11 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
     return <PageWrapper>{children}</PageWrapper>;
   }
 
+  // app routes
+  if (pathname.includes("/admin")) {
+    return <PageWrapper>{children}</PageWrapper>;
+  }
+
   // Koywe sdk router
   if (pathname.includes("/sdk")) {
     return <>{children}</>;

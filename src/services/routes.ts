@@ -4,6 +4,11 @@ export const routes = {
   signUp: "/user/sign-up",
   newPassword: "/user/password/new",
 
+  // auth-admin
+  adminLogin: "/admin/auth/login",
+  adminNewPassword: "/admin/auth/password/new",
+  adminSignUp: "/admin/auth/sign-up",
+
   // app
   dashboard: "/app",
   transactions: "/app/transactions",

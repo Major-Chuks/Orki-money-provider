@@ -21,7 +21,7 @@
   border-radius: 8px;
   /*  */
   color: #fff;
-  font-family: var(--font-plus-jakarta-sans);
+  font-family: "Plus Jakarta Sans";
   font-size: 10px;
   font-style: normal;
   font-weight: 500;
@@ -49,7 +49,7 @@
 
 .sectionTitle {
   color: var(--neutral-1, #141416);
-  font-family: var(--font-plus-jakarta-sans);
+  font-family: "Plus Jakarta Sans";
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -81,7 +81,7 @@
 
 .dateLabel {
   color: var(--Neutral-4, #777e90);
-  font-family: var(--font-plus-jakarta-sans);
+  font-family: "Plus Jakarta Sans";
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -124,7 +124,7 @@
 
 .itemTitle {
   color: #000;
-  font-family: var(--font-plus-jakarta-sans);
+  font-family: "Plus Jakarta Sans";
   font-size: 10px;
   font-style: normal;
   font-weight: 600;
@@ -133,7 +133,7 @@
 
 .itemMessage {
   color: var(--Neutral-4, #777e90);
-  font-family: var(--font-plus-jakarta-sans);
+  font-family: "Plus Jakarta Sans";
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -142,7 +142,7 @@
 
 .time {
   color: var(--Neutral-4, #777e90);
-  font-family: var(--font-plus-jakarta-sans);
+  font-family: "Plus Jakarta Sans";
   font-size: 8px;
   font-style: normal;
   font-weight: 400;
@@ -164,7 +164,7 @@
 .viewAllBtn {
   color: var(--Neutral-3, #353945);
   text-align: center;
-  font-family: var(--font-plus-jakarta-sans);
+  font-family: "Plus Jakarta Sans";
   font-size: 11px;
   font-style: normal;
   font-weight: 400;
