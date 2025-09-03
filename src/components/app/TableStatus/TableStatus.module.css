@@ -40,7 +40,8 @@
 .pending-confirmation,
 .pending,
 .cancelling,
-.inactive {
+.inactive,
+.trial {
   background: #fff2e2;
   color: #f29339;
 }

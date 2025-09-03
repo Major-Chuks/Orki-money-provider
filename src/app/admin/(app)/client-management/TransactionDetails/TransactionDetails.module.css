@@ -14,6 +14,8 @@
 }
 
 .headerTitle {
+  margin-bottom: 12px;
+  /* text */
   color: var(--gray-800, #1f2937);
   font-family: "DM Sans";
   font-size: 24px;
@@ -21,6 +23,15 @@
   font-weight: 700;
   line-height: 28px; /* 116.667% */
   letter-spacing: -0.24px;
+}
+
+.headerDescription {
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
 }
 
 .close {
@@ -37,8 +48,9 @@
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  border-radius: 12px;
-  background: #f8f9fc;
+  border-radius: 16px;
+  border: 1px solid #d4d4d4;
+  background: #fff;
 }
 
 .sectionTitle {
@@ -109,7 +121,7 @@
 
 .item .value {
   color: var(--gray-800, #1f2937);
-  /* text-align: right; */
+  text-align: right;
   font-family: "DM Sans";
   font-size: 16px;
   font-style: normal;
@@ -141,4 +153,39 @@
   font-style: normal;
   font-weight: 600;
   line-height: 20px; /* 125% */
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background: #e4e4e4;
+  margin-top: 32px;
+  margin-bottom: 24px;
+}
+
+.tabBtnWrapper {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tabBtn {
+  display: flex;
+  padding: 10px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--Neutral-6, #e6e8ec);
+  background: #fff;
+  /* text */
+  color: var(--Neutral-2, #23262f);
+  font-family: "DM Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 116.667% */
 }

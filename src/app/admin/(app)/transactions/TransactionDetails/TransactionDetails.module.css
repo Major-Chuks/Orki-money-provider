@@ -109,7 +109,7 @@
 
 .item .value {
   color: var(--gray-800, #1f2937);
-  /* text-align: right; */
+  text-align: right;
   font-family: "DM Sans";
   font-size: 16px;
   font-style: normal;

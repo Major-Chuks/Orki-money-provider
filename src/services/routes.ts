@@ -4,11 +4,6 @@ export const routes = {
   signUp: "/user/sign-up",
   newPassword: "/user/password/new",
 
-  // auth-admin
-  adminLogin: "/admin/auth/login",
-  adminNewPassword: "/admin/auth/password/new",
-  adminSignUp: "/admin/auth/sign-up",
-
   // app
   dashboard: "/app",
   transactions: "/app/transactions",
@@ -16,6 +11,17 @@ export const routes = {
   billing: "/app/billing",
   profileAndSettings: "/app/profile-and-settings",
   notifications: "/app/notifications",
+
+  // auth-admin
+  adminLogin: "/admin/auth/login",
+  adminNewPassword: "/admin/auth/password/new",
+  adminSignUp: "/admin/auth/sign-up",
+
+  // app
+  adminDashboard: "/admin",
+  adminTransactions: "/admin/transactions",
+  adminClientManagement: "/admin/client-management",
+  adminProfileAndSettings: "/admin/profile-and-settings",
 
   // main
   home: "/",

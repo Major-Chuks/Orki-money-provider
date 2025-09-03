@@ -1,0 +1,37 @@
+.container {
+  width: 100%;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--gray-100, #f3f4f6);
+  background: var(--white, #fff);
+  box-shadow: 0px 0px 4px 0px rgba(99, 97, 97, 0.25);
+}
+
+.title {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+  font-family: "DM Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 160% */
+  margin-bottom: 8px;
+}
+
+.description {
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 114.286% */
+  margin-bottom: 24px;
+}
+
+.searchAndFilters {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 16px;
+}

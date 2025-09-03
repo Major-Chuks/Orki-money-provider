@@ -1,6 +1,6 @@
 import classes from "./BillingHistory.module.css";
 import EmptyState from "./EmptyState/EmptyState";
-import Search from "./Search/Search";
+import Search from "../../../CustomInput/CustomSearch/CustomSearch";
 import Status from "./Status/Status";
 import TransactionTable from "./TransactionTable/TransactionTable";
 import Pagination from "../../Pagination/Pagination";

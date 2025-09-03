@@ -1,6 +1,5 @@
 "use client";
 
-import Sidebar from "@/components/app/Sidebar/Sidebar";
 import classes from "./layout.module.css";
 import Navbar from "@/components/app/Navbar/Navbar";
 import { useSelector } from "react-redux";
@@ -9,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { routes } from "@/services/routes";
 import { useEffect } from "react";
 import AccountSetupBanner from "@/components/app/AccountSetupBanner/AccountSetupBanner";
+import Sidebar from "./Sidebar/Sidebar";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);

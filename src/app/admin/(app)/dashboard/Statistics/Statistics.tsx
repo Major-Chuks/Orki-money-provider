@@ -1,0 +1,237 @@
+import InfoIcon from "@/assets/app/InfoIcon";
+import classes from "./Statistics.module.css";
+import ChartDateFilter from "../ChartDateFilter/ChartDateFilter";
+import { useState } from "react";
+import {
+  useCompletedTransactionsQuery,
+  useFailedTransactionsQuery,
+  useTotalTransactionsQuery,
+  useTotalVolumeQuery,
+} from "@/services/queryApis";
+import { IntervalType } from "../Dashboard";
+import { get_totalTransactions } from "@/types/apis/analytics/get_totalTransactions";
+import { get_failedTransactions } from "@/types/apis/analytics/get_failedTransactions";
+import { get_completedTransactions } from "@/types/apis/analytics/get_completedTransactions";
+import { get_totalVolume } from "@/types/apis/analytics/get_totalVolume";
+import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
+
+const Statistics = () => {
+  const [interval, setInterval] = useState<IntervalType>("30D");
+
+  const totalTransactions = useTotalTransactionsQuery({ interval });
+  const totalTxData: get_totalTransactions = totalTransactions.data?.data.data;
+  const totalVolume = useTotalVolumeQuery({ interval });
+  const totalVolData: get_totalVolume = totalVolume.data?.data.data;
+  const completedTransactions = useCompletedTransactionsQuery({ interval });
+  const completedTxData: get_completedTransactions =
+    completedTransactions.data?.data.data;
+  const failedTransactions = useFailedTransactionsQuery({ interval });
+  const FailedTxData: get_failedTransactions =
+    failedTransactions.data?.data.data;
+
+  return (
+    <div className={classes.container}>
+      <ChartDateFilter onChange={setInterval} />
+      <div className={classes.statsContainer}>
+        {totalTransactions.isPending ? (
+          <LoadingScreen style={{ height: "127px" }} />
+        ) : totalTransactions.isError ? (
+          <ErrorScreen style={{ height: "127px" }} />
+        ) : (
+          <Stat
+            name="Total Volume"
+            value={totalTxData?.result}
+            percentage={totalTxData?.difference}
+            info=""
+          />
+        )}
+        {totalTransactions.isPending ? (
+          <LoadingScreen style={{ height: "127px" }} />
+        ) : totalTransactions.isError ? (
+          <ErrorScreen style={{ height: "127px" }} />
+        ) : (
+          <Stat
+            name="Total Transactions"
+            value={totalTxData?.result}
+            percentage={totalTxData?.difference}
+            info=""
+          />
+        )}
+        {totalVolume.isPending ? (
+          <LoadingScreen style={{ height: "127px" }} />
+        ) : totalVolume.isError ? (
+          <ErrorScreen style={{ height: "127px" }} />
+        ) : (
+          <Stat
+            name="Success Rate"
+            value={totalVolData?.result}
+            percentage={totalVolData?.difference}
+            info=""
+          />
+        )}
+        {completedTransactions.isPending ? (
+          <LoadingScreen style={{ height: "127px" }} />
+        ) : completedTransactions.isError ? (
+          <ErrorScreen style={{ height: "127px" }} />
+        ) : (
+          <Stat
+            name="Active Clients"
+            value={completedTxData?.result}
+            percentage={completedTxData?.difference}
+            info=""
+          />
+        )}
+        {failedTransactions.isPending ? (
+          <div className={classes.card}>
+            <LoadingScreen style={{ height: "127px" }} />
+          </div>
+        ) : failedTransactions.isError ? (
+          <div className={classes.card}>
+            <ErrorScreen style={{ height: "127px" }} />
+          </div>
+        ) : (
+          <Stat
+            name="Conversion Rate"
+            value={FailedTxData?.result}
+            percentage={FailedTxData?.difference}
+            info=""
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Statistics;
+
+const Stat = ({
+  name,
+  value,
+  percentage,
+  info,
+}: {
+  name: string;
+  value: string;
+  percentage: string;
+  info: string;
+}) => {
+  return (
+    <div className={classes.card}>
+      {MapIconsToNames[name]}
+
+      <div className={classes.name}>
+        {name}{" "}
+        <span className={classes.infoIcon}>
+          <InfoIcon
+            style={{ color: "#9CA3AF", width: "12px", height: "12px" }}
+          />
+          {info}
+        </span>
+      </div>
+      <div className={classes.value}>
+        {value}{" "}
+        {percentage.includes("%") ? (
+          <span className={classes.percentage}>{percentage}</span>
+        ) : null}
+      </div>
+    </div>
+  );
+};
+
+const MapIconsToNames: Record<string, React.JSX.Element> = {
+  "Total Transactions": (
+    <div className={`${classes.iconContainer} ${classes.totalTransactions}`}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <path
+          d="M17.5759 10.4798C17.6976 10.3265 17.7545 10.1316 17.7345 9.93681C17.7144 9.74205 17.619 9.56285 17.4685 9.43751C17.3181 9.31216 17.1247 9.25061 16.9295 9.26599C16.7343 9.28138 16.5529 9.37248 16.4239 9.51985L14.6269 11.6758C14.2569 12.1208 14.0279 12.3918 13.8409 12.5608C13.792 12.6083 13.7372 12.6493 13.6779 12.6828L13.6669 12.6878L13.6559 12.6828C13.5963 12.6494 13.5412 12.6084 13.4919 12.5608C13.3049 12.3908 13.0769 12.1208 12.7059 11.6758L12.4139 11.3258C12.0859 10.9308 11.7889 10.5758 11.5129 10.3258C11.2119 10.0538 10.8329 9.81185 10.3329 9.81185C9.83294 9.81185 9.45494 10.0538 9.15294 10.3258C8.87694 10.5758 8.58094 10.9308 8.25294 11.3258L6.42294 13.5198C6.3599 13.5956 6.3124 13.6829 6.28313 13.777C6.25387 13.8711 6.24342 13.97 6.25238 14.0681C6.27047 14.2662 6.36654 14.449 6.51944 14.5763C6.67233 14.7036 6.86954 14.765 7.06767 14.7469C7.2658 14.7288 7.44863 14.6327 7.57594 14.4798L9.37294 12.3238C9.74294 11.8788 9.97194 11.6078 10.1589 11.4388C10.2079 11.3914 10.2626 11.3504 10.3219 11.3168L10.3329 11.3118L10.3439 11.3168C10.4036 11.3503 10.4587 11.3913 10.5079 11.4388C10.6949 11.6088 10.9229 11.8788 11.2939 12.3238L11.5859 12.6738C11.9149 13.0688 12.2109 13.4238 12.4869 13.6738C12.7879 13.9458 13.1669 14.1878 13.6669 14.1878C14.1669 14.1878 14.5449 13.9458 14.8469 13.6738C15.1229 13.4238 15.4189 13.0688 15.7469 12.6738L17.5759 10.4798Z"
+          fill="#4E9040"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M11.943 1.25C9.634 1.25 7.825 1.25 6.413 1.44C4.969 1.634 3.829 2.04 2.934 2.934C2.039 3.829 1.634 4.969 1.44 6.414C1.25 7.825 1.25 9.634 1.25 11.943V12.057C1.25 14.366 1.25 16.175 1.44 17.587C1.634 19.031 2.04 20.171 2.934 21.066C3.829 21.961 4.969 22.366 6.414 22.56C7.825 22.75 9.634 22.75 11.943 22.75H12.057C14.366 22.75 16.175 22.75 17.587 22.56C19.031 22.366 20.171 21.96 21.066 21.066C21.961 20.171 22.366 19.031 22.56 17.586C22.75 16.175 22.75 14.366 22.75 12.057V11.943C22.75 9.634 22.75 7.825 22.56 6.413C22.366 4.969 21.96 3.829 21.066 2.934C20.171 2.039 19.031 1.634 17.586 1.44C16.175 1.25 14.366 1.25 12.057 1.25H11.943ZM3.995 3.995C4.565 3.425 5.335 3.098 6.614 2.926C7.914 2.752 9.622 2.75 12 2.75C14.378 2.75 16.086 2.752 17.386 2.926C18.665 3.098 19.436 3.426 20.006 3.995C20.575 4.565 20.902 5.335 21.074 6.614C21.248 7.914 21.25 9.622 21.25 12C21.25 14.378 21.248 16.086 21.074 17.386C20.902 18.665 20.574 19.436 20.005 20.006C19.435 20.575 18.665 20.902 17.386 21.074C16.086 21.248 14.378 21.25 12 21.25C9.622 21.25 7.914 21.248 6.614 21.074C5.335 20.902 4.564 20.574 3.994 20.005C3.425 19.435 3.098 18.665 2.926 17.386C2.752 16.086 2.75 14.378 2.75 12C2.75 9.622 2.752 7.914 2.926 6.614C3.098 5.335 3.426 4.565 3.995 3.995Z"
+          fill="#4E9040"
+        />
+      </svg>
+    </div>
+  ),
+  "Total Volume": (
+    <div className={`${classes.iconContainer} ${classes.totalVolume}`}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="24"
+        viewBox="0 0 25 24"
+        fill="none"
+      >
+        <path
+          d="M3.5 16.5L9.5 10L13.5 16L21.5 6.5"
+          stroke="#3B8CE9"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  ),
+  "Success Rate": (
+    <div
+      className={`${classes.iconContainer} ${classes.completedTransactions}`}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <path
+          d="M18.4801 11.9998C17.6411 11.2966 16.5745 10.9233 15.4801 10.9498H8.44509C8.12434 10.9579 7.80524 10.9012 7.50692 10.7831C7.20859 10.665 6.93717 10.4879 6.70889 10.2624C6.48061 10.037 6.30018 9.76774 6.17839 9.47089C6.0566 9.17404 5.99596 8.85568 6.00009 8.53484C5.99227 8.40997 5.99227 8.28472 6.00009 8.15984C6.09468 7.58655 6.39529 7.06751 6.84548 6.70017C7.29568 6.33283 7.86448 6.14248 8.44509 6.16484H15.3751C15.9404 6.16435 16.4875 6.36465 16.9188 6.73005C17.3501 7.09544 17.6377 7.60216 17.7301 8.15984H19.9801C19.8859 7.00325 19.3599 5.92445 18.5067 5.13793C17.6535 4.35141 16.5355 3.91478 15.3751 3.91484H13.0051V0.464844H11.1301V3.91484H8.44509C7.28467 3.91478 6.16671 4.35141 5.31349 5.13793C4.46028 5.92445 3.93428 7.00325 3.84009 8.15984C3.83227 8.28472 3.83227 8.40997 3.84009 8.53484C3.84009 9.13958 3.95921 9.7384 4.19063 10.2971C4.42205 10.8558 4.76125 11.3635 5.18887 11.7911C6.05247 12.6547 7.22377 13.1398 8.44509 13.1398H15.5551C15.8733 13.1318 16.1899 13.1876 16.4862 13.3039C16.7826 13.4201 17.0526 13.5946 17.2805 13.8168C17.5083 14.0391 17.6894 14.3047 17.813 14.5981C17.9366 14.8914 18.0002 15.2065 18.0001 15.5248C18.0146 15.6945 18.0146 15.8652 18.0001 16.0348C17.881 16.5626 17.586 17.0342 17.1635 17.3722C16.741 17.7102 16.2161 17.8945 15.6751 17.8948H8.62509C8.08404 17.8945 7.55919 17.7102 7.1367 17.3722C6.71421 17.0342 6.41919 16.5626 6.30009 16.0348H4.03509C4.164 17.1619 4.70305 18.2021 5.54952 18.9573C6.39599 19.7125 7.49071 20.1298 8.62509 20.1298H11.1301V23.5348H13.0051V20.1298H15.5551C16.6895 20.1298 17.7842 19.7125 18.6307 18.9573C19.4771 18.2021 20.0162 17.1619 20.1451 16.0348V15.5248C20.1433 14.8511 19.9932 14.186 19.7054 13.5768C19.4177 12.9676 18.9993 12.4292 18.4801 11.9998Z"
+          fill="#BF45FC"
+        />
+      </svg>
+    </div>
+  ),
+  "Active Clients": (
+    <div className={`${classes.iconContainer} ${classes.failedTransactions}`}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="24"
+        viewBox="0 0 25 24"
+        fill="none"
+      >
+        <path
+          d="M5.4995 3V19.0005H21.5V21H3.5V3H5.4995ZM20.792 6.2925L22.2065 7.707L16.499 13.4145L13.499 10.4145L9.206 14.7075L7.793 13.293L13.499 7.5855L16.499 10.5855L20.792 6.2925Z"
+          fill="#E03130"
+        />
+      </svg>
+    </div>
+  ),
+  "Conversion Rate": (
+    <div className={`${classes.iconContainer} ${classes.totalVolume}`}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="24"
+        viewBox="0 0 25 24"
+        fill="none"
+      >
+        <path
+          d="M3.5 16.5L9.5 10L13.5 16L21.5 6.5"
+          stroke="#3B8CE9"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  ),
+};

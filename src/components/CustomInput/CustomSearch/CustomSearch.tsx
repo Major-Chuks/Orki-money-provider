@@ -1,7 +1,7 @@
 import SearchIcon from "@/assets/app/SearchIcon";
-import classes from "./Search.module.css";
+import classes from "./CustomSearch.module.css";
 
-const Search = ({ placeholder }: { placeholder?: string }) => {
+const CustomSearch = ({ placeholder }: { placeholder?: string }) => {
   return (
     <div className={classes.container}>
       <SearchIcon />
@@ -10,4 +10,4 @@ const Search = ({ placeholder }: { placeholder?: string }) => {
   );
 };
 
-export default Search;
+export default CustomSearch;

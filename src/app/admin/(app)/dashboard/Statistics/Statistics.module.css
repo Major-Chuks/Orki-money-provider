@@ -1,0 +1,92 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 24px;
+  border-radius: 8px;
+  border: 1px solid #dedfe2;
+  background: #fff;
+  box-shadow: 0px 0px 4px 0px rgba(236, 242, 255, 0.25);
+  padding: 16px;
+}
+
+.statsContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(263px, 1fr));
+  gap: 8px;
+}
+
+.card {
+  width: auto;
+  min-height: 127px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #dedfe2;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0px 0px 4px 2px rgba(236, 242, 255, 0.3);
+}
+
+.iconContainer {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconContainer.totalTransactions {
+  background-color: #e7f6e8;
+}
+
+.iconContainer.totalVolume {
+  background-color: #e5efff;
+}
+
+.iconContainer.completedTransactions {
+  background-color: #f9ebfc;
+}
+
+.iconContainer.failedTransactions {
+  background-color: #ffe7e7;
+}
+
+.name {
+  color: var(--Neutral-4, #777e90);
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px; /* 112.5% */
+}
+
+.value {
+  color: var(--Neutral-2, #23262f);
+  font-family: "Plus Jakarta Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 133.333% */
+  letter-spacing: -0.24px;
+}
+
+.percentage {
+  color: #229846;
+  font-family: "Plus Jakarta Sans";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 12px; /* 150% */
+}
+
+.infoIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
