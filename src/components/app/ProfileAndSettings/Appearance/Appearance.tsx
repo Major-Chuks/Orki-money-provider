@@ -8,11 +8,15 @@ import { useEffect, useRef, useState } from "react";
 import backend from "@/services/apis";
 import { debounce } from "lodash";
 import { useToast } from "@/context/Toast/ToastContext";
-import { useFetchWidgetThemeQuery } from "@/services/queryApis";
+import {
+  useApiKeysQuery,
+  useFetchWidgetThemeQuery,
+} from "@/services/queryApis";
 import { get_fetchWidgetTheme } from "@/types/apis/userProfile/get_fetchWidgetTheme";
 import { InputIdState } from "@/components/CustomInput/CustomInput.script";
 import Button from "@/components/CustomInput/Button/Button";
-import Widget from "./Widget";
+import { get_apiKeys } from "@/types/apis/apiKeys/get_apiKeys";
+import LoadingScreen from "@/components/LoadingScreen/LoadingScreen";
 
 const inputKeys = {
   brand_primary_color: "brand_primary_color",
@@ -61,6 +65,14 @@ const Appearance = () => {
   const { data, isPending, refetch } = useFetchWidgetThemeQuery();
   const inpuData: get_fetchWidgetTheme = data?.data.data;
   const isUserChange = useRef(false);
+
+  const { data: apiKeyResponse, isPending: isPendingApiKey } = useApiKeysQuery({
+    type: "live",
+  });
+
+  const [widgetKey, setWidgetKey] = useState(Date.now());
+
+  const apiKeyData: get_apiKeys | null = apiKeyResponse?.data.data[0];
 
   const [input, setInput] = useState<InputTypes>({
     brand_primary_color: "",
@@ -121,6 +133,7 @@ const Appearance = () => {
       const response = await backend().patch_updateWidgetTheme(input);
       if (response) {
         showToast("Widget theme updated successfully.", "success");
+        setWidgetKey(Date.now());
       }
     }, 1000)
   );
@@ -147,6 +160,10 @@ const Appearance = () => {
         advanced_shadow_style: inpuData.advanced_shadow_style || "",
       });
   }, [isPending, inpuData]);
+
+  useEffect(() => {
+    console.log(widgetKey);
+  }, [widgetKey]);
 
   return (
     <div className={classes.container}>
@@ -276,7 +293,28 @@ const Appearance = () => {
           />
 
           <div className={classes.widget}>
-            <Widget />
+            {isPendingApiKey ? (
+              <LoadingScreen style={{ height: "80vh" }} />
+            ) : apiKeyData ? (
+              <iframe
+                key={widgetKey}
+                src={`https://orki-widget.vercel.app/?apiKey=${apiKeyData.public_key}`}
+                width="100%"
+                height="100%"
+                allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;payment"
+                allowFullScreen
+                style={{
+                  width: "100%",
+                  maxWidth: "482px",
+                  height: "748px",
+                  background: "#fff",
+                  border: "none",
+                  boxShadow: "0px 2px 50px 0px rgba(0, 0, 0, 0.12)",
+                  borderRadius: "8px",
+                }}
+                title="Orki Money"
+              ></iframe>
+            ) : null}
           </div>
         </div>
       </section>

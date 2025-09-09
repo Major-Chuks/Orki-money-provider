@@ -214,6 +214,7 @@ const FeesAndMarkup = () => {
                   onChange={handleChangeGlobal}
                   error={globalErrors.onramp}
                   errorMsg="Value must be between 0 and 100"
+                  rightLabel="percentage"
                 />
                 <CustomTextInput
                   id={"offramp"}
@@ -223,6 +224,7 @@ const FeesAndMarkup = () => {
                   onChange={handleChangeGlobal}
                   error={globalErrors.offramp}
                   errorMsg="Value must be between 0 and 100"
+                  rightLabel="percentage"
                 />
               </div>
               <Button
@@ -282,6 +284,7 @@ const FeesAndMarkup = () => {
                         onChange={handleChangeLocal}
                         error={localErrors[ramp_id]?.onramp || false}
                         errorMsg="Value must be between 0 and 100"
+                        rightLabel="percentage"
                       />
                       <CustomTextInput
                         id={`offramp_${ramp_id}`}
@@ -291,6 +294,7 @@ const FeesAndMarkup = () => {
                         onChange={handleChangeLocal}
                         error={localErrors[ramp_id]?.offramp || false}
                         errorMsg="Value must be between 0 and 100"
+                        rightLabel="percentage"
                       />
                     </div>
                   ) : null}

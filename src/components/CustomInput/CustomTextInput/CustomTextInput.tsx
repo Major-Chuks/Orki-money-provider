@@ -9,6 +9,7 @@ interface IExtendedCustomInput extends ICustomInput {
   type?: "text" | "textarea";
   capitalize?: boolean;
   required?: boolean;
+  rightLabel?: "percentage" | "";
 }
 
 const CustomTextInput = ({
@@ -27,6 +28,7 @@ const CustomTextInput = ({
   capitalize = false,
   required,
   leftIcon,
+  rightLabel,
 }: IExtendedCustomInput) => {
   return (
     <div
@@ -73,6 +75,9 @@ const CustomTextInput = ({
             disabled={disabled}
           ></textarea>
         )}
+        {rightLabel === "percentage" ? (
+          <div className={classes.section}>%</div>
+        ) : null}
       </div>
       {!!getError({ error, id }) && (
         <div className={classes.error}>{errorMsg}</div>
