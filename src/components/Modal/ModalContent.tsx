@@ -5,11 +5,12 @@ import ModalWrapper from "./ModalWrapper";
 interface ModalContentProps {
   title?: string;
   subtitle?: string;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "full";
   onClose: () => void;
   children: React.ReactNode;
   titleStyle?: React.CSSProperties;
   stickyHeader?: boolean;
+  underline?: boolean;
 }
 
 const ModalContent: React.FC<ModalContentProps> = ({
@@ -20,6 +21,7 @@ const ModalContent: React.FC<ModalContentProps> = ({
   children,
   titleStyle,
   stickyHeader,
+  underline = true,
 }) => {
   return (
     <ModalWrapper size={size}>
@@ -35,7 +37,7 @@ const ModalContent: React.FC<ModalContentProps> = ({
           </div>
           <CloseButton onClose={onClose} />
         </div>
-        {subtitle && <hr />}
+        {subtitle && underline && <hr />}
         <div className={classes.body}>{children}</div>
       </div>
     </ModalWrapper>

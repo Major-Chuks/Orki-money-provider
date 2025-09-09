@@ -20,7 +20,8 @@
 .completed,
 .accepted,
 .success,
-.paid {
+.paid,
+.approved {
   background: #bbf7d0;
   color: #166534;
 }

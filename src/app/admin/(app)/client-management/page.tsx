@@ -12,10 +12,10 @@ import ErrorScreen from "@/components/ErrorScreen/ErrorScreen";
 
 import { useState } from "react";
 import Pagination from "@/components/app/Pagination/Pagination";
-import EmptyState from "@/components/app/Transactions/EmptyState/EmptyState";
 import TransactionTable from "./TransactionTable/TransactionTable";
 import { mockData } from "./mockData";
 import CustomSearch from "@/components/CustomInput/CustomSearch/CustomSearch";
+import EmptyState from "./EmptyState/EmptyState";
 
 const TransactionsPage = () => {
   const [params, setParams] = useState("");
@@ -117,7 +117,7 @@ const TransactionsPage = () => {
           ) : mockData.length ? (
             <TransactionTable data={mockData} />
           ) : (
-            <EmptyState isSearch={params} />
+            <EmptyState />
           )}
 
           {metadata && (

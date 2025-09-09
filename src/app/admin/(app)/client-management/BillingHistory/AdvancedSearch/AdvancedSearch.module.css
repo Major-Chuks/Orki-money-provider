@@ -1,0 +1,29 @@
+.container {
+  width: 100%;
+  padding: 20px 16px;
+  border-radius: 12px;
+  background: #f8f9fc;
+  margin-bottom: 32px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 16px;
+}
+
+.container > div:nth-child(-n + 4) {
+  grid-column: span 5; /* 4 items per row = 5 columns each */
+}
+
+.container > div:nth-child(n + 5) {
+  grid-column: span 4; /* 5 items per row = 4 columns each */
+}
+
+.wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 19px;
+  margin-bottom: 4px;
+}

@@ -15,6 +15,10 @@
   max-width: 1068px; /* Large size */
 }
 
+.full {
+  max-width: 100%;
+}
+
 .container {
   width: 100%;
   max-height: 90vh;

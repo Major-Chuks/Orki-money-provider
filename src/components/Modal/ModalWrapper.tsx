@@ -3,7 +3,7 @@ import classes from "./ModalWrapper.module.css";
 import ButtonWrapper from "../CustomInput/ButtonWrapper/ButtonWrapper";
 
 interface WidgetLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "full";
 }
 
 const ModalWrapper: React.FC<WidgetLayoutProps> = ({

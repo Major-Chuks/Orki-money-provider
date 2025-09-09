@@ -1,0 +1,34 @@
+.container {
+  width: 100%;
+}
+
+.textWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 40px;
+  /* text */
+  color: var(--gray-500, #6b7280);
+  font-family: "DM Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 177.778% */
+}
+
+.textWrapper ul {
+  padding-left: 32px;
+}
+
+.textWrapper span {
+  color: var(--Foundation-Text-color-text-color-500, #0c0c0c);
+}
+
+.btnWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}

@@ -1,0 +1,24 @@
+.container {
+  width: 100%;
+}
+
+.searchAndFilters {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 92px;
+  background: #fff;
+  z-index: 1;
+  margin-bottom: 16px;
+  padding: 16px 0;
+}
+
+.filters {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
