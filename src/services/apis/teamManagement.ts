@@ -2,7 +2,7 @@ import { BACKEND_API, handleApiCall } from ".";
 
 export const teamManagementApi = {
   get_listManagementTeam: async () => {
-    const url = "/team-management/index";
+    const url = "/team-management";
     return handleApiCall(() => BACKEND_API.get(url), "get_listManagementTeam");
   },
 
