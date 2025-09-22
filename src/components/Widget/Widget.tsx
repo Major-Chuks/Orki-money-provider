@@ -12,7 +12,7 @@ const Widget = () => {
     <iframe
       src={`https://orki-widget.vercel.app/?mode=${
         isSwapPage ? "swap" : "onramp"
-      }`}
+      }&provider=orki`}
       width="100%"
       height="100%"
       allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;payment"

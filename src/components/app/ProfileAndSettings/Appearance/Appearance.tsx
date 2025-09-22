@@ -298,7 +298,7 @@ const Appearance = () => {
             ) : apiKeyData ? (
               <iframe
                 key={widgetKey}
-                src={`https://orki-widget.vercel.app/?apiKey=${apiKeyData.public_key}`}
+                src={`https://orki-widget.vercel.app/?apiKey=${apiKeyData.public_key}&provider=orki`}
                 width="100%"
                 height="100%"
                 allow="camera;fullscreen;accelerometer;gyroscope;magnetometer;payment"
